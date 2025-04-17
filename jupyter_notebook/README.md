@@ -1,6 +1,8 @@
-# Installation Guide for Python & Jupiter Notebooks
+# Jupyter Notebook Examples
 
-## Setting up Python on Windows
+This directory includes plethora of examples going through most of the LPI. Jupyter Notebook examples is the recommended way to interact will LUSAS for beginers.
+
+## ⚙️Setting up Python on Windows
 
 You can first check if Python is already installed on your system through one of the follwoing methods:
 
@@ -31,37 +33,27 @@ To **install Python** on your system, follow these steps:
    
    - Optionally, additional Python libraries used accross the repository examples can be installed running: `pip install pandas openpyxl matplotlib`
 
-3. **Run Python script**:
-   
-   - In Command Prompt, run: `python example.py`
 
 
-
-## Setting up Jupyter Notebook on Windows
+## ⚙️Setting up Jupyter Notebook on Windows
 
 Ensure that Python is already installed on your system, then follow these steps:
 
-1. **Install Jupyter Notebook**:
-   - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
-   - Run: `pip install notebook`
-   - If you get a "pip not recognized" error, try: `python -m pip install notebook`
-2. **Launch Jupyter Notebook**:
-   - In Command Prompt, run: `jupyter notebook`
-   - Your browser should open automatically with Jupyter running
-   - The notebook will run at [http://localhost:8888](http://localhost:8888)
+**Install Jupyter Notebook**:
 
-**Alternative Method (Using Anaconda)**:
-If you prefer a more comprehensive scientific Python environment:
-
-1. Download and install Anaconda from [anaconda.com](https://anaconda.com)
-2. After installation, launch "Anaconda Navigator"
-3. Click on the Jupyter Notebook tile to launch it
+- Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
+- Run: `pip install notebook`
+- If you get a "pip not recognized" error, try: `python -m pip install notebook` 
 
 
 
-## Visual Studio Code
+## 🚀 How to Run
 
-If you are using *Visual Studio Code* as your (IDE) you need to install the following VSCode plugins:
+#### Visual Studio Code
+
+The easiest way to run Jupyter Notebook scripts is by opening the with *Visual Studio Code*. Each code block can be excecuted by the run shortcut ▶️ next to them. It is adviced that all code blocks are run from top to bottom.
+
+You will need to install the following VSCode plugins:
 
 - `Python` plugin (released by *Microsoft*)
 
@@ -69,8 +61,18 @@ If you are using *Visual Studio Code* as your (IDE) you need to install the foll
 
 - Optionally, `Pylance` plugin (released by *Microsoft*)
 
+#### Manually
 
+Launch Jupyter Notebook:
 
-## 🚀 How to Run
+- In Command Prompt, run: `jupyter notebook`
+- Your browser should open automatically with Jupyter running
+- The notebook will run at [http://localhost:8888](http://localhost:8888)
 
-The easiest way to run Jupyter Notebook scripts is by opening the with *Visual Studio Code*. Each code block can be excecuted by the run shortcut ▶️ next to them. It is adviced that all code blocks are run from top to bottom.
+##### Using Anaconda:
+
+If you prefer a more comprehensive scientific Python environment:
+
+1. Download and install Anaconda from [anaconda.com](https://anaconda.com)
+2. After installation, launch "Anaconda Navigator"
+3. Click on the Jupyter Notebook tile to launch it
