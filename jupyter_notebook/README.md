@@ -35,6 +35,8 @@ To **install Python** on your system, follow these steps:
    
    - In Command Prompt, run: `python example.py`
 
+
+
 ## Setting up Jupyter Notebook on Windows
 
 Ensure that Python is already installed on your system, then follow these steps:
@@ -55,6 +57,20 @@ If you prefer a more comprehensive scientific Python environment:
 2. After installation, launch "Anaconda Navigator"
 3. Click on the Jupyter Notebook tile to launch it
 
-## Install LUSAS Plugin Visual Studio Template
 
-blablabla
+
+## Visual Studio Code
+
+If you are using *Visual Studio Code* as your (IDE) you need to install the following VSCode plugins:
+
+- `Python` plugin (released by *Microsoft*)
+
+- `jupyter` plugin (released by *Microsoft*)
+
+- Optionally, `Pylance` plugin (released by *Microsoft*)
+
+
+
+## 🚀 How to Run
+
+The easiest way to run Jupyter Notebook scripts is by opening the with *Visual Studio Code*. Each code block can be excecuted by the run shortcut ▶️ next to them. It is adviced that all code blocks are run from top to bottom.

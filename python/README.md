@@ -6,9 +6,9 @@ It is recommended that beginers start from the `Jupyter Notbook` folder, with co
 
 ## 📚 Examples Included
 
-| Category         | Description                            | Language       | File                        |
-| ---------------- | -------------------------------------- | -------------- | --------------------------- |
-| Geometry         | Create a simple beam and 2D frame      | Python/VBS     | create_beam_model.py        |
+| Category | Description                       | Language   | File                 |
+| -------- | --------------------------------- | ---------- | -------------------- |
+| Geometry | Create a simple beam and 2D frame | Python/VBS | create_beam_model.py |
 
 ## ⚙️ Setting up Python on Windows
 
@@ -49,6 +49,8 @@ To **install Python** on your system, follow these steps:
      pip install pandas openpyxl matplotlib
      ```
 
+If you are using *Visual Studio Code* as your (IDE), it is recommended that you also install the `Python` and `Pylance` plugin (released by *Microsoft*).
+
 ## 🚀 How to Run
 
 Python can be excecuted in the traditional way, outside LUSAS, or similarly to *VBScripts*, through the Main Menu shortcut "Run Script".
@@ -59,8 +61,6 @@ The examples in this directory assume that Python will connect on LUSAS external
 cd LUSAS-API-Examples/python/
 python create_beam_model.py
 ```
-
-
 
 ## 🔗 Links
 

@@ -19,7 +19,7 @@ These examples are tailored for **LUSAS v21.1** (see repository branches for oth
 - `grasshopper/` – Rhinoceros Grasshopper examples
 - `docs/` – Additional documentation
 
-    Browse each folder to read more about each interaction method.
+    Browse each directory to read more about each interaction method.
 
 ## Prerequisites
 
