@@ -29,11 +29,9 @@ To **install Python** on your system, follow these steps:
    
    - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
    
-   - Run `pip install pywin32` to install pywin32
+   - Run `pip install pywin32 ipykernel` to install pywin32 and ipykernel (default kernel used by Jupyter Notebooks)
    
    - Optionally, additional Python libraries used accross the repository examples can be installed running: `pip install pandas openpyxl matplotlib`
-
-
 
 ## ⚙️Setting up Jupyter Notebook on Windows
 
@@ -44,8 +42,6 @@ Ensure that Python is already installed on your system, then follow these steps:
 - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
 - Run: `pip install notebook`
 - If you get a "pip not recognized" error, try: `python -m pip install notebook` 
-
-
 
 ## 🚀 How to Run
 
