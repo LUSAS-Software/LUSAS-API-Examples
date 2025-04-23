@@ -72,3 +72,12 @@ If you prefer a more comprehensive scientific Python environment:
 1. Download and install Anaconda from [anaconda.com](https://anaconda.com)
 2. After installation, launch "Anaconda Navigator"
 3. Click on the Jupyter Notebook tile to launch it
+
+## Convert Jupyter Notebooks to Python scripts
+
+If you want to convert your Jupyter Notebooks to Python scripts, you can do so through the `nbconvert` library:
+
+1. Install the library: `pip install nbconvert`
+2. Convert your script: `jupyter nbconvert --to script myNotebook.ipynb` (use your notebook filename instead of `myNotebook.ipynb`)
+
+To convert all notebooks within a folder, the following command can be used: `jupyter nbconvert --to script *.ipynb`
