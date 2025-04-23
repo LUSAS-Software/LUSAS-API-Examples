@@ -2,7 +2,7 @@
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
 # Example:      04a_Create_and_assign_mesh.py
-# Description:  Creates and assigns a mesh in the running LUSAS model
+# Description:  Creates and assigns meshes in the running LUSAS model
 # 
 
 # Libraries:
@@ -37,7 +37,7 @@ surface1 = Helpers.sweep_lines([line1], [0, 0, 1])
 
 ######################################################
 ## Create Line (beam) mesh
-lineMeshAttr = lusas.db().createMeshLine("Beam Mesh")
+lineMeshAttr = database.createMeshLine("Beam Mesh")
 
 # Set the element type and size of elements BMI21 = 2Node thick beam elements, 1 = 1m length (set model units)
 lineMeshAttr.setSize("BMI21", 1)
