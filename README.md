@@ -27,12 +27,12 @@ These examples are tailored for **LUSAS v21.1** (see repository branches for oth
 - For Python and Jupiter Notebook examples:
   - Installed Python (v3+)
 - For C# examples:
-  - Visual Studio 2019 (recommended)
+  - Visual Studio 2019
 - For Grasshopper examples:
   - Rhinoceros (v8.08 or later)
   - Grasshopper LUSAS plugin
 
-    For step by step installation guide, see [relevant document](.\docs\Installation.md).
+    For step by step installation guides, see each relevant directory.
 
 ## 🤝 Ask Questions / Contribute
 
@@ -46,6 +46,6 @@ MIT License
 
 - [LUSAS Official Site](https://www.lusas.com/)
 - [LUSAS Documentation](https://www.lusas.com/)
-- [Grasshopper LUSAS plug in]([LUSAS_Grasshopper | Food4Rhino](https://www.food4rhino.com/en/app/lusasgrasshopper))
+- [Grasshopper LUSAS plug in](https://www.food4rhino.com/en/app/lusasgrasshopper)
 - [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V21_1/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI & VBS)
 - [LUSAS LPI Developer Guide](https://www.lusas.com/user_area/documentation/V21_1/LPI%20Developer%20Guide.pdf) (.NET & COM)
