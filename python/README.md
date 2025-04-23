@@ -2,17 +2,17 @@
 
 This folder contains Python scripts that interact with LUSAS creating model features or accessing analysis results.
 
-It is recommended that beginers start from the `Jupyter Notbook` folder, with contains a plethora of examples in a friendly Notbook framework or Python blocks.
+It is recommended that beginners start from the `Jupyter Notebook` folder, with contains a plethora of examples in a friendly Notebook framework of Python blocks.
 
 ## 📚 Examples Included
 
 | Category | Description                       | Language   | File                 |
 | -------- | --------------------------------- | ---------- | -------------------- |
-| Geometry | Create a simple beam and 2D frame | Python/VBS | create_beam_model.py |
+| Geometry | Create a simple beam and 2D frame | Python     | create_beam_model.py |
 
 ## ⚙️ Setting up Python on Windows
 
-You can first **check if Python is already installed** on your system through one of the follwoing methods:
+You can first **check if Python is already installed** on your system through one of the following methods:
 
 1. **Using Command Prompt**:
    - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
@@ -43,7 +43,7 @@ To **install Python** on your system, follow these steps:
      pip install pywin32
      ```
    
-   - Optionally, additional Python libraries used accross the repository examples can be installed running:
+   - Optionally, additional Python libraries used across the repository examples can be installed running:
      
      ```bash
      pip install pandas openpyxl matplotlib
@@ -53,9 +53,9 @@ If you are using *Visual Studio Code* as your (IDE), it is recommended that you 
 
 ## 🚀 How to Run
 
-Python can be excecuted in the traditional way, outside LUSAS, or similarly to *VBScripts*, through the Main Menu shortcut "Run Script".
+Python can be executed in the traditional way, outside LUSAS, or similarly to *VBScripts*, through the Main Menu shortcut "Run Script".
 
-The examples in this directory assume that Python will connect on LUSAS externally. The connection will be established through the Component Object Model (COM) system, silarly to connecting on other software like MS Excel. A Python script can be run externally with the following CMD command: 
+The examples in this directory assume that Python will connect on LUSAS externally. The connection will be established through the Component Object Model (COM) system, similarly to connecting on other software like MS Excel. A Python script can be run externally with the following CMD command: 
 
 ```bash
 cd LUSAS-API-Examples/python/
@@ -66,4 +66,4 @@ python create_beam_model.py
 
 - [Python Official Site](https://www.python.org/)
 - [pywin32 Github](https://github.com/mhammond/pywin32)
-- [Grasshopper LUSAS plug in]([LUSAS_Grasshopper | Food4Rhino](https://www.food4rhino.com/en/app/lusasgrasshopper))
+- [Grasshopper LUSAS plug in](https://www.food4rhino.com/en/app/lusasgrasshopper)
