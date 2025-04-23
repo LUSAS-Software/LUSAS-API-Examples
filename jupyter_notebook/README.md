@@ -1,10 +1,10 @@
 # Jupyter Notebook Examples
 
-This directory includes plethora of examples going through most of the LPI. Jupyter Notebook examples is the recommended way to interact will LUSAS for beginers.
+This directory includes plethora of examples going through most of the LPI. Jupyter Notebook examples is the recommended way to interact will LUSAS for beginners.
 
 ## ⚙️Setting up Python on Windows
 
-You can first check if Python is already installed on your system through one of the follwoing methods:
+You can first check if Python is already installed on your system through one of the following methods:
 
 1. **Using Command Prompt**:
    - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
@@ -31,7 +31,7 @@ To **install Python** on your system, follow these steps:
    
    - Run `pip install pywin32 ipykernel` to install pywin32 and ipykernel (default kernel used by Jupyter Notebooks)
    
-   - Optionally, additional Python libraries used accross the repository examples can be installed running: `pip install pandas openpyxl matplotlib`
+   - Optionally, additional Python libraries used across the repository examples can be installed running: `pip install pandas openpyxl matplotlib`
 
 ## ⚙️Setting up Jupyter Notebook on Windows
 
@@ -47,7 +47,7 @@ Ensure that Python is already installed on your system, then follow these steps:
 
 #### Visual Studio Code
 
-The easiest way to run Jupyter Notebook scripts is by opening the with *Visual Studio Code*. Each code block can be excecuted by the run shortcut ▶️ next to them. It is adviced that all code blocks are run from top to bottom.
+The easiest way to run Jupyter Notebook scripts is by opening the with *Visual Studio Code*. Each code block can be executed by the run shortcut ▶️ next to them. It is advised that all code blocks are run from top to bottom.
 
 You will need to install the following VSCode plugins:
 

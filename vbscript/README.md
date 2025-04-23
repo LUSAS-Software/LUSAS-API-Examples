@@ -1,6 +1,6 @@
 # VBScript Examples
 
-Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be excecuted within LUSAS through the Main Menu shortcut "Run Script" (red folder icon).
+Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be executed within LUSAS through the Main Menu shortcut "Run Script" (red folder icon).
 
 ## 📚 Examples Included
 
@@ -10,7 +10,7 @@ Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be
 
 ## Code
 
-Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript is excecuted internally, code has direct access to the following methods:
+Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript is executed internally, code has direct access to the following methods:
 
 - `database()` or `db()`
 
