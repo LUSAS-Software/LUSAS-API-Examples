@@ -25,7 +25,7 @@ database = lusas.db() # Save database in variable
 ## Create line and surface to use in this example
 
 # Create line
-line1 = Helpers.create_line(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
+line1 = Helpers.create_line_by_coordinates(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
 # To get existing line, use the following command instead:
 # line1 = database.getObject("line", 1) #get line with ID 1
 
@@ -45,7 +45,8 @@ beamSection.setValue("elementType", "3D Thick Beam")
 
 # Set section from library (library name, library type, section name, as shown in the LUSAS GUI)
 sectionNo = 0 # 0 for first section (uniform if no other sections are defined)
-beamSection.setFromLibrary("UK Sections", "Universal Beams (BS4)", "305x165x46kg UB", 0, 0, sectionNo)
+rotation = 1 # Rotation of the section about the local x-axis (1 = 90 degrees)
+beamSection.setFromLibrary("UK Sections", "Universal Beams (BS4)", "305x165x46kg UB", rotation, 0, sectionNo)
 
 # Assign the mesh to the line on loadcase 1
 beamSection.assignTo(line1, 1)
@@ -86,8 +87,14 @@ thicknessAttr.setSurface(t, ec)
 # Assign thickness to the surface on loadcase 1
 thicknessAttr.assignTo(surface1, 1)
 
+
 ######################################################
-## Enable fleshing to draw sections (requires assigned mesh attributes)
+## Create/Assign mesh and enable fleshing to draw sections
+
+database.createMeshLine("Dummy Line Mesh").setSize("BMI21", 1).assignTo(line1, 1)
+database.createMeshSurface("Dummy Surface Mesh").setRegular("QTS4", 0, 0, True).assignTo(surface1, 1)
+database.updateMesh()
+
 lusas.view().attributes().setVisible(True)
 lusas.view().attributes().setDrawStyle("Geometric", "Arrows")
 lusas.view().attributes().visualiseAll("Geometric")
