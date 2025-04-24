@@ -19,6 +19,7 @@ It is recommended that beginners start from the `Jupyter Notebook` folder, with 
 | Attributes | Create/assign sections              | Python     | 04b_Create_and_assign_section.py  |
 | Attributes | Create/assign materials             | Python     | 04c_Create_and_assign_material.py |
 | Attributes | Create/assign supports              | Python     | 04d_Create_and_assign_supports.py |
+| Attributes | Create/assign loads                 | Python     | 04d_Create_and_assign_loads.py    |
 | Analyses   | Create/solve analyses and loadcases | Python     | 05a_Create_and_Run_Analyses_and_Loadcases.py |
 | Analyses   | Create Combinations and Envelopes   | Python     | 05b_Create_Combinations_and_Envelopes.py |
 | Analyses   | Create Coupled Structural-Thermal Analysis | Python     | 05c_Coupled_Structural_Thermal_Analysis.py |
@@ -82,4 +83,3 @@ python create_beam_model.py
 
 - [Python Official Site](https://www.python.org/)
 - [pywin32 Github](https://github.com/mhammond/pywin32)
-- [Grasshopper LUSAS plug in](https://www.food4rhino.com/en/app/lusasgrasshopper)
