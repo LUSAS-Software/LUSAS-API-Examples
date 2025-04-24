@@ -1,4 +1,4 @@
-from LPI_21_1 import *
+from shared.LPI_21_1 import *
 
 def initialise(modeller:'IFModeller'):
     global lusas
@@ -384,8 +384,6 @@ def create_circular_section(db:'IFDatabase', name:str, dia:float) -> 'IFGeometri
     """    
     util = db.createParametricSection(name).setType("Circular Solid").setDimensions(['D'], [dia])
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
-    
-
 
 
 def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:float) -> 'IFGeometricLine':
