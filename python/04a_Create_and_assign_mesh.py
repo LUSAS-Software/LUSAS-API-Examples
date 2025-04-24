@@ -21,11 +21,12 @@ if not lusas.existsDatabase():
 Helpers.initialise(lusas) # Initialise the Helpers module
 database = lusas.db() # Save database in variable
 
+
 ######################################################
 ## Create line and surface to use in this example
 
 # Create line
-line1 = Helpers.create_line(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
+line1 = Helpers.create_line_by_coordinates(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
 # To get existing line, use the following command instead:
 # line1 = database.getObject("line", 1) #get line with ID 1
 
@@ -55,3 +56,8 @@ surfMeshAttr.setRegular("QTS4", 0, 0, True)
 
 # Assign the mesh to the surface on loadcase 1
 surfMeshAttr.assignTo(surface1, 1)
+
+
+######################################################
+# Update the mesh to apply the changes
+database.updateMesh()
