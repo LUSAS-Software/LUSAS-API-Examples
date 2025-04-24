@@ -6,7 +6,22 @@ Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be
 
 | Category | Description                       | Language   | File                 |
 | -------- | --------------------------------- | ---------- | -------------------- |
-| Geometry | Create a simple beam and 2D frame | Python/VBS | create_beam_model.py |
+| General  | Create new model                      | Python     | 01a_Create_New_Model.py |
+| Geometry | Creates points                        | Python     | 02a_Point_Creation.py   |
+| Geometry | Creates lines                         | Python     | 02b_Line_Creation.py    |
+| Geometry | Creates surfaces                      | Python     | 02c_Surface_Creation.py |
+| Geometry | Creates volumes                       | Python     | 02d_Volume_Creation.py  |
+| Geometry | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | Python     | 03_Get_Geometries_Groups_Selection_ObjectSets.py |
+| Attributes | Create/assign meshes                | Python     | 04a_Create_and_assign_mesh.py     |
+| Attributes | Create/assign sections              | Python     | 04b_Create_and_assign_section.py  |
+| Attributes | Create/assign materials             | Python     | 04c_Create_and_assign_material.py |
+| Attributes | Create/assign supports              | Python     | 04d_Create_and_assign_supports.py |
+| Attributes | Create/assign loads                 | Python     | 04d_Create_and_assign_loads.py    |
+| Analyses   | Create/solve analyses and loadcases | Python     | 05a_Create_and_Run_Analyses_and_Loadcases.py |
+| Analyses   | Create Combinations and Envelopes   | Python     | 05b_Create_Combinations_and_Envelopes.py |
+| Analyses   | Create Coupled Structural-Thermal Analysis | Python     | 05c_Coupled_Structural_Thermal_Analysis.py |
+| Results    | Get results from Elements/Nodes            | Python     | 06a_Getting_Results.py     |
+| Results    | Get results with Print Results Wizard      | Python     | 06b_Getting_Results_PRW.py |
 
 ## Code
 
@@ -39,11 +54,12 @@ Your Integrated Development Environment (IDE) or Text/Code Editor will not recog
 
 ### Visual Studio Code
 
-To associate the lvb extension with `VBScript`, follow these steps:
-1. Open an `*.lvb` file with Visual Studio Code
-2. Click on the "Plain Text" label at the lower right window corner
-3. Select "Configure File Association for '.lvb'..."
-4. Select "VBScript" from the list
+To associate the lvb extension with `VBScript` and add basic language features for Visual Basic Scripts, follow these steps:
+1. Install the VSC plug in `VBS` (published by Sherpen)
+2. Open an `*.lvb` file with Visual Studio Code
+3. Click on the "Plain Text" label at the lower right window corner
+4. Select "Configure File Association for '.lvb'..."
+5. Select "VBScript" from the list
 
 ### Notepad++
 
