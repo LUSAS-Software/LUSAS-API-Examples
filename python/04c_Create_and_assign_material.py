@@ -21,11 +21,12 @@ if not lusas.existsDatabase():
 Helpers.initialise(lusas) # Initialise the Helpers module
 database = lusas.db() # Save database in variable
 
+
 ######################################################
 ## Create line to use in this example
 
 # Create line
-line1 = Helpers.create_line(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
+line1 = Helpers.create_line_by_coordinates(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
 # To get existing line, use the following command instead:
 # line1 = database.getObject("line", 1) #get line with ID 1
 
@@ -34,20 +35,25 @@ surface1 = Helpers.sweep_lines([line1], [0, 0, 1])
 # To get existing surface, use the following command instead:
 # surface1 = database.getObject("surface", 1) #get surface with ID 1
 
+
 ######################################################
 ## Create Isotropic Steel Material
 
 # Create steel material attribute with properties (in model units)
 name = "Steel"
 E_mod = 210.0E9 # Young's modulus
-v = 0.3 # Poisson's ratio
-density = 7.84913E3 # Density
-alpha = 12.0E-6 # Coefficient of thermal expansion
-steel_material_attr = database.createIsotropicMaterial(name, E_mod, v, density)
+nu = 0.3 # Poisson's ratio
+density = 7849.13 # Density
+alpha = 0.000012 # Coefficient of thermal expansion
+steel_material_attr = database.createIsotropicMaterial(name, E_mod, nu, density)
 steel_material_attr.setValue("alpha", alpha)
 
-# Assign material to the line on loadcase 1
-steel_material_attr.assignTo(line1, 1)
+# Print material properties acquired from attribute
+print(f"Material {name} properties:")
+print(f" - E: {steel_material_attr.getValue('E')}")
+print(f" - nu: {steel_material_attr.getValue('nu')}")
+print(f" - density: {steel_material_attr.getValue('density')}")
+print(f" - alpha: {steel_material_attr.getValue('alpha')}")
 
 ######################################################
 ## Create Isotropic Steel Material from Library
@@ -55,16 +61,18 @@ steel_material_attr.assignTo(line1, 1)
 name = "Steel from library"
 
 # Copy created steel material
-steel_material_attr2 : IFMaterialIsotropic = steel_material_attr.createCopy()
-steel_material_attr2.setName("Steel from library", )
+steel_material_attr2 : IFMaterialIsotropic = steel_material_attr.createCopy(name)
 
 # Set library details on material (so that it is recognised as a library material) as values saved on the attribute
-steel_material_attr.setDefinitionMenuID(1, None, True) # Set the material library dialog as the attribute editing dialog
-steel_material_attr.setDescription("Ungraded | Steel - Structural | EN1993-1-1:2005") # Attribute description (optional)
-steel_material_attr.createValue("Region").setValue("Region", "UK")
-steel_material_attr.createValue("Standard").setValue("Standard", "EN1993-1-1:2005")
-steel_material_attr.createValue("Material").setValue("Material", "Steel - Structural")
-steel_material_attr.createValue("Grade").setValue("Grade", "Ungraded")
+steel_material_attr2.setDefinitionMenuID(1, isRelativeID=True) # Set the material library dialog as the attribute editing dialog
+steel_material_attr2.setDescription("Ungraded | Steel - Structural | EN1993-1-1:2005") # Attribute description (optional)
+steel_material_attr2.createValue("Region", 0, 0, 0, 0, 0, 0, 0).setValue("Region", "UK")
+steel_material_attr2.createValue("Standard", 0, 0, 0, 0, 0, 0, 0).setValue("Standard", "EN1993-1-1:2005")
+steel_material_attr2.createValue("Material", 0, 0, 0, 0, 0, 0, 0).setValue("Material", "Steel - Structural")
+steel_material_attr2.createValue("Grade", 0, 0, 0, 0, 0, 0, 0).setValue("Grade", "Ungraded")
+
+# Assign material to the line on loadcase 1
+steel_material_attr2.assignTo(line1, 1)
 
 
 ######################################################
@@ -73,15 +81,15 @@ steel_material_attr.createValue("Grade").setValue("Grade", "Ungraded")
 # Create concrete material attribute with properties (in model units)
 name = "Concrete from library"
 E_mod = 35.0E9 # Young's modulus
-v = 0.2 # Poisson's ratio
-density = 54842E3 # Density
+nu = 0.2 # Poisson's ratio
+density = 2.54842E3 # Density
 alpha = 10.0E-6 # Coefficient of thermal expansion
-concrete_material_attr = database.createIsotropicMaterial(name, E_mod, v, density)
-steel_material_attr.setValue("alpha", alpha)
-concrete_material_attr.setDefinitionMenuID(1, None, True)
-concrete_material_attr.setDescription("C40/50 | Concrete | EN1992-1-1:2004/2014")
+concrete_material_attr = database.createIsotropicMaterial(name, E_mod, nu, density)
+concrete_material_attr.setValue("alpha", alpha)
 
 # Optionally, set library details on material (so that it is recognised as a library material) as values saved on the attribute
+concrete_material_attr.setDefinitionMenuID(1, isRelativeID=True)
+concrete_material_attr.setDescription("C40/50 | Concrete | EN1992-1-1:2004/2014")
 concrete_material_attr.createValue("Grade").setValue("Grade", "C40/50")
 concrete_material_attr.createValue("Region").setValue("Region", "Europe")
 concrete_material_attr.createValue("Standard").setValue("Standard", "EN1992-1-1:2004/2014")
