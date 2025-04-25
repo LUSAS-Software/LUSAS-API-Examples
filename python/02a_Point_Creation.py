@@ -36,7 +36,7 @@ points:list['IFPoint'] = object_set.getObjects("Point")
 
 # Loop through the points and print their IDs and coordinates
 for point in points:
-    print(f"Point: {point.getID()} at coordinates ({point.getX()},{point.getY()},{point.getZ()}) ")
+    print(f"Point: {point.getID()} at coordinates ({point.getX()},{point.getY()},{point.getZ()})")
 
 
 ### Using Helper function

@@ -12,7 +12,7 @@ If not existsDatabase() Then
 End If
 
 '#####################################################
-'#' Create a Surface by coordinates
+'## Create a Surface by coordinates
 
 ' Create a geometryData object to contain all the settings for the geometry creation
 set geometry_data = newGeometryData()

@@ -1,0 +1,95 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      02d_Volume_Creation.lvb
+' Description:  Creates volumes
+' 
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+
+'#####################################################
+'## Create an array of surfaces to be used in the volume creation
+
+' Create a function that creates a surface from coordinates
+Function create_surface_by_coordinates(xs, ys, zs)
+    ' Create a geometryData object to contain all the settings for the geometry creation
+    set geometry_data = newGeometryData()
+    ' Set the options for creating geometries from coordinates
+    Call geometry_data.setCreateMethod("coons")
+    Call geometry_data.setLowerOrderGeometryType("coordinates")
+
+    ' Specify surface coordinates
+    Call geometry_data.addCoords(xs(0), ys(0), zs(0))
+    Call geometry_data.addCoords(xs(1), ys(1), zs(1))
+    Call geometry_data.addCoords(xs(2), ys(2), zs(2))
+    Call geometry_data.addCoords(xs(3), ys(3), zs(3))
+
+    ' Create the surface using the geometry data
+    Set create_surface_by_coordinates = database.createSurface(geometry_data).getObjects("Surface")(0)
+End Function
+
+' Create an array of surfaces (to be used in the volume creation) using the function
+Dim surfaces(5)
+Set surfaces(0) = create_surface_by_coordinates(Array(0,1,1,0), Array(0,0,1,1), Array(0,0,0,0)) 'Bottom Surface (z=0)
+Set surfaces(1) = create_surface_by_coordinates(Array(0,1,1,0), Array(0,0,1,1), Array(1,1,1,1)) 'Top Surface (z=1)
+Set surfaces(2) = create_surface_by_coordinates(Array(0,1,1,0), Array(0,0,0,0), Array(0,0,1,1)) 'Front Surface (y=0)
+Set surfaces(3) = create_surface_by_coordinates(Array(0,1,1,0), Array(1,1,1,1), Array(0,0,1,1)) 'Back Surface (y=1)
+Set surfaces(4) = create_surface_by_coordinates(Array(0,0,0,0), Array(0,1,1,0), Array(0,0,1,1)) 'Left Surface (x=0)
+Set surfaces(5) = create_surface_by_coordinates(Array(1,1,1,1), Array(0,1,1,0), Array(0,0,1,1)) 'Right Surface (x=1)
+
+
+'#####################################################
+'## Create a Volumes from Surfaces
+
+' Create a geometryData object to contain all the settings for the geometry creation
+Set geom_data = newGeometryData()
+' set the options for creating geometries from surfaces
+Call geom_data.setCreateMethod("solidVolume")
+Call geom_data.setExtractAllVolumes()
+
+' create an object set to contain the surfaces and use this set to create the volume
+Set surfsObj = newObjectSet()
+Call surfsObj.add(surfaces)
+
+' Create the volume using the surfaces
+Set vlm = database.createVolume(geom_data).getObjects("Volume")(0)
+
+
+'######################################################
+'## Volume from Surface translational sweep
+
+' Create a surface to be used in the volume creation
+Set surface = surfaces(0) 'Bottom Surface
+
+' Sweep vector x, y, z
+vector = Array(0, 0, -1)
+
+' Create a translation attribute
+Set attr = database.createTranslationTransAttr("Temp_SweepTranslation", vector)
+Call attr.setSweepType("straight")
+Call attr.setHofType("Volume") ' Set target geometry
+
+Set geom_data = newGeometryData()
+Call geom_data.setMaximumDimension(3) ' Target geometries (0: Points, 1: Lines, 2: Surfaces)
+Call geom_data.setTransformation(attr)
+Call geom_data.sweptArcType("straight")
+
+' Create an object set to contain the points and be swept
+Set obs = newObjectSet().add(surface)
+
+' Perform the sweep, the returned object set will contain the created surfaces
+set objSet = obs.sweep(geom_data)
+
+' Delete the translation attribute
+Call database.deleteAttribute(attr)
+
+' Print new line IDs
+newVolumes = objSet.getObjects("Volume")
+For Each volume in newVolumes
+    Call getTextWindow().writeLine("Volume " & volume.getID() & " created from sweep.")
+Next

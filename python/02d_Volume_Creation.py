@@ -49,10 +49,10 @@ vlm : IFVolume = lusas.db().createVolume(geom_data).getObjects("Volume")[0]
 ### Volume from Surface translational sweep
 
 # Create a surface to be used in the volume creation
-surface = lusas.db().getObject("Surface", 1) #assumes surface with ID 1 exists
+surface = surfaces[0] # Bottom Surface
 
 # Sweep vector x, y, z
-vector = [0, 0, 1]
+vector = [0, 0, -1]
 
 # Create a translation attribute
 attr = lusas.db().createTranslationTransAttr("Temp_SweepTranslation", vector)
