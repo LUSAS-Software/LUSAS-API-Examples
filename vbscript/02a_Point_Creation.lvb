@@ -3,7 +3,11 @@
 '
 ' Example:      02a_Point_Creation.lvb
 ' Description:  Creates points
-' 
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-25
+'
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
 $ENGINE=VBScript
 
 ' Check if a model is open
@@ -11,6 +15,7 @@ If not existsDatabase() Then
     Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
 End If
 
+'#####################################################
 '## Creating Points
 
 ' The options and settings for creating all geometry in LUSAS is defined in the IFGeometryData object.
@@ -38,6 +43,5 @@ Next
 '#####################################################
 '## Use functions from shared\Helpers.vbs
 
-' For easier geometry creation, you can copy in this script the relevant functions from the shared\Helpers.vbs file.
-' For example, the create_point function can be used as:
-'   Call create_point(2.0, 1.0, 0.0)
+' For easier geometry creation, you can use the relevant functions from the shared\Helpers.vbs file.
+Call create_point(2.0, 1.0, 1.0)

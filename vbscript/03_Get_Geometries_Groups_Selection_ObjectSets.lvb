@@ -4,6 +4,9 @@
 ' Example:      02e_Get_Existing_Geometries.lvb
 ' Description:  Use ObjectSets (Database, Groups, Selection etc) and filter geometries
 ' 
+
+' Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
 $ENGINE=VBScript
 
 ' Check if a model is open
@@ -13,49 +16,8 @@ End If
 
 
 '#####################################################
-'## Create geometries for testing
+'## Create geometries for testing (using Helpers.vbs)
 
-' Copy relevant functions from the shared\Helpers.vbs for easier geometry creation
-Function create_point(x, y, z)
-    Set geom_data = newGeometryData().setLowerOrderGeometryType("coordinates").addCoords(x, y, z)
-    Set create_point = database.createPoint(geom_data).getObject("Point")
-End Function
-
-Function create_line_by_coordinates(x1, y1, z1, x2, y2, z2)
-    Set geometry_data = newGeometryData().setLowerOrderGeometryType("coordinates").setCreateMethod("straight").addCoords(x1, y1, z1).addCoords(x2, y2, z2)
-    Set create_line_by_coordinates = database.createLine(geometry_data).getObjects("Line")(0)
-End Function
-
-Function create_surface_by_coordinates(x, y, z)
-    Set geometry_data = newGeometryData().setCreateMethod("coons").setLowerOrderGeometryType("coordinates")
-    For i = 0 To UBound(x)
-        geometry_data.addCoords x(i), y(i), z(i)
-    Next
-    Set create_surface_by_coordinates = database.createSurface(geometry_data).getObjects("Surface")(0)
-End Function
-
-Function sweep_surfaces(surfs, vector)
-    Set myObj = newObjectSet().add(surfs)
-    sweep_surfaces = sweep_Ext(myObj, vector, "Volume").getObjects("Volumes")
-End Function
-
-Function sweep_Ext(trgtObjSet, vector, hofType)
-    Dim types, MaximumDimension, attr, geomData, objSet
-    types = Array("Point", "Line", "Surface", "Volume")
-    MaximumDimension = -1
-    For i = 0 To UBound(types)
-        If types(i) = hofType Then
-            MaximumDimension = i
-            Exit For
-        End If
-    Next
-    Set attr = database.createTranslationTransAttr("Temp_SweepTranslation", vector).setSweepType("straight").setHofType(hofType)
-    Set geomData = newGeometryData().setMaximumDimension(MaximumDimension).setTransformation(attr).sweptArcType("straight")
-    Set sweep_Ext = trgtObjSet.sweep(geomData)
-    database.deleteAttribute attr
-End Function
-
-' Create the geometries
 Call create_point(2.0, 1.0, 0.0)
 Call create_line_by_coordinates(0, 0, -1, 1, 0, -1)
 Set surf = create_surface_by_coordinates(Array(0,1,1,0), Array(0,0,1,1), Array(0,0,0,0))

@@ -3,7 +3,11 @@
 '
 ' Example:      02b_Line_Creation.lvb
 ' Description:  Creates lines
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-25
 ' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
 $ENGINE=VBScript
 
 ' Check if a model is open
@@ -161,7 +165,22 @@ Next
 
 '#####################################################
 '## Use functions from shared\Helpers.vbs
+' The Helper module contains some useful functions to simplify the geometry creation process.
 
-' For easier geometry creation, you can copy in this script the relevant functions from the shared\Helpers.vbs file.
-' For example, the create_line_by_coordinates function can be used as:
-'  Call create_line_by_coordinates(0, 0, -1, 1, 0, -1)
+' Points creation:
+Set point1 = create_point(2.0, 1.0, 0.0)
+Set point2 = create_point(3.0, 2.0, 0.0)
+
+' Lines creation:
+Set line1 = create_line_from_points(point1, point2)
+Set line2 = create_line_by_coordinates(0, 0, 0, 1, 1, 0)
+
+' Lines creation by translational sweeps:
+sweepVector = Array(1, 0, 0)
+lines1 = sweep_points(Array(point1, point2), sweepVector)
+
+' Lines creation by rotational sweeps:
+angle = 45 ' degrees
+rotationOrigin = Array(0, 0, 0) ' origin of rotation
+axis = "z" ' axis of rotation
+lines2 = sweep_points_rotationally(Array(point1, point2), angle, rotationOrigin, axis)

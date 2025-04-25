@@ -3,8 +3,8 @@
 '
 ' Example:      Helpers.vbs
 ' Description:  This file contains helper functions to create points, lines, surfaces, and volumes in the LUSAS database.
-'               Copy and paste these functions into your own scripts.
-' 
+'               To use this file, import it in your script by adding the following command at the top of your *.lvb script:
+'               $INCLUDE %RunningScriptPath%\relative_path\Helpers.vbs
 
 ' This function creates a point from coordinates.
 Function create_point(x, y, z)
@@ -64,7 +64,7 @@ End Function
 ' This function sweeps the given object set in the specified direction to create a new object set.
 ' (This function is used internally by the other sweep functions)
 Function sweep_Ext(targetObjSet, vector, hofType)
-    Dim types, MaximumDimension, attr, geomData, objSet
+    Dim types, MaximumDimension, attr, geometry_data, objSet
     types = Array("Point", "Line", "Surface", "Volume")
     MaximumDimension = -1
     For i = 0 To UBound(types)
@@ -74,8 +74,8 @@ Function sweep_Ext(targetObjSet, vector, hofType)
         End If
     Next
     Set attr = database.createTranslationTransAttr("Temp_SweepTranslation", vector).setSweepType("straight").setHofType(hofType)
-    Set geomData = newGeometryData().setMaximumDimension(MaximumDimension).setTransformation(attr).sweptArcType("straight")
-    Set sweep_Ext = targetObjSet.sweep(geomData)
+    Set geometry_data = newGeometryData().setMaximumDimension(MaximumDimension).setTransformation(attr).sweptArcType("straight")
+    Set sweep_Ext = targetObjSet.sweep(geometry_data)
     database.deleteAttribute attr
 End Function
 
@@ -132,9 +132,8 @@ Function sweep_rotationally_Ext(targetObjSet, origin, hofType, degree, aboutAxis
     End If
     attr.setSweepType("minorArc").setHofType(hofType)
 
-    Set geomData = newGeometryData().setMaximumDimension(MaximumDimension).setTransformation(attr).sweptArcType("minorArc")
-
-    Set sweep_rotationally_Ext = targetObjSet.sweep(geomData)
+    Set geometry_data = newGeometryData().setMaximumDimension(MaximumDimension).setTransformation(attr).sweptArcType("minorArc")
+    Set sweep_rotationally_Ext = targetObjSet.sweep(geometry_data)
     database.deleteAttribute attr
 End Function
 

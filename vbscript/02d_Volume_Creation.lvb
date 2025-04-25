@@ -3,7 +3,11 @@
 '
 ' Example:      02d_Volume_Creation.lvb
 ' Description:  Creates volumes
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-25
 ' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
 $ENGINE=VBScript
 
 ' Check if a model is open
@@ -14,24 +18,6 @@ End If
 
 '#####################################################
 '## Create an array of surfaces to be used in the volume creation
-
-' Create a function that creates a surface from coordinates
-Function create_surface_by_coordinates(xs, ys, zs)
-    ' Create a geometryData object to contain all the settings for the geometry creation
-    set geometry_data = newGeometryData()
-    ' Set the options for creating geometries from coordinates
-    Call geometry_data.setCreateMethod("coons")
-    Call geometry_data.setLowerOrderGeometryType("coordinates")
-
-    ' Specify surface coordinates
-    Call geometry_data.addCoords(xs(0), ys(0), zs(0))
-    Call geometry_data.addCoords(xs(1), ys(1), zs(1))
-    Call geometry_data.addCoords(xs(2), ys(2), zs(2))
-    Call geometry_data.addCoords(xs(3), ys(3), zs(3))
-
-    ' Create the surface using the geometry data
-    Set create_surface_by_coordinates = database.createSurface(geometry_data).getObjects("Surface")(0)
-End Function
 
 ' Create an array of surfaces (to be used in the volume creation) using the function
 Dim surfaces(5)
@@ -97,7 +83,20 @@ Next
 
 '#####################################################
 '## Use functions from shared\Helpers.vbs
+' The Helper module contains some useful functions to simplify the geometry creation process.
 
-' For easier geometry creation, you can copy in this script the relevant functions from the shared\Helpers.vbs file.
-' For example, the create_volume_by_surfaces function can be used as:
-'   Call create_volume_by_surfaces(surfaces)
+' Surface creation by coordinates:
+xs = Array(0, 1, 1, 0)
+ys = Array(0, 0, 1, 1)
+zs = Array(-4, -4, -4, -4)
+Set surface1 = create_surface_by_coordinates(xs, ys, zs)
+
+' Volume creation by translational sweeps:
+sweepVector = Array(0, 0, 1)
+volumes1 = sweep_surfaces(Array(surface1), sweepVector)
+
+' Volume creation by rotational sweeps:
+angle = -45 ' degrees
+rotationOrigin = Array(0, 0, -4) ' origin of rotation
+axis = "x" ' axis of rotation
+volumes2 = sweep_surfaces_rotationally(Array(surface1), angle, rotationOrigin, axis)

@@ -39,7 +39,15 @@ Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript 
 
 - `geometryData()` and `newGeometryData()`
 
-Some useful functions have been defined in the `shared\Helpers.vbs` script. You can use these these functions by copying them inside your scripts.
+Since VBScript does not natively support imports, the following command can be used at the top of `*.lvb` files to import other scripts:
+```
+$INCLUDE C:\\Path_to_lib_script\myScript.vbs
+```
+The imported script relative path will be based on the open model parent folder. To use paths relevant to the running script paths, the `%RunningScriptPath%` token can be used.
+For example, some useful functions have been defined in the `shared\Helpers.vbs` script, which is imported in the provided examples through the following command:
+```
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+```
 
 ## Script Recording
 
