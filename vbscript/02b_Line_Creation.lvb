@@ -1,0 +1,159 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      02b_Line_Creation.lvb
+' Description:  Creates lines
+' 
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+'#####################################################
+'## Creating Straight line By Coordinates
+
+' The options and settings for creating all geometry in LUSAS is defined in the IFGeometryData object.
+' To start any geometry creation, get the geometryData object and set all the defaults
+Call geometryData.setAllDefaults()
+' Here we are creating a line by specifying the coordinates, we set the option in setLowerOrderGeometryType
+Call geometryData.setLowerOrderGeometryType("coordinates")
+' We want a straight line
+Call geometryData.setCreateMethod("straight")
+
+' Now we add the start and end coordinates
+Call geometryData.addCoords(0.0, 3.0, 0.0)
+Call geometryData.addCoords(3.0, 3.0, 0.0)
+
+' Now we instruct the database to the create the line. It will return an IFObject set containing the newly created line
+set object_set = database.createLine(geometryData)
+
+' Get all points from the returned object set
+lines = object_set.getObjects("Line")
+
+' Loop through the lines and print their ids and coordinates
+For Each line in lines
+    set p1 = line.getStartPoint()
+    set p2 = line.getEndPoint()
+
+    Call getTextWindow().writeLine("Line: " & line.getID() & " between points (" & p1.getX() & "," & p1.getY() & "," & p1.getZ() & ") to (" & p2.getX() & "," & p2.getY() & "," & p2.getZ() & ")")
+Next
+
+'#####################################################
+'## Arc line by coordinates
+
+' The options and settings for creating all geometry in LUSAS is defined in the IFGeometryData object.
+' To start any geometry creation, get the geometryData object and set all the defaults
+Call geometryData.setAllDefaults()
+' Here we are creating a line by specifying the coordinates, we set the option in setLowerOrderGeometryType
+Call geometryData.setLowerOrderGeometryType("coordinates")
+' We want an arc
+Call geometryData.setCreateMethod("arc")
+' Specify how we are supplying the coordinates, i.e Start->Middle->End
+Call geometryData.setStartMiddleEnd()
+
+' Now we add the start, middle and end coordinates
+Call geometryData.addCoords(0.0, 4.0, 0.0)
+Call geometryData.addCoords(2, 5.0, 0.0)
+Call geometryData.addCoords(4.0, 4.0, 0.0)
+
+' Now we instruct the database to the create the line. It will return an IFObject set containing the newly created line
+set object_set = database.createLine(geometryData)
+
+' Get all points from the returned object set
+lines = object_set.getObjects("Line")
+
+' Loop through the lines and print their ids and coordinates
+For Each line in lines
+    set p1 = line.getStartPoint()
+    set p2 = line.getEndPoint()
+
+    Call getTextWindow().writeLine("Line: " & line.getID() & " between points (" & p1.getX() & "," & p1.getY() & "," & p1.getZ() & ") to (" & p2.getX() & "," & p2.getY() & "," & p2.getZ() & ")")
+Next
+
+'#####################################################
+'## Circle
+
+radius = 6
+z = 3.5
+' The options and settings for creating all geometry in LUSAS is defined in the IFGeometryData object.
+' To start any geometry creation, get the geometryData object and set all the defaults
+Call geometryData.setAllDefaults()
+' Specify the line by coordinate input
+Call geometryData.setLowerOrderGeometryType("coordinates")
+' Specify defining a circle
+Call geometryData.makeCircle()
+' Specify the meaning of the following coordinates 
+Call geometryData.setStartEndCentre()
+
+' Start point at X=radius
+Call geometryData.addCoords(radius, 0.0, z)
+' Specify the plane (X/Y)
+Call geometryData.addCoords(0.0, 1.0, z)
+' Centre of the circle at the origin
+Call geometryData.addCoords(0.0, 0.0, z)
+
+' Create the line in the database with the settings specified.
+set object_set = database.createLine(geometryData)
+
+
+'#####################################################
+'## Line from points
+
+' Existing points can also be used to create lines.
+' This can be done adding the start and end points in an IFObjectSet.
+set point1 = database.getObject("point", 3) 'assumes point with ID 3 exists (created from the arc)
+
+' geometryData object contains all the settings to perform a geometry creation
+Call geometryData.setAllDefaults()
+' set the options for creating straight lines from points
+Call geometryData.setCreateMethod("straight")
+Call geometryData.setLowerOrderGeometryType("points")
+' Create an object set to contain the points and use this set to create the line
+set obs = newObjectSet()
+
+' Add existing points to the object set
+Call obs.add(point1) ' Add first point (using point Object)
+Call obs.add("point", 4) ' Add second point (using point ID, assumes point with ID 4 exists, created from the arc)
+
+' Create the line, get the line objects array from the returned object set and return the 1 and only line
+new_line = obs.createLine(geometryData).getObjects("Line")
+
+
+'#####################################################
+'## Line from Point translational sweep
+
+' Create a point
+set point1 = database.getObject("point", 1) 'assumes point with ID 1 exists
+set point2 = database.getObject("point", 2) 'assumes point with ID 2 exists
+
+' sweep vector x, y, z
+vector = Array(0, 0, 2)
+
+' Create a translation attribute
+set attr = database.createTranslationTransAttr("Temp_SweepTranslation", vector)
+attr.setSweepType("straight")
+attr.setHofType("Line") ' Set target geometry
+
+Call geometryData.setAllDefaults()
+Call geometryData.setMaximumDimension(1) ' Target geometries (0: Points, 1: Lines, 2: Surfaces)
+Call geometryData.setTransformation(attr)
+Call geometryData.sweptArcType("straight")
+
+' Create an object set to contain the points and be swept
+set obs = newObjectSet()                 
+Call obs.add(point1)
+Call obs.add(point2)
+
+' Perform the sweep, the returned object set will contain the created lines
+set objSet = obs.sweep(geometryData)
+
+' Delete the translation attribute
+Call database.deleteAttribute(attr)
+
+' Print new line IDs
+newLines = objSet.getObjects("Lines")
+For Each line in newLines
+    Call getTextWindow().writeLine("Line " & line.getID() & " created from sweep.")
+Next
