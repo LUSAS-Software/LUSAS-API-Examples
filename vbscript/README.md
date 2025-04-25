@@ -4,24 +4,24 @@ Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be
 
 ## 📚 Examples Included
 
-| Category | Description                       | Language   | File                 |
-| -------- | --------------------------------- | ---------- | -------------------- |
-| General  | Create new model                      | Python     | 01a_Create_New_Model.py |
-| Geometry | Creates points                        | Python     | 02a_Point_Creation.py   |
-| Geometry | Creates lines                         | Python     | 02b_Line_Creation.py    |
-| Geometry | Creates surfaces                      | Python     | 02c_Surface_Creation.py |
-| Geometry | Creates volumes                       | Python     | 02d_Volume_Creation.py  |
-| Geometry | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | Python     | 03_Get_Geometries_Groups_Selection_ObjectSets.py |
-| Attributes | Create/assign meshes                | Python     | 04a_Create_and_assign_mesh.py     |
-| Attributes | Create/assign sections              | Python     | 04b_Create_and_assign_section.py  |
-| Attributes | Create/assign materials             | Python     | 04c_Create_and_assign_material.py |
-| Attributes | Create/assign supports              | Python     | 04d_Create_and_assign_supports.py |
-| Attributes | Create/assign loads                 | Python     | 04d_Create_and_assign_loads.py    |
-| Analyses   | Create/solve analyses and loadcases | Python     | 05a_Create_and_Run_Analyses_and_Loadcases.py |
-| Analyses   | Create Combinations and Envelopes   | Python     | 05b_Create_Combinations_and_Envelopes.py |
-| Analyses   | Create Coupled Structural-Thermal Analysis | Python     | 05c_Coupled_Structural_Thermal_Analysis.py |
-| Results    | Get results from Elements/Nodes            | Python     | 06a_Getting_Results.py     |
-| Results    | Get results with Print Results Wizard      | Python     | 06b_Getting_Results_PRW.py |
+| Category | Description                           | Language   | File                 |
+| -------- | ------------------------------------- | ---------- | -------------------- |
+| General  | Create new model                      | VBScript   | 01a_Create_New_Model.py |
+| Geometry | Creates points                        | VBScript   | 02a_Point_Creation.py   |
+| Geometry | Creates lines                         | VBScript   | 02b_Line_Creation.py    |
+| Geometry | Creates surfaces                      | VBScript   | 02c_Surface_Creation.py |
+| Geometry | Creates volumes                       | VBScript   | 02d_Volume_Creation.py  |
+| Geometry | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | VBScript   | 03_Get_Geometries_Groups_Selection_ObjectSets.py |
+| Attributes | Create/assign meshes                | VBScript   | 04a_Create_and_assign_mesh.py     |
+| Attributes | Create/assign sections              | VBScript   | 04b_Create_and_assign_section.py  |
+| Attributes | Create/assign materials             | VBScript   | 04c_Create_and_assign_material.py |
+| Attributes | Create/assign supports              | VBScript   | 04d_Create_and_assign_supports.py |
+| Attributes | Create/assign loads                 | VBScript   | 04d_Create_and_assign_loads.py    |
+| Analyses   | Create/solve analyses and loadcases | VBScript   | 05a_Create_and_Run_Analyses_and_Loadcases.py |
+| Analyses   | Create Combinations and Envelopes   | VBScript   | 05b_Create_Combinations_and_Envelopes.py |
+| Analyses   | Create Coupled Structural-Thermal Analysis | VBScript   | 05c_Coupled_Structural_Thermal_Analysis.py |
+| Results    | Get results from Elements/Nodes            | VBScript   | 06a_Getting_Results.py     |
+| Results    | Get results with Print Results Wizard      | VBScript   | 06b_Getting_Results_PRW.py |
 
 ## Code
 
