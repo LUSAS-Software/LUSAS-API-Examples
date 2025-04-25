@@ -14,10 +14,9 @@ These examples are tailored for **LUSAS v21.1** (see repository branches for oth
 
 - `python/` – Python examples
 - `jupyter_notebook/` – Python notebooks for interactive use and documentation
-- `vbscript/` – Legacy examples in VBScript
+- `vbscript/` – Legacy examples in VBScript (default LUSAS command bar language)
 - `csharp/` – .NET/C# interop examples
 - `grasshopper/` – Rhinoceros Grasshopper examples
-- `docs/` – Additional documentation
 
     Browse each directory to read more about each interaction method.
 
