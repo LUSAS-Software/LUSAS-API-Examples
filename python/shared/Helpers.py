@@ -69,20 +69,20 @@ def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     # Create the line, get the line object array from the returned object set
     return win32.CastTo(obs.createLine(geom_data).getObject("Line"), "IFLine")
 
-def create_line(p1:list, p2:list) -> 'IFLine':
+def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     """Helper function to create a straight line from two point coordinates defined 
 
     Args:
-        p1 (list): List of 3 floats x,y,z
-        p2 (list): List of 3 floats x,y,z
+        p1 (list[float]): List of 3 floats x,y,z
+        p2 (list[float]): List of 3 floats x,y,z
 
     Returns:
         IFLine: Straight line between the two point coordinates
-    """    
+    """
     assert len(p1) == len(p2) == 3, "Point coordinates must be a list of 3 values (x,y,z)"
     # geometryData object contains all the settings to perform a geometry creation
     geom_data = lusas.geometryData().setAllDefaults()  
-    # set the options for creating straight lines from coordinates
+    # Set the options for creating straight lines from coordinates
     geom_data.setCreateMethod("straight")        
     geom_data.setLowerOrderGeometryType("coordinates")        
     
@@ -123,14 +123,13 @@ def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     """
     # Create a geometryData object to contain all the settings for the geometry creation
     geometry_data = lusas.newGeometryData()
-    # set the options for creating geometries from surfaces
+    # Set the options for creating geometries from surfaces
     geometry_data.setCreateMethod("solidVolume")
     geometry_data.setExtractAllVolumes()
     # create an object set to contain the surfaces and use this set to create the volume
-    surfsObj = lusas.newObjectSet()
-    surfsObj.add(surfaces)
+    surfsObj = lusas.newObjectSet().add(surfaces)
     # Create the volume using the surfaces
-    vlm : IFVolume = lusas.db().createVolume(geometry_data).getObjects("Volume")[0]
+    vlm : IFVolume = surfsObj.createVolume(geometry_data).getObjects("Volume")[0]
     return vlm
 
 def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
