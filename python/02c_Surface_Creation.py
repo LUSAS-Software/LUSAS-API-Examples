@@ -110,5 +110,5 @@ zs = [-4, -4, -4, -4]
 surface1 = Helpers.create_surface_by_coordinates(xs, ys, zs)
 
 # Surface creation by sweeps:
-surface2 = Helpers.sweep_lines([line1], [0, 0, 1])
-surface3 = Helpers.sweep_lines_rotationally([line1], 45) # 45 degrees
+surfaces1 = Helpers.sweep_lines([line1], [0, 0, 1])
+surfaces2 = Helpers.sweep_lines_rotationally([line1], 45) # 45 degrees

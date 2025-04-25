@@ -178,5 +178,5 @@ line1 = Helpers.create_line_from_points(point1, point2)
 line2 = Helpers.create_line_by_coordinates(0, 0, 0, 1, 1, 0)
 
 # Lines creation by sweeps:
-line3 = Helpers.sweep_points([point1, point2], [1, 0, 0])
-line4 = Helpers.sweep_points_rotationally([point1, point2], 45) # 45 degrees
+lines1 = Helpers.sweep_points([point1, point2], [1, 0, 0])
+lines2 = Helpers.sweep_points_rotationally([point1, point2], 45) # 45 degrees

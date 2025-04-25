@@ -94,5 +94,5 @@ zs = [-4, -4, -4, -4]
 surface1 = Helpers.create_surface_by_coordinates(xs, ys, zs)
 
 # Volume creation by sweeps:
-volume1 = Helpers.sweep_surfaces([surface1], [0, 0, 1])
-volume2 = Helpers.sweep_surfaces_rotationally([surface1], 45) # 45 degrees
+volumes1 = Helpers.sweep_surfaces([surface1], [0, 0, 1])
+volumes2 = Helpers.sweep_surfaces_rotationally([surface1], 45, [0,0,-4], "y") # 45 degrees
