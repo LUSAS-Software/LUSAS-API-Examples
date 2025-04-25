@@ -157,3 +157,11 @@ newLines = objSet.getObjects("Lines")
 For Each line in newLines
     Call getTextWindow().writeLine("Line " & line.getID() & " created from sweep.")
 Next
+
+
+'#####################################################
+'## Use functions from shared\Helpers.vbs
+
+' For easier geometry creation, you can copy in this script the relevant functions from the shared\Helpers.vbs file.
+' For example, the create_line_by_coordinates function can be used as:
+'  Call create_line_by_coordinates(0, 0, -1, 1, 0, -1)

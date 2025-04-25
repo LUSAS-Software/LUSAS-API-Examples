@@ -33,3 +33,11 @@ points = object_set.getObjects("Point")
 For Each point in points
     Call getTextWindow().writeLine("Point: " & point.getID() & " at coordinates (" & point.getX() & "," & point.getY() & "," & point.getZ() & ")")
 Next
+
+
+'#####################################################
+'## Use functions from shared\Helpers.vbs
+
+' For easier geometry creation, you can copy in this script the relevant functions from the shared\Helpers.vbs file.
+' For example, the create_point function can be used as:
+'   Call create_point(2.0, 1.0, 0.0)

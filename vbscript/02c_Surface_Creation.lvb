@@ -96,3 +96,14 @@ newSurfaces = objSet.getObjects("Surface")
 For Each surface in newSurfaces
     Call getTextWindow().writeLine("Surface " & surface.getID() & " created from sweep.")
 Next
+
+
+'#####################################################
+'## Use functions from shared\Helpers.vbs
+
+' For easier geometry creation, you can copy in this script the relevant functions from the shared\Helpers.vbs file.
+' For example, the create_surface_by_coordinates function can be used as:
+'  xs = Array(0, 1, 1, 0)
+'  ys = Array(0, 0, 1, 1)
+'  zs = Array(-1, -1, 0, 0)
+'  Call create_surface_by_coordinates(xs, ys, zs)

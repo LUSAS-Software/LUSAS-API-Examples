@@ -93,3 +93,11 @@ newVolumes = objSet.getObjects("Volume")
 For Each volume in newVolumes
     Call getTextWindow().writeLine("Volume " & volume.getID() & " created from sweep.")
 Next
+
+
+'#####################################################
+'## Use functions from shared\Helpers.vbs
+
+' For easier geometry creation, you can copy in this script the relevant functions from the shared\Helpers.vbs file.
+' For example, the create_volume_by_surfaces function can be used as:
+'   Call create_volume_by_surfaces(surfaces)
