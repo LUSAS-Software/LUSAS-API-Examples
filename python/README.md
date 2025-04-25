@@ -8,7 +8,7 @@ It is recommended that beginners start from the `Jupyter Notebook` folder, with 
 
 | Category | Description                           | Language   | File                    |
 | -------- | ------------------------------------- | ---------- | ----------------------- |
-| General  | Connects on LUSAS instance            | Python     | 01a_Connect_on_LUSAS.py |
+| General  | Connects on LUSAS instance            | Python     | 01a_Connect_to_LUSAS.py |
 | General  | Create new model                      | Python     | 01b_Create_New_Model.py |
 | Geometry | Creates points                        | Python     | 02a_Point_Creation.py   |
 | Geometry | Creates lines                         | Python     | 02b_Line_Creation.py    |

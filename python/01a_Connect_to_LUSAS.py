@@ -1,7 +1,7 @@
 # LUSAS API (LPI) PYTHON EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      01_Connect_on_LUSAS.py
+# Example:      01_Connect_to_LUSAS.py
 # Description:  Connects on the running LUSAS instance and prints in the log
 # 
 
