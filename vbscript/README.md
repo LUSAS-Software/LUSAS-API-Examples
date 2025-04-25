@@ -39,6 +39,8 @@ Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript 
 
 - `geometryData()` and `newGeometryData()`
 
+Some useful functions have been defined in the `shared\Helpers.vbs` script. You can use these these functions by copying them inside your scripts.
+
 ## Script Recording
 
 Users can easily create VBScripts by recording their actions within LUSAS. The procedure is as follows:
@@ -55,7 +57,7 @@ Your Integrated Development Environment (IDE) or Text/Code Editor will not recog
 ### Visual Studio Code
 
 To associate the lvb extension with `VBScript` and add basic language features for Visual Basic Scripts, follow these steps:
-1. Install the VSC plug in `VBS` (published by Sherpen)
+1. Install the VSC plug in `VBS` (published by *Sherpen*)
 2. Open an `*.lvb` file with Visual Studio Code
 3. Click on the "Plain Text" label at the lower right window corner
 4. Select "Configure File Association for '.lvb'..."
