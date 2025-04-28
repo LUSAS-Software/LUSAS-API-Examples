@@ -1,0 +1,77 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      04c_Create_and_assign_loads.lvb
+' Description:  Creates and assigns loads
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-28
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+'#####################################################
+'## Create slab and columns to use in this example
+
+' Create slab-surface
+xs = Array(0, 5, 5, 0)
+ys = Array(0, 0, 3, 3)
+zs = Array(0, 0, 0, 0)
+Set surface1 = create_surface_by_coordinates(xs, ys, zs)
+
+' Create columns-lines
+surfPoints = newObjectSet().add(surface1).addLOF("Points").getObjects("Point")
+sweepVector = Array(0, 0, 3)
+lines = sweep_points(surfPoints, sweepVector)
+' Get the top points of the columns
+Dim topPoints()
+ReDim topPoints(UBound(lines))
+Dim i
+For i = 0 To UBound(lines)
+    Set topPoints(i) = lines(i).getEndPoint()
+Next
+
+
+'#####################################################
+'# Create Point load
+
+Fx = 0.0 ' Load in X direction
+Fy = 0.0 ' Load in Y direction
+Fz = -100.0 ' Load in Z direction (negative value = downwards)
+Mx = 0.0 ' Moment about X axis
+My = 0.0 ' Moment about Y axis
+Mz = 0.0 ' Moment about Z axis
+
+Set pointLoadAttr = database.createLoadingConcentrated("Example Vertical Point Load")
+Call pointLoadAttr.setConcentrated(Fx, Fy, Fz, Mx, My, Mz)
+
+' Assign on all column top points for loadcase 1
+Call pointLoadAttr.assignTo(topPoints, 1)
+
+
+'#####################################################
+'# Create Distributes load
+
+distrType = "Area" ' Load distribution type: "Total" for total load, "Length" for length distribution, "Area" for area distribution
+wx = 0.0 ' Load in X direction
+wy = 0.0 ' Load in Y direction
+wz = -100.0 ' Load in Z direction (negative value = downwards)
+
+Set distrLoadAttr = database.createLoadingGlobalDistributed("GlbD2")
+Call distrLoadAttr.setGlobalDistributed(distrType, wx, wy, wz)
+
+' Assign on slab for loadcase 1
+Call pointLoadAttr.assignTo(surfPoints, 1)
+
+
+'#####################################################
+'# Create/Assign mesh so that loads are visualised
+
+Call database.createMeshLine("Dummy Line Mesh").setSize("BMI21", 1).assignTo(lines, 1)
+Call database.createMeshSurface("Dummy Surface Mesh").setRegular("QTS4", 0, 0, True).assignTo(surface1, 1)
+Call database.updateMesh()
