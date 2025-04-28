@@ -1,0 +1,4 @@
+pywin32>=310       #For COM connection
+pandas>=2.2.3      #For data manipulation and analysis
+openpyxl>=3.1.5    #For reading and writing Excel files
+matplotlib>=3.10.1 #For data visualization

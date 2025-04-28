@@ -1,0 +1,7 @@
+pywin32>=310       #For COM connection
+notebook>=7.4.1    #For Jupyter Notebook
+ipykernel>=6.29.5  #For Jupyter Notebook kernel
+nbconvert>=7.16.6  #For Jupyter Notebook to Python conversion
+pandas>=2.2.3      #For data manipulation and analysis
+openpyxl>=3.1.5    #For reading and writing Excel files
+matplotlib>=3.10.1 #For data visualization
