@@ -1,0 +1,106 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      04c_Create_and_assign_material.lvb
+' Description:  Creates and assigns materials
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-28
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+'#####################################################
+'## Create line and surface to use in this example
+
+' Create line
+Set line1 = create_line_by_coordinates(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
+' To get existing line, use the following command instead:
+' Set line1 = database.getObject("line", 1) 'get line with ID 1
+
+' Create vertical surface
+sweepVector = Array(0, 0, 1)
+surfaces1 = sweep_lines(Array(line1), sweepVector)
+' To get existing surface, use the following command instead:
+' Set surface1 = database.getObject("surface", 1) 'get surface with ID 1
+
+
+'#####################################################
+'# Create Isotropic Steel Material
+
+' Create steel material attribute with properties (in model units)
+name = "Steel"
+E_mod = 210.0E9 ' Young's modulus
+nu = 0.3 ' Poisson's ratio
+density = 7849.13 ' Density
+alpha = 0.000012 ' Coefficient of thermal expansion
+Set steel_material_attr = database.createIsotropicMaterial(name, E_mod, nu, density)
+Call steel_material_attr.setValue("alpha", alpha)
+
+' Print material properties acquired from attribute
+Call textWin.writeLine("Material " & name & " properties:")
+Call textWin.writeLine(" - E: " & steel_material_attr.getValue("E"))
+Call textWin.writeLine(" - nu: " & steel_material_attr.getValue("nu"))
+Call textWin.writeLine(" - density: " & steel_material_attr.getValue("density"))
+Call textWin.writeLine(" - alpha: " & steel_material_attr.getValue("alpha"))
+
+'#####################################################
+'# Create Isotropic Steel Material from Library
+
+name = "Steel from library"
+
+' Copy created steel material
+Set steel_material_attr2 = steel_material_attr.createCopy(name)
+
+' Set library details on material (so that it is recognised as a library material) as values saved on the attribute
+Call steel_material_attr2.setDefinitionMenuID(1, , True) ' Set the material library dialog as the attribute editing dialog
+Call steel_material_attr2.setDescription("Ungraded | Steel - Structural | EN1993-1-1:2005") ' Attribute description (optional)
+Call steel_material_attr2.createValue("Region", 0, 0, 0, 0, 0, 0, 0).setValue("Region", "UK")
+Call steel_material_attr2.createValue("Standard", 0, 0, 0, 0, 0, 0, 0).setValue("Standard", "EN1993-1-1:2005")
+Call steel_material_attr2.createValue("Material", 0, 0, 0, 0, 0, 0, 0).setValue("Material", "Steel - Structural")
+Call steel_material_attr2.createValue("Grade", 0, 0, 0, 0, 0, 0, 0).setValue("Grade", "Ungraded")
+
+' Assign material to the line on loadcase 1
+Call steel_material_attr2.assignTo(line1, 1)
+
+
+'#####################################################
+'# Create Isotropic Concrete Material from Library
+
+' Create concrete material attribute with properties (in model units)
+name = "Concrete from library"
+E_mod = 35.0E9 ' Young's modulus
+nu = 0.2 ' Poisson's ratio
+density = 2.54842E3 ' Density
+alpha = 10.0E-6 ' Coefficient of thermal expansion
+Set concrete_material_attr = database.createIsotropicMaterial(name, E_mod, nu, density)
+Call concrete_material_attr.setValue("alpha", alpha)
+
+' Optionally, set library details on material (so that it is recognised as a library material) as values saved on the attribute
+Call concrete_material_attr.setDefinitionMenuID(1, , True)
+Call concrete_material_attr.setDescription("C40/50 | Concrete | EN1992-1-1:2004/2014")
+Call concrete_material_attr.createValue("Grade").setValue("Grade", "C40/50")
+Call concrete_material_attr.createValue("Region").setValue("Region", "Europe")
+Call concrete_material_attr.createValue("Standard").setValue("Standard", "EN1992-1-1:2004/2014")
+Call concrete_material_attr.createValue("Material").setValue("Material", "Concrete")
+Call concrete_material_attr.createValue("ec3").setValue("ec3", 1.75E-3)
+Call concrete_material_attr.createValue("fcd3", 0, 1, -2, 0, 0, 0, 0).setValue("fcd3", 26.66666667E6)
+Call concrete_material_attr.createValue("fck", 0, 1, -2, 0, 0, 0, 0).setValue("fck", 40.0E6)
+Call concrete_material_attr.createValue("fctm", 0, 1, -2, 0, 0, 0, 0).setValue("fctm", 3.5E6)
+Call concrete_material_attr.createValue("ecu3").setValue("ecu3", 3.5E-3)
+Call concrete_material_attr.createValue("E3", 0, 1, -2, 0, 0, 0, 0).setValue("E3", 15.238095238E9)
+' Optionally, add descriptions to the values
+Call concrete_material_attr.setValueDescription("ec3", "Compressive strain limit 3", False)
+Call concrete_material_attr.setValueDescription("fcd3", "Design compressive strength 3", False)
+Call concrete_material_attr.setValueDescription("fck", "Characteristic compressive cylinder strength of concrete at 28 days", False)
+Call concrete_material_attr.setValueDescription("fctm", "Mean value of axial tensile strength of concrete", False)
+Call concrete_material_attr.setValueDescription("ecu3", "Ultimate compressive strain limit 3", False)
+Call concrete_material_attr.setValueDescription("E3", "Modulus of elasticity 3", False)
+
+' Assign material to the surface on loadcase 1
+Call concrete_material_attr.assignTo(surfaces1, 1)

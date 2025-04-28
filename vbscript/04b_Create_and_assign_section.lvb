@@ -1,0 +1,95 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      04b_Create_and_assign_section.lvb
+' Description:  Creates and assigns a section
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-28
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+'#####################################################
+'## Create line and surface to use in this example
+
+' Create line
+Set line1 = create_line_by_coordinates(0.0, 3.0, 0.0, 3.0, 3.0, 0.0)
+' To get existing line, use the following command instead:
+' Set line1 = database.getObject("line", 1) 'get line with ID 1
+
+' Create vertical surface
+sweepVector = Array(0, 0, 1)
+surfaces1 = sweep_lines(Array(line1), sweepVector)
+' To get existing surface, use the following command instead:
+' Set surface1 = database.getObject("surface", 1) 'get surface with ID 1
+
+
+'#####################################################
+'# Geometric Line (beam) section using the section library
+
+' Create a geometric attribute object
+Set beamSection = database.createGeometricLine("Geometric Line from Library")
+' Set the element type
+Call beamSection.setValue("elementType", "3D Thick Beam")
+
+' Set section from library (library name, library type, section name, as shown in the LUSAS GUI)
+sectionNo = 0 ' 0 for first section (uniform if no other sections are defined)
+rotation = 1 ' Rotation of the section about the local x-axis (1 = 90 degrees)
+Call beamSection.setFromLibrary("UK Sections", "Universal Beams (BS4)", "305x165x46kg UB", rotation, 0, sectionNo)
+
+' Assign the mesh to the line on loadcase 1
+Call beamSection.assignTo(line1, 1)
+
+
+'#####################################################
+'# Geometric Line (beam) section with custom properties
+
+' Create a geometric attribute object
+Set customSection = database.createGeometricLine("Geometric Line from Properties")
+' Set the element type
+Call customSection.setValue("elementType", "3D Thick Beam")
+
+' Set custom properties (in model units)
+Area = 5.87461E-3 ' Cross-sectional area
+Iyy = 98.9866E-6 ' Moment of inertia about the y-axis
+Izz = 8.95665E-6 ' Moment of inertia about the z-axis
+Iyz = 0.0 ' Product of inertia about the y and z axes
+J_const = 0.224843E-6 ' Torsional constant
+Asz = 3.39835E-3 ' Shear area about the z-axis
+Asy = 1.97516E-3 ' Shear area about the y-axis
+ey = 0.0 ' Distance from the centroid to the top of the section in the y-direction
+ez = 0.0 ' Distance from the centroid to the top of the section in the z-direction
+sectionNo = 0 ' 0 for first section (uniform if no other sections are defined)
+Call customSection.setBeam(Area, Iyy, Izz, Iyz, J_const, Asz, Asy, ey, ez, sectionNo)
+
+
+'#####################################################
+'# Surface thickness
+
+' Create a geometric attribute object
+Set thicknessAttr = database.createGeometricSurface("Thickness")
+' Set thickness and eccentricity (in model units)
+t = 0.1 ' Thickness
+ec = 0.0 ' Eccentricity
+Call thicknessAttr.setSurface(t, ec)
+
+' Assign thickness to the surface on loadcase 1
+Call thicknessAttr.assignTo(surfaces1, 1)
+
+
+'#####################################################
+'# Create/Assign mesh and enable fleshing to draw sections
+
+Call database.createMeshLine("Dummy Line Mesh").setSize("BMI21", 1).assignTo(line1, 1)
+Call database.createMeshSurface("Dummy Surface Mesh").setRegular("QTS4", 0, 0, True).assignTo(surfaces1, 1)
+Call database.updateMesh()
+
+Call view().attributes().setVisible(True)
+Call view().attributes().setDrawStyle("Geometric", "Arrows")
+Call view().attributes().visualiseAll("Geometric")
