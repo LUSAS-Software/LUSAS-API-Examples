@@ -79,6 +79,28 @@ cd LUSAS-API-Examples/python/
 python create_beam_model.py
 ```
 
+## 🔍🐛 Troubleshooting
+
+1. Command prompt error `python: command not found` or `The term 'python' is not recognized`
+   These error will be thrown in CMD or PowerShell when the python installation path is not in the Windows `PATH`. To solve this, follow these steps:
+   - In the Windows search bar, type python 3, right-click on it and select `Open file location` and do the same on the highlighted file (e.g. `Python 3.10 (32-bit)`). You should not see the `python.exe`.
+   - Copy the path of the open explorer window and close it
+   - On your desktop, right click on `This PC` and select `Properties`, find and click the `Advanced system settings` link to open the System Properties.
+   - In the open window, click on `Environment Variables...`, and under the User Variables, select the `Path` variable and click edit.
+   - In the open window, click `new` and paste the copied python path.
+   - Click OK on all windows to close them.
+   - Now you should be able to run python commands in the the command prompt.
+
+2. Python error `AttributeError: module 'win32com.gen_py.XXXXXXXXXXXXXXXX' has not attribute 'CLSIDToClassMap'`
+   First, ensure that you are using the LPI_21_1.py library and that the object at the error line has the called method.
+   Python is case sensitive which may sometimes cause issues with pywin32. These issues are usually fixed my deleting the pywin32 cache. To do so, follow these steps:
+   - Navigate to `%TEMP%/gen_py` and open the python version folder (e.g. 3.12)
+   - Delete the folder that matches the error message `XXXXXXXXXXXXXXXX`
+   - Run the script again.
+
+3. Casting
+   Some LPI commands will return the general object types which may require casting to access fully access them. As an example, getting a loadcase object can be done through the `getLoadsetByName()` command which will return an `IFLoadset` object. If you are sure that this object is a loadcase, you can cast it as an `IFLoadcase` object using the command `win32.CastTo(myLoadset, "IFLoadcase")`. This is also done when accessing attributes through the `getAttribute()` LPI command, as seen at the end of the `06b_Getting_Results_PRW.py` example where a Print Results Wizard is acquired and then cast to `IFPrintResultsWizard`.
+
 ## 🔗 Links
 
 - [Python Official Site](https://www.python.org/)
