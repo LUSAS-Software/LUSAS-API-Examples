@@ -88,9 +88,9 @@ You can add your scripts in LUSAS toolbar or menu through the following steps.
 2. Under the `User` tab, you can define up to 9 commands where you can call you python script file with the following command:
 ```VBScript
 ' With command prompt shown
-CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py""
+CreateObject("WScript.Shell").Run "py C:\\path_to_my_script\myScript.py"
 ' Or with command prompt hidden
-CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"", 0, true
+CreateObject("WScript.Shell").Run "py C:\\path_to_my_script\myScript.py", 0, true
 ```
 3. Go back to the `Commands` tab and select `User` from the Categories list, and Drag & Drop one of the user buttons in one of the existing toolbars, then close the window.
 4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `C:\\Path_to_my_lusas_installation\Programs\Config\userToolbar.bmp`.
