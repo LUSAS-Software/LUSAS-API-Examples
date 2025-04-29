@@ -79,6 +79,35 @@ cd LUSAS-API-Examples/python/
 python create_beam_model.py
 ```
 
+## ▶️ Script Shortcuts in LUSAS (toolbar button, menu item)
+
+You can add your scripts in LUSAS toolbar or menu through the following steps.
+
+**Toolbar button**:
+1. Within LUSAS, navigate to the menu View > Toolbars.
+2. Under the `User` tab, you can define up to 9 commands where you can call you python script file with the following command:
+```VBScript
+' With command prompt shown
+CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py""
+' Or with command prompt hidden
+CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"", 0, true
+```
+3. Go back to the `Commands` tab and select `User` from the Categories list, and Drag & Drop one of the user buttons in one of the existing toolbars, then close the window.
+4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `C:\\Path_to_my_lusas_installation\Programs\Config\userToolbar.bmp`.
+
+**Menu item**:
+1. Navigate to `%userprofile%\Documents\Lusas211\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
+2. This script should modify the LUSAS menu and the code should look like the following example:
+```VBScript
+$ENGINE=VBSCRIPT
+
+' Create a user menu to host all menu entries
+set myMenu = menu.appendMenu("User Menu")
+' Create a new menu item
+call myMenu.appendItem("My script (cmp shown)", "CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"" " )
+call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"", 0, true" )
+```
+
 ## 🔍🐛 Troubleshooting
 
 1. Command prompt error `python: command not found` or `The term 'python' is not recognized`

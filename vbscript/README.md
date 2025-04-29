@@ -25,7 +25,7 @@ Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be
 | Results    | Get results from Elements/Nodes            | VBScript   | 06a_Getting_Results.lvb     |
 | Results    | Get results with Print Results Wizard      | VBScript   | 06b_Getting_Results_PRW.lvb |
 
-## Code
+## 📄 Code
 
 Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript is executed internally, the code has direct access to all IFModeller methods some of which are listed bellow:
 
@@ -53,7 +53,7 @@ For example, some useful functions have been defined in the `shared\Helpers.vbs`
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs
 ```
 
-## Script Recording
+## 🔴 Script Recording
 
 Users can easily create VBScripts by recording their actions within LUSAS. The procedure is as follows:
 
@@ -62,17 +62,17 @@ Users can easily create VBScripts by recording their actions within LUSAS. The p
 3. Stop recording by selecting File > Script > Stop Recording
 4. You can then edit the .lvb file before use.
 
-## Script Shortcuts in LUSAS (toolbar button, menu item)
+## ▶️ Script Shortcuts in LUSAS (toolbar button, menu item)
 
 You can add your scripts in LUSAS toolbar or menu through the following steps.
 
-Toolbar button:
+**Toolbar button**:
 1. Within LUSAS, navigate to the menu View > Toolbars.
 2. Under the `User` tab, you can define up to 9 commands as single line `VBScript` (e.g. `msgbox "Hello world!"`) or call a script file (e.g. `fileopen "C:\LUSAS Scripts\MyScript.vbs"`)
 3. Go back to the `Commands` tab and select `User` from the Categories list, and Drag & Drop one of the user buttons in one of the existing toolbars, then close the window.
 4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `C:\\Path_to_my_lusas_installation\Programs\Config\userToolbar.bmp`.
 
-Menu item:
+**Menu item**:
 1. Navigate to `%userprofile%\Documents\Lusas211\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
 2. This script should modify the LUSAS menu and the code should look like the following example:
 ```VBScript
@@ -85,7 +85,7 @@ call myMenu.appendItem("Find attribute type", "fileopen ""C:\LUSAS Scripts\04f_G
 call myMenu.appendItem("Show attribute properties", "fileopen ""C:\LUSAS Scripts\04g_Extract_attribute_values.lvb"" " )
 ```
 
-## Associate *.lvb extension with VBScript in your IDE
+## 📝 Associate *.lvb extension with VBScript in your IDE
 
 Your Integrated Development Environment (IDE) or Text/Code Editor will not recognise `*.lvb` files as `VBScript` language files (`*.vbs`). If your IDE does not offer custom file extension association, `*.lvb` file can be renamed to `*.vbs` extension. LUSAS recognises both extensions when run as scripts within LUSAS.
 
