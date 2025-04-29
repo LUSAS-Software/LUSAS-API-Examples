@@ -19,7 +19,7 @@ End If
 
 ' Script results parameters
 prw_name = "Shell Results With Global Transform"
-export_dir = "C:\Temp\\"
+export_dir = "C:\Temp\"
 
 '#####################################################
 '# Create a print results wizard for thick shell element results
@@ -50,7 +50,7 @@ Call attr.setThreshold(1e-6)
 
 ' Release the attribute object (for the shake of this example)
 ' This variable can later be used instead of the "prwAttr" (provided that it not dereferenced with this command).
-attr = Nothing 
+Set attr = Nothing 
 
 
 '#####################################################
@@ -62,6 +62,7 @@ Set prwAttr = database.getAttribute("Print Results Wizard", prw_name)
 ' Display the table of results
 Set table = prwAttr.showResults()
 ' Save the grid view to a file
-Call table.saveAs(export_dir & prw_name & "_results.xls", "Microsoft Excel")
 Call table.saveAs(export_dir & prw_name & "_results.txt", "Text")
+' Or save as Excel file
+'Call table.saveAs(export_dir & prw_name & "_results.xls", "Microsoft Excel")
 Call table.close()

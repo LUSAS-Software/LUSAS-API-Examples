@@ -25,7 +25,7 @@ Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be
 
 ## Code
 
-Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript is executed internally, code has direct access to the following methods:
+Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript is executed internally, the code has direct access to all IFModeller methods some of which are listed bellow:
 
 - `database()` or `db()`
 

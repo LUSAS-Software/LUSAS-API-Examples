@@ -19,11 +19,13 @@ End If
 
 ' To successfully run the code below you must have a model solved.
 
-' Get selected nodes
-selectedNodes = selection().getObjects("Node")
+' Get selected items and add related Elements and Nodes
+Set target = newObjectSet().add(selection()).addLOF("Element").addLOF("Node")
+targetNodes = selection().getObjects("Node")
+targetElements = target.getObjects("Element")
 
-If Ubound(selectedNodes) + 1 = 0 Then
-    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "No nodes selected. Please select some nodes to get results from." & vbCrLf)
+If Ubound(targetNodes) + 1 = 0 Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "No features selected. Please select some elements/nodes to get results from." & vbCrLf)
 End If
 
 '#####################################################
@@ -31,32 +33,38 @@ End If
 ' All nodes have displacement results. Here we simply loop through the nodes contained in the current selection and ask for the results of displacement and printing them
 
 ' Print displacements (model units)
-For Each n in selectedNodes
-    dx = n.getResults("Displacement", "DX")(0)
-    dy = n.getResults("Displacement", "DY")(0)
-    dz = n.getResults("Displacement", "DZ")(0)
-    Call textWin.writeLine(dx, dy, dz)
+clockStart() 'Start timer to measure execution time
+Call textWin.writeLine("Displacement results:")
+For Each n in targetNodes
+    dx = n.getResults("Displacement", "DX")
+    dy = n.getResults("Displacement", "DY")
+    dz = n.getResults("Displacement", "DZ")
+    Call textWin.writeLine(dx & ", " & dy & ", " & dz)
 Next
+clockEnd("Print displacements from nodes") 'Print execution time
 
 ' Print reactions and calculate total reactions (model units)
+clockStart() 'Start timer to measure execution time
 total_fx = 0.0
 total_fy = 0.0
 total_fz = 0.0
-For Each n in selectedNodes
+Call textWin.writeLine("") ' Add a blank line to the output window
+Call textWin.writeLine("Reaction results:")
+For Each n in targetNodes
     ' Non supported nodes will return a value of 2.2250738585072014e-308. This is the smallest possible value represented by a 64bit double precision variable.
     ' We can avoid this small value by asking if a result is available
     If n.hasResults("Reaction", "FX") Then
-        fx = n.getResults("Reaction", "FX")(0)
+        fx = n.getResults("Reaction", "FX")
     Else
         fx = 0.0
     End If
     If n.hasResults("Reaction", "FY") Then
-        fy = n.getResults("Reaction", "FY")(0)
+        fy = n.getResults("Reaction", "FY")
     Else
         fy = 0.0
     End If
     If n.hasResults("Reaction", "FZ") Then
-        fz = n.getResults("Reaction", "FZ")(0)
+        fz = n.getResults("Reaction", "FZ")
     Else
         fz = 0.0
     End If
@@ -69,6 +77,7 @@ Next
 
 ' Print total reactions (model units)
 Call textWin.writeLine("Total reactions of selected nodes : " & fx & ", " & fy & ", " & fz)
+clockEnd("Print reactions from nodes") 'Print execution time
 
 ' NOTE:
 ' The getResults function has 3 additional optional arguments as shown in the LPI Reference manual
@@ -91,19 +100,22 @@ Call textWin.writeLine("Total reactions of selected nodes : " & fx & ", " & fy &
 ' The element interface therefore has several functions to deal with these differences and its up to you to call the correct one for the element you are looking at.
 ' 
 ' If we ask the database for all elements, that's exactly what we'll get and we'd have to write a lot of code to handle the various element types as follows:
+clockStart() 'Start timer to measure execution time
 
-allElements = database.getObjects("Element")
-For Each e in allElements
+Call textWin.writeLine("") ' Add a blank line to the output window
+Call textWin.writeLine("Force/Moment results: (from beam elements)")
+For Each e in targetElements
     stressType = e.getStressType()
     if e.getDomainDimension() = 1 Then ' Beam Element
         if stressType = "Thick 3D Beam" Then
             ' Get bending moment My for each internal point
-            For i = 0 To e.countInternalPoints() - 1
-                my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My")(0)
-                Call textWin.writeLine(my)
-            Next
+            'For i = 0 To e.countInternalPoints() - 1
+            '    my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My")
+            '    Call textWin.writeLine(my)
+            'Next
             ' Or get the internal results as an array
             my = e.getInternalResultsArray("Force/Moment - Thick 3D Beam", "My")
+            Call textWin.writeLine(Join(my, ", "))
         End If
     ElseIf e.getDomainDimension() = 2 Then ' Shell Element
         ' Do nothing
@@ -111,6 +123,7 @@ For Each e in allElements
         ' Do nothing
     End If
 Next
+clockEnd("Print Force/Moment from beam elements") 'Print execution time
 
 ' The above can be repeated for all element types but you may have noticed that this approach is very slow and not recommended.
 ' A much better approach is to use results component sets.
@@ -119,36 +132,42 @@ Next
 '#####################################################
 '# Results Component Sets
 ' A results component set is a container for a particular set of results. It is much more efficient than asking for results all at once.
-
+clockStart() 'Start timer to measure execution time
 
 ' Get the internal point results for all thick beam elements
 Set results_my = database().getResultsComponentSet("Force/Moment - Thick 3D Beam", "My", "Internal")
-Set i_my = results_my.getComponentNumber("My")
+i_my = results_my.getComponentNumber("My")
 
-For Each e in allElements
+Call textWin.writeLine("") ' Add a blank line to the output window
+Call textWin.writeLine("Force/Moment results: (from beam elements using ResultsComponentSet)")
+For Each e in targetElements
     stressType = e.getStressType()
     if e.getDomainDimension() = 1 Then ' Beam Element
         if stressType = "Thick 3D Beam" Then
             ' Note the unitset is not optional but providing Nothing uses the current database units
             my = results_my.getInternalResultsArray(i_my, e, Nothing)
-            Call textWin.writeLine(my)
+            Call textWin.writeLine(Join(my, ", "))
         End If
     End If
 Next
-
+clockEnd("Print Force/Moment from beam elements using ResultsComponentSet") 'Print execution time
 
 '# Instead of checking all elements and their type, we can filter them using an Object Set.
 ' Depending on what your model contains the following code should run much quicker than previous methods. This is because we filtered out only the elements of interest and removed any subsequent type checking.
+clockStart() 'Start timer to measure execution time
 
 ' Create an object set containing only the thick 3d beam elements.
-Set beams = newObjectSet().add("Thick 3D Beam")
+Set beams = newObjectSet().add(targetElements).keep("Thick 3D Beam")
 
 ' Get the internal point results for all thick beam elements
+Call textWin.writeLine("") ' Add a blank line to the output window
+Call textWin.writeLine("Force/Moment results: (from ObjectSet using ResultsComponentSet)")
 For Each e in beams.getObjects("Element")
     ' Note the unitset is not optional but providing Nothing uses the current database units
     my = results_my.getInternalResultsArray(i_my, e, Nothing)
-    Call textWin.writeLine(my)
+    Call textWin.writeLine(Join(my, ", "))
 Next
+clockEnd("Print Force/Moment from ObjectSet using ResultsComponentSet") 'Print execution time
 
 ' Remember clear the results component set if not used again to free up memory (commented in this case since we are using it again)
 'results_my = Nothing 
@@ -156,6 +175,7 @@ Next
 
 '# The final piece of the puzzle is to provide a results context.
 ' Results context can be set to any loadcase and set of elements so we are no longer relying on the active settings of the user interface.
+clockStart() 'Start timer to measure execution time
 
 ' Create a results context for the beam elements
 Set context = newResultsContext(Nothing)
@@ -164,16 +184,19 @@ Call context.getCalcResultsSet().add(beams)
 ' Set loadset 1 as the active loadset of the context
 Call context.setActiveLoadset(1)
 
+Call textWin.writeLine("") ' Add a blank line to the output window
+Call textWin.writeLine("Force/Moment results: (from ObjectSet using ResultsComponentSet and set context)")
 For Each e in beams.getObjects("Element")
     ' Note the unitset is not optional but providing None uses the current database units
     my = results_my.getInternalResultsArray(i_my, e, Nothing)
-    Call textWin.writeLine(my)
+    Call textWin.writeLine(Join(my, ", "))
 Next
+clockEnd("Print Force/Moment from ObjectSet using ResultsComponentSet and set context") 'Print execution time
 
 ' Free up memory if the script will continue to run (not required in this case
-results_my = Nothing
-context = Nothing
-beams = Nothing
+Set results_my = Nothing
+Set context = Nothing
+Set beams = Nothing
 
 
 ' The general principle laid out above can be used for all elements, nodes and inspection location results.
