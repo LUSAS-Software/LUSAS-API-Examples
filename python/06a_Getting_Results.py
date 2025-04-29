@@ -3,7 +3,7 @@
 #
 # Example:      06a_Getting_Results.py
 # Description:  Extract nodal and element results from the running LUSAS model.
-#               This example does the examples in different approaches. It is recommended to use the results component set approach for most cases.
+#               This example does the extraction in different approaches. It is recommended to use the results component set approach for most cases.
 #               To compare the different approaches, it is recommended that the Jupyter Notebook example is used instead.
 # 
 

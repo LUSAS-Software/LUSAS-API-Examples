@@ -23,7 +23,7 @@ database = lusas.db() # Save database in variable
 
 
 ######################################################
-## Create line to use in this example
+## Create slab and columns to use in this example
 
 # Create slab-surface
 xs = [0, 5, 5, 0]
