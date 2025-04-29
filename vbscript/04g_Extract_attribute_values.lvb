@@ -1,0 +1,182 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      04g_Extract_attribute_values.lvb
+' Description:  This example asks the user for an attribute name or type and prints all attributes' properties in a data grid.
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-29
+' 
+$ENGINE=VBSCRIPT
+
+
+' Prompt user for typeName and attributeName (single input box)
+inputString = InputBox("Enter attribute type and/or attribute name (examples: material or material/iso1 or iso1) or type 'all' to extract all attributes' properties")
+inputString = Trim(inputString)
+
+' Stop execution if Cancel is pressed
+If Not IsEmpty(inputString) Then
+	' Get the attribute type and name from the input string
+	splitInput = Split(inputString, "/")
+	attrTypeOrName = splitInput(0)
+
+	' Check if an attribute name was provided
+	If UBound(splitInput) > 0 Then
+		' If both type name and attribute name are provided
+		attributeType = attrTypeOrName
+		attributeName = splitInput(1)
+		' Get the specific attribute in an array
+		attributes = Array(db.getAttribute(attributeType, attributeName))
+	Else
+		' Get attributes by type or name
+		attributes = getAttributesByTypeOrName(attrTypeOrName)
+	End If
+
+	if Ubound(attributes) < 0 Then
+		MsgBox "No attributes found with type or name: " & attributeType
+	else
+		' Extract properties for the found attributes in a grid window
+        Set grid = createGridWindow(nextGridWindowID())
+		
+		For Each attr in attributes
+			data = getAttributeProperties(attr)
+			' Create grid tab
+			title = attr.getName() & " (" & attr.getAttributeType() & ")"
+			Call grid.createTab(title, title)
+        	Call grid.setColHeaders(title, Array("Property", "Type", "Value", "Units"))
+        	Call grid.setData(title, data, False, False, False)
+		Next
+	End if
+End If
+
+
+' Function to get attributes by type or name
+Function getAttributesByTypeOrName(attrTypeOrName)
+    ' Ignore error due to invalid attribute type
+	On Error Resume Next 
+	' Try to get the attributes assuming the type was given
+	attributes = db.getAttributes(attrTypeOrName)
+	
+	' If attribute type was invalid, then search the attributes by name
+	If Err.Number <> 0 Then
+		Err.Clear
+		On Error GoTo 0' Reset error handling
+
+		' Check if they just entered the name of an attribute
+		attributeNameLC = LCase(attrTypeOrName)
+
+		' Initialize an empty array for filtered loadcases
+		ReDim attributes(-1)
+		For Each attr in db.getAttributes("All")
+			if LCase(attr.getName()) = attributeNameLC Then
+				ReDim Preserve attributes(UBound(attributes) + 1)
+				Set attributes(UBound(attributes)) = attr
+			end if
+		Next
+	End If
+
+	getAttributesByTypeOrName = attributes
+End Function
+
+Function getAttributeProperties(attr)
+    Dim attributeName, attributeType, valueNames, valueName
+    Dim rowsCount, i, j, strValues, newRowIndex
+
+    attributeName = attr.getName()
+    attributeType = attr.getAttributeType()
+    valueNames = attr.getValueNames()
+
+	' Declare a multidimensional array to store all properties
+	Dim propertiesArray()
+	ReDim propertiesArray(-1) ' Array with Array(Name, Type, Value, Units)
+	
+    If Not IsEmpty(valueNames) And UBound(valueNames) > -1 Then
+        For Each valueName In valueNames
+            valueType = attr.getValueType(valueName)
+            valueUnits = attr.getValueUnits(valueName)
+            rowsCount = attr.countRows(valueName)
+
+            If valueType = "Dispatch" Then
+                ' Skip it
+            Else
+                If rowsCount > 0 Then
+                    ' Handle case where rowsCount > 0 (retrieve values row by row)
+                    For i = 0 To rowsCount - 1
+						strValues = getValueAsStrArray(attr.getValue(valueName, i))
+						For j = LBound(strValues) To UBound(strValues)
+							newRowIndex = UBound(propertiesArray) + 1
+							ReDim Preserve propertiesArray(newRowIndex)
+							propertiesArray(newRowIndex) = Array(valueName, valueType, strValues(j), valueUnits)
+						Next
+                    Next
+                Else
+					strValues = getValueAsStrArray(attr.getValue(valueName))
+					For j = LBound(strValues) To UBound(strValues)
+						newRowIndex = UBound(propertiesArray) + 1
+						ReDim Preserve propertiesArray(newRowIndex)
+						propertiesArray(newRowIndex) = Array(valueName, valueType, strValues(j), valueUnits)
+					Next
+                End If
+            End If
+        Next
+    Else
+        ' Handle case where no value names are available
+		ReDim Preserve propertiesArray(0)
+        propertiesArray(0) = Array("N/A", "N/A", "N/A", "N/A")
+    End If
+
+	' Convert single-dimensional array of arrays to a 2-dimensional array
+    Dim finalArray()
+	ReDim finalArray(UBound(propertiesArray), 3)
+	For i = LBound(propertiesArray) To UBound(propertiesArray)
+		For j = 0 To 3
+			finalArray(i, j) = propertiesArray(i)(j)
+		Next
+	Next
+
+	getAttributeProperties = finalArray
+End Function
+
+' Function to get the value as a string array
+Function getValueAsStrArray(value)
+	Dim strValues()
+	ReDim strValues(-1)
+
+	On Error Resume Next ' Error handle
+
+	if IsObject(value) Then
+		' Store object name
+		ReDim Preserve strValues(0)
+		strValues(0) = value.getName
+	
+	ElseIf IsArray(value) Then
+		' Handle case where value is an array
+		For i = LBound(value) To UBound(value)
+			items = getValueAsStrArray(value(i))
+			count = UBound(items) + 1
+
+			ReDim Preserve strValues(i)
+			if count = 0 Then
+				strValues(i) = " "
+			elseif count = 1 Then
+				strValues(i) = items(0)
+			else
+				strValues(i) = items(0) & ", " & items(1) & ", ..."
+			End If
+		Next
+
+	Else
+		' Handle normal single-value case
+		ReDim Preserve strValues(0)
+		strValues(0) = value
+	End If
+
+	' On any error, return N/A (error)
+	If Err.Number <> 0 Then
+		ReDim Preserve strValues(0)
+		strValues(0) = "N/A (error)"
+		Err.Clear
+	End If
+    On Error GoTo 0  ' Always reset error handling
+	
+	getValueAsStrArray = strValues
+End Function

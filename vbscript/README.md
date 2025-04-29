@@ -4,21 +4,23 @@ Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be
 
 ## 📚 Examples Included
 
-| Category | Description                           | Language   | File                     |
-| -------- | ------------------------------------- | ---------- | ------------------------ |
-| General  | Create new model                      | VBScript   | 01a_Create_New_Model.lvb |
-| Geometry | Creates points                        | VBScript   | 02a_Point_Creation.lvb   |
-| Geometry | Creates lines                         | VBScript   | 02b_Line_Creation.lvb    |
-| Geometry | Creates surfaces                      | VBScript   | 02c_Surface_Creation.lvb |
-| Geometry | Creates volumes                       | VBScript   | 02d_Volume_Creation.lvb  |
-| Geometry | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | VBScript   | 03_Get_Geometries_Groups_Selection_ObjectSets.lvb |
-| Attributes | Create/assign meshes                | VBScript   | 04a_Create_and_assign_mesh.lvb     |
-| Attributes | Create/assign sections              | VBScript   | 04b_Create_and_assign_section.lvb  |
-| Attributes | Create/assign materials             | VBScript   | 04c_Create_and_assign_material.lvb |
-| Attributes | Create/assign supports              | VBScript   | 04d_Create_and_assign_supports.lvb |
-| Attributes | Create/assign loads                 | VBScript   | 04d_Create_and_assign_loads.lvb    |
-| Analyses   | Create/solve analyses and loadcases | VBScript   | 05a_Create_and_Run_Analyses_and_Loadcases.lvb |
-| Analyses   | Create Combinations and Envelopes   | VBScript   | 05b_Create_Combinations_and_Envelopes.lvb |
+| Category   | Description                           | Language   | File                     |
+| ---------- | ------------------------------------- | ---------- | ------------------------ |
+| General    | Create new model                      | VBScript   | 01a_Create_New_Model.lvb |
+| Geometry   | Creates points                        | VBScript   | 02a_Point_Creation.lvb   |
+| Geometry   | Creates lines                         | VBScript   | 02b_Line_Creation.lvb    |
+| Geometry   | Creates surfaces                      | VBScript   | 02c_Surface_Creation.lvb |
+| Geometry   | Creates volumes                       | VBScript   | 02d_Volume_Creation.lvb  |
+| Geometry   | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | VBScript   | 03_Get_Geometries_Groups_Selection_ObjectSets.lvb |
+| Attributes | Create/assign meshes                  | VBScript   | 04a_Create_and_assign_mesh.lvb     |
+| Attributes | Create/assign sections                | VBScript   | 04b_Create_and_assign_section.lvb  |
+| Attributes | Create/assign materials               | VBScript   | 04c_Create_and_assign_material.lvb |
+| Attributes | Create/assign supports                | VBScript   | 04d_Create_and_assign_supports.lvb |
+| Attributes | Create/assign loads                   | VBScript   | 04d_Create_and_assign_loads.lvb    |
+| Attributes | Prints the attribute type(s) for the user given attribute names | VBScript   | 04f_Get_attribute_type_by_name.lvb |
+| Attributes | Extracts all attributes' properties in a data grid for the user given attribute names | VBScript   | 04g_Extract_attribute_values.lvb |
+| Analyses   | Create/solve analyses and loadcases   | VBScript   | 05a_Create_and_Run_Analyses_and_Loadcases.lvb |
+| Analyses   | Create Combinations and Envelopes     | VBScript   | 05b_Create_Combinations_and_Envelopes.lvb |
 | Analyses   | Create Coupled Structural-Thermal Analysis | VBScript   | 05c_Coupled_Structural_Thermal_Analysis.lvb |
 | Results    | Get results from Elements/Nodes            | VBScript   | 06a_Getting_Results.lvb     |
 | Results    | Get results with Print Results Wizard      | VBScript   | 06b_Getting_Results_PRW.lvb |

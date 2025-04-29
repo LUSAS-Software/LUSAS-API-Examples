@@ -1,0 +1,89 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      04f_Get_attribute_type_by_name.lvb
+' Description:  This example asks the user for an attribute name and prints the attribute type(s) in the log window.
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-29
+' 
+$ENGINE=VBSCRIPT
+
+Dim input, attributeName, attributes, attributeTypes, attrType
+
+' Prompt user for attribute name
+userInput = InputBox("Enter attribute name(s) separated by ;")
+attributeNames = Split(userInput, ";")
+
+' Loop given attribute names and call the function to print attribute types
+For Each attributeName in attributeNames
+    getAttributeTypes(attributeName)
+Next
+
+' Function that retrieves and prints attribute types based on the given attribute name
+sub getAttributeTypes(attributeName)
+	' Trim whitespace from the input and convert to lowercase
+	attributeName = Trim(attributeName)
+	attributeNameLC = LCase(attributeName)
+
+	If attributeName <> "" Then
+		' Create a dictionary to store attribute types
+		Set attributeTypes = CreateObject("Scripting.Dictionary")
+		
+		' Find and collect attribute types
+		noAttributesFound = True
+		allAttributes = db.getAttributes("All")
+		For Each attr In allAttributes
+			If LCase(attr.getName()) = attributeNameLC or attributeNameLC = "all" Then
+				attrType = attr.getAttributeType()
+				If Not attributeTypes.Exists(attrType) Then
+					attributeTypes.Add attrType, True
+				End If
+				noAttributesFound = False
+			End If
+		Next
+		' If not attributes are found, try to find attributes that start with the given name
+		isStartingName = Not noAttributesFound
+		If noAttributesFound Then
+			call getTextWindow.writeLine("Searching for starting name...","information")
+			length = Len(attributeNameLC)
+			For Each attr In allAttributes
+				call getTextWindow.writeLine(LCase(Left(attr.getName(), length)) & " = " & attributeNameLC)
+				If LCase(Left(attr.getName(), length)) = attributeNameLC Then
+					attrType = attr.getAttributeType()
+					If Not attributeTypes.Exists(attrType) Then
+						attributeTypes.Add attrType, True
+					End If
+					noAttributesFound = False
+				End If
+			Next
+		End If
+		' If the found attributes start with he given name, add "..." to the printed name
+		if isStartingName and Not noAttributesFound Then
+			attributeName = attributeName & "..."
+		End If
+		
+		' Print output in log window
+		If noAttributesFound Then
+			call getTextWindow.writeLine("No attributes found named or starting with " & """" & attributeName & """", "information")
+		
+		ElseIf attributeTypes.Count = 1 Then
+			call getTextWindow.writeLine("--------------------------------------------------","information")
+			call getTextWindow.writeLine("Attribute type of " & """" & attributeName & """" & ": ", "information")
+			call getTextWindow.writeLine(attributeTypes.Keys()(0),"information")
+
+		Elseif attributeNameLC = "all" Then
+			call getTextWindow.writeLine("--------------------------------------------------","information")
+			call getTextWindow.writeLine("Attribute types of all attributes in model:", "information")
+			For Each attrType In attributeTypes.Keys()
+				call getTextWindow.writeLine(attrType, "information")
+			Next
+
+		Else
+			call getTextWindow.writeLine("--------------------------------------------------","information")
+			call getTextWindow.writeLine("Attribute types of attributes named " & """" & attributeName & """" & ":", "information")
+			For Each attrType In attributeTypes.Keys()
+				call getTextWindow.writeLine(attrType, "information")
+			Next
+		End If
+	End If
+end sub
