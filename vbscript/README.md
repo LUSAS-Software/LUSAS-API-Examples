@@ -1,6 +1,6 @@
 # VBScript Examples
 
-Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be executed within LUSAS through the Main Menu shortcut "Run Script" (red folder icon).
+Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be executed within LUSAS through the Main Menu shortcut "Run Script" (red folder icon). One line VBScript commands can also be executed through LUSAS's command bar (by default is set to VBScript). To enable the command bar, navigate to View > LPI Command Bar.
 
 ## 📚 Examples Included
 
@@ -38,6 +38,8 @@ Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript 
 - `newObjectSet()`
 
 - `geometryData()` and `newGeometryData()`
+
+- `textWin.writeLine()`
 
 Since VBScript does not natively support imports, the following command can be used at the top of `*.lvb` files to import other scripts:
 ```
