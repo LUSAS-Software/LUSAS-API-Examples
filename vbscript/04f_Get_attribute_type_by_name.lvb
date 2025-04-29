@@ -44,10 +44,8 @@ sub getAttributeTypes(attributeName)
 		' If not attributes are found, try to find attributes that start with the given name
 		isStartingName = Not noAttributesFound
 		If noAttributesFound Then
-			call getTextWindow.writeLine("Searching for starting name...","information")
 			length = Len(attributeNameLC)
 			For Each attr In allAttributes
-				call getTextWindow.writeLine(LCase(Left(attr.getName(), length)) & " = " & attributeNameLC)
 				If LCase(Left(attr.getName(), length)) = attributeNameLC Then
 					attrType = attr.getAttributeType()
 					If Not attributeTypes.Exists(attrType) Then
@@ -61,7 +59,7 @@ sub getAttributeTypes(attributeName)
 		if isStartingName and Not noAttributesFound Then
 			attributeName = attributeName & "..."
 		End If
-		
+
 		' Print output in log window
 		If noAttributesFound Then
 			call getTextWindow.writeLine("No attributes found named or starting with " & """" & attributeName & """", "information")
