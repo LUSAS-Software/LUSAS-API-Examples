@@ -1,0 +1,68 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      05b_Create_Combinations_and_Envelopes.lvb
+' Description:  Creates combinations and envelopes
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-28
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+
+' Check if loadcases 1 and 2 exist (required for this example)
+loadcaseExists1 = False
+loadcaseExists2 = False
+loadcases = database.getLoadsets("loadcase")
+For i = 0 To UBound(loadcases)
+    id = loadcases(i).getID()
+    If id = 1 Then
+        loadcaseExists1 = True
+    ElseIf id = 2 Then
+        loadcaseExists2 = True
+    End If
+Next
+
+If Not loadcaseExists1 Or Not loadcaseExists2 Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", "This example assumes that loadcases with ID 1 and 2 exist in the model")
+End If
+
+
+'#####################################################
+'# Create basic combination
+Set basicCombo = database.createCombinationBasic("Basic Combination")
+' Add loadcase 1 in the combination with a factor of 1.5
+Call basicCombo.addEntry(1.5, 1) 'assumes that loadcase with ID = 1 exists
+' Add loadcase 2 in the combination with a factor of 1.0
+Call basicCombo.addEntry(1.0, 2) 'assumes that loadcase with ID = 2 exists
+
+
+'# Create smart combination
+Set smartCombo = database.createCombinationSmart("Smart Combination")
+' Add loadcase 1 in the combination
+beneficialFactor = 0.25
+adverseFactor = 1.5
+Call smartCombo.addEntry(beneficialFactor, adverseFactor - beneficialFactor, 1)
+' Add loadcase 2 in the combination
+beneficialFactor = 0.25
+adverseFactor = 1.0
+Call smartCombo.addEntry(beneficialFactor, adverseFactor - beneficialFactor, 2)
+
+
+'# Create envelop combination
+Set envCombo = database.createEnvelope("Test Envelop")
+' Add loadcase 1 (using ID)
+Call envCombo.addEntry(1)
+' Add loadcase 2 (using ID)
+Call envCombo.addEntry(2)
+' Add basic combination (using name)
+id = basicCombo.getID()
+Call envCombo.addEntry(id)
+' Add smart combination (using object)
+Call envCombo.addEntry(smartCombo)

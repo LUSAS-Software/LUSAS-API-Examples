@@ -1,0 +1,97 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      05b_Coupled_Structural_Thermal_Analysis.lvb
+' Description:  Creates coupled Thermal-Structural analysis
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-28
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+' It is assumed that only one structural analysis called "Analysis 1" exists in the model
+allAnalyses = database.getAnalyses()
+if Ubound(allAnalyses) + 1 > 1 or Not allAnalyses(0).getName() = "Analysis 1" Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "This example assumes that only one structural analysis called 'Analysis 1' exists in the model" & vbCrLf)
+End If
+
+
+' Get the structural analysis
+Set structAnalysis = database.getAnalysis("Analysis 1")
+
+'# Create new thermal analysis
+Set thermalAnalysis = database.createAnalysisThermal("Analysis 1 (Thermal)", True, "Nonlinear and transient")
+Call thermalAnalysis.setAsBase()
+Call thermalAnalysis.setUndeformedMeshStart()
+Call thermalAnalysis.setCoupled("Analysis 1")
+
+'# Set coupling options
+Call database.options().setString("Coupling Type", "Thermal", False, "")
+Call database.options().setString("Coupling Method", "Time", False, "")
+Call database.options().setDouble("Coupling Write Start", 1e-3, False, "")
+Call database.options().setDouble("Coupling Read Start", 1e-3, False, "")
+Call database.options().setBoolean("Initialise Reference Temperatures", True, False, "")
+
+' Get all loadcases (a loadcase is a type of loadset)
+loadcases = database.getLoadsets("Loadcase")
+
+' Find first structural loadcase
+Dim structLoadcase
+For Each loadcase in loadcases
+    if loadcase.getAnalysis() is structAnalysis Then
+        Set structLoadcase = loadcase
+    End If
+Next
+
+' Find first thermal loadcase
+Dim thermalLoadcase
+For Each loadcase in loadcases
+    if loadcase.getAnalysis() is thermalAnalysis Then
+        Set thermalLoadcase = loadcase
+    End If
+Next
+
+' Set structural analysis transient control options
+Call structLoadcase.setTransientControl(0)
+Set control = structLoadcase.getTransientControl()
+Call control.setValue("CouplingReadInterval", 1.0).setValue("CouplingWriteInterval", 1.0)
+Call control.setNonlinearManual()
+Call control.setValue("AllowStepReduction", True).setValue("MaxStepReduction", 5)
+Call control.setTimeDomainConsolidation(50e6) ' Initial time step
+Call control.setValue("TimeStepRestrictionFactor", 1.0).setValue("MinTimeStepFactor", 0.0).setValue("MaxTimeStepFactor", 100.0E6)
+Call control.setValue("TotalResponseTime", 100.0E6).setValue("MinTimeStep", 0.0)
+Call control.setValue("PoreWaterPressureStep", 0.0).setValue("SaturationStep", 0.0).setValue("MaxExcessPoreWP", 0.0).setValue("rateChangePoreWP", 0.0).setValue("rateChangeSaturation", 0.0)
+Call control.setConstants().setValue("nit", 12).setValue("nalps", 2).setValue("toline", 0.75).setValue("rmaxal", 100.0E6)
+Call control.setValue("rnoral", 100.0E6).setValue("dlnorm", 1.0).setValue("rlnorm", 0.1).setValue("wlnorm", 100.0E6)
+Call control.setValue("dtnrml", 1.0).setValue("ampmx", 5.0).setValue("etmxa", 25.0).setValue("etmna", 0.0)
+Call control.setValue("alpha", 0.0).setValue("beta", 1.0).setValue("gamma", 0.5).setValue("isilcp", False)
+Call control.setValue("pnrm", 0.1).setValue("ptnrm", 0.0).setValue("tnorm", 0.0).setValue("pnorm", 0.0)
+Call control.setValue("GroundwaterSolutionType", "Auto").setValue("PermeabilityType", "Auto")
+Call control.setValue("iterStrategyType", "Auto").setValue("iterDataType", "auto")
+Call control.setOutput().setValue("IncrementIntervalForLusas", 1).setValue("IncrementIntervalForPlotFile", 1).setValue("IncrementIntervalForRestart", 0)
+Call control.setValue("MaxRestartDumpsSaved", 0).setValue("IncrementIntervalForTimeStepLog", 1).setValue("IncrementIntervalForHistory", 1)
+
+' Set thermal analysis transient control options
+Call thermalLoadcase.setTransientControl(0)
+Set control = thermalLoadcase.getTransientControl()
+Call control.setValue("CouplingReadInterval", 1.0).setValue("CouplingWriteInterval", 1.0)
+Call control.setNonlinearManual()
+Call control.setValue("AllowStepReduction", True).setValue("MaxStepReduction", 5)
+Call control.setTimeDomainThermal(50e6) ' Initial time step
+Call control.setValue("TimeStepRestrictionFactor", 1.0).setValue("MinTimeStepFactor", 0.0).setValue("MaxTimeStepFactor", 100.0E6)
+Call control.setValue("TotalResponseTime", 100.0E6).setValue("MinTimeStep", 0.0)
+Call control.setConstants().setValue("nit", 12).setValue("nalps", 2).setValue("toline", 0.75).setValue("rmaxal", 100.0E6)
+Call control.setValue("rnoral", 100.0E6).setValue("dlnorm", 1.0).setValue("rlnorm", 0.01).setValue("wlnorm", 100.0E6)
+Call control.setValue("dtnrml", 0.01).setValue("ampmx", 5.0).setValue("etmxa", 25.0).setValue("etmna", 0.0)
+Call control.setValue("alpha", 0.0).setValue("beta", 1.0).setValue("gamma", 0.5).setValue("isilcp", False)
+Call control.setValue("pnrm", 0.1).setValue("ptnrm", 0.0).setValue("tnorm", 0.0).setValue("pnorm", 0.0)
+Call control.setValue("GroundwaterSolutionType", "Auto").setValue("PermeabilityType", "Auto")
+Call control.setValue("iterStrategyType", "Auto").setValue("iterDataType", "auto")
+Call control.setOutput().setValue("IncrementIntervalForLusas", 1).setValue("IncrementIntervalForPlotFile", 1).setValue("IncrementIntervalForRestart", 0)
+Call control.setValue("MaxRestartDumpsSaved", 0).setValue("IncrementIntervalForTimeStepLog", 1).setValue("IncrementIntervalForHistory", 1)

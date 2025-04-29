@@ -1,0 +1,47 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      05a_Create_and_Run_Analyses_and_loadcases.lvb
+' Description:  Creates analyses, loadcases and solves them
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-28
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+'#####################################################
+'## Create new structural analysis
+
+analysisName = "New Structural Analysis"
+Set structAnalysis = database.createAnalysisStructural(analysisName, True)
+
+' Create additional loadcase in the analysis
+Set newLoadcase = database.createLoadcase("Self-weight", analysisName)
+' Enable gravity in self-weight loadcase
+Call newLoadcase.addGravity(True)
+Call newLoadcase.setGravityFactor(1.0)
+
+' Get list of loadcase objects from analysis
+loadcases = get_Analysis_Loadcases(database, structAnalysis)
+' TODO: In v22.0 the Helpers function is not needed anymore, as the analysis.getLoadcases() method is available in the API
+'loadcases = structAnalysis.getLoadcases()
+
+' Print loadcase names
+Call textWin.writeLine("Analysis " & structAnalysis.getName() & " loadcases:")
+For Each loadcase in loadcases
+    Call textWin.writeLine(" - " & loadcase.getID() & ": " & loadcase.getName())
+Next
+
+'#####################################################
+'# Solve structural analysis
+
+Call database.getAnalysis(analysisName).solve(False)
+
+' Open available results
+Call database.openAllResults(False)

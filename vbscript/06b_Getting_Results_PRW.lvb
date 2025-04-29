@@ -1,0 +1,67 @@
+' LUSAS API (LPI) PYTHON EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      06b_Getting_Results_PRW.lvb
+' Description:  Extract results using a Print Results Wizard (PRW)
+' Author:       Finite Element Analysis Ltd
+' Date:         2025-04-28
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Check if a model is open
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+' To successfully run the code below you must have a model solved.
+
+' Script results parameters
+prw_name = "Shell Results With Global Transform"
+export_dir = "C:\Temp\\"
+
+'#####################################################
+'# Create a print results wizard for thick shell element results
+
+' Shell Results
+Set attr = database.createPrintResultsWizard(prw_name)
+
+' PRW Settings
+Call attr.setResultsType("Components")
+Call attr.setResultsOrder("Mesh")
+Call attr.setResultsContent("Tabular")
+Call attr.setResultsEntity("Force/Moment - Thick Shell")
+Call attr.setExtent("Elements showing results", "")
+Call attr.setResultsLocation("ElementNodal")
+Call attr.setLoadcasesOption("Active") ' Active loadset only
+' Target Components
+components = Array("Nx","Ny","Nxy","Mx","My","Mxy","Sx","Sy")
+Call attr.setComponents(components)
+
+Call attr.setResultsTransformGlobal()
+Call attr.showCoordinates(True)
+Call attr.showExtremeResults(False)
+Call attr.setSlice(False)
+Call attr.setAllowDerived(False)
+Call attr.setDisplayNow(False)
+Call attr.setDecimalPlaces(3)
+Call attr.setThreshold(1e-6)
+
+' Release the attribute object (for the shake of this example)
+' This variable can later be used instead of the "prwAttr" (provided that it not dereferenced with this command).
+attr = Nothing 
+
+
+'#####################################################
+' Export the results defined by the Print Results Wizard
+
+' Get the Print Results Wizard attribute object
+Set prwAttr = database.getAttribute("Print Results Wizard", prw_name)
+
+' Display the table of results
+Set table = prwAttr.showResults()
+' Save the grid view to a file
+Call table.saveAs(export_dir & prw_name & "_results.xls", "Microsoft Excel")
+Call table.saveAs(export_dir & prw_name & "_results.txt", "Text")
+Call table.close()
