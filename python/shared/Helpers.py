@@ -344,7 +344,20 @@ def delete_all_database_contents(db:'IFDatabase'):
 
     db.createAnalysisStructural("Analysis 1")
 
+def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
+    """
+    Get all loadcases of an analysis. In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
 
+    Args:
+        analysis (IFAnalysis): Analysis object
+
+    Returns:
+        list[IFLoadcase]: List of loadcases in the analysis
+    """
+    analysisName = analysis.getName()
+    allLoadcases : list['IFLoadcase'] = lusas.db().getLoadsets("Loadcase")
+    loadcases : list['IFLoadcase'] = list(filter(lambda lc: lc.getAnalysis().getName() == analysisName, allLoadcases))
+    return loadcases
 
 def create_reinforcing_bar_attributes(db:'IFDatabase', diameters:list) -> list:
     """Create geometric attributes representing individual bars in the LUSAS Database

@@ -152,6 +152,30 @@ Sub delete_all_database_contents(db)
     database.createAnalysisStructural "Analysis 1"
 End Sub
 
+' Function to get all loadcases of an analysis
+' TODO: In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
+Function get_Analysis_Loadcases(db, analysis)
+    Dim analysisName, allLoadcases, loadcases, lc, i, filteredLoadcases
+    analysisName = analysis.getName()
+
+    ' Get all loadcases from the database
+    allLoadcases = db.getLoadsets("Loadcase")
+
+    ' Initialize an empty array for filtered loadcases
+    ReDim filteredLoadcases(-1)
+
+    ' Filter loadcases belonging to the specified analysis
+    For i = 0 To UBound(allLoadcases)
+        Set lc = allLoadcases(i)
+        If lc.getAnalysis().getName() = analysisName Then
+            ReDim Preserve filteredLoadcases(UBound(filteredLoadcases) + 1)
+            Set filteredLoadcases(UBound(filteredLoadcases)) = lc
+        End If
+    Next
+
+    ' Return the filtered loadcases
+    get_Analysis_Loadcases = filteredLoadcases
+End Function
 
 ' This function creates reinforcing bar attributes in the LUSAS database.
 Function create_reinforcing_bar_attributes(db, diameters)
