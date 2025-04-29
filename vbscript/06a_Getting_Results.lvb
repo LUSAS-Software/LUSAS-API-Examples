@@ -157,12 +157,12 @@ clockEnd("Print Force/Moment from beam elements using ResultsComponentSet") 'Pri
 clockStart() 'Start timer to measure execution time
 
 ' Create an object set containing only the thick 3d beam elements.
-Set beams = newObjectSet().add(targetElements).keep("Thick 3D Beam")
+Set beamsObjSet = newObjectSet().add(targetElements).keep("Thick 3D Beam")
 
 ' Get the internal point results for all thick beam elements
 Call textWin.writeLine("") ' Add a blank line to the output window
 Call textWin.writeLine("Force/Moment results: (from ObjectSet using ResultsComponentSet)")
-For Each e in beams.getObjects("Element")
+For Each e in beamsObjSet.getObjects("Element")
     ' Note the unitset is not optional but providing Nothing uses the current database units
     my = results_my.getInternalResultsArray(i_my, e, Nothing)
     Call textWin.writeLine(Join(my, ", "))
@@ -180,13 +180,13 @@ clockStart() 'Start timer to measure execution time
 ' Create a results context for the beam elements
 Set context = newResultsContext(Nothing)
 ' Set target elements
-Call context.getCalcResultsSet().add(beams)
+Call context.getCalcResultsSet().add(beamsObjSet)
 ' Set loadset 1 as the active loadset of the context
 Call context.setActiveLoadset(1)
 
 Call textWin.writeLine("") ' Add a blank line to the output window
 Call textWin.writeLine("Force/Moment results: (from ObjectSet using ResultsComponentSet and set context)")
-For Each e in beams.getObjects("Element")
+For Each e in beamsObjSet.getObjects("Element")
     ' Note the unitset is not optional but providing None uses the current database units
     my = results_my.getInternalResultsArray(i_my, e, Nothing)
     Call textWin.writeLine(Join(my, ", "))
@@ -196,7 +196,7 @@ clockEnd("Print Force/Moment from ObjectSet using ResultsComponentSet and set co
 ' Free up memory if the script will continue to run (not required in this case
 Set results_my = Nothing
 Set context = Nothing
-Set beams = Nothing
+Set beamsObjSet = Nothing
 
 
 ' The general principle laid out above can be used for all elements, nodes and inspection location results.

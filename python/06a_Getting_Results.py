@@ -10,6 +10,8 @@
 # Libraries:
 # LUSAS LPI module (easier connection and autocomplete)
 from shared.LPI_21_1 import *
+# Time module to measure execution time
+import time
 
 # Connect on LUSAS and check if a model is open
 lusas = get_lusas_modeller()
@@ -20,34 +22,52 @@ if not lusas.existsDatabase():
 # Save database in variable
 database = lusas.db()
 
+# Get selected items and add related Elements and Nodes
+target = lusas.newObjectSet().add(lusas.selection()).addLOF("Element").addLOF("Node")
+targetNodes : list[IFNode] = lusas.selection().getObjects("Node")
+targetElements : list[IFElement] = target.getObjects("Element")
+
+if len(targetNodes) == 0:
+    raise Exception("No features selected. Please select some nodes/elements to get results from.")
+
 # To successfully run the code below you must have a model solved.
-
-# Get selected nodes
-selectedNodes : list[IFNode] = lusas.selection().getObjects("Node")
-
-if len(selectedNodes) == 0:
-    raise Exception("No nodes selected. Please select some nodes to get results from.")
 
 
 ######################################################
 ## Nodal Results
 # All nodes have displacement results. Here we simply loop through the nodes contained in the current selection and ask for the results of displacement and printing them
+start = time.time()
 
 # Print displacements (model units)
-for n in selectedNodes:
-    dx = n.getResults("Displacement", "DX")[0]
-    dy = n.getResults("Displacement", "DY")[0]
-    dz = n.getResults("Displacement", "DZ")[0]
+print("Displacement results:")
+for n in targetNodes:
+    dx = n.getResults("Displacement", "DX") # TODO: May need [0] for versions >v21.1
+    dy = n.getResults("Displacement", "DY")
+    dz = n.getResults("Displacement", "DZ")
     print(dx, dy, dz)
+print(f"Execution time for displacement results: {time.time() - start} seconds")
 
 # Print reactions and calculate total reactions (model units)
+start = time.time()
 total_fx, total_fy, total_fz = 0, 0, 0
-for n in selectedNodes:
-    # Non supported nodes will return a value of 2.2250738585072014e-308. This is the smallest possible value represented by a 64bit double precision variable.
-    # We can avoid this small value by asking if a result is available
-    fx = n.getResults("Reaction", "FX")[0] if n.hasResults("Reaction", "FX") else 0
-    fy = n.getResults("Reaction", "FY")[0] if n.hasResults("Reaction", "FY") else 0
-    fz = n.getResults("Reaction", "FZ")[0] if n.hasResults("Reaction", "FZ") else 0
+print("Reaction results:")
+for n in targetNodes:
+    # Non supported nodes will return a value of 2.2250738585072014e-308.
+    # This is the smallest possible value represented by a 64bit double precision variable.
+    # This value is equivalent to N/A.
+    fx = n.getResults("Reaction", "FX")
+    if fx == 2.2250738585072014e-308:
+        fx = 0
+    fy = n.getResults("Reaction", "FY")
+    if fy == 2.2250738585072014e-308:
+        fy = 0
+    fz = n.getResults("Reaction", "FZ")
+    if fz == 2.2250738585072014e-308:
+        fz = 0
+
+    # TODO: May need [0] for versions >v21.1, also check if this works in >v21.1
+    #fx = n.getResults("Reaction", "FX") if n.hasResults("Reaction", "FX") else 0
+
     print(fx, fy, fz)
 
     total_fx += fx
@@ -56,6 +76,7 @@ for n in selectedNodes:
 
 # Print total reactions (model units)
 print(f"Total reactions of selected nodes : {fx:.2f}, {fy:.2f}, {fz:.2f}")
+print(f"Execution time for reaction results: {time.time() - start} seconds")
 
 # NOTE:
 # The getResults function has 3 additional optional arguments as shown in the LPI Reference manual
@@ -78,15 +99,16 @@ print(f"Total reactions of selected nodes : {fx:.2f}, {fy:.2f}, {fz:.2f}")
 # The element interface therefore has several functions to deal with these differences and its up to you to call the correct one for the element you are looking at.
 # 
 # If we ask the database for all elements, that's exactly what we'll get and we'd have to write a lot of code to handle the various element types as follows:
+start = time.time()
 
-allElements : list[IFElement] = database.getObjects("Element")
-for e in allElements:
+print("Force/Moment results: (from beam elements)")
+for e in targetElements:
     stressType = e.getStressType()
     if e.getDomainDimension() == 1: # Beam Element
         if stressType == "Thick 3D Beam":
             # Get bending moment My for each internal point
             for i in range(0, e.countInternalPoints()):
-                my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My")[0]
+                my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My") # TODO: May need [0] for versions >v21.1,
                 print(my)
             # Or get the internal results as an array
             my = e.getInternalResultsArray("Force/Moment - Thick 3D Beam", "My")
@@ -96,6 +118,7 @@ for e in allElements:
 
     elif e.getDomainDimension() == 3: # Solid Element
         pass
+print(f"Execution time for Force/Moment results (from beam elements): {time.time() - start} seconds")
 
 # The above can be repeated for all element types but you may have noticed that this approach is very slow and not recommended.
 # A much better approach is to use results component sets.
@@ -104,33 +127,38 @@ for e in allElements:
 ######################################################
 ## Results Component Sets
 # A results component set is a container for a particular set of results. It is much more efficient than asking for results all at once.
-
+start = time.time()
 
 # Get the internal point results for all thick beam elements
 results_my = lusas.database().getResultsComponentSet("Force/Moment - Thick 3D Beam", "My", "Internal")
 i_my = results_my.getComponentNumber("My")
 
-for e in allElements:
+print("Force/Moment results: (from beam elements using ResultsComponentSet)")
+for e in targetElements:
     stressType = e.getStressType()
     if e.getDomainDimension() == 1: # Beam Element
         if stressType == "Thick 3D Beam":
             # Note the unitset is not optional but providing None uses the current database units
             my = results_my.getInternalResultsArray(i_my, e, None)
             print(my)
+print(f"Execution time for Force/Moment results (from beam elements using ResultsComponentSet): {time.time() - start} seconds")
 
 
 
 ## Instead of checking all elements and their type, we can filter them using an Object Set.
 # Depending on what your model contains the following code should run much quicker than previous methods. This is because we filtered out only the elements of interest and removed any subsequent type checking.
+start = time.time()
 
 # Create an object set containing only the thick 3d beam elements.
-beams = lusas.newObjectSet().add("Thick 3D Beam")
+beamsObjSet = lusas.newObjectSet().add(targetElements).keep("Thick 3D Beam")
 
 # Get the internal point results for all thick beam elements
-for e in beams.getObjects("Element"):
+print("Force/Moment results: (from ObjectSet using ResultsComponentSet)")
+for e in beamsObjSet.getObjects("Element"):
     # Note the unitset is not optional but providing None uses the current database units
     my = results_my.getInternalResultsArray(i_my, e, None)
     print(my)
+print(f"Execution time for Force/Moment results (from ObjectSet using ResultsComponentSet): {time.time() - start} seconds")
 
 # Remember clear the results component set if not used again to free up memory (commented in this case since we are using it again)
 #results_my = None 
@@ -138,23 +166,26 @@ for e in beams.getObjects("Element"):
 
 ## The final piece of the puzzle is to provide a results context.
 # Results context can be set to any loadcase and set of elements so we are no longer relying on the active settings of the user interface.
+start = time.time()
 
 # Create a results context for the beam elements
 context = lusas.newResultsContext(None)
 # Set target elements
-context.getCalcResultsSet().add(beams)
+context.getCalcResultsSet().add(beamsObjSet)
 # Set loadset 1 as the active loadset of the context
 context.setActiveLoadset(1)
 
-for e in beams.getObjects("Element"):
+print("Force/Moment results: (from ObjectSet using ResultsComponentSet and set context)")
+for e in beamsObjSet.getObjects("Element"):
     # Note the unitset is not optional but providing None uses the current database units
     my = results_my.getInternalResultsArray(i_my, e, None)
     print(my)
+print(f"Execution time for Force/Moment results (from ObjectSet using ResultsComponentSet and set context): {time.time() - start} seconds")
 
 # Free up memory if the script will continue to run (not required in this case
 results_my = None
 context = None
-beams = None
+beamsObjSet = None
 
 
 # The general principle laid out above can be used for all elements, nodes and inspection location results.
