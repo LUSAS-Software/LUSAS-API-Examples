@@ -68,6 +68,28 @@ ez = 0.0 ' Distance from the centroid to the top of the section in the z-directi
 sectionNo = 0 ' 0 for first section (uniform if no other sections are defined)
 Call customSection.setBeam(Area, Iyy, Izz, Iyz, J_const, Asz, Asy, ey, ez, sectionNo)
 
+' To assign the mesh to the line on loadcase 1, the following command could be used
+' Call customSection.assignTo(line1, 1)
+
+
+'#####################################################
+'# Geometric Line (beam) section with parametric section
+
+' Create the Rectangular Solid Section (utility)
+set rectSection = database.createParametricSection("Sct1").setType("Rectangular Solid")
+' Set the section properties (in model units) - breath 0.4 and depth 0.6
+names = Array("B", "D")
+values = Array(0.4, 0.6)
+call rectSection.setDimensions(names, values)
+
+' Create a geometric attribute object and set the parametric section
+set paramSection = database.createGeometricLine("LGeo1")
+call paramSection.setValue("elementType", "3D Thick Beam")
+call paramSection.setFromLibrary("Utilities", "", "Sct1", 0, 0, 0)
+
+' To assign the mesh to the line on loadcase 1, the following command could be used
+' Call paramSection.assignTo(line1, 1)
+
 
 '#####################################################
 '# Surface thickness
