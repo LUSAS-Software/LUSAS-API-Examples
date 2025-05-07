@@ -357,6 +357,8 @@ def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
     analysisName = analysis.getName()
     allLoadcases : list['IFLoadcase'] = lusas.db().getLoadsets("Loadcase")
     loadcases : list['IFLoadcase'] = list(filter(lambda lc: lc.getAnalysis().getName() == analysisName, allLoadcases))
+    # or
+    # loadcases : list['IFLoadcase'] = lusas.db().getLoadsets("loadcase", "all", analysisName)
     return loadcases
 
 def create_reinforcing_bar_attributes(db:'IFDatabase', diameters:list) -> list:
