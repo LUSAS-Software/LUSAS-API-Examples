@@ -25,6 +25,8 @@ Visual Basic Script (VBScript) code (files with *.vb or *.lvb extensions) can be
 | Results    | Get results from Elements/Nodes            | VBScript   | 06a_Getting_Results.lvb     |
 | Results    | Get results with Print Results Wizard      | VBScript   | 06b_Getting_Results_PRW.lvb |
 
+More examples can be found in your LUSAS installation folder at `<lusas_installation_path>\LUSAS211\Programs\scripts\LPIExamples`.
+
 ## 📄 Code
 
 Scripts should always start with the `$ENGINE=VBScript` command. Since VBScript is executed internally, the code has direct access to all IFModeller methods some of which are listed bellow:
