@@ -34,6 +34,10 @@ Grasshopper can interact directly with LUSAS through the official LUSAS plugin.
 | ![Example-01](./img/09_LUSAS_GH_twisting_tower.jpg)    | ![Example-01](./img/10_LUSAS_GH_uframe_bridge.jpg)     |
 | 09_LUSAS_GH_TwistingTower.gh   | 10_LUSAS_GH_UFrameBridge.gh            |
 
+| 09. **Steel-concrete composite twin girder bridge Construction Stages (activation/deactivation)** |  |
+| ![Example-01](./img/11_LUSAS_GH_construction_stages.jpg)    |      |
+| 11_LUSAS_GH_ConstructionStages.gh   |  |
+
 Grasshopper examples can also be downloaded from the [relevant page on LUSAS website](https://www.lusas.com/products/external_plugins/grasshopper/index.html).
 
 ## 🔗 Relevant Links
