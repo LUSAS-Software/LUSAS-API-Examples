@@ -1,4 +1,4 @@
-# LUSAS API (LPI) PYTHON EXAMPLES
+# LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
 # Example:      06c_User_Defined_Results_and_Design_Attributes.py
@@ -29,8 +29,7 @@ database = lusas.db() # Save database in variable
 # - calculate the top and bottom stresses for concrete beams,
 # - determine if the section is cracked based on the set concrete grade.
 #
-# To see the new results after running this script, make sure you have concrete beam elements in your model and that you have run an analysis.
-# Additionally, assign one of the concrete design attributes created in this script to the concrete beam elements.
+# For the purpose of this example, a simply supported concrete beam is modelled, so make sure you use an empty model before running this script.
 
 
 ######################################################
@@ -64,13 +63,9 @@ database.createLoadingGlobalDistributed("GlbD1").setGlobalDistributed("Length", 
 # These new results (output of each expression) will be available along with all the other results in Contours, Reports, Diagrams etc.
 user_defined_results = database.createUserDefinedResult("User-defined")
 
-# Set UDR options to disable variable checking when model has no geometric assignments yet
-opt = lusas.newUDROptions()
-opt.setErrorCheckingLevel("NoVars")
-
 # Top and bottom stresses are added to the existing force/moment entity to access the correct results entity, i,e My or a thick beam
-user_defined_results.setUserResultComponent("s_top", "Force/Moment - Thick 3D Beam", "Fx / geometric.A + My / geometric.Szt", "Stress_top", opt)
-user_defined_results.setUserResultComponent("s_bot", "Force/Moment - Thick 3D Beam", "Fx / geometric.A + My / geometric.Szb", "Stress_bottom", opt)
+user_defined_results.setUserResultComponent("s_top", "Force/Moment - Thick 3D Beam", "Fx / geometric.A + My / geometric.Szt", "Stress_top")
+user_defined_results.setUserResultComponent("s_bot", "Force/Moment - Thick 3D Beam", "Fx / geometric.A + My / geometric.Szb", "Stress_bottom")
 # Note geometric refers to the assigned geometric (section) attribute. Szb is the section modulus at the negative z axis and is negative
 
 # You can also create new entities instead of adding the results under "Force/Moment - Thick 3D Beam",
@@ -78,7 +73,7 @@ user_defined_results.setUserResultComponent("s_bot", "Force/Moment - Thick 3D Be
 results_entity = "Concrete Cracking"
 database.addUserDefinedResultsEntity(results_entity, "Thick 3D Beam")
 # maximum tensile stress in top and bottom fibres
-user_defined_results.setUserResultComponent("max_fct", results_entity, "max(s_top, s_bot)", "Max tensile stress", opt)
+user_defined_results.setUserResultComponent("max_fct", results_entity, "max(s_top, s_bot)", "Max tensile stress")
 
 
 ####################################################################
@@ -124,17 +119,21 @@ database.getAttribute("Design", "fctm 2.21 MPa").assignTo(line1, 1)
 
 ## Create User Defined Result that read the design attribute fctm values and calculate if the section is cracked:
 
+# Set UDR options to disable variable checking when model has no design assignments yet
+opt = lusas.newUDROptions()
+opt.setErrorCheckingLevel("NoVars")
+
 # - fctm UDR
 # To avoid errors on elements that do not have a design attribute assigned, we can use the "isDefined" function 
 # to check if the design.concrete_cracking.fctm exists (design attribute is assigned). If it does not exist the UDR will return no value using the "none()" function.
-user_defined_results.setUserResultComponent("fctm", results_entity, f"if (isDefined(design.{attr_scope}.fctm), design.{attr_scope}.fctm, none())", "Tensile capacity", opt)
+user_defined_results.setUserResultComponent("udr_fctm", results_entity, f"if (isDefined(design.{attr_scope}.fctm), design.{attr_scope}.fctm, none())", "Tensile capacity", opt)
 
 # - isCracked UDR
 # Determine if the stress exceeds the tensile limit
 # Mind that when the UDR "fctm" returns the "none()" function, that value is almost 0. So we should manually check if the design.concrete_cracking.fctm
 # exists to avoid assuming fctm is 0.
 # In this case, once again we will return the "none()" function, so that modeller does not show the result.
-user_defined_results.setUserResultComponent("isCracked", results_entity, f"if (and(isDefined(design.{attr_scope}.fctm), isNumber(design.{attr_scope}.fctm)), if(max_fct > design.{attr_scope}.fctm, 1, 0), none())", "1 = cracked, 0 = not cracked", opt)
+user_defined_results.setUserResultComponent("isCracked", results_entity, f"if (isDefined(udr_fctm), if(max_fct > udr_fctm, 1, 0), none())", "1 = cracked, 0 = not cracked")
 
 
 # It should be noted that instead of manually creating design attributes for each concrete type,
