@@ -1,4 +1,4 @@
-# LUSAS API (LPI) PYTHON EXAMPLES
+# LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
 # Example:      02a_Point_Creation.py

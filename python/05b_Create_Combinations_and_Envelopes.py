@@ -1,4 +1,4 @@
-# LUSAS API (LPI) PYTHON EXAMPLES
+# LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
 # Example:      05b_Create_Combinations_and_Envelopes.py
