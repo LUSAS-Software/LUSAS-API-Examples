@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      01b_Create_New_Model.py
+# Example:      02_Create_New_Model.py
 # Description:  Create a new LUSAS model
 # 
 

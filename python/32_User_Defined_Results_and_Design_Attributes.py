@@ -1,8 +1,8 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      06c_User_Defined_Results_and_Design_Attributes.py
-# Description:  Create User Defined Results and and Design Attributes in the running LUSAS model.
+# Example:      32_User_Defined_Results_and_Design_Attributes.py
+# Description:  Create User Defined Results and Design Attributes in the running LUSAS model.
 # 
 
 # Libraries:

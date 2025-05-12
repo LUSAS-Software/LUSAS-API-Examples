@@ -1,3 +1,13 @@
+# LUSAS API (LPI) EXAMPLES
+# (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+#
+# Description:
+# This file contains helper functions for creating geometry in LUSAS using Python
+# It includes functions to create points, lines, surfaces, and volumes from coordinates or existing objects
+# It also includes functions for sweeping objects in a specified direction or rotationally
+# and for creating geometric attributes based on parametric definitions.
+# The library must be initialised with the a reference to LUSAS Modeller before using these functions.
+
 from shared.LPI_21_1 import *
 
 def initialise(modeller:'IFModeller'):

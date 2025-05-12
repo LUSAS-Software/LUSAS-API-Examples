@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      06b_Getting_Results_PRW.py
+# Example:      31_Getting_Results_PRW.py
 # Description:  Extract results from the running LUSAS model using a Print Results Wizard (PRW)
 # 
 

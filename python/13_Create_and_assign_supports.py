@@ -1,8 +1,8 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      04c_Create_and_assign_loads.py
-# Description:  Creates and assigns loads in the running LUSAS model
+# Example:      13_Create_and_assign_supports.py
+# Description:  Creates and assigns supports in the running LUSAS model
 # 
 
 # Libraries:
@@ -21,7 +21,6 @@ if not lusas.existsDatabase():
 Helpers.initialise(lusas) # Initialise the Helpers module
 database = lusas.db() # Save database in variable
 
-
 ######################################################
 ## Create slab and columns to use in this example
 
@@ -39,39 +38,43 @@ topPoints : list['IFPoint'] = [ln.getEndPoint() for ln in lines]
 
 
 ######################################################
-## Create Point load
+## Create Fixed support
 
-Fx = 0.0 # Load in X direction
-Fy = 0.0 # Load in Y direction
-Fz = -100.0 # Load in Z direction (negative value = downwards)
-Mx = 0.0 # Moment about X axis
-My = 0.0 # Moment about Y axis
-Mz = 0.0 # Moment about Z axis
+attr = database.createSupportStructural("Fixed")
+# Restrict all degrees of freedom
+attr.setStructural("R", "R", "R", "R", "R", "R")  # R=Restrained
 
-pointLoadAttr = database.createLoadingConcentrated("Example Vertical Point Load")
-pointLoadAttr.setConcentrated(Fx, Fy, Fz, Mx, My, Mz)
-
-# Assign on all column top points for loadcase 1
-pointLoadAttr.assignTo(topPoints, 1)
+# Assign on slab points and loadcase 1
+attr.assignTo(surfPoints, 1)
 
 
 ######################################################
-## Create Distributes load
+## Create pinned support
 
-distrType = "Area" # Load distribution type: "Total" for total load, "Length" for length distribution, "Area" for area distribution
-wx = 0.0 # Load in X direction
-wy = 0.0 # Load in Y direction
-wz = -100.0 # Load in Z direction (negative value = downwards)
+attr = database.createSupportStructural("Pinned")
+# Release all rotational degrees of freedom
+attr.setStructural("R", "R", "R", "F", "F", "F")  # F=Free, R=Restrained
 
-distrLoadAttr = database.createLoadingGlobalDistributed("GlbD2")
-distrLoadAttr.setGlobalDistributed(distrType, wx, wy, wz)
-
-# Assign on slab for loadcase 1
-pointLoadAttr.assignTo(surfPoints, 1)
+# Assign on column top points and loadcase 1
+attr.assignTo(topPoints, 1)
 
 
 ######################################################
-## Create/Assign mesh so that loads are visualised
+## Create translation springs support
+
+attr = database.createSupportStructural("Springs")
+# Mark translational degrees of freedoms as strings
+attr.setStructural("S", "S", "S", "F", "F", "F")
+# Set springs stiffness (in model units)
+sType = "Area" # Spring stiffness distribution: "Total" for total stiffness, "Length" for length distribution, "Area" for area distribution
+attr.setSpring(sType, 200, 200, 200, 0, 0, 0, 0, 0, 0)
+
+# Assign on surface and loadcase 1
+attr.assignTo(surface1, 1)
+
+
+######################################################
+## Create/Assign mesh so that supports are visualised
 
 database.createMeshLine("Dummy Line Mesh").setSize("BMI21", 1).assignTo(lines, 1)
 database.createMeshSurface("Dummy Surface Mesh").setRegular("QTS4", 0, 0, True).assignTo(surface1, 1)

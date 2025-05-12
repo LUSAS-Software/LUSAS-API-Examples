@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      04a_Create_and_assign_mesh.py
+# Example:      10_Create_and_assign_mesh.py
 # Description:  Creates and assigns meshes in the running LUSAS model
 # 
 

@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      02d_Volume_Creation.py
+# Example:      06_Volume_Creation.py
 # Description:  Creates volumes in the running LUSAS model
 # 
 

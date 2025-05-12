@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      05b_Coupled_Structural_Thermal_Analysis.py
+# Example:      23_Coupled_Structural_Thermal_Analysis.py
 # Description:  Creates coupled Thermal-Structural analysis in the running LUSAS model
 # 
 

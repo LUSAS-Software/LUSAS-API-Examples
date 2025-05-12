@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      02c_Surface_Creation.py
+# Example:      05_Surface_Creation.py
 # Description:  Creates surfaces in the running LUSAS model
 # 
 

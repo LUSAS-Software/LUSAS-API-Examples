@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      04b_Create_and_assign_section.py
+# Example:      11_Create_and_assign_section.py
 # Description:  Creates and assigns a section in the running LUSAS model
 # 
 

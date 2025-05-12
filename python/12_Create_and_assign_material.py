@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      04c_Create_and_assign_material.py
+# Example:      12_Create_and_assign_material.py
 # Description:  Creates and assigns materials in the running LUSAS model
 # 
 

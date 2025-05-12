@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      02b_Line_Creation.py
+# Example:      04_Line_Creation.py
 # Description:  Creates lines in the running LUSAS model
 # 
 
