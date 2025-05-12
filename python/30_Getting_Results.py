@@ -9,7 +9,7 @@
 
 # Libraries:
 # LUSAS LPI module (easier connection and autocomplete)
-from shared.LPI_21_1 import *
+from shared.LPI import *
 # Time module to measure execution time
 import time
 
