@@ -6,8 +6,6 @@
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-28
 ' 
-' Libraries: Load the Helpers.vbs which contains useful functions
-$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
 $ENGINE=VBScript
 
 ' Check if a model is open
@@ -28,8 +26,8 @@ Call newLoadcase.addGravity(True)
 Call newLoadcase.setGravityFactor(1.0)
 
 ' Get list of loadcase objects from analysis
-loadcases = get_Analysis_Loadcases(database, structAnalysis)
-' TODO: In v22.0 the Helpers function is not needed anymore, as the analysis.getLoadcases() method is available in the API
+loadcases = db.getLoadsets("loadcase", "all", analysisName)
+' Or get them from the analysis (v22.0+)
 'loadcases = structAnalysis.getLoadcases()
 
 ' Print loadcase names
