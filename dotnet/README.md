@@ -32,12 +32,12 @@ Projects can be compiled as:
 - libraries (`.dll`) that can be loaded in LUSAS as custom modules (plugins).
 
 To easily create new plugin projects in Visual Studio, the LUSAS project template can used:
-1. Copy the `LusasModule21_1.zip` file from the LUSAS installation directory `<LUSAS Installation Folder>\LUSAS211\Programs (x86)` to the Visual Studio project template folder `%USERPROFILE%\Documents\Visual Studio 2019\Templates\ProjectTemplates\Visual Basic`
+1. Copy the `LusasModule22_0.zip` file from the LUSAS installation directory `<LUSAS Installation Folder>\LUSAS220\Programs (x86)` to the Visual Studio project template folder `%USERPROFILE%\Documents\Visual Studio 2019\Templates\ProjectTemplates\Visual Basic`
 2. Open Visual Studio and select `File` > `Create a new Project`
-3. Scroll to the bottom and select the `LUSAS Module 21.1` template from the available list, and click `Next`
+3. Scroll to the bottom and select the `LUSAS Module 22.0` template from the available list, and click `Next`
 4. Pick a project name and click create.
 5. After writing and compiling your project as a library (`.dll`), you can configure LUSAS to automatically import it through the following steps:
-   - Move the `.dll` in `%USERPROFILE%\Documents\Lusas211\Modules`
+   - Move the `.dll` in `%USERPROFILE%\Documents\Lusas220\Modules`
    - Create an `.lml` text file next to your library, with the same name and the following contents:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -64,8 +64,8 @@ To easily create new plugin projects in Visual Studio, the LUSAS project templat
 </modules>
 ```
 
-More information can be found in the [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V21_1/LPI%20Customisation%20and%20Automation%20Guide.pdf).
+More information can be found in the [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V22_0/LPI%20Customisation%20and%20Automation%20Guide.pdf).
 
 ## 🔗 Links
 
-- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V21_1/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI, VBS, VB.NET)
+- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V22_0/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI, VBS, VB.NET)

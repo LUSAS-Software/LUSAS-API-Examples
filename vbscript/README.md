@@ -25,7 +25,7 @@ Visual Basic Script (*VBScript*) code (files with *.vb or *.lvb extensions) can 
 | Results    | Get results from Elements/Nodes            | 30_Getting_Results.lvb     |
 | Results    | Get results with Print Results Wizard      | 31_Getting_Results_PRW.lvb |
 
-More examples can be found in your LUSAS installation folder at `<lusas_installation_path>\LUSAS211\Programs\scripts\LPIExamples`.
+More examples can be found in your LUSAS installation folder at `<lusas_installation_path>\LUSAS220\Programs\scripts\LPIExamples`.
 
 ## 📄 Code
 
@@ -75,7 +75,7 @@ You can add your scripts in LUSAS toolbar or menu through the following steps.
 4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `<lusas_installation_path>\Programs\Config\userToolbar.bmp`.
 
 **Menu item**:
-1. Navigate to `%userprofile%\Documents\Lusas211\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
+1. Navigate to `%userprofile%\Documents\Lusas220\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
 2. This script should modify the LUSAS menu and the code should look like the following example:
 ```VBScript
 $ENGINE=VBSCRIPT
@@ -111,4 +111,4 @@ To associate the lvb extension with *VBScript*, follow these steps:
 
 ## 🔗 Relevant Links
 
-- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V21_1/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI & VBS)
+- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V22_0/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI & VBS)

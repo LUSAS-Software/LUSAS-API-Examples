@@ -97,7 +97,7 @@ CreateObject("WScript.Shell").Run "py C:\\path_to_my_script\myScript.py", 0, tru
 4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `C:\\Path_to_my_lusas_installation\Programs\Config\userToolbar.bmp`.
 
 **Menu item**:
-1. Navigate to `%userprofile%\Documents\Lusas211\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
+1. Navigate to `%userprofile%\Documents\Lusas220\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
 2. This script should modify the LUSAS menu and the code should look like the following example:
 ```VBScript
 $ENGINE=VBSCRIPT
@@ -124,7 +124,7 @@ call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell""
 
 2. Python error `AttributeError: module 'win32com.gen_py.XXXXXXXXXXXXXXXX' has not attribute 'CLSIDToClassMap'`
 
-   First, ensure that you are using the `LPI.py` or `LPI_21_1.py` library and that the object at the error line has the called method.
+   First, ensure that you are using the `LPI.py` or `LPI_22_2.py` library and that the object at the error line has the called method.
    Python is case sensitive which may sometimes cause issues with pywin32. These issues are usually fixed my deleting the pywin32 cache. To do so, follow these steps:
    - Navigate to `%TEMP%/gen_py` and open the python version folder (e.g. 3.12)
    - Delete the folder that matches the error message `XXXXXXXXXXXXXXXX`

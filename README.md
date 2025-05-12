@@ -4,7 +4,7 @@
 
 This repository provides practical and minimal examples of using the LUSAS Programming Interface (LPI) in Python, VBScript, Jupyter, and C#.
 
-These examples are tailored for **LUSAS v21.1** (see repository branches for other versions).
+These examples are tailored for **LUSAS v22.0** (see repository branches for other versions).
 
 ## What is LUSAS?
 
@@ -46,5 +46,5 @@ MIT License
 - [LUSAS Official Site](https://www.lusas.com/)
 - [LUSAS Documentation](https://www.lusas.com/)
 - [Grasshopper LUSAS plug in](https://www.food4rhino.com/en/app/lusasgrasshopper)
-- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V21_1/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI & VBS)
-- [LUSAS LPI Developer Guide](https://www.lusas.com/user_area/documentation/V21_1/LPI%20Developer%20Guide.pdf) (.NET & COM)
+- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V20_0/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI & VBS)
+- [LUSAS LPI Developer Guide](https://www.lusas.com/user_area/documentation/V22_0/LPI%20Developer%20Guide.pdf) (.NET & COM)
