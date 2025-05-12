@@ -2,6 +2,26 @@
 
 This directory includes plethora of examples going through most of the LPI. Jupyter Notebook examples is the recommended way to interact will LUSAS for beginners.
 
+## 📚 Examples Included
+
+| Category   | Description                                                     | File                          |
+| ---------- | --------------------------------------------------------------- | ----------------------------- |
+| General    | Connects on LUSAS instance                                      | 01 Getting Connected.ipynb    |
+| General    | Handle string parsing and returned values                       | 02 Expression Parsing and Return values.ipynb |
+| Geometry   | Creates points, lines, surfaces and volumes                     | 03 Geometry creation.ipynb    |
+| Geometry   | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | 04 Get Geometries, Groups, Selection and ObjectSets.ipynb |
+| Geometry   | Creates a simple multistorey 3D Frame geometry out of lines     | 05 Simple 3D Frame.ipynb      |
+| Attributes | Creates and solves a steel beam cantilver model by creating basic mesh, geometric, material, support and loading attributes. | 10 Simple Cantilever beam.ipynb |
+| Attributes / Results | Creates and solves a steel beam simply supported model and procceses the results. | 11 Simply Supported Line Beam.ipynb |
+| Attributes | Extract all the values of geometric or material attributes in formats that are easier for reviewing and checking models (e.g. spreadsheets) | 16 Extract Attribute Values.ipynb |
+| Attributes | Creates a 2D bridge with rigid constraints (links) between deck beams and pier legs. | 17 Rigid Constraints.ipynb |
+| Attributes | Use of design attributes to hold user data                      | 18 Design Attributes.ipynb    |
+| Results    | Get results from Elements/Nodes                                 | 30 Getting Results.ipynb      |
+| Results    | Create Print Result Wizards and export to spreadsheets and txts | 31 Getting Results PRW.ipynb  |
+| Results    | Create User Defined Results                                     | 32 User Defined Results.ipynb |
+
+Additional examples are included in the `Tools` and `Wizards` folders.
+
 ## ⚙️Setting up Python on Windows
 
 You can first check if Python is already installed on your system through one of the following methods:
@@ -29,9 +49,15 @@ To **install Python** on your system, follow these steps:
    
    - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
    
-   - Run `pip install pywin32 ipykernel` to install pywin32 and ipykernel (default kernel used by Jupyter Notebooks)
+   - Run the following command to install pywin32 and ipykernel (default kernel used by Jupyter Notebooks)
+      ```bash
+      pip install pywin32 ipykernel
+      ```
    
-   - Optionally, additional Python libraries used across the repository examples can be installed running: `pip install pandas openpyxl matplotlib`
+   - Optionally, additional Python libraries used across the repository examples can be installed running:
+      ```bash
+      pip install pandas openpyxl matplotlib numpy
+      ```
 
 ## ⚙️Setting up Jupyter Notebook on Windows
 
@@ -40,8 +66,16 @@ Ensure that Python is already installed on your system, then follow these steps:
 **Install Jupyter Notebook**:
 
 - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
-- Run: `pip install notebook`
-- If you get a "pip not recognized" error, try: `python -m pip install notebook` 
+
+- Run:
+   ```bash
+   pip install notebook
+   ```
+
+- If you get a `pip not recognized` error, try:
+   ```bash
+   python -m pip install notebook
+   ```
 
 ## 🚀 How to Run
 
@@ -77,7 +111,16 @@ If you prefer a more comprehensive scientific Python environment:
 
 If you want to convert your Jupyter Notebooks to Python scripts, you can do so through the `nbconvert` library:
 
-1. Install the library: `pip install nbconvert`
-2. Convert your script: `jupyter nbconvert --to script myNotebook.ipynb` (use your notebook filename instead of `myNotebook.ipynb`)
+1. Install the library:
+   ```bash
+   pip install nbconvert
+   ```
 
-To convert all notebooks within a folder, the following command can be used: `jupyter nbconvert --to script *.ipynb`
+2. Convert your script: (use your notebook filename instead of `myNotebook.ipynb`)
+   ```bash
+   jupyter nbconvert --to script myNotebook.ipynb
+   ```
+   To convert all notebooks within a folder, the following command can be used:
+   ```bash
+   jupyter nbconvert --to script *.ipynb
+   ```

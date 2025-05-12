@@ -1,0 +1,1 @@
+# Placeholder file to flag shared folder as module
