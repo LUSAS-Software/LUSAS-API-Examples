@@ -20,6 +20,7 @@ It is recommended that beginners start from the `Jupyter Notebook` folder, with 
 | Attributes | Create/assign materials              | 12_Create_and_assign_material.py |
 | Attributes | Create/assign supports               | 13_Create_and_assign_supports.py |
 | Attributes | Create/assign loads                  | 14_Create_and_assign_loads.py    |
+| Attributes | Create a simply supported beam       | 15_Simply_Supported_Beam.py      |
 | Analyses   | Create/solve analyses and loadcases  | 20_Create_and_Run_Analyses_and_Loadcases.py |
 | Analyses   | Create Combinations and Envelopes    | 21_Create_Combinations_and_Envelopes.py |
 | Analyses   | Create Coupled Structural-Thermal Analysis        | 22_Coupled_Structural_Thermal_Analysis.py |
