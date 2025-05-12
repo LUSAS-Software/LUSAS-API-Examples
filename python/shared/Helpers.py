@@ -356,7 +356,7 @@ def delete_all_database_contents(db:'IFDatabase'):
 
 def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
     """
-    Get all loadcases of an analysis. In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
+    Get all loadcases of an analysis. In v22+, this can be acquired directly from the analysis object as analysis.getLoadcases().
 
     Args:
         analysis (IFAnalysis): Analysis object

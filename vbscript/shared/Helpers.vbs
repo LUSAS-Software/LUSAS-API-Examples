@@ -153,7 +153,7 @@ Sub delete_all_database_contents(db)
 End Sub
 
 ' Function to get all loadcases of an analysis
-' TODO: In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
+' In v22+, this can be acquired directly from the analysis object as analysis.getLoadcases().
 Function get_Analysis_Loadcases(db, analysis)
     analysisName = analysis.getName()
     get_Analysis_Loadcases = db.getLoadsets("loadcase", "all", analysisName)

@@ -35,7 +35,7 @@ newLoadcase.setGravityFactor(1.0)
 import shared.Helpers as Helpers
 Helpers.initialise(lusas)
 loadcases = Helpers.get_Analysis_Loadcases(structAnalysis)
-# TODO: In v22.0 the Helpers function is not needed anymore, as the analysis.getLoadcases() method is available in the API
+# In v22+ the Helpers function is not required as the analysis.getLoadcases() method is available:
 #loadcases : list['IFLoadcase'] = structAnalysis.getLoadcases()
 
 # Print loadcase names

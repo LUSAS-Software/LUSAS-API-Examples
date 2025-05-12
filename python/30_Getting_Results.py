@@ -41,7 +41,7 @@ start = time.time()
 # Print displacements (model units)
 print("Displacement results:")
 for n in targetNodes:
-    dx = n.getResults("Displacement", "DX") # TODO: May need [0] for versions >v21.1
+    dx = n.getResults("Displacement", "DX")
     dy = n.getResults("Displacement", "DY")
     dz = n.getResults("Displacement", "DZ")
     print(dx, dy, dz)
@@ -64,10 +64,6 @@ for n in targetNodes:
     fz = n.getResults("Reaction", "FZ")
     if fz == 2.2250738585072014e-308:
         fz = 0
-
-    # TODO: May need [0] for versions >v21.1, also check if this works in >v21.1
-    #fx = n.getResults("Reaction", "FX") if n.hasResults("Reaction", "FX") else 0
-
     print(fx, fy, fz)
 
     total_fx += fx
@@ -108,7 +104,7 @@ for e in targetElements:
         if stressType == "Thick 3D Beam":
             # Get bending moment My for each internal point
             for i in range(0, e.countInternalPoints()):
-                my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My") # TODO: May need [0] for versions >v21.1,
+                my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My")
                 print(my)
             # Or get the internal results as an array
             my = e.getInternalResultsArray("Force/Moment - Thick 3D Beam", "My")
