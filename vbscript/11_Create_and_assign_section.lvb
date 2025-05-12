@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      04b_Create_and_assign_section.lvb
+' Example:      11_Create_and_assign_section.lvb
 ' Description:  Creates and assigns a section
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-28

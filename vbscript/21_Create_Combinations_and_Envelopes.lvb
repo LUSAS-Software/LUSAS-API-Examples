@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      05b_Create_Combinations_and_Envelopes.lvb
+' Example:      21_Create_Combinations_and_Envelopes.lvb
 ' Description:  Creates combinations and envelopes
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-28

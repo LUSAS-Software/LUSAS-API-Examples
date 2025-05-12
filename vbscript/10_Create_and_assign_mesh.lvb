@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      04a_Create_and_assign_mesh.lvb
+' Example:      10_Create_and_assign_mesh.lvb
 ' Description:  Creates and assigns meshes
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-28

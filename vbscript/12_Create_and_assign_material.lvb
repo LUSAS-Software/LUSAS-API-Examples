@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      04c_Create_and_assign_material.lvb
+' Example:      12_Create_and_assign_material.lvb
 ' Description:  Creates and assigns materials
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-28

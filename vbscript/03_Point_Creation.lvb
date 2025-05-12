@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      02a_Point_Creation.lvb
+' Example:      3_Point_Creation.lvb
 ' Description:  Creates points
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-25

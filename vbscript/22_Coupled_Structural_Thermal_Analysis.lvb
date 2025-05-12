@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      05b_Coupled_Structural_Thermal_Analysis.lvb
+' Example:      22_Coupled_Structural_Thermal_Analysis.lvb
 ' Description:  Creates coupled Thermal-Structural analysis
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-28

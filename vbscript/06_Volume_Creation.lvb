@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      02d_Volume_Creation.lvb
+' Example:      6_Volume_Creation.lvb
 ' Description:  Creates volumes
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-25

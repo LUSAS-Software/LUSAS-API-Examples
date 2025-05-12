@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      06b_Getting_Results_PRW.lvb
+' Example:      31_Getting_Results_PRW.lvb
 ' Description:  Extract results using a Print Results Wizard (PRW)
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-28

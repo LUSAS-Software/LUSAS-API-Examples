@@ -1,7 +1,7 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      02e_Get_Existing_Geometries.lvb
+' Example:      7_Get_Existing_Geometries.lvb
 ' Description:  Use ObjectSets (Database, Groups, Selection etc) and filter geometries
 ' 
 
