@@ -29,4 +29,4 @@ db.setAnalysisCategory("3D")
 db.setVerticalDir("Z")
 
 # Set the unit system
-db.setModelUnits("kN,m,kg,s,C")
+db.setModelUnits(lusas.getUnitSet("kN,m,kg,s,C"))

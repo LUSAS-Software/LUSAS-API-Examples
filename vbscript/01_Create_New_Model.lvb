@@ -20,4 +20,4 @@ Call database.setAnalysisCategory("3D")
 Call database.setVerticalDir("Z")
 
 ' Set the unit system
-Call database.setModelUnits("kN,m,kg,s,C")
+Call database.setModelUnits(getUnitSet("N,m,kg,s,C"))

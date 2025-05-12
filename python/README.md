@@ -1,4 +1,4 @@
-# PYthon Examples
+# Python Examples
 
 This folder contains Python scripts that interact with LUSAS creating model features or accessing analysis results.
 
