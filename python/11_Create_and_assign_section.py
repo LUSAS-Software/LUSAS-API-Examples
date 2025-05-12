@@ -7,7 +7,7 @@
 
 # Libraries:
 # LUSAS LPI module (easier connection and autocomplete)
-from shared.LPI_21_1 import *
+from shared.LPI import *
 # Helpers module (easier geometry creation)
 import shared.Helpers as Helpers
 

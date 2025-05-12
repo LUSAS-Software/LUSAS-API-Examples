@@ -24,7 +24,7 @@ lusas.getTextWindow().writeLine("Hello world!")
 # You can acquire the `lusas` object with the `get_lusas_modeller()` method, while notice that `writeLine()` is now a documented on mouse over
 # (if your IDE supports it).
 
-from shared.LPI_21_1 import *
+from shared.LPI import *
 
 lusas = get_lusas_modeller()
 lusas.getTextWindow().writeLine("Hello world! (LPI module)")

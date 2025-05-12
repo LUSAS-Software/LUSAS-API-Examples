@@ -8,7 +8,7 @@
 # and for creating geometric attributes based on parametric definitions.
 # The library must be initialised with the a reference to LUSAS Modeller before using these functions.
 
-from shared.LPI_21_1 import *
+from shared.LPI import *
 
 def initialise(modeller:'IFModeller'):
     global lusas
