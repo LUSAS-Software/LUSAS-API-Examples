@@ -51,7 +51,7 @@ To **install Python** on your system, follow these steps:
    
    - Run the following command to install pywin32 and ipykernel (default kernel used by Jupyter Notebooks)
       ```bash
-      pip install pywin32 ipykernel
+      pip install pywin32==308 ipykernel
       ```
    
    - Optionally, additional Python libraries used across the repository examples can be installed running:
