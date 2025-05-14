@@ -29,7 +29,7 @@ You can first check if Python is already installed on your system through one of
 1. **Using Command Prompt**:
    - Press `Win + R`, type `cmd` and press Enter (this opens the command prompt)
    - Type `python --version` or `python -V` and press Enter
-   - If Python is installed, you'll see the version number (like "Python 3.10.5")
+   - If Python is installed, you'll see the version number (like "Python 3.13.3")
    - You can also try `py --version` as an alternative
 2. **From the Start Menu**:
    - Search for "Python" in your Start menu
@@ -39,7 +39,7 @@ To **install Python** on your system, follow these steps:
 
 1. **Install Python**:
    
-   - Download the latest Python installer from [python.org](https://python.org)
+   - Download a Python installer from [python.org](https://python.org), preferably v3.13.*
    
    - During installation, make sure to **check "Add Python to PATH"**
    
