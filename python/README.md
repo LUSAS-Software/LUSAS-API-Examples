@@ -125,7 +125,7 @@ call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell""
 
 2. Python error `AttributeError: module 'win32com.gen_py.XXXXXXXXXXXXXXXX' has not attribute 'CLSIDToClassMap'`
 
-   First, ensure that you are using the `LPI.py` or `LPI_22_2.py` library and that the object at the error line has the called method.
+   First, ensure that you are using the `LPI.py` or `LPI_22_0.py` library and that the object at the error line has the called method.
    Python is case sensitive which may sometimes cause issues with pywin32. These issues are usually fixed by deleting the pywin32 cache. To do so, follow these steps:
    - Navigate to `%TEMP%/gen_py` and open the python version folder (e.g. 3.13)
    - Delete the folder that matches the error message `XXXXXXXXXXXXXXXX`
