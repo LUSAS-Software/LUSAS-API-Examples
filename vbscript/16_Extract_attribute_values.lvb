@@ -2,19 +2,24 @@
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
 ' Example:      16_Extract_attribute_values.lvb
-' Description:  This example asks the user for an attribute name or type and extracts all attributes' properties in a data grid.
+' Description:  This example asks the user for an attribute name or type and extracts all 
+'               attributes' properties in a CSV or a LUSAS data grid.
 ' Author:       Finite Element Analysis Ltd
 ' Date:         2025-04-29
 ' 
 $ENGINE=VBSCRIPT
 
+' Change this to true to show attributes in a CSV instead of a grid in lusas
+showInCsv = true
+csvFileName = "attributeValues"
 
 ' Prompt user for typeName and attributeName (single input box)
-inputString = InputBox("Enter attribute type and/or attribute name (examples: material or material/iso1 or iso1) or type 'all' to extract all attributes' properties")
+defaultEntry = ""
+inputString = InputBox("Enter attribute type and/or attribute name (examples: material or material/iso1 or iso1) or type 'all' to extract all attributes' properties", "Show Attribute Properties", defaultEntry)
 inputString = Trim(inputString)
 
 ' Stop execution if Cancel is pressed
-If Not IsEmpty(inputString) Then
+If Len(inputString) > 0 Then
 	' Get the attribute type and name from the input string
 	splitInput = Split(inputString, "/")
 	attrTypeOrName = splitInput(0)
@@ -34,24 +39,73 @@ If Not IsEmpty(inputString) Then
 	if Ubound(attributes) < 0 Then
 		MsgBox "No attributes found with type or name: " & attrTypeOrName
 	else
-		' Extract properties for the found attributes in a grid window
-        Set grid = createGridWindow(nextGridWindowID())
-		
-		For Each attr in attributes
-			data = getAttributeProperties(attr)
-			' Create grid tab
-			title = attr.getName() & " (" & attr.getAttributeType() & ")"
-			Call grid.createTab(title, title)
-        	Call grid.setColHeaders(title, Array("Property", "Type", "Value", "Units"))
-        	Call grid.setData(title, data, False, False, False)
-		Next
+
+		If showInCsv Then
+			' Filename with timestamp (YYYYMMDD_HHMMSS)
+			Dim timestamp
+			timestamp = Year(Now) _
+					& Right("0" & Month(Now),2) _
+					& Right("0" & Day(Now),2) _
+					& "_" & Right("0" & Hour(Now),2) _
+					& Right("0" & Minute(Now),2) _
+					& Right("0" & Second(Now),2)
+
+			' Use it in the CSV filename
+			csvFile = csvFileName & "_" & timestamp & ".csv"
+			
+			' Create a FileSystemObject
+			Set objFSO = CreateObject("Scripting.FileSystemObject")
+	    	Set objFile = objFSO.OpenTextFile(csvFile, 8, True)' Append
+
+			' Write attributes in a table
+			objFile.WriteLine "Attribute Type, Attribute Name, Value Name, Value Type, Value, Units"
+			For Each attr In attributes
+				' Get 2D array with attribute values
+				data = getAttributeProperties(attr)
+				attributeType = attr.getAttributeType()
+				attributeName = attr.getName()
+				' Add attribute values in the table
+				For i = LBound(data) To UBound(data)
+					valueName = data(i, 0)
+					valueType = data(i, 1)
+					value = data(i, 2)
+					valueUnits = data(i, 3)
+					objFile.WriteLine attributeType & ", " & attributeName & ", " & valueName & ", " & valueType & ", " & value & ", " & valueUnits
+				Next
+			Next
+			
+			' Close the file
+			objFile.Close
+			Set objFile = Nothing
+
+			' Open the CSV file in Excel
+			Set shell = CreateObject("WScript.Shell")
+			shell.Run csvFile, 1, False
+			Set shell = Nothing
+			
+			' Clean up
+			Set objFSO = Nothing
+		Else
+			' Extract properties for the found attributes in a grid window
+			Set grid = createGridWindow(nextGridWindowID())
+
+			' Multiple grid tabs: one per attribute
+			For Each attr In attributes
+				data = getAttributeProperties(attr)
+				title = attr.getName() & " (" & attr.getAttributeType() & ")"
+				Call grid.createTab(title, title)
+				Call grid.setColHeaders(title, Array("Property", "Type", "Value", "Units"))
+				Call grid.setData(title, data, False, False, False)
+			Next
+		End If
+
 	End if
 End If
 
 
 ' Function to get attributes by type or name
 Function getAttributesByTypeOrName(attrTypeOrName)
-    ' Ignore error due to invalid attribute type
+	' Ignore error due to invalid attribute type
 	On Error Resume Next 
 	' Try to get the attributes assuming the type was given
 	attributes = db.getAttributes(attrTypeOrName)
@@ -78,54 +132,54 @@ Function getAttributesByTypeOrName(attrTypeOrName)
 End Function
 
 Function getAttributeProperties(attr)
-    Dim attributeName, attributeType, valueNames, valueName
-    Dim rowsCount, i, j, strValues, newRowIndex
+	Dim attributeName, attributeType, valueNames, valueName
+	Dim rowsCount, i, j, strValues, newRowIndex
 
-    attributeName = attr.getName()
-    attributeType = attr.getAttributeType()
-    valueNames = attr.getValueNames()
+	attributeName = attr.getName()
+	attributeType = attr.getAttributeType()
+	valueNames = attr.getValueNames()
 
 	' Declare a multidimensional array to store all properties
 	Dim propertiesArray()
 	ReDim propertiesArray(-1) ' Array with Array(Name, Type, Value, Units)
 	
-    If Not IsEmpty(valueNames) And UBound(valueNames) > -1 Then
-        For Each valueName In valueNames
-            valueType = attr.getValueType(valueName)
-            valueUnits = attr.getValueUnits(valueName)
-            rowsCount = attr.countRows(valueName)
+	If Not IsEmpty(valueNames) And UBound(valueNames) > -1 Then
+		For Each valueName In valueNames
+			valueType = attr.getValueType(valueName)
+			valueUnits = attr.getValueUnits(valueName)
+			rowsCount = attr.countRows(valueName)
 
-            If valueType = "Dispatch" Then
-                ' Skip it
-            Else
-                If rowsCount > 0 Then
-                    ' Handle case where rowsCount > 0 (retrieve values row by row)
-                    For i = 0 To rowsCount - 1
+			If valueType = "Dispatch" Then
+				' Skip it
+			Else
+				If rowsCount > 0 Then
+					' Handle case where rowsCount > 0 (retrieve values row by row)
+					For i = 0 To rowsCount - 1
 						strValues = getValueAsStrArray(attr.getValue(valueName, i))
 						For j = LBound(strValues) To UBound(strValues)
 							newRowIndex = UBound(propertiesArray) + 1
 							ReDim Preserve propertiesArray(newRowIndex)
 							propertiesArray(newRowIndex) = Array(valueName, valueType, strValues(j), valueUnits)
 						Next
-                    Next
-                Else
+					Next
+				Else
 					strValues = getValueAsStrArray(attr.getValue(valueName))
 					For j = LBound(strValues) To UBound(strValues)
 						newRowIndex = UBound(propertiesArray) + 1
 						ReDim Preserve propertiesArray(newRowIndex)
 						propertiesArray(newRowIndex) = Array(valueName, valueType, strValues(j), valueUnits)
 					Next
-                End If
-            End If
-        Next
-    Else
-        ' Handle case where no value names are available
+				End If
+			End If
+		Next
+	Else
+		' Handle case where no value names are available
 		ReDim Preserve propertiesArray(0)
-        propertiesArray(0) = Array("N/A", "N/A", "N/A", "N/A")
-    End If
+		propertiesArray(0) = Array("N/A", "N/A", "N/A", "N/A")
+	End If
 
 	' Convert single-dimensional array of arrays to a 2-dimensional array
-    Dim finalArray()
+	Dim finalArray()
 	ReDim finalArray(UBound(propertiesArray), 3)
 	For i = LBound(propertiesArray) To UBound(propertiesArray)
 		For j = 0 To 3
@@ -176,7 +230,7 @@ Function getValueAsStrArray(value)
 		strValues(0) = "N/A (error)"
 		Err.Clear
 	End If
-    On Error GoTo 0  ' Always reset error handling
+	On Error GoTo 0  ' Always reset error handling
 	
 	getValueAsStrArray = strValues
 End Function
