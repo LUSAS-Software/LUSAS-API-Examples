@@ -35,7 +35,7 @@ These examples are tailored for **LUSAS v22.0** (see repository branches for oth
 
 ## 🤝 Ask Questions / Contribute
 
-Feel free to ask LPI related questions by creating an Issue, or contribute to this repository by sharing your own examples, either through a Pull Requests or by openign an Issue!
+Feel free to ask LPI related questions by creating an Issue, or contribute to this repository by sharing your own examples, either through a Pull Requests or by opening an Issue!
 
 ## 📄 License
 
