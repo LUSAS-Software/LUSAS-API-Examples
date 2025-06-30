@@ -141,6 +141,9 @@ call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell""
    
    It is noted that in LUSAS v22+, it may be preferable to use `lusas.enableUI(False)` instead to avoid hiding the modeller window. The UI will then remain unresponsive until `lusas.enableUI(True)` is called.
 
+5. ModuleNotFoundError
+
+   The `ModuleNotFoundError: No module named 'shared'` error means Python can’t find the `LPI.py` file and the `shared` folder. To fix it, copy the `shared` folder into the same folder where your Python script is located.
 
 ## 🔗 Links
 
