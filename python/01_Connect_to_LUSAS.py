@@ -9,7 +9,7 @@
 import win32com.client as win32
 
 # Connect to a running LUSAS Modeller or create a new instance using the pywin32 module.
-lusas = win32.gencache.EnsureDispatch("Lusas.Modeller.22.0")
+lusas = win32.dynamic.Dispatch("Lusas.Modeller.22.0")
 # Notes: - To target different LUSAS versions, change the version number e.g from "Lusas.Modeller.22.0" to "Lusas.Modeller.21.1"
 #        - If you get the error 'Import "win32com.client" could not be resolved', then the pywin32 Python library is missing.
 #          You can install the missing library by running the command "pip install pywin32==308" in the terminal.
