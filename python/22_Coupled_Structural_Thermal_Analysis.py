@@ -24,9 +24,6 @@ if len(allAnalyses) > 1 or allAnalyses[0].getName() != "Analysis 1":
 
 # Get the structural analysis
 structAnalysis = database.getAnalysis("Analysis 1")
-# getAnalysis() returns an IFAnalysisBaseClass object, but we know that the structural analysis is of type IFAnalysis
-# so we can cast it using win32.CastTo()
-structAnalysis : 'IFAnalysis' = win32.CastTo(structAnalysis, 'IFAnalysis')
 
 ## Create new thermal analysis
 thermalAnalysis = database.createAnalysisThermal("Analysis 1 (Thermal)", True, "Nonlinear and transient")

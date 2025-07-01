@@ -416,16 +416,3 @@ def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:f
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
     
 
-
-
-def get_loadcase(id:int) -> IFLoadcase:
-    """Gets a loadcase with the given ID. 
-       This function provides a type hint for a loadcase, since the underlying LPI function returns an IFLoadset
-    Args:
-        id (int): ID of the loadcase
-
-    Returns:
-        IFLoadcase: Loadcase object
-    """    
-    loadset = lusas.db().getLoadset(id)
-    return loadset
