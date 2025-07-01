@@ -33,7 +33,7 @@ def create_point(x:float, y:float, z:float) -> 'IFPoint':
     geom_data.addCoords(x, y, z)
     # Create the point and return it. 
     # Note that createPoint returns and IFObjectSet from which we can get the point.
-    return win32.CastTo(lusas.database().createPoint(geom_data).getObject("Point"), "IFPoint")
+    return lusas.database().createPoint(geom_data).getObject("Point")
 
 def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float, z2:float,) -> 'IFLine':
     """Helper function to create a line from coordinates
@@ -77,7 +77,7 @@ def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     obs.add(p1)
     obs.add(p2)
     # Create the line, get the line object array from the returned object set
-    return win32.CastTo(obs.createLine(geom_data).getObject("Line"), "IFLine")
+    return obs.createLine(geom_data).getObject("Line")
 
 def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     """Helper function to create a straight line from two point coordinates defined 
@@ -101,7 +101,7 @@ def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     geom_data.addCoords(p2[0], p2[1], p2[2])    # Set the coordinates of the second point X,Y,Z
 
     # Create the line, get the line objects from the returned object set
-    return win32.CastTo(lusas.database().createLine(geom_data).getObject("Line"), "IFLine")
+    return lusas.database().createLine(geom_data).getObject("Line")
 
 def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -> IFSurface:
     """Helper function to create a surface from coordinates
@@ -426,16 +426,3 @@ def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:f
     util.setDimensions(['B', 'D'], [breadth, depth])
 
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
-    
-def get_loadcase(db:IFDatabase, id:int) -> IFLoadcase:
-    """Get a loadcase from the database by its ID
-
-    Args:
-        db (IFDatabase): Reference to the database
-        id (int): ID of the loadcase
-
-    Returns:
-        IFLoadcase: Loadcase object
-    """
-    loadset = db.getLoadset(id)
-    return win32.CastTo(loadset, "IFLoadcase")
