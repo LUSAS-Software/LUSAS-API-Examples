@@ -60,9 +60,7 @@ attr = None
 # Export the results defined by the Print Results Wizard
 
 # Get the Print Results Wizard attribute object
-genericAttr : 'IFAttribute' = database.getAttribute("Print Results Wizard", prw_name)
-# Note the getAttribute function returns the IFAttribute base class and so we need to cast this to the IFResultsWizard type in order to call the showResults() function
-prwAttr : 'IFPrintResultsWizard' = win32.CastTo(genericAttr, "IFPrintResultsWizard")
+prwAttr : 'IFAttribute' = database.getAttribute("Print Results Wizard", prw_name)
 
 # Display the table of results
 table = prwAttr.showResults()
