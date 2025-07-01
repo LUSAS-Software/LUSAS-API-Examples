@@ -33,7 +33,7 @@ def create_point(x:float, y:float, z:float) -> 'IFPoint':
     geom_data.addCoords(x, y, z)
     # Create the point and return it. 
     # Note that createPoint returns and IFObjectSet from which we can get the point.
-    return win32.CastTo(lusas.database().createPoint(geom_data).getObject("Point"), "IFPoint")
+    return lusas.database().createPoint(geom_data).getObject("Point")
 
 def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float, z2:float,) -> 'IFLine':
     """Helper function to create a line from coordinates
@@ -55,7 +55,7 @@ def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float,
     geometry_data.setCreateMethod("straight")
     geometry_data.addCoords(x1, y1, z1)
     geometry_data.addCoords(x2, y2, z2)
-    newLine:IFLine = lusas.database().createLine(geometry_data).getObjects("Line")[0]
+    newLine:IFLine = lusas.database().createLine(geometry_data).getObject("Line")
     return newLine
 
 def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
@@ -77,7 +77,7 @@ def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     obs.add(p1)
     obs.add(p2)
     # Create the line, get the line object array from the returned object set
-    return win32.CastTo(obs.createLine(geom_data).getObject("Line"), "IFLine")
+    return obs.createLine(geom_data).getObject("Line")
 
 def create_line(p1:list, p2:list) -> 'IFLine':
     """Helper function to create a straight line from two point coordinates defined 
@@ -101,7 +101,7 @@ def create_line(p1:list, p2:list) -> 'IFLine':
     geom_data.addCoords(p2[0], p2[1], p2[2])    # Set the coordinates of the second point X,Y,Z
 
     # Create the line, get the line objects from the returned object set
-    return win32.CastTo(lusas.database().createLine(geom_data).getObject("Line"), "IFLine")
+    return lusas.database().createLine(geom_data).getObject("Line")
 
 def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -> IFSurface:
     """Helper function to create a surface from coordinates
@@ -119,7 +119,7 @@ def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -
     geometry_data.setLowerOrderGeometryType("coordinates")
     for i in range(len(x)):
         geometry_data.addCoords(x[i], y[i], z[i])
-    surf : IFSurface = lusas.db().createSurface(geometry_data).getObjects("Surface")[0]
+    surf : IFSurface = lusas.db().createSurface(geometry_data).getObject("Surface")
     return surf
 
 def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
@@ -140,7 +140,7 @@ def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     surfsObj = lusas.newObjectSet()
     surfsObj.add(surfaces)
     # Create the volume using the surfaces
-    vlm : IFVolume = lusas.db().createVolume(geometry_data).getObjects("Volume")[0]
+    vlm : IFVolume = lusas.db().createVolume(geometry_data).getObject("Volume")
     return vlm
 
 def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
@@ -428,5 +428,4 @@ def get_loadcase(id:int) -> IFLoadcase:
         IFLoadcase: Loadcase object
     """    
     loadset = lusas.db().getLoadset(id)
-    # Cast the return type from IFLoadset to IFLoadcase so loadcase functions can be called.
-    return win32.CastTo(loadset, "IFLoadcase")
+    return loadset
