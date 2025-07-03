@@ -22,8 +22,8 @@ These examples are tailored for **LUSAS v22.0** (see repository branches for oth
 
 ## Prerequisites
 
-- Installed LUSAS v22+ (most scripts will work with the free version but the use of a licenced version is recommended)
-- For Python and Jupiter Notebook examples:
+- Installed LUSAS v22+ (most scripts will work with the free version but the use of a licensed version is recommended)
+- For Python and Jupyter Notebook examples:
   - Installed Python (v3+)
 - For C# examples:
   - Visual Studio 2019

@@ -1,6 +1,6 @@
 # .NET Examples (C# and VB.NET)
 
-This folder contains information about connecting to LUSAS and LPI through .NET (e.i. VB.NET and C#). 
+This folder contains information about connecting to LUSAS and LPI through .NET (i.e. VB.NET and C#). 
 
 ### 🚀 Why Use .NET Over a Scripting Language?
 
