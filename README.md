@@ -22,7 +22,7 @@ These examples are tailored for **LUSAS v21.1** (see repository branches for oth
 
 ## Prerequisites
 
-- Licensed **LUSAS**
+- Installed LUSAS v22+ (most scripts will work with the free version but the use of a licenced version is recommended)
 - For Python and Jupiter Notebook examples:
   - Installed Python (v3+)
 - For C# examples:
@@ -33,9 +33,12 @@ These examples are tailored for **LUSAS v21.1** (see repository branches for oth
 
     For step by step installation guides, see each relevant directory.
 
-## 🤝 Ask Questions / Contribute
+## 🤝 Contributing
 
-Feel free to ask LPI related questions by creating an Issue, or contribute to this repository by sharing your own examples, either through a Pull Requests or by opening an Issue!
+We welcome contributions!  You can contribute by:
+
+*   **Asking API Questions:** Open an [Issue](https://github.com/LUSAS-Software/LUSAS-API-Examples/issues) for questions.
+*   **Sharing Examples:** Submit a [Pull Request](https://github.com/LUSAS-Software/LUSAS-API-Examples/pulls) or open an [Issue](https://github.com/LUSAS-Software/LUSAS-API-Examples/issues) with your code.
 
 ## 📄 License
 

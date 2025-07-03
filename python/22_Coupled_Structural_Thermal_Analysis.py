@@ -63,7 +63,7 @@ control.setValue("CouplingReadInterval", 1.0)       # Time between each read (in
 control.setValue("CouplingWriteInterval", 1.0)      # Time between each write (in model units, e.g. seconds)
 control.setNonlinearManual()                        # Set nonlinear incrementation with manual (loading data in each loadcase is specified separately)
 control.setTimeDomainConsolidation(50e6)            # Initial time step (in model units, e.g. seconds)
-control.setValue("MinTimeStepFactor", 0.0)            # Minimum time step to use (in model units, e.g. seconds)
+control.setValue("MinTimeStepFactor", 0.0)          # Minimum time step to use (in model units, e.g. seconds)
 control.setValue("MaxTimeStepFactor", 100.0E6)      # Maximum time step to use (in model units, e.g. seconds)
 control.setValue("TotalResponseTime", 100.0E6)      # Total response time (in model units, e.g. seconds)
 

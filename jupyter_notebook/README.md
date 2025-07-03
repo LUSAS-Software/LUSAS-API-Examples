@@ -10,9 +10,9 @@ This directory includes plethora of examples going through most of the LPI. Jupy
 | General    | Handle string parsing and returned values                       | 02 Expression Parsing and Return values.ipynb |
 | Geometry   | Creates points, lines, surfaces and volumes                     | 03 Geometry creation.ipynb    |
 | Geometry   | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | 04 Get Geometries, Groups, Selection and ObjectSets.ipynb |
-| Geometry   | Creates a simple multistorey 3D Frame geometry out of lines     | 05 Simple 3D Frame.ipynb      |
-| Attributes | Creates and solves a steel beam cantilver model by creating basic mesh, geometric, material, support and loading attributes. | 10 Simple Cantilever beam.ipynb |
-| Attributes / Results | Creates and solves a steel beam simply supported model and procceses the results. | 11 Simply Supported Line Beam.ipynb |
+| Geometry   | Creates a simple multi-storey 3D Frame geometry out of lines     | 05 Simple 3D Frame.ipynb      |
+| Attributes | Creates and solves a steel beam cantilever model by creating basic mesh, geometric, material, support and loading attributes. | 10 Simple Cantilever beam.ipynb |
+| Attributes / Results | Creates and solves a steel beam simply supported model and processes the results. | 11 Simply Supported Line Beam.ipynb |
 | Attributes | Extract all the values of geometric or material attributes in formats that are easier for reviewing and checking models (e.g. spreadsheets) | 16 Extract Attribute Values.ipynb |
 | Attributes | Creates a 2D bridge with rigid constraints (links) between deck beams and pier legs. | 17 Rigid Constraints.ipynb |
 | Attributes | Use of design attributes to hold user data                      | 18 Design Attributes.ipynb    |
@@ -21,6 +21,8 @@ This directory includes plethora of examples going through most of the LPI. Jupy
 | Results    | Create User Defined Results                                     | 32 User Defined Results.ipynb |
 
 Additional examples are included in the `Tools` and `Wizards` folders.
+
+Some more examples can be found in [this repository](https://github.com/CadairIdris/LusasNoteBooks/tree/master) by @CadairIdris.
 
 ## ⚙️Setting up Python on Windows
 
