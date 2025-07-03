@@ -126,3 +126,10 @@ If you want to convert your Jupyter Notebooks to Python scripts, you can do so t
    ```bash
    jupyter nbconvert --to script *.ipynb
    ```
+
+## 🔍🐛 Troubleshooting
+
+1. **Python IntelliSense (autocomplete) not working in VSCode Jupyter blocks**
+   First ensure that the `LPI` library is loaded from the `shared` folder (e.g. `from shared.LPI import *`). If IntelliSense is not across all codeblocks, restart VSCode.
+
+For python related errors, see the [Python troubleshooting section](../python/README.md).
