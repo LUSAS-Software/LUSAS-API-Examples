@@ -14,6 +14,7 @@ import shared.Helpers as Helpers
 # Connect on LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
+# Throw error if a model is open and not saved
 if lusas.existsDatabase() and lusas.db().isModified():
     raise Exception("This script will create a new model. Please save or close the current model and try again")
 
