@@ -2,7 +2,7 @@
 
 This folder contains Python scripts that interact with LUSAS creating model features or accessing analysis results.
 
-It is recommended that beginners start from the `Jupyter Notebook` folder, with contains a plethora of examples in a friendly Notebook framework of Python blocks.
+It is recommended that beginners start from the `Jupyter Notebook` folder, which contains a plethora of examples in a friendly Notebook framework of Python blocks.
 
 ## 📚 Examples Included
 
