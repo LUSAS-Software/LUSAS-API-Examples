@@ -114,14 +114,16 @@ call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell""
 
 1. **Command prompt error `python: command not found` or `The term 'python' is not recognized`**
 
-   These error will be thrown in CMD or PowerShell when the python installation path is not in the Windows `PATH`. To solve this, follow these steps:
-   - In the Windows search bar, type python 3, right-click on it and select `Open file location` and do the same on the highlighted file (e.g. `Python 3.10 (32-bit)`). You should not see the `python.exe`.
-   - Copy the path of the open explorer window and close it
-   - On your desktop, right click on `This PC` and select `Properties`, find and click the `Advanced system settings` link to open the System Properties.
+   This error is thrown when the python installation path is not in the Windows `PATH`. To solve this, follow these steps:
+   - In the Windows search bar, type python 3 and right-click on the first found item (e.i. `Python 3.13.3 (32bit)`) selecting `Open file location`. If no items are found, then python is not install on the machine.
+   - In the open folder, right-click on the highlighted file (e.g. `Python 3.10 (32-bit)`) and select `Open file location` again. 
+   - In the open folder, verify that you see the `python.exe`. Copy the folder path and close the folder.
+   - On your desktop, right click on `This PC` and select `Properties`.
+   - In the open window, find and click the `Advanced system settings` link to open the System Properties.
    - In the open window, click on `Environment Variables...`, and under the User Variables, select the `Path` variable and click edit.
    - In the open window, click `new` and paste the copied python path.
    - Click OK on all windows to close them.
-   - Now you should be able to run python commands in the the command prompt.
+   - Now you can run python commands in the command prompt.
 
 2. **Python error `AttributeError: module 'win32com.gen_py.XXXXXXXXXXXXXXXX' has not attribute 'CLSIDToClassMap'`**
 
