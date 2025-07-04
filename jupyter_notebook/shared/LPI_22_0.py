@@ -300,7 +300,7 @@ class IFUnitSet(IFDispatch):
 		Return a description of the given dimensionality, using the definition of this 
 		Params:
 			dim (unsigned int): the packed dimensionality of the quantity to be described
-			lengthUnitSet (IFUnitSet, optional): The name of a unitset, or a pointer to a IFUnitSet object
+			lengthUnitSet (IFUnitSet, optional): The name of a unitset, or a pointer to a IFUnitSet object. Only used by dimensions that have a non-zero value for 'perLength'. This allows the return of values such as "mm²/m"
 			timescaleUnitSet (str, optional): "Seconds", "Minutes", "Hours" or "Days". Only used by dimensions that are in terms of solution time (like age)
 		Returns:
 			str: the returned description
@@ -1237,7 +1237,7 @@ class IFResultsCache(IFDispatch):
 		r"""
 		add a PRW utility to the list of utilities that will be used to create a cache just after solving the model. Note that only PRW utilities with the extent set to "all" may be used - others will yield an error message 
 		Params:
-			attr (IFPrintResultsWizard): The name or ID of a name, or a pointer to a IFPrintResultsWizard object
+			attr (IFPrintResultsWizard): The name or ID of a name, or a pointer to a IFPrintResultsWizard object.
 		Returns:
 			None: 
 		"""
@@ -1257,10 +1257,10 @@ class IFResultsCache(IFDispatch):
 		r"""
 		Call to delete all files containing cached results that belong to the given loadset 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
-			resFile (int, optional): default = 0   //
-			eigen (int, optional): default = -1  // -1 means 'not an eigenvalue'
-			harm (int, optional): default = -1  // -1 means 'not a harmonic'
+			ID (object): IFLoadset object, loadset ID or loadset name. -1 means 'all loadcases'
+			resFile (int, optional): default = 0
+			eigen (int, optional): default = -1  ( -1 means 'not an eigenvalue')
+			harm (int, optional): default = -1  ( -1 means 'not a harmonic')
 		Returns:
 			None: 
 		"""
@@ -1282,7 +1282,7 @@ class IFResultsCache(IFDispatch):
 		r"""
 		Call to delete all files containing cached results that are transformed by the given local coordinate 
 		Params:
-			localCoord (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoord (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 		Returns:
 			None: 
 		"""
@@ -1293,7 +1293,7 @@ class IFResultsCache(IFDispatch):
 		r"""
 		Call to delete all files containing cached results that are transformed by the given path 
 		Params:
-			path (IFReferencePath): The name or ID of a path, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a path, or a pointer to a IFReferencePath object.
 		Returns:
 			None: 
 		"""
@@ -2044,7 +2044,7 @@ class IFPolylineDefn(IFDispatch):
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. location on polyline
 		"""
 		pass
 
@@ -2055,7 +2055,7 @@ class IFPolylineDefn(IFDispatch):
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. tangent to polyline
 		"""
 		pass
 
@@ -2065,10 +2065,10 @@ class IFPolylineDefn(IFDispatch):
 		get the axes at the given normalised coordinate, nrmCoord=0.0 at the polyline start nrmCoord=1.0 at the polyline end 
 		Params:
 			nrmCoord (float): specified normalised coord
-			pOrigin (array of float): An array of 3 real numbers, representing 3d coordinates
-			pxAxis (array of float): An array of 3 real numbers, representing 3d coordinates
-			pyAxis (array of float): An array of 3 real numbers, representing 3d coordinates
-			pzAxis (array of float): An array of 3 real numbers, representing 3d coordinates
+			pOrigin (array of float): An array of 3 real numbers, representing 3d coordinates. location
+			pxAxis (array of float): An array of 3 real numbers, representing 3d coordinates. x axis
+			pyAxis (array of float): An array of 3 real numbers, representing 3d coordinates. y axis
+			pzAxis (array of float): An array of 3 real numbers, representing 3d coordinates. z axis
 		Returns:
 			None: 
 		"""
@@ -2118,7 +2118,7 @@ class IFProject(IFDispatch):
 		r"""
 		Remove a sub-model from this project. The sub-model must have been previously added with IFProject.addSubModel. It is not possible to remove the governing model. 
 		Params:
-			db (IFDatabase): The name or ID of a database, or a pointer to a IFDatabase object
+			db (IFDatabase): The name or ID of a database, or a pointer to a IFDatabase object.
 		Returns:
 			None: 
 		"""
@@ -2160,7 +2160,7 @@ class IFProject(IFDispatch):
 		r"""
 		Set the given database as "current", so that IFModeller.database will return it The "current" database can also be set implicitly via IFView.setCurrent and IFResultsContext.setActiveLoadset 
 		Params:
-			db (IFDatabase): The name or ID of a database, or a pointer to a IFDatabase object
+			db (IFDatabase): The name or ID of a database, or a pointer to a IFDatabase object.
 		Returns:
 			None: 
 		"""
@@ -2373,7 +2373,7 @@ class IFReportChapter(IFDispatch):
 		r"""
 		Adds a loadcase to be reported upon 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -2856,7 +2856,7 @@ class IFReport(IFDispatch):
 		Adds a graph chapter in the report 
 		Params:
 			chapterName (str): chapter name
-			graph (IFGraphWizard): The name or ID of a graphWizard, or a pointer to a IFGraphWizard object
+			graph (IFGraphWizard): The name or ID of a graphWizard, or a pointer to a IFGraphWizard object.
 			position (int, optional): position where this chapter will be added; if not specified, will be added at the end
 			isAppend (bool, optional): If false (the default), adds a normal chapter. If true, appends the contents of this chapter to the previous chapter.
 		Returns:
@@ -2870,7 +2870,7 @@ class IFReport(IFDispatch):
 		Adds a chapter with a model view in the report 
 		Params:
 			chapterName (str): chapter name
-			modelView (IFSavedView): The name or ID of a modelView, or a pointer to a IFSavedView object
+			modelView (IFSavedView): The name or ID of a modelView, or a pointer to a IFSavedView object.
 			position (int, optional): position where this chapter will be added; if not specified, will be added at the end
 			isAppend (bool, optional): If false (the default), adds a normal chapter. If true, appends the contents of this chapter to the previous chapter.
 		Returns:
@@ -2884,7 +2884,7 @@ class IFReport(IFDispatch):
 		Adds a chapter with a note in the report 
 		Params:
 			chapterName (str): chapter name
-			modelView (IFNote): The name or ID of a note, or a pointer to a IFNote object
+			modelView (IFNote): The name or ID of a note, or a pointer to a IFNote object.
 			position (int, optional): position where this chapter will be added; if not specified, will be added at the end
 			isAppend (bool, optional): If false (the default), adds a normal chapter. If true, appends the contents of this chapter to the previous chapter.
 		Returns:
@@ -2930,7 +2930,7 @@ class IFReport(IFDispatch):
 		r"""
 		Adds a saved view in the report's front page. Pass "Nothing" for no view in the front page. 
 		Params:
-			savedView (IFSavedView): The name or ID of a savedview, or a pointer to a IFSavedView object
+			savedView (IFSavedView): The name or ID of a savedview, or a pointer to a IFSavedView object.
 		Returns:
 			IFReport: 
 		"""
@@ -3219,7 +3219,7 @@ class IFAttribute(IFDispatch):
 		r"""
 		Deassigns this attribute from the object(s) given Optionally also pass in assignment data giving extra details about the assignment, such as loadcase, local coordinates, load factor etc. If such an object is given, deassignment will only be performed on those assignments that match the details given - e.g. only those assignments with a particular loadcase. The assignment info, if given, must always be last. 
 		Params:
-			arg1 (object): Can be any database object capable of having assignments, or an array or objectset, containing any such objects. Alternatively specify an object type such as 'Volume'. Subsequent arguments can provide more context, typically with and assignment object
+			arg1 (object): Can be any database object capable of having assignments, or an array or objectset, containing any such objects. Alternatively specify an object type such as 'Volume'. Subsequent arguments can provide more context, typically with and assignment object.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 		Returns:
@@ -3232,7 +3232,7 @@ class IFAttribute(IFDispatch):
 		r"""
 		Assigns this attribute to the object(s) given. Optionally also pass in assignment data giving extra details about the assignment, such as loadcase, local coordinates, load factor etc. There are two ways to call this function. For most attributes only a single object, IFObjectSet, or array is required, and the attribute will be assigned to that. However, for interface mesh, it is necessary to indicate both primaries and secondaries at the same time. Thus, two objects, IFObjectSet, or arrays must be given. In the case of IFObjectSet and arrays, the same number of objects must be given in each, and the primary secondary pairing will be assumed from the order. E.g. item 1 in the first array will be the primary of item 1 in the second array, and so on. The assignment info, if given, must always be last. 
 		Params:
-			arg1 (object): Can be any database object capable of having assignments, or an array or objectset, containing any such objects. Alternatively specify an object type such as 'Volume'. Subsequent arguments can provide more context, typically with and assignment object
+			arg1 (object): Can be any database object capable of having assignments, or an array or objectset, containing any such objects. Alternatively specify an object type such as 'Volume'. Subsequent arguments can provide more context, typically with and assignment object.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -3447,7 +3447,7 @@ class IFAttribute(IFDispatch):
 		r"""
 		Behaves exactly like IFAttribute.getAssignments() except that it only works for material and geometric attributes, and the returned list is filtered to reflect the given loadcase. We are not returning assignments that are MADE in this given loadcase, but assignments that APPLY in the given loadcase. e.g. Consider that "this" material is assigned only to a particular line in LC1 and then a different material is assigned to the same line in LC4. Just like getAssignments(), when we ask for assignments in LC1, of course we get the assignment to that line. But with this function, when we ask for assignments in LC2, we also get the same return value (the earlier assignment still applies). When we ask for assignments in LC3, we still get the same, for the same reason. When we ask for assignments of this attribute in LC4, we get an empty array - because the line now has the other material assigned. 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. given loadcase to filter the array
 		Returns:
 			array of IFAssignment objects: Returned filtered array of IFAssignment objects
 		"""
@@ -3566,7 +3566,7 @@ class IFAttribute(IFDispatch):
 		r"""
 		Move this attribute to be below the given attribute in the treeview 
 		Params:
-			ID (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			ID (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object.
 		Returns:
 			IFAttribute: 
 		"""
@@ -3658,7 +3658,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the loadset for the assignment. Generally this will be a IFLoadcase but in a load curve analysis, loading must be assigned to a IFLoadCurve. 
 		Params:
-			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3689,7 +3689,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the ending loadset for the assignment. Generally this will be a IFLoadcase but in a load curve analysis, loading must be assigned to a IFLoadCurve. 
 		Params:
-			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3700,7 +3700,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the starting loadset for the assignment. Generally this will be a IFLoadcase but in a load curve analysis, loading must be assigned to a IFLoadCurve. 
 		Params:
-			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3711,7 +3711,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the first loadset of a set for the assignment. Generally this will be a IFLoadcase but in a load curve analysis, loading must be assigned to a IFLoadCurve. 
 		Params:
-			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3722,7 +3722,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Add a loadset to a set for the assignment. Generally this will be a IFLoadcase but in a load curve analysis, loading must be assigned to a IFLoadCurve. 
 		Params:
-			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3733,8 +3733,8 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the range of loadsets the assignment. Generally this will be a IFLoadcase but in a load curve analysis, loading must be assigned to a IFLoadCurve. 
 		Params:
-			IDstart (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
-			IDend (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			IDstart (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
+			IDend (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3765,7 +3765,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the beta angle for assignment of mesh. This is the angle between the line z axis (as modified by any assigned local coordinates) and the element z axis 
 		Params:
-			Beta (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object
+			Beta (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3776,7 +3776,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the beta angle for assignment of mesh. This ts the beta angle originally calculated from "setBetaAngleMatrix" 
 		Params:
-			Beta (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object
+			Beta (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3806,7 +3806,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		 
 		Params:
-			TransAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object
+			TransAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3826,7 +3826,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		 
 		Params:
-			TransAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object
+			TransAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3846,7 +3846,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		 
 		Params:
-			SearchAreaAttr (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object
+			SearchAreaAttr (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3921,7 +3921,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		 
 		Params:
-			LocalCoordAttr (IFLocalCoord): The name or ID of a localcoordinate, or a pointer to a IFLocalCoord object
+			LocalCoordAttr (IFLocalCoord): The name or ID of a localcoordinate, or a pointer to a IFLocalCoord object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3941,7 +3941,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		 
 		Params:
-			Point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object
+			Point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3952,7 +3952,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		 
 		Params:
-			Point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object
+			Point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -3972,7 +3972,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		 
 		Params:
-			Grid (IFBackgroundGrid): The name or ID of a backgroundgrid, or a pointer to a IFBackgroundGrid object
+			Grid (IFBackgroundGrid): The name or ID of a backgroundgrid, or a pointer to a IFBackgroundGrid object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -4516,7 +4516,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the reference path that applies to this assignment 
 		Params:
-			pRefPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			pRefPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -4536,7 +4536,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		Specify the twist along a line for beam elements 
 		Params:
-			twist (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object
+			twist (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -4598,7 +4598,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		add an object that will be used to restrict results calculation (equivalent to selecting the object when influence is assigned) 
 		Params:
-			obj (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object
+			obj (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object.
 		Returns:
 			None: 
 		"""
@@ -4806,7 +4806,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		For a "single feature mesh assignment" add a parent object to be separated from the assigned child object 
 		Params:
-			obj (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object
+			obj (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object.
 		Returns:
 			IFAssignment: 
 		"""
@@ -4915,7 +4915,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		return true if the given loadcase is in the loadcase range 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. loadset to check
 		Returns:
 			bool: 
 		"""
@@ -5003,7 +5003,7 @@ class IFAssignment(IFDispatch):
 		r"""
 		discrete loading following a reference path 
 		Params:
-			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			nrmCrd (float): normalised coordinate along the path
 			patchTransformType (str or int): patch transformation type
 			doPatchReverse (bool): if true reverse patch direction
@@ -5192,7 +5192,7 @@ class IFControl(IFDispatch):
 		r"""
 		Creates a clone control 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object. Loadcase in which the copy will be created.
 		Returns:
 			IFControl: the new control that has been created
 		"""
@@ -5332,7 +5332,7 @@ class IFLoadset(IFDispatch):
 		Returns true if this loadset is the currently active loadset, and was made active with a primary component. Otherwise returns false. On returning true, the entity and component variables are set to the entity and component which were specified when it was made active. Note - a primary component of "All" means "no coincident effects" which in turn means "each component calculated independently". 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 		Returns:
 			bool: true if active, and primary component used
 		"""
@@ -5696,7 +5696,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		specifies the IFTransformationAttr attribute which will be used in move, copy, sweep and similar operations. 
 		Params:
-			transAttr (IFTransformationAttr, optional): The name or ID of a transformation, or a pointer to a IFTransformationAttr object
+			transAttr (IFTransformationAttr, optional): The name or ID of a transformation, or a pointer to a IFTransformationAttr object. The transformation to use
 		Returns:
 			IFGeometryData: 
 		"""
@@ -5716,7 +5716,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		Specifies the IFLocalCoord attribute which will be used in move, copy, sweep and similar operations. 
 		Params:
-			localAttr (IFLocalCoord): The name or ID of a localcoordinate, or a pointer to a IFLocalCoord object
+			localAttr (IFLocalCoord): The name or ID of a localcoordinate, or a pointer to a IFLocalCoord object. The local coordinate system to use
 		Returns:
 			IFGeometryData: 
 		"""
@@ -5736,7 +5736,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		Add one or more sets of 3d coordinates to the geometry definition Coordinates can be entered as three values (x,y,z) or as a single dimensional array of three values, or as a two dimensional array. In the latter case the first dimension represents the number of coordinates to be added, the second dimension must be 3 Note that if a local coordinate object has been specified using IFGeometryData.setLocalCoord, the arguments could represent r z and theta. 
 		Params:
-			X (object): Two dimensional array of doubles. The first dimension is the number coordinates to be added, the second dimension must be 3 (X,Y,Z)
+			X (object): Two dimensional array of doubles. The first dimension is the number coordinates to be added, the second dimension must be 3 (X,Y,Z).
 			Y (object, optional): 
 			Z (object, optional): 
 			isGlobal (object, optional): optional<boolean> default false, true for global coords, false for local coords w.r.t active local coordinates set
@@ -5835,7 +5835,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		specifies the reference position used to select particular solutions to a tangent, intersection or projection command.  
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -5919,7 +5919,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		Specify the origin (centre) of a cube, cuboid, cylinder, cone, sphere or ellipsoid when creating these shapes. 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -5932,7 +5932,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -5945,7 +5945,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -5958,7 +5958,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -5971,7 +5971,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		Specifies the start tangent when creating a spline from points and end tangents 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -5984,7 +5984,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		Specifies the end tangent when creating a spline from points and end tangents 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -5997,7 +5997,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -6222,8 +6222,8 @@ class IFGeometryData(IFDispatch):
 		r"""
 		Defines a plane by a perpendicular vector and a point in the plane. 
 		Params:
-			perpendicular (array of float): An array of 3 real numbers, representing a 3d vector
-			pointInPlane (array of float): An array of 3 real numbers, representing 3d coordinates
+			perpendicular (array of float): An array of 3 real numbers, representing a 3d vector. Vector perpendicular to the plane
+			pointInPlane (array of float): An array of 3 real numbers, representing 3d coordinates. Coordinates of point in plane
 		Returns:
 			IFGeometryData: 
 		"""
@@ -7632,7 +7632,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		store the given internal surface point 
 		Params:
-			point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object
+			point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object.
 		Returns:
 			IFGeometryData: 
 		"""
@@ -7772,7 +7772,7 @@ class IFGeometryData(IFDispatch):
 		r"""
 		add the given surface to the set of surfaces defining a volume 
 		Params:
-			surface (IFSurface): The name or ID of a surface, or a pointer to a IFSurface object
+			surface (IFSurface): The name or ID of a surface, or a pointer to a IFSurface object.
 		Returns:
 			IFGeometryData: 
 		"""
@@ -7784,7 +7784,7 @@ class IFGeometryData(IFDispatch):
 		add the given surface to the set of surfaces defining a void in a volume 
 		Params:
 			voidIndex (int): index of the void in the surface, first void is 0
-			surface (IFSurface): The name or ID of a point, or a pointer to a IFSurface object
+			surface (IFSurface): The name or ID of a point, or a pointer to a IFSurface object.
 		Returns:
 			IFGeometryData: 
 		"""
@@ -7946,7 +7946,7 @@ class IF3dCoords(IFDispatch):
 		r"""
 		 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -7959,7 +7959,7 @@ class IF3dCoords(IFDispatch):
 		r"""
 		 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -7972,11 +7972,11 @@ class IF3dCoords(IFDispatch):
 		r"""
 		 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates.
 		"""
 		pass
 
@@ -8298,8 +8298,8 @@ class IFGraphBase(IFDispatch):
 			combination (str): 
 			angle (float): 
 			nDiv (int): 
-			node (IFNode): The name or ID of a node, or a pointer to a IFNode object
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			node (IFNode): The name or ID of a node, or a pointer to a IFNode object.
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			pInLoadCase (loadcase, optional): 
 		Returns:
 			array of IFDataset objects: The datasets just created in array format
@@ -8311,7 +8311,7 @@ class IFGraphBase(IFDispatch):
 		r"""
 		create graph from loadCurve 
 		Params:
-			loadCurve (IFLoadCurve): The name or ID of a loadcurve, or a pointer to a IFLoadCurve object
+			loadCurve (IFLoadCurve): The name or ID of a loadcurve, or a pointer to a IFLoadCurve object.
 			applyAssignmentFactor (bool, optional): , if T apply the assignment factor
 		Returns:
 			array of IFDataset objects: The datasets just created in array format
@@ -8323,10 +8323,10 @@ class IFGraphBase(IFDispatch):
 		r"""
 		 
 		Params:
-			attr (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object
+			attr (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object.
 			nValues (int): 
 			factor (float): 
-			line (IFLine, optional): The name or ID of a line, or a pointer to a IFLine object
+			line (IFLine, optional): The name or ID of a line, or a pointer to a IFLine object.
 		Returns:
 			array of IFDataset objects: The datasets just created in array format
 		"""
@@ -8377,7 +8377,7 @@ class IFGraphBase(IFDispatch):
 			end (float): 
 			step (float): 
 			resType (int): 1=Real, 2=Imaginary,3=Amplitude,4=Phase,5=PSD input,6=PSD response,7=All
-			psd (IFPSD, optional): The name or ID of a PSD, or a pointer to a IFPSD object
+			psd (IFPSD, optional): The name or ID of a PSD, or a pointer to a IFPSD object.
 		Returns:
 			array of IFDataset objects: The datasets just created in array format
 		"""
@@ -8389,9 +8389,9 @@ class IFGraphBase(IFDispatch):
 		 
 		Params:
 			type (str): "Force", "Displacement", "Velocity", or "Acceleration"
-			node (IFNode): The name or ID of a node, or a pointer to a IFNode object
+			node (IFNode): The name or ID of a node, or a pointer to a IFNode object.
 			largeMass (float): large mass
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			amplitude (float, optional): amplitude
 		Returns:
 			IFGraph: 
@@ -8403,7 +8403,7 @@ class IFGraphBase(IFDispatch):
 		r"""
 		 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -8417,7 +8417,7 @@ class IFGraphBase(IFDispatch):
 		r"""
 		 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -8431,8 +8431,8 @@ class IFGraphBase(IFDispatch):
 		r"""
 		 
 		Params:
-			real (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
-			imaginary (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			real (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
+			imaginary (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFGraph: 
 		"""
@@ -8493,7 +8493,7 @@ class IFGraphBase(IFDispatch):
 		 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			arg3 (str): 
 			arg4 (str): 
 			arg5 (str, optional): 
@@ -8508,8 +8508,8 @@ class IFGraphBase(IFDispatch):
 		draws a time history graph of a result at a Gauss point within a solid or surface element 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
-			element (IFElement): The name or ID of a element, or a pointer to a IFElement object
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
+			element (IFElement): The name or ID of a element, or a pointer to a IFElement object.
 			GaussPoint (int): index of the Gauss point to be considered
 		Returns:
 			IFDataset: returns dataset just created
@@ -8522,8 +8522,8 @@ class IFGraphBase(IFDispatch):
 		draws a time history graph of a result at an internal point within a beam element 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
-			element (IFElement): The name or ID of a element, or a pointer to a IFElement object
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
+			element (IFElement): The name or ID of a element, or a pointer to a IFElement object.
 			internalPoint (int): index of the internal point to be considered
 		Returns:
 			IFDataset: returns dataset just created
@@ -8560,7 +8560,7 @@ class IFGraphBase(IFDispatch):
 		 
 		Params:
 			type (str): "Angle" or "Distance"
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			posX (float, optional): Only needed when type is "Angle". Alternative, can be the node from which the coordinates x, y will be extracted
 			posY (float, optional): Only needed when type is "Angle" and posX is not a node
 		Returns:
@@ -8574,7 +8574,7 @@ class IFGraphBase(IFDispatch):
 		 
 		Params:
 			type (str): "Angle" or "Distance"
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			posX (float, optional): Only needed when type is "Angle". Alternative, can be the node from which the coordinates x, y will be extracted
 			posY (float, optional): Only needed when type is "Angle" and posX is not a node
 		Returns:
@@ -8588,7 +8588,7 @@ class IFGraphBase(IFDispatch):
 		Create a graph by 'cutting' the model along a line specified by end coordinates. The line is given in rotated model coordinates, along with the rotation matrix used to rotate them. Only works on surface elements (including the result of a 3d slice through a solid). Optionally the given line may be considered as an arc, by specifying an origin, in which case distances are presented as subtended angles. A corridor width may be given, in which case the program considers three parallel lines, (left, right and centre) and averages values between them (0.25*left + 0.5*centre + 0.25*right) 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			startX (float): rotated model coords X of start of line to 'cut' model
 			startY (float): rotated model coords Y of start of line to 'cut' model
 			endX (float): rotated model coords X of end of line to 'cut' model
@@ -8612,8 +8612,8 @@ class IFGraphBase(IFDispatch):
 		Create a graph by 'cutting' the model along a line specified as an object. Only works on surface elements (including the result of a 3d slice through a solid). The given object may be a line (straight or curved), an annotation line, a reference path, or a previously cut slice graph. A projection vector must be given to convert the given line into a plane which cuts the model. Typically, the projection vector is screen z. A corridor width may be given, in which case the program considers three parallel lines, (left, right and centre) and averages values between them (0.25*left + 0.5*centre + 0.25*right). 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
-			object (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
+			object (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object. Object to use to 'cut' model
 			projType (str): "Normal to screen", "Normal to line", "Vertically", "In X direction", "In X direction", or "In Z direction"
 			stringX (str, optional): Optional x axis legend (if not given, one will be computed automatically)
 			stringY (str, optional): Optional y axis legend (if not given, one will be computed automatically)
@@ -8647,7 +8647,7 @@ class IFGraphBase(IFDispatch):
 		 
 		Params:
 			sliceType (str): 
-			object (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object
+			object (IFDatabaseMember): The name or ID of a databasemember, or a pointer to a IFDatabaseMember object. Object to use to 'cut' model
 			projType (str): "Cut model normal to screen", "Cut model normal to line", or "Cut model vertically"
 			matrix (array of float, optional): transformation matrix (usually rotation of current view)
 			corridorWidth (float, optional): width of corridor to be averaged
@@ -8701,7 +8701,7 @@ class IFGraphBase(IFDispatch):
 		r"""
 		Use the specified local coordinate as the results transformation for this graph. 
 		Params:
-			localCoordSe (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoordSe (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 			shellPlane (int): Shell plane for resultants (1, 2 or 3)
 		Returns:
 			None: 
@@ -8713,7 +8713,7 @@ class IFGraphBase(IFDispatch):
 		r"""
 		Uses the specified path as the results transformation for this graph 
 		Params:
-			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			skew (bool, optional): True if local y = transverse
 		Returns:
 			None: 
@@ -8743,7 +8743,7 @@ class IFGraphBase(IFDispatch):
 		r"""
 		Uses the given attribute type to obtain the results transformation for this graph. 
 		Params:
-			type (object): "Loading", "Support", "Material", etc
+			type (object): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -9764,7 +9764,7 @@ class IFResultsContext(IFDispatch):
 		r"""
 		Use the specified local coordinate as the results transformation in this context. Calling this function on the view modifies the transformation setting of all currently showing drawing layers and sets the default transformation for new drawing layers, as they are created. When a combination or envelope is active in the view, it is an error if the individual transformation settings of the individual layers are not same as the settings of the parent view 
 		Params:
-			localCoordSet (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoordSet (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 			shellPlane (int): Shell plane for resultants (1, 2 or 3)
 		Returns:
 			None: 
@@ -9776,7 +9776,7 @@ class IFResultsContext(IFDispatch):
 		r"""
 		Uses the specified path as the results transformation in this context. Calling this function on the view modifies the transformation setting of all currently showing drawing layers and sets the default transformation for new drawing layers, as they are created. When a combination or envelope is active in the view, it is an error if the individual transformation settings of the individual layers are not same as the settings of the parent view 
 		Params:
-			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			skew (bool, optional): True if local y = transverse
 		Returns:
 			None: 
@@ -9806,7 +9806,7 @@ class IFResultsContext(IFDispatch):
 		r"""
 		Uses the given attribute type (currently limited to "material" and "results transform") to obtain the results transformation in this view. Calling this function modifies the transformation setting of all currently showing drawing layers and sets the default transformation for new drawing layers, as they are created. When a combination or envelope is active in the view, it is an error if the individual transformation settings of the individual layers are not same as the settings of the parent view 
 		Params:
-			type (object): "Loading", "Support", "Material", etc
+			type (object): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -9818,7 +9818,7 @@ class IFResultsContext(IFDispatch):
 		For the given results entity and component this function returns the maximum and minimum nodal results values and the nodes at which they occur within this context. Such results are affected by which elements are currently visible, as well as the current loadset, current lamina, current fibre settings and current results transformation 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			maxValue (float): the returned maximum value
 			minValue (float): the returned minimum value
 			maxNode (IFNode): the returned node at which maximum value occurs
@@ -9834,7 +9834,7 @@ class IFResultsContext(IFDispatch):
 		For the given results entity and component this function returns the maximum and minimum Gauss point results values and the element/Gauss point at which they occur within this context. Such results are affected by which elements are currently visible, as well as the current loadset, current lamina, current fibre settings and current results transformation 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			maxValue (float): the returned maximum value
 			minValue (float): the returned minimum value
 			maxElement (IFElement): the returned element at which maximum value occurs
@@ -9852,7 +9852,7 @@ class IFResultsContext(IFDispatch):
 		For the given results entity and component this function returns the maximum and minimum internal point results values and the element/internal point at which they occur within this context. Such results are affected by which elements are currently visible, as well as the current loadset, current lamina, current fibre settings and current results transformation 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			maxValue (float): the returned maximum value
 			minValue (float): the returned minimum value
 			maxElement (IFElement): the returned element at which maximum value occurs
@@ -9870,7 +9870,7 @@ class IFResultsContext(IFDispatch):
 		For the given results entity and component this function returns the maximum and minimum element nodal point results values and the element/node at which they occur within this context. Such results are affected by which elements are currently visible, as well as the current loadset, current lamina, current fibre settings and current results transformation 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			maxValue (float): the returned maximum value
 			minValue (float): the returned minimum value
 			maxElement (IFElement): the returned element at which maximum value occurs
@@ -9907,7 +9907,7 @@ class IFResultsContext(IFDispatch):
 		r"""
 		Set active the given lamina (layer) belonging to the given laminate (composite attribute). Thus, if this function is called with the lamina name 'layer1', and the laminate 'bob', only elements with an assignment to 'bob' will be affected. The active lamina is the one that is used for visualisation and results plots There is always an active lamina, even if the currently requested results or visualisation do not require it (in which case it is ignored). 
 		Params:
-			laminate (IFComposite): The name or ID of a composite, or a pointer to a IFComposite object
+			laminate (IFComposite): The name or ID of a composite, or a pointer to a IFComposite object. Specifies a composite attribute
 			lamina (str): 
 		Returns:
 			None: 
@@ -9930,7 +9930,7 @@ class IFResultsContext(IFDispatch):
 		r"""
 		Set active the given fibre belonging to the given geometric beam attribute. Thus, if this function is called with the fibre name 'fibre1', and the attribute 'bob', only elements with an assignment to 'bob' will be affected. The active fibre is the one that is used for visualisation and results plots There is always an active fibre, even if the currently requested results or visualisation do not require it (in which case it is ignored). 
 		Params:
-			geomCSBeam (IFGeometric): The name or ID of a geometric, or a pointer to a IFGeometric object
+			geomCSBeam (IFGeometric): The name or ID of a geometric, or a pointer to a IFGeometric object. specifies a geometric cross section beam attribute
 			fibre (str): fibre name
 		Returns:
 			None: 
@@ -9953,7 +9953,7 @@ class IFResultsContext(IFDispatch):
 		r"""
 		Specify which loadcase is used for visualisation and results processing in this context. Use this function for simple loadcase types that do not need a primary component. Note that you cannot use this function to mean "no coincident effects" - you must use IFResultsContext.setActiveLoadsetAssocVal() with a primary component of "all"  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -9968,8 +9968,8 @@ class IFResultsContext(IFDispatch):
 		Specify which loadcase is used for results processing in this context. Use this function when setting active a loadcase type (such as an envelope or combination) which needs a primary component. Note - a primary component of "All" means "no coincident effects" which in turn means "each component calculated independently". When calling this function in view, you must also re-specify the results transformations for the context, to force all the individual drawing layers to use the same transformation. Failure to do this will lead to erroneous output.  
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
-			ID (object): IFLoadset object, loadset ID or loadset name
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -11224,7 +11224,7 @@ class IFAnalysisBaseClass(IFDispatch):
 		r"""
 		Creates a copy of this analysis and adds it to the panel. Loadcases and their assignments will be copied as well. If "this" analysis is a branch, then it is necessary to specify the loadcase in which the copy will be created Conversely, if "this" analysis is not a branch, the target should not be given 
 		Params:
-			target (IFLoadcase, optional): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object
+			target (IFLoadcase, optional): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object. Loadcase in which to create copy
 			copyMaterials (str, optional): "copy","no copy","inherit" material and composite assignments
 		Returns:
 			IFAnalysisBaseClass: the new analysis that has been created
@@ -11236,7 +11236,7 @@ class IFAnalysisBaseClass(IFDispatch):
 		r"""
 		Copy assignments from the given analysis into this analysis. If only the source analysis is given then all assignments of all attributes will be copied 
 		Params:
-			sourceAnalysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object
+			sourceAnalysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object. Analysis from which assignments will be copied
 			attrType (str, optional): Type of attributes whose assignments will be copied
 			attributes (array, optional): Names and/or numbers of the attributes whose assignments will be copied
 		Returns:
@@ -11547,7 +11547,7 @@ class IFAnalysisBaseClass(IFDispatch):
 		r"""
 		Sets up the loadcase from which this analysis will start. This analysis will start from the end of the given loadcase. Calling this function clears any settings previously set using IFAnalysisBaseClass.setRestartFromDump or IFAnalysis.setDeformedMeshStart 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Model loadcase at which to start
 			restartIncType (str, optional): increment type "load factor" or "arc length"
 			startingIncLength (float, optional): starting increment length
 			maximumIncLength (float, optional): maximum increment length
@@ -12142,7 +12142,7 @@ class IFReinforcementSectionBar(IFDispatch):
 		r"""
 		Returns the coordinates of this bar (x,y,z) 
 		Returns:
-			object: Array of 3 real numbers representing a coordinate axis in 3D space
+			object: Array of 3 real numbers representing a coordinate axis in 3D space.
 		"""
 		pass
 
@@ -12225,7 +12225,7 @@ class IFReinforcementSectionBar(IFDispatch):
 		r"""
 		return the equivalent centre of the bundle of which this bar is a member 
 		Returns:
-			object: Array of 3 real numbers representing a coordinate axis in 3D space
+			object: Array of 3 real numbers representing a coordinate axis in 3D space.
 		"""
 		pass
 
@@ -12338,7 +12338,7 @@ class IFPrestressSolver(IFDispatch):
 		r"""
 		Sets the one and only analysis that the next call to IFPrestressSolver.solve will process. In normal use, this function is not called, and all analyses are processed. Note that calling this function will NOT mark prestress loading as "up to date" because that can only be done for the whole model. 
 		Params:
-			analysis (IFAnalysisBaseClass): The name of a analysis, or a pointer to a IFAnalysisBaseClass object
+			analysis (IFAnalysisBaseClass): The name of a analysis, or a pointer to a IFAnalysisBaseClass object. ,  the analysis
 		Returns:
 			IFPrestressSolver: 
 		"""
@@ -13000,7 +13000,7 @@ class IFDatabaseOperations(IFDatabaseMember):
 		r"""
 		Calculate and return the coordinates of the centre of area of this set of surfaces 
 		Params:
-			pCentreOfAreaCoords (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			pCentreOfAreaCoords (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			localCrds (IFLocalCoord, optional): If not given, The answer is returned in global coords
 		Returns:
 			int: error code 0 = success, != 0 error
@@ -13035,7 +13035,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Adds the specified objects to this set. Note that IFObjectSet.add obeys the value of the downward associativity such that it will also add the LOFs of any items added if the downward associativity flag is set true. (Check full documentation for argument details). 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13050,7 +13050,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Deletes the specified object(s) from this set. The specified objects will still be present in the model, and may be added to this set again at a later stage. Note that IFObjectSet.remove obeys the value of the downward associativity such that it will also remove the LOFs of any items removed if the downward associativity flag is set true. (Check full documentation for argument details). 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13065,7 +13065,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Remove all objects from this set that do not meet the given criteria Note that IFObjectSet.keep obeys the value of the downward associativity such that it will also keep the LOFs of any items kept if the downward associativity flag is set true. (Check full documentation for argument details). 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13080,7 +13080,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Deletes the specified object(s) permanently from this set and from the database. The specified objects will no longer be present in the model, or this set. Modeller will automatically remove such objects from all its intrinsic sets such as groups and the selection. However as described in IFObjectSet, the deleted objects may still be present in other temporary sets that you have created - it is your responsibility to check this, preferably before executing the IFObjectSet.Delete instruction. Note that IFObjectSet.Delete obeys the value of the downward associativity such that it will also delete the unshared LOFs of any items deleted if the downward associativity flag is set true. (Check full documentation for argument details). 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13095,7 +13095,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Returns whether or not the given item is present in the set Note that IFObjectSet.exists ignores the value of the downward associativity such that it will return false if the requested item is not present, even if one of its LOFs is present and the downward associativity flag is set true. This function is exactly equivalent to calling IFObjectSet.getObjects() and testing to see if the length of the returned array is greater than 0. If you plan to call IFObjectSet.getObject() conditionally upon the result of a call to IFObjectSet.exists(), note that it is much more efficient to call IFObjectSet.getObjects() and check the length of the returned array instead. (Check full documentation for argument details). 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13110,7 +13110,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Returns the number of objects in the set of a particular type. Note that IFObjectSet.count ignores the value of the downward associativity such that it will return 1 if exactly one single item is requested and present, even if some of its LOFs are also present and the downward associativity flag is set true. This function is exactly equivalent to calling IFObjectSet.getObjects() and returning the length of the returned array. If you plan to call IFObjectSet.getObjects() as well as IFObjectSet.count(), note that it is much more efficient to simply examine the length of the array returned by IFObjectSet.getObjects(). (Check full documentation for argument details). 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13125,7 +13125,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Fetch the specified object(s) as an array. The output array is sorted into increasing object type and increasing object ID. E.g. (regardless of the input), the output would be something like { P1, P2, P32, L1, L3, L58, S4, S34 } The array can then be looped in the normal way. (Check full documentation for argument details). 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13140,7 +13140,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Fetch the specified object by name or ID or attribute assignment. It is an error to call this function with parameters that do not match exactly one object. If in doubt about the number of objects that might be returned, use IFObjectSet.getObjects(). If you plan to call IFObjectSet.getObject() conditionally upon the result of a call to IFObjectSet.exists(), note that it is much more efficient to call IFObjectSet.getObjects() and check the length of the returned array instead. 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -13200,7 +13200,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Adds to this set all elements and lower order features of objects already in this set. Optionally the operation may be filtered to only add objects of a specific type, and with specific name(s), or that have a particular attribute assignment. (Check full documentation for argument details). 
 		Params:
-			arg1 (object, optional): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type
+			arg1 (object, optional): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type.
 			arg2 (object, optional): 
 		Returns:
 			IFObjectSet: 
@@ -13212,7 +13212,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Adds to this set all higher order features of objects already in this set. Also adds parent features of any elements in the set. Optionally the operation may be filtered to only add objects of a specific type, and with specific name(s), or that have a particular attribute assignment. (Check full documentation for argument details). 
 		Params:
-			arg1 (object, optional): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type
+			arg1 (object, optional): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type.
 			arg2 (object, optional): 
 		Returns:
 			IFObjectSet: 
@@ -13293,7 +13293,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 		r"""
 		Removes any assignments of the given type from the objects 
 		Params:
-			attributeType (str): "Loading", "Support", "Material", etc
+			attributeType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -13378,7 +13378,7 @@ class IFGeometry(IFDatabaseOperations):
 		r"""
 		Returns TRUE if this object is a member of the given group 
 		Params:
-			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object
+			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object.
 		Returns:
 			bool: 
 		"""
@@ -13409,10 +13409,10 @@ class IFGeometry(IFDatabaseOperations):
 		r"""
 		Creates and returns an array of IFAssignment objects, each of which represents one attribute assignment made to this object. The array can be restricted by using the optional argument to specify a given attribute type, e.g. loading. If not given, all assignments are returned Note that the IFAssignment objects returned are copies of the ones in actual use - modifying them will have no effect. If you wish to modify assignment details it is necessary to re-assign the attribute to the object 
 		Params:
-			attributeType (object, optional): "Loading", "Support", "Material", etc
-			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object
+			attributeType (object, optional): "Loading", "Support", "Material", etc.
+			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object. , optionally only return assignments to this loadcase
 			andAssignedObjects (bool, optional): default false, if true add the assigned objects to the IFAssignment objects returned
-			singleLoadcase (object, optional): NOT YET,  <boolean>default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
+			singleLoadcase (bool, optional): default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
 		Returns:
 			array of IFAssignment objects: The returned array
 		"""
@@ -13646,7 +13646,7 @@ class IFGeometry(IFDatabaseOperations):
 		Params:
 			type (str): , "featureMax", "featureMin", "FeatureAbs", or "featureExt"
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			varRes1 (int, optional): The node id for nodal results or the element id (for Gauss, internal and elementNodal results) from which the returned value has been calculated
 			varRes2 (int, optional): 0 for nodal results or the index (for Gauss, internal and elementNodal results) at which the returned value has been calculated
@@ -13666,10 +13666,10 @@ class IFGeometry(IFDatabaseOperations):
  If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults.
  Although usually the array will contain only one value, multiple values could be returned if the inspection locaton occurs at an averaging discontinuity (e.g. material boundary) 
 		Params:
-			attr (IFInspectionPoint): The name or ID of a inspectionlocation, or a pointer to a IFInspectionPoint object
+			attr (IFInspectionPoint): The name or ID of a inspectionlocation, or a pointer to a IFInspectionPoint object.
 			index (int): index of location number within attr (corresponds to the row number in the definition dialog) (ignored for inspection locations assigned to points)
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -13744,7 +13744,7 @@ class IFMeshFamily(IFDatabaseMember):
 		r"""
 		return TRUE if this object is a member of the given group 
 		Params:
-			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object
+			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object.
 		Returns:
 			bool: 
 		"""
@@ -13775,7 +13775,7 @@ class IFMeshFamily(IFDatabaseMember):
 		r"""
 		return TRUE if this object has assembled attributes of the given type for tabulation 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			bool: 
 		"""
@@ -13840,7 +13840,7 @@ class IFPoint(IFGeometry):
 		Params:
 			localCoord (IFLocalCoord): 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -13849,7 +13849,7 @@ class IFPoint(IFGeometry):
 		r"""
 		Returns the mass of a point for a given loadcase. Only points that have both point mass elements and mass material assigned actually have mass. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the mass will be returned
 		Returns:
 			mass: The returned mass of a point for a given loadcase
 		"""
@@ -13860,7 +13860,7 @@ class IFPoint(IFGeometry):
 		r"""
 		 
 		Params:
-			position (array of float): An array of 3 real numbers, representing 3d coordinates
+			position (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			float: 
 		"""
@@ -13908,7 +13908,7 @@ class IFPoint(IFGeometry):
 			includeLofs (bool, optional): true to include the nearest defining object of "obj"
 			returnMinimum (bool, optional): true to return the minimum distance,, false for the maximum distance
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -13940,7 +13940,7 @@ class IFLine(IFGeometry):
 		r"""
 		Return start coordinate of line 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -13949,7 +13949,7 @@ class IFLine(IFGeometry):
 		r"""
 		Return end coordinate of line 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -13978,7 +13978,7 @@ class IFLine(IFGeometry):
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -13989,7 +13989,7 @@ class IFLine(IFGeometry):
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -13998,7 +13998,7 @@ class IFLine(IFGeometry):
 		r"""
 		Return coordinate at centre of arc 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -14016,7 +14016,7 @@ class IFLine(IFGeometry):
 		r"""
 		Return coordinate of the arc bulge midpoint Note: It is an error to call this function on a combined line 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -14052,10 +14052,10 @@ class IFLine(IFGeometry):
 		r"""
 		Given a straight line defined by a position and direction, this function returns the closest positions on the straight line and this line 
 		Params:
-			Origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			Direction (array of float): An array of 3 real numbers, representing 3d coordinates
-			PointOnStraightLine (array of float): An array of 3 real numbers, representing 3d coordinates
-			PointOnThisLine (array of float): An array of 3 real numbers, representing 3d coordinates
+			Origin (array of float): An array of 3 real numbers, representing 3d coordinates. Any position on the straight line
+			Direction (array of float): An array of 3 real numbers, representing 3d coordinates. Direction vector of the straight line
+			PointOnStraightLine (array of float): An array of 3 real numbers, representing 3d coordinates. Returned closest position on the straight line
+			PointOnThisLine (array of float): An array of 3 real numbers, representing 3d coordinates. Returned closest position on this line
 			IsValidSolution (int): Flag indicating validity of solutions +1 valid, -1 invalid
 		Returns:
 			None: 
@@ -14076,7 +14076,7 @@ class IFLine(IFGeometry):
 		r"""
 		Return the normalised coords of the given model space coordinated on this line *pRetval=0.0 at the line start *pRetval=1.0 at the line end 
 		Params:
-			pCoords (array of float): An array of 3 real numbers, representing 3d coordinates
+			pCoords (array of float): An array of 3 real numbers, representing 3d coordinates. any position on the straight line
 		Returns:
 			float: returned equivalent normalised coordinate
 		"""
@@ -14087,7 +14087,7 @@ class IFLine(IFGeometry):
 		r"""
 		Return the normalised coords of the given model space coordinates on this line 
 		Params:
-			pCoords (array of float): An array of 3 real numbers, representing 3d coordinates
+			pCoords (array of float): An array of 3 real numbers, representing 3d coordinates. any position on the straight line
 		Returns:
 			array of float: vector of coordinates (x1, y1, z1, ... xn, yn, zn)
 		"""
@@ -14098,7 +14098,7 @@ class IFLine(IFGeometry):
 		r"""
 		Returns the mass of a line for a given loadcase. Only lines that have a mesh, section and density assigned actually have any mass. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the mass will be returned
 		Returns:
 			mass: The returned mass of a line for a given loadcase
 		"""
@@ -14109,7 +14109,7 @@ class IFLine(IFGeometry):
 		r"""
 		Returns the volume of a line for a given loadcase Only lines that have a mesh and section assigned actually have any volume. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the volume will be returned
 		Returns:
 			mass: The returned volume of a line for a given loadcase
 		"""
@@ -14305,7 +14305,7 @@ class IFReferencePath(IFPolyline):
 		r"""
 		Sets the given local coordinate set. 
 		Params:
-			localCoord (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoord (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 		Returns:
 			IFReferencePath: 
 		"""
@@ -14359,7 +14359,7 @@ class IFSurface(IFGeometry):
 		r"""
 		returns the normal of this surface as a vector, represented by an array of three numbers. Optionally, the position (which must be on the surface) where the normal is required may also be given. If not given, the centre of the surface is used. 
 		Params:
-			X (object, optional): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object, optional): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -14408,7 +14408,7 @@ class IFSurface(IFGeometry):
 		r"""
 		Return the coords of the centroid of this surface 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -14417,11 +14417,11 @@ class IFSurface(IFGeometry):
 		r"""
 		Returns the surface axes in the global system. Optionally, the position where the axes are returned may also be given. If not given, the centroid of the surface is used (when available). 
 		Params:
-			origin (object): Array of 3 real numbers representing a coordinate axis in 3D space
-			xAxis (object): Array of 3 real numbers representing a coordinate axis in 3D space
-			yAxis (object): Array of 3 real numbers representing a coordinate axis in 3D space
-			zAxis (object): Array of 3 real numbers representing a coordinate axis in 3D space
-			position (object, optional): Array of 3 real numbers representing a coordinate axis in 3D space
+			origin (object): Array of 3 real numbers representing a coordinate axis in 3D space. origin coords (the location were the axis have been calculated)
+			xAxis (object): Array of 3 real numbers representing a coordinate axis in 3D space. x axis vector
+			yAxis (object): Array of 3 real numbers representing a coordinate axis in 3D space. y axis vector
+			zAxis (object): Array of 3 real numbers representing a coordinate axis in 3D space. z axis vector
+			position (object, optional): Array of 3 real numbers representing a coordinate axis in 3D space. optional global coords at which to calculate axes
 		Returns:
 			None: 
 		"""
@@ -14432,7 +14432,7 @@ class IFSurface(IFGeometry):
 		r"""
 		Returns the mass of a surface for a given loadcase. Only surfaces that have a mesh, thickness and density assigned actually have any mass. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the mass will be returned
 		Returns:
 			mass: The returned mass of a surface for a given loadcase
 		"""
@@ -14443,7 +14443,7 @@ class IFSurface(IFGeometry):
 		r"""
 		Returns the volume of a surface for a given loadcase. Only surfaces that have a mesh and thickness assigned actually have a volume. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the volume will be returned
 		Returns:
 			mass: The returned volume of a surface for a given loadcase
 		"""
@@ -14495,7 +14495,7 @@ class IFVolume(IFGeometry):
 		r"""
 		Returns the mass of a volume for a given loadcase. Only volumes that have a mesh and density assigned actually have mass. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the mass will be returned
 		Returns:
 			mass: The returned mass of a volume for a given loadcase
 		"""
@@ -14631,7 +14631,7 @@ class IFNode(IFMeshFamily):
  
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			loadcase (IFLoadset, optional): If this variable is given, and the currently active loadcase is an envelope, the variable will be set to the results loadcase that caused the result
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
@@ -14646,7 +14646,7 @@ class IFNode(IFMeshFamily):
 		Return the units ("N/mm2", "m/s", etc) of the value that will be returned by IFNode.getResults for the given named results. In order to find the list of valid named components, use IFResultsContext.getResultsComponentNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -14674,7 +14674,7 @@ class IFNode(IFMeshFamily):
 			val (float): User results value
 			entity (str or int): Name or index of results entity
 			component (str, optional): Name of results component (if 'entity' is an IFScriptedResultsComponentSet, then this is expected to be an integer)
-			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase in which results apply (unless given as IFScriptedResultsComponentSet in 'entity')
 		Returns:
 			None: 
 		"""
@@ -14772,10 +14772,10 @@ class IFNode(IFMeshFamily):
 		r"""
 		Creates and returns an array of IFAssignment objects, each of which represents one attribute assignment made to this object. The array can be restricted by using the optional argument to specify a given attribute type, e.g. loading. If not given, all assignments are returned Note that the IFAssignment objects returned are copies of the ones in actual use - modifying them will have no effect. If you wish to modify assignment details it is necessary to re-assign the attribute to the object 
 		Params:
-			attributeType (object, optional): "Loading", "Support", "Material", etc
-			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object
+			attributeType (object, optional): "Loading", "Support", "Material", etc.
+			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object. , optionally only return assignments to this loadcase
 			andAssignedObjects (bool, optional): default false, if true add the assigned objects to the IFAssignment objects returned
-			singleLoadcase (object, optional): NOT YET,  <boolean>default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
+			singleLoadcase (bool, optional): default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
 		Returns:
 			array of IFAssignment objects: The returned array
 		"""
@@ -14831,7 +14831,7 @@ class IFNode(IFMeshFamily):
 		r"""
 		Returns the mass of a node for a given loadcase. Only nodes that belong to point mass elements and have mass material assigned actually have mass. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the mass will be returned
 		Returns:
 			mass: The returned mass of a node for a given loadcase
 		"""
@@ -14891,7 +14891,7 @@ class IFNode(IFMeshFamily):
  This function is typically used as a safety check before calling IFNode.getResults(), because, for example, it is invalid to ask for the reactions of an unsupported node or for an average value at a discontinuity caused by (for example) a change of material 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
 			bool: TRUE if the result does exist
@@ -15017,7 +15017,7 @@ class IFElement(IFMeshFamily):
 		r"""
 		Returns the mass of an element for a given loadcase. Only elements that have density assigned actually have mass. 
 		Params:
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. The loadcase for which the mass will be returned
 		Returns:
 			mass: The returned mass of an element for a given loadcase
 		"""
@@ -15029,7 +15029,7 @@ class IFElement(IFMeshFamily):
 		Return the units ("N/mm2", "m/s", etc) of the value that will be returned by IFElement.getGaussResults and IFElement.getNodeResults for the given named results. In order to find the list of valid named components, use IFResultsContext.getResultsComponentNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -15050,7 +15050,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			iGauss (int): Gauss point index
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			loadcase (IFLoadset, optional): If this variable is given, and the currently active loadcase is an envelope, the variable will be set to the results loadcase that caused the result
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
@@ -15066,7 +15066,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			iGauss (int): Gauss point index
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
 			bool: true if results available
@@ -15086,7 +15086,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			iPoint (int): internal point index
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			loadcase (IFLoadset, optional): If this variable is given, and the currently active loadcase is an envelope, the variable will be set to the results loadcase that caused the result
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
@@ -15102,7 +15102,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			iPoint (int): internal point index
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
 			bool: true if results available
@@ -15121,7 +15121,7 @@ class IFElement(IFMeshFamily):
  Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -15141,7 +15141,7 @@ class IFElement(IFMeshFamily):
  Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -15158,7 +15158,7 @@ class IFElement(IFMeshFamily):
 			val (float): Results value
 			entity (str or int or IFScriptedResultsComponentSet): Name or index of results entity, or object in which to store results
 			component (str, optional): Name of results component (if 'entity' is an IFScriptedResultsComponentSet, then this is expected to be an integer)
-			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase in which results apply (unless given as IFScriptedResultsComponentSet in 'entity')
 		Returns:
 			None: 
 		"""
@@ -15173,7 +15173,7 @@ class IFElement(IFMeshFamily):
 			val (float): Results value
 			entity (str or int or IFScriptedResultsComponentSet): Name or index of results entity, or object in which to store results
 			component (str, optional): Name of results component (if 'entity' is an IFScriptedResultsComponentSet, then this is expected to be an integer)
-			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase in which results apply (unless given as IFScriptedResultsComponentSet in 'entity')
 		Returns:
 			None: 
 		"""
@@ -15217,7 +15217,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			node (int or IFNode): local node (0..nNodes-1) or node pointer
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			loadcase (IFLoadset, optional): If this variable is given, and the currently active loadcase is an envelope, the variable will be set to the results loadcase that caused the result
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
@@ -15233,7 +15233,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			node (int or IFNode): local node (0..nNodes-1) or node pointer
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
 			bool: true if results available
@@ -15254,7 +15254,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			node (int or IFNode): local node (0..nNodes-1) or node pointer
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			loadcase (IFLoadset, optional): If this variable is given, and the currently active loadcase is an envelope, the variable will be set to the results loadcase that caused the result
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
@@ -15274,7 +15274,7 @@ class IFElement(IFMeshFamily):
  Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -15294,7 +15294,7 @@ class IFElement(IFMeshFamily):
  Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			units (IFUnitSet, optional): 
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -15311,7 +15311,7 @@ class IFElement(IFMeshFamily):
 			val (float): User results value
 			entity (str or int or IFScriptedResultsComponentSet): Name or index of results entity, or object in which to store results
 			component (str, optional): Name of results component (if 'entity' is an IFScriptedResultsComponentSet, then this is expected to be an integer)
-			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase in which results apply (unless given as IFScriptedResultsComponentSet in 'entity')
 		Returns:
 			None: 
 		"""
@@ -15326,7 +15326,7 @@ class IFElement(IFMeshFamily):
 			val (float): User results value
 			entity (str or int or IFScriptedResultsComponentSet): Name or index of results entity, or object in which to store results
 			component (str, optional): Name of results component (if 'entity' is an IFScriptedResultsComponentSet, then this is expected to be an integer)
-			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase in which results apply (unless given as IFScriptedResultsComponentSet in 'entity')
 		Returns:
 			None: 
 		"""
@@ -15360,10 +15360,10 @@ class IFElement(IFMeshFamily):
 		Return element axes at the given node 
 		Params:
 			iNode (int): specified local node index
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			xAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			yAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			zAxis (array of float): An array of 3 real numbers, representing a 3d vector
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. coordinates of origin
+			xAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of x-axis
+			yAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of y-axis
+			zAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of z-axis
 		Returns:
 			None: 
 		"""
@@ -15375,10 +15375,10 @@ class IFElement(IFMeshFamily):
 		Return element axes at the given Gauss point 
 		Params:
 			iGauss (int): specified local Gauss point index
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			xAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			yAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			zAxis (array of float): An array of 3 real numbers, representing a 3d vector
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. coordinates of origin
+			xAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of x-axis
+			yAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of y-axis
+			zAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of z-axis
 		Returns:
 			None: 
 		"""
@@ -15390,10 +15390,10 @@ class IFElement(IFMeshFamily):
 		Return element axes at the given internal point 
 		Params:
 			iPoint (int): specified local internal point index
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			xAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			yAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			zAxis (array of float): An array of 3 real numbers, representing a 3d vector
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. coordinates of origin
+			xAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of x-axis
+			yAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of y-axis
+			zAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of z-axis
 		Returns:
 			None: 
 		"""
@@ -15404,10 +15404,10 @@ class IFElement(IFMeshFamily):
 		r"""
 		Return element axes at the element centroid 
 		Params:
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			xAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			yAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			zAxis (array of float): An array of 3 real numbers, representing a 3d vector
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. coordinates of origin
+			xAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of x-axis
+			yAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of y-axis
+			zAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of z-axis
 		Returns:
 			None: 
 		"""
@@ -15418,11 +15418,11 @@ class IFElement(IFMeshFamily):
 		r"""
 		Return element axes at the given normalised coords 
 		Params:
-			nrmCrds (array of float): An array of 3 real numbers, representing 3d coordinates
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			xAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			yAxis (array of float): An array of 3 real numbers, representing a 3d vector
-			zAxis (array of float): An array of 3 real numbers, representing a 3d vector
+			nrmCrds (array of float): An array of 3 real numbers, representing 3d coordinates. specified normalised coords
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. coordinates of origin
+			xAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of x-axis
+			yAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of y-axis
+			zAxis (array of float): An array of 3 real numbers, representing a 3d vector. Vector of z-axis
 		Returns:
 			None: 
 		"""
@@ -15433,10 +15433,10 @@ class IFElement(IFMeshFamily):
 		r"""
 		Creates and returns an array of IFAssignment objects, each of which represents one attribute assignment made to this object. The array can be restricted by using the optional argument to specify a given attribute type, e.g. loading. If not given, all assignments are returned Note that the IFAssignment objects returned are copies of the ones in actual use - modifying them will have no effect. If you wish to modify assignment details it is necessary to re-assign the attribute to the object 
 		Params:
-			attributeType (object, optional): "Loading", "Support", "Material", etc
-			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object
+			attributeType (object, optional): "Loading", "Support", "Material", etc.
+			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object. , optionally only return assignments to this loadcase
 			andAssignedObjects (bool, optional): default false, if true add the assigned objects to the IFAssignment objects returned
-			singleLoadcase (object, optional): NOT YET,  <boolean>default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
+			singleLoadcase (bool, optional): default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
 		Returns:
 			array of IFAssignment objects: The returned array
 		"""
@@ -15512,7 +15512,7 @@ class IFElement(IFMeshFamily):
 		r"""
 		Retrieves element-wide attribute values such as material properties Not to be used for properties that might vary across an element or nodal attribute values such as support conditions 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): 
 			loadcase (IFUnitSet, optional): 
 			units (IFUnitSet, optional): 
@@ -15528,8 +15528,8 @@ class IFElement(IFMeshFamily):
 		r"""
 		Retrieves attribute values that might vary across an element, like geometric thickness, or nodal attribute values such as support conditions Not to be used for properties that must be fixed across an element (such as material properties) 
 		Params:
-			node (IFNode): The name or ID of a node, or a pointer to a IFNode object
-			attrType (object): "Loading", "Support", "Material", etc
+			node (IFNode): The name or ID of a node, or a pointer to a IFNode object. local node  (0..nNodes-1) or node pointer
+			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): 
 			loadcase (IFUnitSet, optional): 
 			units (IFUnitSet, optional): 
@@ -15546,7 +15546,7 @@ class IFElement(IFMeshFamily):
 		As IFElement.getAttributeValue, but only works for beam elements and returns the value corresponding to the given distance along the beam, e.g. calculating variations, and interpolating for tapered beams as necessary 
 		Params:
 			u (float): distance along beam (0..1)
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): 
 			loadcase (IFUnitSet, optional): 
 			units (IFUnitSet, optional): 
@@ -15562,8 +15562,8 @@ class IFElement(IFMeshFamily):
 		r"""
 		Interpolate model space coordinates at the given normalised local coordinates 
 		Params:
-			pNrmCrdsIn (array of float): An array of 3 real numbers, representing 3d coordinates
-			pMdlCrdsOut (array of float): An array of 3 real numbers, representing 3d coordinates
+			pNrmCrdsIn (array of float): An array of 3 real numbers, representing 3d coordinates. normalised coordinates, range (0.0 to 1.0)
+			pMdlCrdsOut (array of float): An array of 3 real numbers, representing 3d coordinates. interpolated model space coordinates
 		Returns:
 			None: 
 		"""
@@ -15712,7 +15712,7 @@ class IFElement(IFMeshFamily):
 		r"""
 		Return the coords of the centroid of this element 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -15721,7 +15721,7 @@ class IFElement(IFMeshFamily):
 		r"""
 		Return the loadcase in which this element was "born" - i.e. the loadcase in which an activate attribute was most recently assigned. Note that it is possible for an element to be "born", "die", and be "born again" any number of times if multiple IFDeactivate and IFActivate assignments are made. In such cases, it will be necessary to pass in the loadcase of interest. This function will track backwards in time from that point, looking for the most recent activation. If the element is inactive in the loadcase of interest, an error is generated. If no activation exists, the first loadcase is returned (the element is assumed to be always active). 
 		Params:
-			loadcaseOfInterest (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcaseOfInterest (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. The "time" at which to start looking. If not given, the current loadcase is assumed
 		Returns:
 			IFLoadcase: The returned loadcase
 		"""
@@ -15766,7 +15766,7 @@ class IFGroup(IFObjectSet):
 		r"""
 		return TRUE if this object is a member of the given group 
 		Params:
-			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object
+			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object.
 		Returns:
 			bool: 
 		"""
@@ -15806,10 +15806,10 @@ class IFGroup(IFObjectSet):
 		r"""
 		Creates and returns an array of IFAssignment objects, each of which represents one attribute assignment made to this object. The array can be restricted by using the optional argument to specify a given attribute type, e.g. loading. If not given, all assignments are returned Note that the IFAssignment objects returned are copies of the ones in actual use - modifying them will have no effect. If you wish to modify assignment details it is necessary to re-assign the attribute to the object 
 		Params:
-			attributeType (object, optional): "Loading", "Support", "Material", etc
-			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object
+			attributeType (object, optional): "Loading", "Support", "Material", etc.
+			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object. , optionally only return assignments to this loadcase
 			andAssignedObjects (bool, optional): default false, if true add the assigned objects to the IFAssignment objects returned
-			singleLoadcase (object, optional): NOT YET,  <boolean>default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
+			singleLoadcase (bool, optional): default true, if true return only assignments to the specific loadcase, if false assignments that apply to the given loadcase
 		Returns:
 			array of IFAssignment objects: The returned array extras
 		"""
@@ -15965,7 +15965,7 @@ class IFBackgroundGrid(IFDatabaseMember):
 		r"""
 		Returns TRUE if this object is a member of the given group 
 		Params:
-			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object
+			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object.
 		Returns:
 			bool: 
 		"""
@@ -16001,7 +16001,7 @@ class IFLayoutGrid(IFGeometry):
 		r"""
 		Sets the origin of the grid. 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (Y-coord, optional): 
 			Z (Z-coord, optional): 
 		Returns:
@@ -16014,7 +16014,7 @@ class IFLayoutGrid(IFGeometry):
 		r"""
 		Returns the origin of the grid 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -16462,7 +16462,7 @@ class IFLayoutGridByOffset(IFLayoutGrid):
 		r"""
 		Sets the reference path for the grid 
 		Params:
-			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 		Returns:
 			IFLayoutGridByOffset: grid object
 		"""
@@ -16484,8 +16484,8 @@ class IFLayoutGridByOffset(IFLayoutGrid):
 		r"""
 		add straight line to the grid 
 		Params:
-			start (array of float): An array of 3 real numbers, representing 3d coordinates
-			end (array of float): An array of 3 real numbers, representing 3d coordinates
+			start (array of float): An array of 3 real numbers, representing 3d coordinates. start of line
+			end (array of float): An array of 3 real numbers, representing 3d coordinates. end of line
 		Returns:
 			IFLayoutGridByOffset: grid object
 		"""
@@ -16496,9 +16496,9 @@ class IFLayoutGridByOffset(IFLayoutGrid):
 		r"""
 		add arc line to the grid 
 		Params:
-			centre (array of float): An array of 3 real numbers, representing 3d coordinates
-			hori (array of float): An array of 3 real numbers, representing 3d coordinates
-			vert (array of float): An array of 3 real numbers, representing 3d coordinates
+			centre (array of float): An array of 3 real numbers, representing 3d coordinates. centre of arc
+			hori (array of float): An array of 3 real numbers, representing 3d coordinates. vector from centre to start
+			vert (array of float): An array of 3 real numbers, representing 3d coordinates. vector from centre in the +ve swept angle direction
 			sweptAngleDegs (float): swept angle in degrees
 		Returns:
 			IFLayoutGridByOffset: grid object
@@ -16515,7 +16515,7 @@ class IFLayoutGridByOffset(IFLayoutGrid):
 			isRational (bool): true if rational, false if non-rational
 			knots (float): knot array
 			multiplicity (float): knot multiplicity array
-			coords (array of float): An array of 3 real numbers, representing 3d coordinates
+			coords (array of float): An array of 3 real numbers, representing 3d coordinates. control point coordinates
 			weights (float): weights if spline is rational
 		Returns:
 			IFLayoutGridByOffset: grid object
@@ -16568,7 +16568,7 @@ class IFObjsToDrape(IFDatabaseMember):
 		r"""
 		Returns TRUE if this object is a member of the given group 
 		Params:
-			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object
+			group (IFGroup): The name or ID of a group, or a pointer to a IFGroup object.
 		Returns:
 			bool: 
 		"""
@@ -16599,7 +16599,7 @@ class IFObjsToDrape(IFDatabaseMember):
 		r"""
 		Adds the specified objects to this set. see "IFObjectSet.add" 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -16614,7 +16614,7 @@ class IFObjsToDrape(IFDatabaseMember):
 		r"""
 		Removes the specified objects to this set. see "IFObjectSet.remove" 
 		Params:
-			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument
+			arg1 (object): Can be an object type, object or array of objects. Can be an attribute type, element type or stress model. Subsequent arguments can provide specifc names or ids to further filter the first argument.
 			arg2 (object, optional): 
 			arg3 (object, optional): 
 			arg4 (object, optional): 
@@ -16763,7 +16763,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Set the units for this database. This function should only be called before any data has been entered, and should only be called once per new database. Once a value is entered, its numeric value never changes, therefore if the units change, for example, from m to mm, any value already in the database would correspondingly change - e.g. from 1m to 1mm. 
 		Params:
-			units (IFUnitSet): The name of a units, or a pointer to a IFUnitSet object
+			units (IFUnitSet): The name of a units, or a pointer to a IFUnitSet object. Units to set current
 		Returns:
 			None: 
 		"""
@@ -16877,7 +16877,7 @@ class IFDatabase(IFGroup):
 		Params:
 			reportName (str): report name
 			reportTitle (str): report title
-			units (IFUnitSet): The name of a units, or a pointer to a IFUnitSet object
+			units (IFUnitSet): The name of a units, or a pointer to a IFUnitSet object. Units in which to present the report
 			nSigFig (int): number of significant figures
 			trailingZeros (bool, optional): true for 1.200, false for 1.2
 		Returns:
@@ -16890,7 +16890,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Deletes a report The report may be specified by name, by ID, or as an object 
 		Params:
-			report (IFReport): The name or ID of a report, or a pointer to a IFReport object
+			report (IFReport): The name or ID of a report, or a pointer to a IFReport object.
 		Returns:
 			None: 
 		"""
@@ -16901,7 +16901,7 @@ class IFDatabase(IFGroup):
 		r"""
 		gets a report; the report may be specified by name or by ID 
 		Params:
-			report (IFReport): The name or ID of a report, or a pointer to a IFReport object
+			report (IFReport): The name or ID of a report, or a pointer to a IFReport object.
 		Returns:
 			IFReport: 
 		"""
@@ -16999,7 +16999,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Return the ID of the attribute of the specified type whose ID is numerically highest of all attributes of that type 
 		Params:
-			pAttr (object): "Loading", "Support", "Material", etc
+			pAttr (object): "Loading", "Support", "Material", etc.
 		Returns:
 			int: 
 		"""
@@ -17010,7 +17010,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Return the next unique available ID of the attribute of the specified type 
 		Params:
-			pAttr (object): "Loading", "Support", "Material", etc
+			pAttr (object): "Loading", "Support", "Material", etc.
 		Returns:
 			int: 
 		"""
@@ -17021,7 +17021,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Return the next unique available ID of the attribute of the specified type 
 		Params:
-			pAttr (object): "Loading", "Support", "Material", etc
+			pAttr (object): "Loading", "Support", "Material", etc.
 		Returns:
 			int: 
 		"""
@@ -17059,7 +17059,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns the number of loadsets matching the given criteria  
 		Params:
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -17073,7 +17073,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Deletes all the specified loadsets  
 		Params:
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -17087,7 +17087,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns an array of specified loadsets - may be loadcases, load curves, combinations, envelopes, all etc.  
 		Params:
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -17221,8 +17221,8 @@ class IFDatabase(IFGroup):
 			entity (str or int): Name or index of results entity
 			component (str, optional): Name of results component
 			packedDim (int, optional): Dimensionality of the component
-			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
-			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
+			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for this result - default is database units
+			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for the optional extra 'per length/area' denominator - default is database units
 		Returns:
 			None: 
 		"""
@@ -17236,8 +17236,8 @@ class IFDatabase(IFGroup):
 			entity (str or int): Name or index of results entity
 			component (str, optional): Name of results component
 			packedDim (int, optional): Dimensionality of the component
-			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
-			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
+			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for this result - default is database units
+			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for the optional extra 'per length/area' denominator - default is database units
 		Returns:
 			IFPrimaryScriptedResultsComponentSet: object which will hold results
 		"""
@@ -17296,7 +17296,7 @@ class IFDatabase(IFGroup):
 		Return object which will hold results values of specified type. All options (loadcase, transformation, active fibre, active composite layer, etc) will be taken from the given context. If a context is not given, the current view will be used for all those options and settings instead. Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults. Changes to the context, after the call to IFDatabase.getResultsComponentSet, are IGNORED. Thus, the results cached within the IFResultsComponentSet are orphaned and isolated from the view, once the object has been created. If you need to respect such changes, you should create a new IFResultsComponentSet 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			locn (str): "nodal", "elementNodal", "Gauss"/"Internal"
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 		Returns:
@@ -17418,7 +17418,7 @@ class IFDatabase(IFGroup):
 		r"""
 		remove all traces of the given loadset from other post-processing loadsets such as envelopes and combinations. Useful to call when deleting a loadset. 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name. // -1 means 'all loadcases'
 			resFile (int, optional): default = 0   //
 			eigen (int, optional): default = -1  // -1 means 'not an eigenvalue'
 			harm (int, optional): default = -1  // -1 means 'not a harmonic'
@@ -17690,7 +17690,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a static moving load analysis as a branch within the given stage 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			name (str): Analysis name
 			linear (bool): true for a linear branch, false to continue the parent analysis (NL / transient)
 		Returns:
@@ -17714,7 +17714,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a pedestrian moving load analysis as a branch within the given stage 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			name (str): Analysis name
 		Returns:
 			IFPedestrianMovingLoadAnalysis: 
@@ -17726,7 +17726,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a cable tuning analysis as a branch within the given stage 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			name (str): Cable tuning analysis name
 			forceID (int, optional): The desired ID of the analysis results loadcase.
 		Returns:
@@ -17771,7 +17771,7 @@ class IFDatabase(IFGroup):
 			terminationValue (float): Termination time/increment
 			incrementValue (float): Segment size
 			assignmentFactor (float): Amplitude factor
-			variation (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object
+			variation (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object.
 			analysisName (str, optional): Name of analysis in which to create the new load curve
 			forceID (int, optional): The desired ID of the new loadcase
 		Returns:
@@ -17830,7 +17830,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns true if a loadset exists with the given specification  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -17844,7 +17844,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns the loadset with the given criteria. If no loadset matches the given criteria an error will occur. Therefore it is recommended to check the loadset exists with IFDatabase.existsLoadset before calling this function.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -17858,7 +17858,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Delete the specified loadset. Note that it is not possible to delete results loadcases (close the file instead) or the last remaining pre-processing loadcase.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -17873,7 +17873,7 @@ class IFDatabase(IFGroup):
 		change the state of automatic gravity for all structural loadcases to that given. Note that this function will automatically skip any loadcases that inherit gravity from a previous loadcase by way of automatic incrementation. If an analysis is given, only that analysis will receive the change. 
 		Params:
 			isGravity (bool): on or off
-			analysis (IFAnalysis, optional): The name of a analysis, or a pointer to a IFAnalysis object
+			analysis (IFAnalysis, optional): The name of a analysis, or a pointer to a IFAnalysis object.
 		Returns:
 			None: 
 		"""
@@ -18023,7 +18023,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Sets active the given local coordinate set. As a special case, calling this function with an empty string sets active the default global cartesian set 
 		Params:
-			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 		Returns:
 			None: 
 		"""
@@ -18235,7 +18235,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create an empty branch, within a stage, ready to receive loadcases 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			branchName (str, optional): Branch name; if empty or not given, a default name will be generated
 			createInitialLoadcase (bool, optional): True (default) to create an initial loadcase. False to create an empty (and thus temporarily invalid) analysis
 			type (str, optional): "general" (default), "linear", "eigenvalue", "phi-c", "staged"
@@ -18321,7 +18321,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Deletes the given analysis The analysis may be specified by name or as an object 
 		Params:
-			analysis (IFAnalysis): The name of a analysis, or a pointer to a IFAnalysis object
+			analysis (IFAnalysis): The name of a analysis, or a pointer to a IFAnalysis object. Analysis
 		Returns:
 			None: 
 		"""
@@ -18365,7 +18365,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create new Direct Method Influence Analysis as a branch within the given stage 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			analysisName (str, optional): Analysis name; if empty or not given, a default name will be generated
 		Returns:
 			IFDirectMethodInfAnalysis: Return created direct method influence analysis
@@ -18388,7 +18388,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create new Rail Direct Method Influence Analysis as a branch within the given stage 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			analysisName (str, optional): Analysis name; if empty or not given, a default name will be generated
 		Returns:
 			IFRailDMIAnalysis: Return created direct method influence analysis
@@ -18413,7 +18413,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a new run of VLO (and, if necessary, the analysis to contain it) as a branch within the given stage. VLO run names need to be unique, it is not possible to have two runs with the same name, even if they are in different analyses 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			runName (str): Name of this run of VLO, if empty string given then a default name will be generated
 			analysisName (str, optional): Name of containing analysis, if empty or not given then a default name will be generated
 			informPanel (bool, optional): if TRUE (default), the new run will appear in the loadcase panel
@@ -18453,7 +18453,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a new envlope run of TLO (and, if necessary, the analysis to contain it). TLO run names need to be unique, it is not possible to have two runs with the same name, even if they are in different analyses 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			runName (str): Name of the TLO envelope Run, if empty string given then a default name will be generated
 			isTLO (bool): if TRUE, a TLO Envelope Run is created
 			informPanel (bool, optional): if TRUE (default), the new run will appear in the loadcase panel
@@ -18467,7 +18467,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a new run of RLO (and, if necessary, the analysis to contain it) as a branch within the given stage. RLO run names need to be unique, it is not possible to have two runs with the same name, even if they are in different analyses 
 		Params:
-			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			runName (str): Name of this run of RLO, if empty string given then a default name will be generated
 			analysisName (str, optional): Name of containing analysis, if empty or not given then a default name will be generated
 			informPanel (bool, optional): if TRUE (default), the new run will appear in the loadcase panel
@@ -18685,7 +18685,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Specifies the manner by which attribute IDs are automatically allocated. Two techniques are available "fromEnd", which behaves like V13, and gives each new attribute an index calculated as one higher than the current highest. Conversely "fillgaps" will reuse IDs where attributes have been deleted. 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			method (str): "fillgaps", "fromend"
 		Returns:
 			None: 
@@ -18697,7 +18697,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns the manner by which attribute IDs are automatically allocated. Two techniques are available "fromEnd", which behaves like V13, and gives each new attribute an index calculated as one higher than the current highest. Conversely "fillgaps" will reuse IDs where attributes have been deleted. 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 		Returns:
 			str: "fillgaps", "fromend"
 		"""
@@ -18708,7 +18708,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Deletes the given attribute/utility The attribute may be specified by name, by ID, or as an object. It is an error to call this function if the attribute is assigned (you may wish to call IFAttribute.deassignFrom("All") first). It is an error to call this function if the given info is not unique. For example, deleteAttribute("fred") is OK if there is only one attribute in your model called "fred". However, it is possible to create attributes with the same name, as long as they have different types. So if you create both a load and support with the same name, this function cannot be used to delete by name - use getAttribute() to get the object, and then pass the object to this function. 
 		Params:
-			attr (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attr (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object.
 		Returns:
 			None: 
 		"""
@@ -18719,8 +18719,8 @@ class IFDatabase(IFGroup):
 		r"""
 		Sets the specified attribute as the default attribute for this type. This means that all new objects will automatically receive an assignment to this attribute. This function is also used to remove the default attribute (if any) of the given type - use (for example) setAsDefault("material", "none") 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attrType (object): "Loading", "Support", "Material", etc.
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object.
 		Returns:
 			None: 
 		"""
@@ -18731,7 +18731,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns the attribute/utility of the given type with the name/ID given 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			attributeName (str or int): name or ID of the attribute
 		Returns:
 			IFAttribute: 
@@ -18743,7 +18743,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Deletes all attributes/utilities of the specified type Optionally, output can be restricted to only those with the given name(s) and/or in the given range of IDs. Delete is only possible if the attribute is not assigned. Returns the number actually deleted - so you may check that the operation was successful by first calling IFDatabase.getAttributes and comparing the number of objects returned by that function with the return value of this one.  
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			arg2 (str, optional): names and/or IDs of attributes, e.g. "bob;1T5" (default all)
 			reportError (bool, optional): flag to indicate if an error should be reported when the attribute type is unrecognised (default = True)
 		Returns:
@@ -18756,7 +18756,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Fetches all attributes/utilities of the given type as an array. The array can then be looped in the normal way. Note that if only a results file is loaded (i.e. without the corresponding model) only attribute IDs will be in the array. Otherwise the array will be filled with attribute objects Optionally, output can be restricted to only those with the given name(s) and/or in the given range of IDs. The array can then be looped in the normal way. 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			arg2 (str, optional): names and/or IDs of attributes, e.g. "bob;1T5" (default all)
 		Returns:
 			array of IFAttribute objects: the returned array
@@ -18768,7 +18768,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns true if an attribute/utility exists with the type and name/ID given false otherwise 
 		Params:
-			attributeType (object): "Loading", "Support", "Material", etc
+			attributeType (object): "Loading", "Support", "Material", etc.
 			attributeName (str or int): name or ID of the attribute
 		Returns:
 			bool: true if it exists
@@ -18780,7 +18780,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns the number of attribute/utility objects of the given type. You may optionally pass in a string such as "1-10" to discover how many attributes exist with that range of IDs. 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			names (str, optional): e.g. "Bob;1-10" (default all)
 		Returns:
 			int: the number
@@ -18792,7 +18792,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Returns whether or not any attribute/utility objects of the given type are actually assigned 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 		Returns:
 			bool: true if assigned
 		"""
@@ -18812,12 +18812,12 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a point mesh attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			elementSize (float): Element size
 			firstStretch (float): 
-			firstVector (array of float): An array of 3 real numbers, representing 3d coordinates
+			firstVector (array of float): An array of 3 real numbers, representing 3d coordinates.
 			secondStretch (float): 
-			secondVector (array of float): An array of 3 real numbers, representing 3d coordinates
+			secondVector (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFPointSpacingMeshAttr: 
 		"""
@@ -18828,7 +18828,7 @@ class IFDatabase(IFGroup):
 		r"""
 		 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			elementSize (float): Element size
 		Returns:
 			IFPointSpacingMeshAttr: 
@@ -18840,7 +18840,7 @@ class IFDatabase(IFGroup):
 		r"""
 		 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			elementName (str): 
 		Returns:
 			IFPointElementMeshAttr: 
@@ -18852,7 +18852,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a line mesh attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMeshLine: Newly created attribute
 		"""
@@ -18863,7 +18863,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a surface mesh attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMeshSurface: Newly created attribute
 		"""
@@ -18874,7 +18874,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a volume mesh attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMeshVolume: Newly created attribute
 		"""
@@ -18885,7 +18885,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a phreatic surface mesh attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMeshPhreatic: Newly created attribute
 		"""
@@ -18896,9 +18896,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local Cartesian coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationCartLocalAttr: 
 		"""
@@ -18909,9 +18909,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local cylindrical coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationCylLocalAttr: 
 		"""
@@ -18922,9 +18922,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local spherical set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationSphLocalAttr: 
 		"""
@@ -18935,9 +18935,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local Cartesian coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationCartLocalAttr: 
 		"""
@@ -18948,9 +18948,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local cylindrical coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationCylLocalAttr: 
 		"""
@@ -18961,9 +18961,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local spherical set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationSphLocalAttr: 
 		"""
@@ -18974,9 +18974,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local Cartesian coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationCartLocalAttr: 
 		"""
@@ -18987,9 +18987,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local cylindrical coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationCylLocalAttr: 
 		"""
@@ -19000,9 +19000,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local spherical set 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angle (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationSphLocalAttr: 
 		"""
@@ -19013,11 +19013,11 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local Cartesian coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			offset (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol0 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			offset (array of float): An array of 3 real numbers, representing 3d coordinates. Offset of the coordinate system
+			matrixCol0 (array of float): An array of 3 real numbers, representing 3d coordinates. first column of 3x3 array of real numbers
+			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates. second column of 3x3 array of real numbers
+			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates. third column of 3x3 array of real numbers
 		Returns:
 			IFGenRotationCartLocalAttr: 
 		"""
@@ -19028,11 +19028,11 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local cylindrical coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			offset (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol0 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			offset (array of float): An array of 3 real numbers, representing 3d coordinates. Offset of the coordinate system
+			matrixCol0 (array of float): An array of 3 real numbers, representing 3d coordinates. first column of 3x3 array of real numbers
+			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates. second column of 3x3 array of real numbers
+			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates. third column of 3x3 array of real numbers
 		Returns:
 			IFGenRotationCylLocalAttr: 
 		"""
@@ -19043,11 +19043,11 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local spherical set 
 		Params:
-			attrName (str): The unique name of this attribute
-			offset (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol0 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			offset (array of float): An array of 3 real numbers, representing 3d coordinates. Offset of the coordinate system
+			matrixCol0 (array of float): An array of 3 real numbers, representing 3d coordinates. first column of 3x3 array of real numbers
+			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates. second column of 3x3 array of real numbers
+			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates. third column of 3x3 array of real numbers
 		Returns:
 			IFGenRotationSphLocalAttr: 
 		"""
@@ -19058,9 +19058,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local Cartesian coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			originPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			originPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFGenRotationCartLocalAttr: 
 		"""
@@ -19071,9 +19071,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local cylindrical coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			originPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			originPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFGenRotationCylLocalAttr: 
 		"""
@@ -19084,9 +19084,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local spherical set 
 		Params:
-			attrName (str): The unique name of this attribute
-			originPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			originPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFGenRotationSphLocalAttr: 
 		"""
@@ -19097,10 +19097,10 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local Cartesian coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			OriginPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XYplanePoint (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			OriginPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XYplanePoint (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFGenRotationCartLocalAttr: 
 		"""
@@ -19111,10 +19111,10 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local cylindrical coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			OriginPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XYplanePoint (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			OriginPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XYplanePoint (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFGenRotationCylLocalAttr: 
 		"""
@@ -19125,10 +19125,10 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local spherical set 
 		Params:
-			attrName (str): The unique name of this attribute
-			OriginPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates
-			XYplanePoint (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			OriginPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XaxisPoint (array of float): An array of 3 real numbers, representing 3d coordinates.
+			XYplanePoint (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFGenRotationSphLocalAttr: 
 		"""
@@ -19139,9 +19139,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local Cartesian coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			scales (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
+			scales (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFScaleCartLocalAttr: 
 		"""
@@ -19152,9 +19152,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local cylindrical coordinate set 
 		Params:
-			attrName (str): The unique name of this attribute
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			scales (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
+			scales (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFScaleCylLocalAttr: 
 		"""
@@ -19165,9 +19165,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local spherical set 
 		Params:
-			attrName (str): The unique name of this attribute
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			scales (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
+			scales (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFScaleSphLocalAttr: 
 		"""
@@ -19178,7 +19178,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates local coordinate set normal to assigned surface 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSurfaceAxesLocalAttr: 
 		"""
@@ -19189,8 +19189,8 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates translation transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			translation (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			translation (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFTranslationTransAttr: 
 		"""
@@ -19201,9 +19201,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates rotation transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angleDegrees (float): angle in degrees
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationTransAttr: 
 		"""
@@ -19214,9 +19214,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates rotation transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angleDegrees (float): angle in degrees
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationTransAttr: 
 		"""
@@ -19227,9 +19227,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates rotation transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			angleDegrees (float): 
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
 		Returns:
 			IFPlanarRotationTransAttr: 
 		"""
@@ -19240,12 +19240,12 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates rotation transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			axis0 (array of float): An array of 3 real numbers, representing 3d coordinates
-			axis1 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates
-			matrixCol3 (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			axis0 (array of float): An array of 3 real numbers, representing 3d coordinates.
+			axis1 (array of float): An array of 3 real numbers, representing 3d coordinates.
+			matrixCol1 (array of float): An array of 3 real numbers, representing 3d coordinates.
+			matrixCol2 (array of float): An array of 3 real numbers, representing 3d coordinates.
+			matrixCol3 (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFGenRotationTransAttr: 
 		"""
@@ -19256,9 +19256,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates scale transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			scales (array of float): An array of 3 real numbers, representing 3d coordinates
+			attrName (str): The unique name of this attribute.
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Origin of the coordinate system
+			scales (array of float): An array of 3 real numbers, representing 3d coordinates.
 		Returns:
 			IFScaleTransAttr: 
 		"""
@@ -19269,7 +19269,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates rotation transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			OriginPoint (IFPoint): 
 			XaxisPoint (IFPoint): 
 		Returns:
@@ -19282,7 +19282,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates rotation transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			OriginPoint (IFPoint): 
 			XaxisPoint (IFPoint): 
 			XYplanePoint (IFPoint): 
@@ -19296,7 +19296,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates mirror transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			planeEquation (array of 4 float): Array defining the coefficients of the plane equation
 		Returns:
 			IFMirrorPlaneTransAttr: 
@@ -19308,7 +19308,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates mirror transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			OriginPoint (IFPoint): 
 			XaxisPoint (IFPoint): 
 		Returns:
@@ -19321,7 +19321,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates mirror transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			OriginPoint (IFPoint): 
 			XaxisPoint (IFPoint): 
 			XYplanePoint (IFPoint): 
@@ -19335,7 +19335,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates mirror transformation attribute that works perpendicular to the current screen rotation The screen rotation is obtained at the time the attribute is used, not at the time it is defined. Thus the same attribute can be used for any number of different screen rotations. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFScreenMirrorTransAttr: 
 		"""
@@ -19346,7 +19346,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates compound transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			TranAttrs (array of IFTransformationAttr objects): Array, in the order in which they should be applied
 		Returns:
 			IFCompoundTransAttr: 
@@ -19358,7 +19358,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a holder for a named generic array of values. This array of values is typically used for graphing, but could potentially have other uses. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDataset: newly created attribute
 		"""
@@ -19380,7 +19380,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a PSD dataset attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPSD: newly created attribute
 		"""
@@ -19391,7 +19391,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a Pedestrian Load Definition attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPedestrianLoadDefinition: newly created attribute
 		"""
@@ -19402,7 +19402,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a spectral response dataset attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSpectralCurve: newly created attribute
 		"""
@@ -19413,7 +19413,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a field variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFVariationField: newly created attribute
 		"""
@@ -19424,7 +19424,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a line variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFVariationLine: newly created attribute
 		"""
@@ -19448,7 +19448,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an unequal interpolation variation 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			type (str): "Actual" or "Parametric"
 			distance (float): 
 			function (str): 
@@ -19462,7 +19462,7 @@ class IFDatabase(IFGroup):
 		r"""
 		 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			order (str): "Constant", "Linear", "Quadratic", or "Cubic"
 			type (str): "Actual" or "Parametric"
 			function (str): 
@@ -19476,7 +19476,7 @@ class IFDatabase(IFGroup):
 		r"""
 		 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			order (str): "Constant", "Linear", "Quadratic", or "Cubic"
 			type (str): "Actual" or "Parametric"
 			distance (float): 
@@ -19491,7 +19491,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a surface variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFVariationSurface: newly created attribute
 		"""
@@ -19502,7 +19502,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a surface boundary variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFVariationBoundary: newly created attribute
 		"""
@@ -19513,7 +19513,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a surface grid variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFVariationGrid: newly created attribute
 		"""
@@ -19524,7 +19524,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a factored variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFVariationFactored: newly created attribute
 		"""
@@ -19535,7 +19535,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a line profile variation for use in defining a profile set variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFInterpolationVariation: newly created attribute
 		"""
@@ -19546,7 +19546,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a profile set variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFProfileVariation: newly created attribute
 		"""
@@ -19557,7 +19557,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a cylindrical profile set variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFProfileVariation: newly created attribute
 		"""
@@ -19568,7 +19568,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a prior results set variation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFVariationPriorResults: newly created attribute
 		"""
@@ -19579,7 +19579,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a surface geometric properties attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFGeometricSurface: newly created attribute
 		"""
@@ -19590,7 +19590,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a joint geometric properties attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFGeometricJoint: newly created attribute
 		"""
@@ -19601,7 +19601,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a thermal link geometric properties attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFGeometricThermalLink: newly created attribute
 		"""
@@ -19612,7 +19612,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a beam geometric properties attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFGeometricLine: newly created attribute
 		"""
@@ -19623,7 +19623,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an activate attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFActivate: newly created attribute
 		"""
@@ -19634,7 +19634,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a deactivate attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			percent (float, optional): percentage reduction factor
 			stiffness (float, optional): stiffness reduction factor
 		Returns:
@@ -19647,7 +19647,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a structural or viscous damping attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDamping: newly created attribute
 		"""
@@ -19658,7 +19658,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a reset deformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFResetDeformation: newly created attribute
 		"""
@@ -19669,7 +19669,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a dimension lines attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDimensionLines: newly created attribute
 		"""
@@ -19680,7 +19680,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a geometric section optimisation pool utility 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFGeomBeamOptimPool: newly created utility
 		"""
@@ -19691,7 +19691,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a geometric section optimisation utility 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFGeomBeamOptimUtil: newly created utility
 		"""
@@ -19702,7 +19702,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an equivalence attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFEquivalence: newly created attribute
 		"""
@@ -19713,7 +19713,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an age attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFAge: newly created attribute
 		"""
@@ -19724,7 +19724,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a radiation surface attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSurfaceRadiation: newly created attribute
 		"""
@@ -19735,7 +19735,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a search area attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSearchArea: 
 		"""
@@ -19746,7 +19746,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a slideline attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			slideType (str): "Friction", "No Friction", "Null", "Sliding" or "Tied"
 			slideRigidType (str): "Non-rigid slideline surface", "Rigid slideline master surface" or "Rigid slideline slave surface"
 			slideGeometryType (str): "Linear or bilinear slideline surface" or "Quadratic slideline surface"
@@ -19770,7 +19770,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a thermal gap attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFThermalSurfaceGap: newly created attribute
 		"""
@@ -19781,7 +19781,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a thermal surface attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFThermalSurface: newly created attribute
 		"""
@@ -19792,7 +19792,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a thermal support attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSupportThermal: newly created attribute
 		"""
@@ -19803,7 +19803,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a structural support attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSupportStructural: newly created attribute
 		"""
@@ -19814,7 +19814,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a beam distributed loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingBeamDistributed: newly created attribute
 		"""
@@ -19825,7 +19825,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a beam point loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingBeamPoint: newly created attribute
 		"""
@@ -19836,7 +19836,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a concentrated structural loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingConcentrated: newly created attribute
 		"""
@@ -19847,7 +19847,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a body force loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingBody: newly created attribute
 		"""
@@ -19858,7 +19858,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a body force loading specifically to represent gravity 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingGravity: newly created attribute
 		"""
@@ -19869,7 +19869,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a temperature loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingTemperature: newly created attribute
 		"""
@@ -19880,7 +19880,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an initial stress/strain loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingStressStrain: newly created attribute
 		"""
@@ -19891,7 +19891,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a face loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingFace: newly created attribute
 		"""
@@ -19902,8 +19902,8 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a field face loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			flux (object, optional): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			flux (IFVariationAttr or float, optional): 
 		Returns:
 			IFFieldFaceLoading: 
 		"""
@@ -19914,7 +19914,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a hygro-thermal face loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFFieldFaceLoading: 
 		"""
@@ -19925,7 +19925,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a global distributed loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingGlobalDistributed: newly created attribute
 		"""
@@ -19936,7 +19936,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a local distributed loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingLocalDistributed: newly created attribute
 		"""
@@ -19947,7 +19947,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a prescribed displacement loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			type (str): "Total" or "Incremental"
 		Returns:
 			IFPrescribedDisplacementLoad: 
@@ -19959,7 +19959,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an initial acceleration loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFInitialAccelerationLoad: 
 		"""
@@ -19970,7 +19970,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a prescribed acceleration loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPrescribedAccelerationLoad: 
 		"""
@@ -19981,7 +19981,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an initial velocity loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFInitialVelocityLoad: 
 		"""
@@ -19992,7 +19992,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a prescribed velocity loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPrescribedVelocityLoad: 
 		"""
@@ -20003,7 +20003,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a concentrated flux loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingFlux: newly created attribute
 		"""
@@ -20014,7 +20014,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a prescribed temperature loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPrescribedTemperatureLoad: 
 		"""
@@ -20025,7 +20025,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an initial temperature loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingInitialTemperature: 
 		"""
@@ -20036,7 +20036,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an environmental loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingEnvironmental: newly created attribute
 		"""
@@ -20047,7 +20047,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an internal heat loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFInternalHeatLoading: 
 		"""
@@ -20058,7 +20058,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an internal heat user attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			UserDataArray (array of realvariation): 
 			temperature (float): 
 		Returns:
@@ -20071,7 +20071,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete point loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingDiscretePoint: newly created attribute
 		"""
@@ -20082,7 +20082,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete flux point loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDiscreteFluxPointLoading: newly created attribute
 		"""
@@ -20093,7 +20093,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete internal heat point loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDiscreteHeatPointLoading: newly created attribute
 		"""
@@ -20104,7 +20104,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete patch loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingDiscretePatch: newly created attribute
 		"""
@@ -20115,7 +20115,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete ENVT patch loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDiscreteENVTLoading: newly created attribute
 		"""
@@ -20126,7 +20126,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete flux patch loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDiscreteFluxPatchLoading: newly created attribute
 		"""
@@ -20137,7 +20137,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete internal heat patch loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDiscreteHeatPatchLoading: newly created attribute
 		"""
@@ -20148,7 +20148,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a discrete compound loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDiscreteCompoundLoading: newly created attribute
 		"""
@@ -20159,7 +20159,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a surface distributed loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSurfDistrLoading: newly created attribute
 		"""
@@ -20170,7 +20170,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a temperature profile loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFTemperatureProfileLoad: newly created attribute
 		"""
@@ -20181,7 +20181,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a strain profile loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFStrainProfileLoad: newly created attribute
 		"""
@@ -20192,7 +20192,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a water pressure distribution loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFWaterPressureDistrLoad: newly created attribute
 		"""
@@ -20203,7 +20203,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a viscous support (velocity) loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFViscousSupportLoad: newly created attribute
 		"""
@@ -20214,7 +20214,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a constant constraint equation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFConstraintConstant: newly created attribute
 		"""
@@ -20225,7 +20225,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a cyclic rotation constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			Primary (float): ordinate
 			Secondary (float): ordinate
 		Returns:
@@ -20238,7 +20238,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a cyclic rotation constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			primaryX (float): 
 			primaryY (float): 
 			primaryZ (float): 
@@ -20255,7 +20255,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a cyclic translation constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			Primary (float): ordinate
 			Secondary (float): ordinate
 		Returns:
@@ -20268,7 +20268,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a cyclic translation constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			primaryX (float): 
 			primaryY (float): 
 			primaryZ (float): 
@@ -20285,7 +20285,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a normal tied mesh constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFNormalTiedMeshConstraint: 
 		"""
@@ -20296,7 +20296,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a path constraint equation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFConstraintPath: newly created attribute
 		"""
@@ -20307,7 +20307,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a planar surface constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPlanarSurfaceConstraint: 
 		"""
@@ -20318,7 +20318,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a rigid displacement constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFRigidDisplacementConstraint: 
 		"""
@@ -20329,7 +20329,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a rigid link constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFRigidLinkConstraint: 
 		"""
@@ -20340,7 +20340,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a specified constraint equation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFConstraintEquation: newly created attribute
 		"""
@@ -20351,7 +20351,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a specified tied mesh constraint equation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFConstraintTied: newly created attribute
 		"""
@@ -20362,7 +20362,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a straight line constraint attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFStraightLineConstraint: 
 		"""
@@ -20373,7 +20373,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a rigid floor constraint equation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFRigidFloorConstraintEqu: newly created attribute
 		"""
@@ -20384,7 +20384,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a structural retained freedom attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFRetainedStructural: newly created attribute
 		"""
@@ -20395,7 +20395,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a thermal retained freedom attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFRetainedThermal: newly created attribute
 		"""
@@ -20406,13 +20406,13 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an isotropic material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			Young (IFVariationAttr or float): Young's modulus
 			Poisson (IFVariationAttr or float): Poisson's ratio
 			Density (IFVariationAttr or float): Density
-			alpha (IFVariationAttr or float, optional): Coefficient of thermal expansion
-			massDamping (IFVariationAttr or float, optional): Mass Rayleigh damping constant
-			stiffDamping (IFVariationAttr or float, optional): Stiffness Rayleigh damping constant
+			alpha (IFVariationAttr or float, optional): Coefficient of thermal expansion.
+			massDamping (IFVariationAttr or float, optional): Mass Rayleigh damping constant.
+			stiffDamping (IFVariationAttr or float, optional): Stiffness Rayleigh damping constant.
 			temp (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -20424,12 +20424,12 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an orthotropic material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			ShearXY (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float, optional): temperature
 			defnPageType (str, optional): "Plane stress", "Axisymmetric shell"
@@ -20443,15 +20443,15 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an orthotropic plane strain material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			YoungZ (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			YoungZ (IFVariationAttr or float): Young's modulus in Z
+			ShearXY (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float, optional): temperature
 		Returns:
@@ -20464,11 +20464,11 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an orthotropic sheet material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float, optional): temperature
 		Returns:
@@ -20481,14 +20481,14 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an orthotropic thick material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			ShearYZ (object): IFVariationAttr or double
-			ShearXZ (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			ShearXY (IFVariationAttr or float): 
+			ShearYZ (IFVariationAttr or float): 
+			ShearXZ (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float, optional): temperature
 		Returns:
@@ -20501,15 +20501,15 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an axisymmetric orthotropic material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			YoungZ (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			YoungZ (IFVariationAttr or float): Young's modulus in Z
+			ShearXY (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float, optional): temperature
 		Returns:
@@ -20522,16 +20522,16 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a solid orthotropic material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			YoungZ (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			ShearYZ (object): IFVariationAttr or double
-			ShearXZ (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio
+			attrName (str): The unique name of this attribute.
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			YoungZ (IFVariationAttr or float): Young's modulus in Z
+			ShearXY (IFVariationAttr or float): 
+			ShearYZ (IFVariationAttr or float): 
+			ShearXZ (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
 			Density (IFVariationAttr or float): Density
 			temperature (float, optional): temperature
 		Returns:
@@ -20544,10 +20544,10 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an anisotropic material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			MassDensity (IFVariationAttr or float): Density
-			Angle (object): IFVariationAttr or double
-			Matrix (object): IFVariationAttr or double
+			Angle (IFVariationAttr or float): 
+			Matrix (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFAnisotropicMaterial: 
@@ -20559,7 +20559,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a rigidity matrix attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			massDensity (float): density
 			angle (float): Angle of orthotropy in degrees relative to reference axis
 			pMatrix (array of float): Upper triangle of rigidity matrix
@@ -20575,9 +20575,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a frictional joint attribute (Mdl=34) 
 		Params:
-			AttrName (str): The unique name of this attribute
-			FrictionCoeff (object): IFVariationAttr or double
-			InitialGap (object): IFVariationAttr or double
+			AttrName (str): The unique name of this attribute.
+			FrictionCoeff (IFVariationAttr or float): 
+			InitialGap (IFVariationAttr or float): 
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20592,7 +20592,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a general joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20606,7 +20606,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a nonlinear joint material (mdl=32) 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20624,7 +20624,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a nonlinear smooth joint attribute (mdl=33) 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20642,7 +20642,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a linear joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 			Stiffness (array of realvariation): 
 		Returns:
 			IFSpringJointMaterial: 
@@ -20654,7 +20654,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a nonlinear joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20670,7 +20670,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a viscous joint attribute (Mdl=35) 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20687,8 +20687,8 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a lead rubber bearing joint attribute (Mdl=36) 
 		Params:
-			AttrName (str): The unique name of this attribute
-			BiaxialCoef (object): IFVariationAttr or double
+			AttrName (str): The unique name of this attribute.
+			BiaxialCoef (IFVariationAttr or float): 
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20705,10 +20705,10 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a frictional pendulum joint attribute (Mdl=37) 
 		Params:
-			AttrName (str): The unique name of this attribute
-			ContactArea (object): IFVariationAttr or double
-			RadiusSlide (object): IFVariationAttr or double
-			BiaxialCoef (object): IFVariationAttr or double
+			AttrName (str): The unique name of this attribute.
+			ContactArea (IFVariationAttr or float): 
+			RadiusSlide (IFVariationAttr or float): 
+			BiaxialCoef (IFVariationAttr or float): 
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20723,9 +20723,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a non-linear user joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
-			ModelID (object): IFVariationAttr or double
-			NStateVar (object): IFVariationAttr or double
+			AttrName (str): The unique name of this attribute.
+			ModelID (IFVariationAttr or float): user model number
+			NStateVar (IFVariationAttr or float): number of state variables
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20741,8 +20741,8 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a Piecewise linear joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
-			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
+			AttrName (str): The unique name of this attribute.
+			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node" Position of mass or masses: "Between nodes", "At first node", "At second node"
 			CouplingType (str): Direction used to define axial force: "Uncoupled", "Local X", "Local Y", "Local Z"
 			Stiffness (array of realvariation): Elastic spring stiffesses for each freedom
 			Mass (array of realvariation): Mass for each freedom
@@ -20756,7 +20756,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a plastic hinge joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 		Returns:
 			IFPlasticHingeJointMaterial: 
 		"""
@@ -20767,7 +20767,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a plastic hinge PMM joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 			hingeType (int): 1=Fx-My, 2=Fx-Mz, 3=My-Mz, 4=Fx-My-Mz
 		Returns:
 			IFPlasticHingePMMJointMaterial: 
@@ -20779,7 +20779,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a matrix joint attribute 
 		Params:
-			AttrName (str): The unique name of this attribute
+			AttrName (str): The unique name of this attribute.
 		Returns:
 			IFMatrixJointMaterial: 
 		"""
@@ -20790,7 +20790,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a isotropic field material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -20801,7 +20801,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a orthotropic field material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -20812,7 +20812,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a 2D interface material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			energy1 (float): critical fracture energy in 1 direction
 			strength1 (float): tensile threshold strength in 1 direction
 			disp1 (float): maximum relative displacement in 1 direction
@@ -20831,7 +20831,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a 3D interface material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			energy1 (float): critical fracture energy in 1 direction
 			strength1 (float): tensile threshold strength in 1 direction
 			disp1 (float): maximum relative displacement in 1 direction
@@ -20854,14 +20854,14 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for Mooney Rivlin rubber model 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			rubberConst1 (float): Mooney Rivlin rubber constant
 			rubberConst2 (float): Mooney Rivlin rubber constant
 			bulkModulus (float): Bulk modulus
 			massDensity (float): density
-			thermalExp (float): Coefficient of thermal expansion
-			massR (float): Mass Rayleigh damping constant
-			stiffnessR (float): Stiffness Rayleigh damping constant
+			thermalExp (float): Coefficient of thermal expansion.
+			massR (float): Mass Rayleigh damping constant.
+			stiffnessR (float): Stiffness Rayleigh damping constant.
 		Returns:
 			IFRubberMaterial: 
 		"""
@@ -20872,13 +20872,13 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for NeoHookean rubber model 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			rubberConst (float): Neo Hookena rubber constant
 			bulkModulus (float): Bulk modulus
 			massDensity (float): density
-			thermalExp (float): Coefficient of thermal expansion
-			massR (float): Mass Rayleigh damping constant
-			stiffnessR (float): Stiffness Rayleigh damping constant
+			thermalExp (float): Coefficient of thermal expansion.
+			massR (float): Mass Rayleigh damping constant.
+			stiffnessR (float): Stiffness Rayleigh damping constant.
 		Returns:
 			IFRubberMaterial: 
 		"""
@@ -20889,13 +20889,13 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for Hencky rubber model 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			shearModulus (float): Shear modulus
 			bulkModulus (float): Bulk modulus
 			massDensity (float): density
-			thermalExp (float): Coefficient of thermal expansion
-			massR (float): Mass Rayleigh damping constant
-			stiffnessR (float): Stiffness Rayleigh damping constant
+			thermalExp (float): Coefficient of thermal expansion.
+			massR (float): Mass Rayleigh damping constant.
+			stiffnessR (float): Stiffness Rayleigh damping constant.
 		Returns:
 			IFRubberMaterial: 
 		"""
@@ -20906,12 +20906,12 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for Ogden rubber model 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			bulkModulus (float): Bulk modulus
 			massDensity (float): density
-			thermalExp (float): Coefficient of thermal expansion
-			massR (float): Mass Rayleigh damping constant
-			stiffnessR (float): Stiffness Rayleigh damping constant
+			thermalExp (float): Coefficient of thermal expansion.
+			massR (float): Mass Rayleigh damping constant.
+			stiffnessR (float): Stiffness Rayleigh damping constant.
 		Returns:
 			IFRubberMaterial: 
 		"""
@@ -20922,14 +20922,14 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for volumetric crushing model (Mdl=81) 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			bIsVolumetric (bool): volumetric crushing indicator
 			bulkModulus (float): Bulk modulus
 			shearModulus (float): Shear modulus
 			massDensity (float): density
-			thermalExp (float): Coefficient of thermal expansion
-			massRayleigh (float): Mass Rayleigh damping constant
-			stiffRayleigh (float): Stiffness Rayleigh damping constant
+			thermalExp (float): Coefficient of thermal expansion.
+			massRayleigh (float): Mass Rayleigh damping constant.
+			stiffRayleigh (float): Stiffness Rayleigh damping constant.
 			heatFraction (float): Heat fraction coefficient
 			cutOffPressure (float): Cut off pressure
 			pressureDepend0 (float): Parameter defining pressure dependent yield stress
@@ -20945,9 +20945,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a 2D mass material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			MassX (object): IFVariationAttr or double
-			MassY (object): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			MassX (IFVariationAttr or float): 
+			MassY (IFVariationAttr or float): 
 			type (str, optional): distribution type
 		Returns:
 			IFMaterialMass: 
@@ -20959,10 +20959,10 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a 3D mass material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
-			MassX (object): IFVariationAttr or double
-			MassY (object): IFVariationAttr or double
-			MassZ (object): IFVariationAttr or double
+			attrName (str): The unique name of this attribute.
+			MassX (IFVariationAttr or float): Mass acting in X direction
+			MassY (IFVariationAttr or float): Mass acting in Y direction
+			MassZ (IFVariationAttr or float): Mass acting in Z direction
 			type (str, optional): distribution type
 		Returns:
 			IFMaterialMass: 
@@ -20974,7 +20974,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for nonlinear user material 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			Young (IFVariationAttr or float): Young's modulus
 			Poisson (IFVariationAttr or float): Poisson's ratio
 			Density (IFVariationAttr or float): Density
@@ -20988,7 +20988,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for nonlinear resultant material 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			Young (IFVariationAttr or float): Young's modulus
 			Poisson (IFVariationAttr or float): Poisson's ratio
 			Density (IFVariationAttr or float): Density
@@ -21003,21 +21003,21 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for CEB-FIP material (Mdl=86) 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			YoungsModulus (IFVariationAttr or float): Young's modulus
 			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
 			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant
+			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
 			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			MeanConcreteCompStrength (object): IFVariationAttr or double
+			MeanConcreteCompStrength (IFVariationAttr or float): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): 
+			NominalThickness (IFVariationAttr or float): 
 			IncludeShrinkage (bool, optional): shrinkage switch
 			UseNominalThickness (bool, optional): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object, optional): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float, optional): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool, optional): if using section perimeter this sets the interior factor to 1
 		Returns:
 			IFMaterialIsotropic: 
@@ -21029,21 +21029,21 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for Eurocode2 material (Mdl=86) 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			YoungsModulus (IFVariationAttr or float): Young's modulus
 			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
 			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant
+			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
 			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			MeanConcreteCompStrength (object): IFVariationAttr or double
+			MeanConcreteCompStrength (IFVariationAttr or float): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): 
+			NominalThickness (IFVariationAttr or float): 
 			IncludeShrinkage (bool): shrinkage switch
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			AutogenousShrinkage (bool): autogenous shrinkage flag
 			UseFullPerimeter (bool, optional): if using section perimeter this sets the interior factor to 1
 			pSilicaFumeType (int, optional): silica fume type
@@ -21057,21 +21057,21 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for India IRC:112-2011 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			YoungsModulus (IFVariationAttr or float): Young's modulus
 			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
 			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant
+			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
 			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			MeanConcreteCompStrength (object): IFVariationAttr or double
+			MeanConcreteCompStrength (IFVariationAttr or float): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): 
+			NominalThickness (IFVariationAttr or float): 
 			IncludeShrinkage (bool): shrinkage switch
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			AutogenousShrinkage (bool): autogenous shrinkage flag
 			UseFullPerimeter (bool, optional): if using section perimeter this sets the interior factor to 1
 		Returns:
@@ -21084,26 +21084,26 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for Chinese creep material (Mdl=86) 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			YoungsModulus (IFVariationAttr or float): Young's modulus
 			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
 			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion
-			A (object): IFVariationAttr or double
-			B (object): IFVariationAttr or double
-			F1 (object): IFVariationAttr or double
-			G1 (object): IFVariationAttr or double
-			P1 (object): IFVariationAttr or double
-			R1 (object): IFVariationAttr or double
-			F2 (object): IFVariationAttr or double
-			G2 (object): IFVariationAttr or double
-			P2 (object): IFVariationAttr or double
-			R2 (object): IFVariationAttr or double
-			F3 (object): IFVariationAttr or double
-			R3 (object): IFVariationAttr or double
-			AR (object, optional): IFVariationAttr or double
-			BR (object, optional): IFVariationAttr or double
-			Hf (object, optional): IFVariationAttr or double
+			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
+			A (IFVariationAttr or float): 
+			B (IFVariationAttr or float): 
+			F1 (IFVariationAttr or float): 
+			G1 (IFVariationAttr or float): 
+			P1 (IFVariationAttr or float): 
+			R1 (IFVariationAttr or float): 
+			F2 (IFVariationAttr or float): 
+			G2 (IFVariationAttr or float): 
+			P2 (IFVariationAttr or float): 
+			R2 (IFVariationAttr or float): 
+			F3 (IFVariationAttr or float): 
+			R3 (IFVariationAttr or float): 
+			AR (IFVariationAttr or float, optional): 
+			BR (IFVariationAttr or float, optional): 
+			Hf (IFVariationAttr or float, optional): 
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -21114,7 +21114,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a material attribute for Generic Polymer material model (Mdl=88) 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			activationEnergyTension (float): activation energy in tension
 			activationVolumeTension (float): activation volume in tension
 			externalStringStiffnessTension (float): external tensile spring stiffness
@@ -21123,9 +21123,9 @@ class IFDatabase(IFGroup):
 			externalStringStiffnessCompression (float): external compressive spring stiffness
 			bulkModulus (float): Bulk modulus
 			density (float): density
-			thermalExpansion (float): Coefficient of thermal expansion
-			massDamping (float): Mass Rayleigh damping constant
-			stiffnessDamping (float): Stiffness Rayleigh damping constant
+			thermalExpansion (float): Coefficient of thermal expansion.
+			massDamping (float): Mass Rayleigh damping constant.
+			stiffnessDamping (float): Stiffness Rayleigh damping constant.
 		Returns:
 			IFPolymerMaterial: 
 		"""
@@ -21136,7 +21136,7 @@ class IFDatabase(IFGroup):
 		r"""
 		 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			damageModel_E (int): idam
 			tensionFuncId_E (int): itdam
 			compressionFuncId_E (int): icdam
@@ -21206,9 +21206,9 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a beam composite attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			layerName (str): layer name
-			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object.
 			isSymmetric (bool): symmetric layup flag
 		Returns:
 			IFCompositeBeam: 
@@ -21220,11 +21220,11 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a composite attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			layerName (str): layer name
 			thickness (float): relative layer thickness
 			angle (float): angle of fibre to reference axis
-			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object.
 			isSymmetric (bool): symmetric layup flag
 			volumeFraction (float, optional): volume fraction for a non-draped composite
 		Returns:
@@ -21292,7 +21292,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Sets the longitudinal direction for influence lines as one of the global axis 
 		Params:
-			pLocalCoord (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			pLocalCoord (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object. local coordinate
 			axisIndex (int): axis index, 0 based
 		Returns:
 			None: 
@@ -21304,7 +21304,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a prestress tendon properties object. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFTendonProperties: 
 		"""
@@ -21315,7 +21315,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a tendon profile utility defining the geometry of a tendon for use with prestress loads. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFTendonProfile: 
 		"""
@@ -21326,7 +21326,7 @@ class IFDatabase(IFGroup):
 		r"""
 		
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFFailureComposite: 
 		"""
@@ -21337,7 +21337,7 @@ class IFDatabase(IFGroup):
 		r"""
 		
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDesignFactor: 
 		"""
@@ -21348,7 +21348,7 @@ class IFDatabase(IFGroup):
 		r"""
 		
 		Params:
-			name (str): The unique name of this attribute
+			name (str): The unique name of this attribute.
 		Returns:
 			IFVLOVehicleLibrary: 
 		"""
@@ -21359,7 +21359,7 @@ class IFDatabase(IFGroup):
 		r"""
 		
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBeamStressRecovery: 
 		"""
@@ -21370,7 +21370,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Design Attribute / Utility The only difference between an attribute and a utility is that utilities cannot be assigned and are shown in a different panel in the UI 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			typeName (str): Full SubType name as it appears in the tree
 			scopeName (str): SubType name used as User Defined Results scope
 			assignType (str, optional): list of features the attribute can be assign to : "Lines", "Surfaces", "Volumes" etc
@@ -21385,7 +21385,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new advanced shear and torsion properties utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFShearTorsionAdvPropsDefinition: returned attribute
 		"""
@@ -21396,7 +21396,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Masonry Bridge Wizard definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMBWDefinition: returned attribute
 		"""
@@ -21407,7 +21407,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Tank definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFTankDefinition: returned attribute
 		"""
@@ -21418,7 +21418,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new KOGAS Tank definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFKogasTankDefinition: returned attribute
 		"""
@@ -21429,7 +21429,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Tank reinforcement definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFTankReinforcementDefinition: returned attribute
 		"""
@@ -21440,7 +21440,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Bridge definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardBridgeDefinition: returned attribute
 		"""
@@ -21451,7 +21451,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Support definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardSupportDefinition: returned attribute
 		"""
@@ -21462,7 +21462,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Stiffener definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardStiffenerDefinition: returned attribute
 		"""
@@ -21473,7 +21473,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Span definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardSpanDefinition: returned attribute
 		"""
@@ -21484,7 +21484,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Section definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardSectionDefinition: returned attribute
 		"""
@@ -21495,7 +21495,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Not implemented 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardTubSectionDefinition: returned attribute
 		"""
@@ -21506,7 +21506,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Girder definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardGirderDefinition: returned attribute
 		"""
@@ -21517,7 +21517,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Bracing Assembly definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardBracingDefinition: returned attribute
 		"""
@@ -21528,7 +21528,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Bridge Wizard Bracing Run definition utility. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeWizardBracingRunDefinition: returned attribute
 		"""
@@ -21539,7 +21539,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Composite bridge design material definition. Describes the various materials used in a composite design 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeDesignGirderMaterial: returned attribute
 		"""
@@ -21550,7 +21550,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Transverse stiffener definition used in bridge design 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeDesignTransverseStiffener: returned attribute
 		"""
@@ -21561,7 +21561,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Longitudinal stiffener definition used in bridge design 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeDesignLongitudinalStiffener: returned attribute
 		"""
@@ -21572,7 +21572,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Pushover Curve 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPushoverCurve: returned attribute
 		"""
@@ -21583,7 +21583,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new Storey Loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBuildingLoading: returned attribute
 		"""
@@ -21594,7 +21594,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new eismic Storey Loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBuildingLoading: returned attribute
 		"""
@@ -21605,7 +21605,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a new attribute / utility with no initial behaviour. The only difference between an attribute and a utility is that utilities cannot be assigned and are shown in a different panel in the UI. LUSAS will not visualise or tabulate this attribute / utility, but it may be created, edited and assigned just like any other attribute / utility. It is the user's responsibility to attach any meaning, calculation, behaviour etc. A sub type is allowed to distinguish between different types of scripted attribute / utility. Values 0, 1 and 2 are reserved by LUSAS. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			subType (int): sub type must be in range 3-10
 			isUtility (bool, optional): true for utility, false (default) for attribute
 		Returns:
@@ -21618,7 +21618,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a crack tip attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFCrackTip: newly created attribute
 		"""
@@ -21629,7 +21629,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an element type attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFElementTypeAttr: newly created attribute
 		"""
@@ -21702,7 +21702,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a nonlinear user thermal material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 			modelId (int): model number
 			nState (int): number of state variables
 		Returns:
@@ -21715,7 +21715,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a modified Cam-Clay material set attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFCamClayMaterialSet: 
 		"""
@@ -21726,7 +21726,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a multi linear bar material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPiecewiseLinearBarMaterial: 
 		"""
@@ -21737,7 +21737,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a thermal link material 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFThermalLinkMaterial: 
 		"""
@@ -21748,7 +21748,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a soil structure interface material set attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSoilStructureMaterialSet: 
 		"""
@@ -21759,7 +21759,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a Duncan-Chang soil material set attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDuncanChangMaterialSet: 
 		"""
@@ -21770,7 +21770,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates AASHTO creep material 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -21781,7 +21781,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a P-Y curve material 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPYCurve: 
 		"""
@@ -21792,7 +21792,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an embedded pile material layup 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPileMaterialLayup: 
 		"""
@@ -21803,7 +21803,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a Elasto platic interface material set attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFElastoPlasticInterfaceSet: 
 		"""
@@ -21971,7 +21971,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a graph wizard attribute which can be used to create graphs that can be re-created or edited at any time. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFGraphWizard: newly created attribute
 		"""
@@ -21993,7 +21993,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a print results wizard utility object 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPrintResultsWizard: newly created attribute
 		"""
@@ -22004,7 +22004,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a model view utility which can be used to store and restore the view settings. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFSavedView: newly created utility
 		"""
@@ -22026,7 +22026,7 @@ class IFDatabase(IFGroup):
 		r"""
 		creates an User Defined Result attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFUserDefinedResult: 
 		"""
@@ -22081,7 +22081,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a note utility which can be used to store and restore plain text. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFNote: newly created utility
 		"""
@@ -22195,7 +22195,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an inspection point attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFInspectionPoint: newly created attribute
 		"""
@@ -22270,7 +22270,7 @@ class IFDatabase(IFGroup):
 		r"""
 		creates a Wood Armer attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFWoodArmerAttr: 
 		"""
@@ -22281,7 +22281,7 @@ class IFDatabase(IFGroup):
 		r"""
 		creates a results transformation attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFResultsTransformationAttr: 
 		"""
@@ -22292,7 +22292,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a section property modifier attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPropertyModifier: newly created attribute
 		"""
@@ -22303,7 +22303,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a tendon loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFLoadingTendon: newly created attribute
 		"""
@@ -22323,7 +22323,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a compound material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFCompoundMaterial: newly created attribute
 		"""
@@ -22334,7 +22334,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a bridge deck material attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBridgeDeckMaterial: newly created attribute
 		"""
@@ -22345,7 +22345,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a reinforcement section attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFReinforcementSection: newly created attribute
 		"""
@@ -22356,7 +22356,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a reinforcement line attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFReinforcementLine: newly created attribute
 		"""
@@ -22367,7 +22367,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a cable shape attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFCableShape: newly created attribute
 		"""
@@ -22378,7 +22378,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an phi c reduction attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFPhiCReduction: newly created attribute
 		"""
@@ -22389,7 +22389,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a drained attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFDrained: newly created attribute
 		"""
@@ -22400,7 +22400,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an undrained attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFUndrained: newly created attribute
 		"""
@@ -22422,7 +22422,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a Barcelona Basic material set attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBarcelonaBasicMaterialSet: newly created attribute
 		"""
@@ -22433,7 +22433,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a section utility which describes the type and and the dimension data of a parametric section. 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFParametricSection: newly created utility
 		"""
@@ -22455,7 +22455,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates an arbitrary section utility which holds the properties needed for the geometric attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFArbitrarySection: newly created utility
 		"""
@@ -22491,7 +22491,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Zero or Reduced Longitudinal Resistance properties for use in Rail Track Analysis 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFRailTrackAnalysisZlrRlrProperties: returned attribute
 		"""
@@ -22502,7 +22502,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Zero or Reduced Longitudinal Resistance regions for use in Rail Track Analysis 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFRailTrackAnalysisZlrRlrRegions: returned attribute
 		"""
@@ -22513,7 +22513,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Creates a beam projected pressure loading attribute 
 		Params:
-			attrName (str): The unique name of this attribute
+			attrName (str): The unique name of this attribute.
 		Returns:
 			IFBeamProjectedPressureLoad: newly created attribute
 		"""
@@ -22528,11 +22528,11 @@ class IFDatabase(IFGroup):
 			widthFactor (array of floats): Array of extra width to be added to each entry in 'lines' (optional - empty array assumes 0.0)
 			widthExtra (array of floats): Array of width factor to be applied to each entry in 'lines' (optional - empty array assumes 1.0)
 			halfWidth (array of bools): For each entry in 'lines': TRUE to use half width (line shared between 2 faces), FALSE for full width. (optional - empty array assumes FALSE)
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. , loadcase for geometric assignment
 			reporting (int): message detail: 0 - errors only, 1 - verbose output
 			Am (float): returned Am (area of members)
 			Ao (float): returned Ao (area enclosed by outline)
-			normal (array of float): An array of 3 real numbers, representing 3d coordinates
+			normal (array of float): An array of 3 real numbers, representing 3d coordinates. returned vector that is perpendicular to the plane
 		Returns:
 			int: status 0 = ok, > 0 for error
 		"""
@@ -22543,12 +22543,12 @@ class IFDatabase(IFGroup):
 		r"""
 		Calculate the solidity ratio factors Am (area of members) and Ao (area enclosed by outline) for selected lines. The lines are first projected onto a flat plane perpendicular to the specified 'dir' vector. It is assumed that the individual line elements are straight - use with caution if curved elements have been used. returned value: 0: OK 3: not all lines connected 4: invalid loadcase 5: incompatible cross section 
 		Params:
-			dir (array of float): An array of 3 real numbers, representing 3d coordinates
+			dir (array of float): An array of 3 real numbers, representing 3d coordinates. projection vector
 			lines (array): Array of lines (name, line, IFLine) in face - must be in a single plane
 			widthFactor (array of floats): Array of extra width to be added to each entry in 'lines' (optional - empty array assumes 0.0)
 			widthExtra (array of floats): Array of width factor to be applied to each entry in 'lines' (optional - empty array assumes 1.0)
 			halfWidth (array of bools): For each entry in 'lines': TRUE to use half width (line shared between 2 faces), FALSE for full width. (optional - empty array assumes FALSE)
-			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			loadset (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object. , loadcase for geometric assignment
 			reporting (int): message detail: 0 - errors only, 1 - verbose output
 			Am (float): returned Am (area of members)
 			Ao (float): returned Ao (area enclosed by outline)
@@ -22562,7 +22562,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Create a unique attribute name starting from that given for the specified attr group 
 		Params:
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): name you would like to use for a new attribute
 		Returns:
 			str: guaranteed unique name if succesful
@@ -22759,7 +22759,7 @@ class IFResultsChapter(IFReportChapter):
 		r"""
 		Add a print results wizard utility that describes partial output for this chapter 
 		Params:
-			attr (IFPrintResultsWizard): The name or ID of a name, or a pointer to a IFPrintResultsWizard object
+			attr (IFPrintResultsWizard): The name or ID of a name, or a pointer to a IFPrintResultsWizard object.
 		Returns:
 			None: 
 		"""
@@ -22770,7 +22770,7 @@ class IFResultsChapter(IFReportChapter):
 		r"""
 		Add a utility that describes partial output for this chapter 
 		Params:
-			attr (IFAttribute): The name or ID of a name, or a pointer to a IFAttribute object
+			attr (IFAttribute): The name or ID of a name, or a pointer to a IFAttribute object.
 		Returns:
 			None: 
 		"""
@@ -23245,7 +23245,7 @@ class IFLocalCoord(IFAttribute):
 		r"""
 		 
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. The returned position
 		"""
 		pass
 
@@ -23265,7 +23265,7 @@ class IFLocalCoord(IFAttribute):
 		r"""
 		Converts the given global coordinates into the local coordinate space of this attribute 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -23278,7 +23278,7 @@ class IFLocalCoord(IFAttribute):
 		r"""
 		Converts the given coordinates from the local coordinate space of this attribute into global coordinates 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -23512,7 +23512,7 @@ class IFCompoundTransAttr(IFTransformationAttr):
 		r"""
 		 
 		Params:
-			transAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object
+			transAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object. The transformation to add
 		Returns:
 			IFCompoundTransAttr: 
 		"""
@@ -23523,7 +23523,7 @@ class IFCompoundTransAttr(IFTransformationAttr):
 		r"""
 		 
 		Params:
-			transAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object
+			transAttr (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object. The transformation to remove
 		Returns:
 			IFCompoundTransAttr: 
 		"""
@@ -23669,7 +23669,7 @@ class IFVariationField(IFVariationAttr):
 		Sets the function expression and coord set. Also unsets all limits. 
 		Params:
 			function (str): any expression that evaluates to a number, e.g. '4','3+4x','y'. Note all numbers must be in US English, i.e. "1.2", not the current locale (e.g. Italian/Swedish/French "1,2")
-			localAttr (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localAttr (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object. local coordinate set in which function and limits are given
 		Returns:
 			IFVariationField: 
 		"""
@@ -23794,7 +23794,7 @@ class IFVariationFactored(IFVariationAttr):
 		Sets the variation factor/multiplier. 
 		Params:
 			factor (float): numerical multiplier
-			variationAttr (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object
+			variationAttr (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object.
 		Returns:
 			IFVariationFactored: 
 		"""
@@ -23810,7 +23810,7 @@ class IFVariationPriorResults(IFVariationAttr):
 		r"""
 		Specify the loadset used to generate this variation. 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -23865,7 +23865,7 @@ class IFVariationPriorResults(IFVariationAttr):
 		r"""
 		Uses the specified local coordinate as the results transformation for this variation. 
 		Params:
-			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 			shellPlane (int): Shell plane for resultants (1, 2 or 3)
 		Returns:
 			None: 
@@ -23877,7 +23877,7 @@ class IFVariationPriorResults(IFVariationAttr):
 		r"""
 		Uses the specified path as the results transformation for this variation. 
 		Params:
-			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			skew (bool, optional): True if local y = transverse
 		Returns:
 			None: 
@@ -23907,7 +23907,7 @@ class IFVariationPriorResults(IFVariationAttr):
 		r"""
 		Uses the given attribute type to obtain the results transformation for this variation. 
 		Params:
-			type (object): "Loading", "Support", "Material", etc
+			type (object): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -23938,7 +23938,7 @@ class IFProfileVariation(IFVariationAttr):
 		Set the variation direction 
 		Params:
 			type (str): direction type
-			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object. local coordinate set if the type is a local coordinate type
 		Returns:
 			IFProfileVariation: 
 		"""
@@ -23961,8 +23961,8 @@ class IFProfileVariation(IFVariationAttr):
 		r"""
 		add a profile to the set 
 		Params:
-			origin (array of float): An array of 3 real numbers, representing 3d coordinates
-			profile (IFInterpolationVariation): The name or ID of a variation, or a pointer to a IFInterpolationVariation object
+			origin (array of float): An array of 3 real numbers, representing 3d coordinates. Coordinates of point in plane
+			profile (IFInterpolationVariation): The name or ID of a variation, or a pointer to a IFInterpolationVariation object. profile variation
 		Returns:
 			IFProfileVariation: 
 		"""
@@ -24003,15 +24003,15 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Specifies the defining parameters of this beam, with the values given at the beam axis. This function can be used for attributes which are assigned to lines meshed with all element types except axisymmetric and grillage. 
 		Params:
-			A (object): IFVariationAttr or double
+			A (IFVariationAttr or float): cross-sectional area
 			Iyy (object): {I'yy}<realvariation> second moment of area about local y axis
 			Izz (object): {I'zz}<realvariation> second moment of area about local z axis
 			Iyz (object): {I'yz}<realvariation> product moment of inertia
 			J (object): {J'}<realvariation> torsion constant
-			Asz (object): IFVariationAttr or double
-			Asy (object): IFVariationAttr or double
-			ey (object, optional): IFVariationAttr or double
-			ez (object, optional): IFVariationAttr or double
+			Asz (IFVariationAttr or float): shear area on local yz plane in z direction
+			Asy (IFVariationAttr or float): shear area on local yz plane in y direction
+			ey (IFVariationAttr or float, optional): eccentricity in y direction
+			ez (IFVariationAttr or float, optional): eccentricity in z direction
 			section (int, optional): Index of section for which the properties are set (e.g. for linear tapered, 0 for first end, 1 for second end); default is 0
 		Returns:
 			IFGeometricLine: 
@@ -24034,7 +24034,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Specifies the path that will be followed when this attribute's distance type is 'choose path at definition' For other distance types, this path will be ignored 
 		Params:
-			pPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			pPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24065,7 +24065,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness for axisymmetric membrane/shell 
 		Params:
-			t (object): IFVariationAttr or double
+			t (IFVariationAttr or float): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24076,7 +24076,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness for plane strain beam 
 		Params:
-			t (object): IFVariationAttr or double
+			t (IFVariationAttr or float): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24087,7 +24087,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness specifically for use in the APSC model 
 		Params:
-			t (object): IFVariationAttr or double
+			t (IFVariationAttr or float): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24098,7 +24098,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness for plane stress interface 
 		Params:
-			t (object): IFVariationAttr or double
+			t (IFVariationAttr or float): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24573,7 +24573,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Set the attribute that describes the reinforcement of a section of this attribute 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. reinforcement member line attribute
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24603,7 +24603,7 @@ class IFGeometricLine(IFGeometric):
 		get the cooordinates defining the section trimming loops at a position alog a line to which this attribute is assigned 
 		Params:
 			subSectionIndex (int): index of the required sub-section
-			line (IFLine): The name or ID of a line, or a pointer to a IFLine object
+			line (IFLine): The name or ID of a line, or a pointer to a IFLine object. geometry line along which section is required
 			normalisedCoord (float): normalise coordinate along the line 0 -> 1
 			nPointsPerTrimmingLoop (array of int): number of points defining each section trimming loop, outer boundary first
 			trimmingLoopCoords (array of float): x,y,x,y.. coords defining the section trimming loops, outer boundary first
@@ -24631,7 +24631,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		get the reinforcement section definition at the given internal point and element 
 		Params:
-			element (IFElement): The name or ID of a element, or a pointer to a IFElement object
+			element (IFElement): The name or ID of a element, or a pointer to a IFElement object.
 			internalPoint (int): internal point index
 			nrmCrd (float): normalised coordinate along the beam
 			sectionAttr (IFReinforcementSection): rebar section definition
@@ -24647,8 +24647,8 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		get the reinforcement section definition at the given node on the line 
 		Params:
-			line (IFLine): The name or ID of a line, or a pointer to a IFLine object
-			node (IFNode): The name or ID of a node, or a pointer to a IFNode object
+			line (IFLine): The name or ID of a line, or a pointer to a IFLine object.
+			node (IFNode): The name or ID of a node, or a pointer to a IFNode object.
 			nrmCrd (float): normalised coordinate along the beam
 			sectionAttr (IFReinforcementSection): rebar section definition
 			rebars (array of IFReinforcementSectionBar): objects
@@ -24663,8 +24663,8 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		get the reinforcement section definition at the given inspection location on the line 
 		Params:
-			line (IFLine): The name or ID of a line, or a pointer to a IFLine object
-			inspection (IFInspectionLine): The name or ID of a inspection, or a pointer to a IFInspectionLine object
+			line (IFLine): The name or ID of a line, or a pointer to a IFLine object.
+			inspection (IFInspectionLine): The name or ID of a inspection, or a pointer to a IFInspectionLine object.
 			index (int): index
 			nrmCrd (float): normalised coordinate along the beam
 			sectionAttr (IFReinforcementSection): rebar section definition
@@ -25068,7 +25068,7 @@ class IFGeometricLine(IFGeometric):
 		Params:
 			lineID (str or int): name or ID of line
 			nrmCoordOnLine (float): normalised coord w.r.t the line
-			Dir (array of float): An array of 3 real numbers, representing a 3d vector
+			Dir (array of float): An array of 3 real numbers, representing a 3d vector. projection vector
 		Returns:
 			float: projected width
 		"""
@@ -25099,7 +25099,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Set the beam optimisation pool attribute for the geometric line. If no attribute is set the 'Same library as Current section' will be used. 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. cross section pool attribute
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -25150,8 +25150,8 @@ class IFGeometricSurface(IFGeometric):
 		r"""
 		Sets the thickness 
 		Params:
-			t (object): IFVariationAttr or double
-			ez (object, optional): IFVariationAttr or double
+			t (IFVariationAttr or float): thickness
+			ez (IFVariationAttr or float, optional): eccentricity in Z direction
 		Returns:
 			IFGeometricSurface: 
 		"""
@@ -25167,9 +25167,9 @@ class IFGeometricJoint(IFGeometric):
 		r"""
 		Sets the eccentricity 
 		Params:
-			ecc (object, optional): IFVariationAttr or double
-			dy (object, optional): IFVariationAttr or double
-			dz (object, optional): IFVariationAttr or double
+			ecc (IFVariationAttr or float, optional): eccentricity
+			dy (IFVariationAttr or float, optional): local y parametric distance to shear spring
+			dz (IFVariationAttr or float, optional): local z parametric distance to shear spring
 			useShearDistances (bool, optional): if false ignore the shear distances and do not tabulate
 		Returns:
 			IFGeometricJoint: 
@@ -25197,7 +25197,7 @@ class IFGeometricThermalLink(IFGeometric):
 		r"""
 		Sets the eccentricity 
 		Params:
-			area (object): IFVariationAttr or double
+			area (IFVariationAttr or float): area for 2d/3d links
 		Returns:
 			IFGeometricThermalLink: 
 		"""
@@ -25208,7 +25208,7 @@ class IFGeometricThermalLink(IFGeometric):
 		r"""
 		Sets the eccentricity 
 		Params:
-			area (object): IFVariationAttr or double
+			area (IFVariationAttr or float): thickness for axisymmetric links
 		Returns:
 			IFGeometricThermalLink: 
 		"""
@@ -25344,8 +25344,8 @@ class IFDamping(IFAttribute):
 		r"""
 		Adds a row if it is valid 
 		Params:
-			Mass (IFVariationAttr or float): Mass Rayleigh damping constant
-			Stiffness (IFVariationAttr or float): Stiffness Rayleigh damping constant
+			Mass (IFVariationAttr or float): Mass Rayleigh damping constant.
+			Stiffness (IFVariationAttr or float): Stiffness Rayleigh damping constant.
 			frequency (float): reference circular frequency
 		Returns:
 			IFDamping: 
@@ -25507,7 +25507,7 @@ class IFGeomBeamOptimUtil(IFAttribute):
 		r"""
 		Adds one geometric line to this utility 
 		Params:
-			section (IFGeometricLine): The name or ID of a name, or a pointer to a IFGeometricLine object
+			section (IFGeometricLine): The name or ID of a name, or a pointer to a IFGeometricLine object. Beam section attribute
 		Returns:
 			IFGeomBeamOptimUtil: 
 		"""
@@ -25601,7 +25601,7 @@ class IFGeomBeamOptimUtil(IFAttribute):
 		r"""
 		Adds one loadcase to this utility 
 		Params:
-			section (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			section (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object.
 		Returns:
 			IFGeomBeamOptimUtil: 
 		"""
@@ -25716,7 +25716,7 @@ class IFSurfaceRadiation(IFAttribute):
 		r"""
 		Adds a surface if it is valid 
 		Params:
-			Surface (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object
+			Surface (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object. thermal surface defining part of this radiation surface
 			isShading (bool): boolean: does the associated thermal surface eclipse the view of other thermal surfaces?
 		Returns:
 			IFSurfaceRadiation: 
@@ -25728,7 +25728,7 @@ class IFSurfaceRadiation(IFAttribute):
 		r"""
 		Adds a symmetry 
 		Params:
-			Attr (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object
+			Attr (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object. thermal surface defining part of this radiation surface
 		Returns:
 			IFSurfaceRadiation: 
 		"""
@@ -25764,7 +25764,7 @@ class IFSurfaceRadiation(IFAttribute):
 		r"""
 		Adds a symmetry 
 		Params:
-			Perp (array of float): An array of 3 real numbers, representing 3d coordinates
+			Perp (array of float): An array of 3 real numbers, representing 3d coordinates. direction perpendicular to the plane (containing a, b, and c)
 			constant (float): plane of symmetry equation: ax + by + cz = d
 		Returns:
 			IFSurfaceRadiation: 
@@ -25861,7 +25861,7 @@ class IFSlide(IFAttribute):
 		r"""
 		Modifies the slideline type for the given loadcase and all subsequent loadcases. Typically a slideline might be defined with a starting type of 'Null' and then be modified at a certain point in the analysis to be of type 'Sliding'. It is quite legal to call this function repeatedly, setting up (for example) a change from 'Null' to 'Sliding' to 'Tied' 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase at which slideline type changes
 			type (str): 'No friction', 'Friction', 'Null','Tied', or 'Sliding'
 		Returns:
 			IFSlide: 
@@ -25878,8 +25878,8 @@ class IFThermalSurfaceGap(IFAttribute):
 		r"""
 		Sets up a thermal gap attribute. 
 		Params:
-			surf1Attr (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object
-			surf2Attr (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object
+			surf1Attr (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object. thermal surface defining first side of gap
+			surf2Attr (IFThermalSurface): The name or ID of a thermalsurface, or a pointer to a IFThermalSurface object. thermal surface defining second side of gap
 			update (bool, optional): geometry update flag (default = TRUE)
 			shading (bool, optional): element shading flag (default = TRUE)
 			active (bool, optional): active gap flag (default = TRUE)
@@ -25923,7 +25923,7 @@ class IFThermalSurfaceGap(IFAttribute):
 		r"""
 		Modifies the gap type for the given loadcase and all subsequent loadcases. 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase at which slideline type changes
 			type (str): 'ACTIVE', or 'INACTIVE'
 		Returns:
 			IFThermalSurfaceGap: 
@@ -26004,8 +26004,8 @@ class IFSupportThermal(IFSupport):
 		Sets up spring stiffnesses. 
 		Params:
 			type (str): 'Total', 'Length', or 'Area' - indicates whether given stiffnesses are total values, or are given per unit length or per unit area
-			phiStiff (object): IFVariationAttr or double
-			presStiff (object, optional): IFVariationAttr or double
+			phiStiff (IFVariationAttr or float): stiffness with respect to temperature (conductivity)
+			presStiff (IFVariationAttr or float, optional): stiffness with respect to capillary pressure
 		Returns:
 			IFSupportThermal: 
 		"""
@@ -26042,16 +26042,16 @@ class IFSupportStructural(IFSupport):
 		Sets up spring stiffnesses. 
 		Params:
 			type (str): 'Total', 'Length', or 'Area' - indicates whether given stiffness is a total stiffness, or is given per unit length or per unit area
-			ustiff (object): IFVariationAttr or double
-			vstiff (object): IFVariationAttr or double
-			wstiff (object): IFVariationAttr or double
-			thxstiff (object): IFVariationAttr or double
-			thystiff (object): IFVariationAttr or double
-			thzstiff (object): IFVariationAttr or double
-			loof1stiff (object): IFVariationAttr or double
-			loof2stiff (object): IFVariationAttr or double
-			porestiff (object): IFVariationAttr or double
-			torsionstiff (object, optional): IFVariationAttr or double
+			ustiff (IFVariationAttr or float): spring stiffness along X axis
+			vstiff (IFVariationAttr or float): spring stiffness along Y axis
+			wstiff (IFVariationAttr or float): spring stiffness along Z axis
+			thxstiff (IFVariationAttr or float): spring stiffness rotationally about X axis
+			thystiff (IFVariationAttr or float): spring stiffness rotationally about Y axis
+			thzstiff (IFVariationAttr or float): spring stiffness rotationally about Z axis
+			loof1stiff (IFVariationAttr or float): spring stiffness rotationally about loof 1 / hinge
+			loof2stiff (IFVariationAttr or float): spring stiffness rotationally about loof 2 / hinge
+			porestiff (IFVariationAttr or float): spring stiffness with respect to pore pressure
+			torsionstiff (IFVariationAttr or float, optional): spring stiffness with respect to torsional warping
 		Returns:
 			IFSupportStructural: 
 		"""
@@ -26088,12 +26088,12 @@ class IFSupportStructural(IFSupport):
 		Sets the viscous damping coefficients for non-reflective/absorbing boundary conditions 
 		Params:
 			userSpecified (bool): TRUE: user specified coefficients, FALSE: solver calculates the viscous damping coefficients (density.wavespeed not required)
-			xReduction (object): IFVariationAttr or double
-			yReduction (object): IFVariationAttr or double
-			zReduction (object): IFVariationAttr or double
-			xDensityWaveSpeed (object, optional): IFVariationAttr or double
-			yDensityWaveSpeed (object, optional): IFVariationAttr or double
-			zDensityWaveSpeed (object, optional): IFVariationAttr or double
+			xReduction (IFVariationAttr or float): Relaxation coefficient for X axis
+			yReduction (IFVariationAttr or float): Relaxation coefficient for Y axis
+			zReduction (IFVariationAttr or float): Relaxation coefficient for Z axis
+			xDensityWaveSpeed (IFVariationAttr or float, optional): Material density at the boundary node x pressure/shear wave speed for X axis
+			yDensityWaveSpeed (IFVariationAttr or float, optional): Material density at the boundary node x pressure/shear wave speed for Y axis
+			zDensityWaveSpeed (IFVariationAttr or float, optional): Material density at the boundary node x pressure/shear wave speed for Z axis
 		Returns:
 			IFSupportStructural: 
 		"""
@@ -26151,7 +26151,7 @@ class IFInspectionPoint(IFAttribute):
 			value (float): value to assign
 			entity (str or int or IFScriptedResultsComponentSet): Name or index of results entity, or object in which to store results
 			component (str, optional): Name of results component (if 'entity' is an IFScriptedResultsComponentSet, then this is expected to be an integer)
-			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Loadcase in which results apply (unless given as IFScriptedResultsComponentSet in 'entity')
 		Returns:
 			None: 
 		"""
@@ -26164,7 +26164,7 @@ class IFInspectionPoint(IFAttribute):
 		Params:
 			feature (IFDatabaseMember): feature to which to attach value (this attribute must be assigned to that feature)
 			locationIndex (int): index of location within this (corresponds to a row in the definition dialog)
-			attrType (object): "Loading", "Support", "Material", etc
+			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): e.g. "E" or "thickness". The set of available names depends on the attibute assigned
 			loadcase (IFLoadset, optional): 
 			units (IFUnitSet, optional): 
@@ -26695,7 +26695,7 @@ class IFBeamShellSlice(IFInspectionLine):
 		return all the results of this slice. The returned array contains 'n' sets of 7 values (Fx,Fy,Fz,Mx,My,Mz,distance). 'n' in this context is the number of unique values of results as returned by IFBeamShellSlice.getNumberLocations, which may be fewer than that returned by IFBeamShellSlice.getNumberResults and therefore refers to original user input When called, modeller will calculate and cache all Beam/Shell slices in the given context (not just the requested slice). This can be changed by modifying the "Beam/Shell Slicing" objects in the context CalcResultsSet. 
 		Params:
 			option (str or int, optional): Dictates behaviour of this function when more than one slice exists at a location "error" (default), "max", "min", "abs"
-			context (IFResultsContext, optional): The name or ID of a context, or a pointer to a IFResultsContext object
+			context (IFResultsContext, optional): The name or ID of a context, or a pointer to a IFResultsContext object. If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
 		Returns:
 			array of float: 
@@ -26709,7 +26709,7 @@ class IFBeamShellSlice(IFInspectionLine):
 		Params:
 			locnIndex (int): ID of the location of interest. Note that this is 0..IFBeamShellSlice.getNumberResults - 1 and NOT 0..IFBeamShellSlice.getNumberLocations - 1
 			option (str or int, optional): Dictates behaviour of this function when more than one slice exists at a location "error" (default), "max", "min", "abs"
-			context (IFResultsContext, optional): The name or ID of a context, or a pointer to a IFResultsContext object
+			context (IFResultsContext, optional): The name or ID of a context, or a pointer to a IFResultsContext object. If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
 		Returns:
 			array of float: 
@@ -26895,16 +26895,16 @@ class IFLoadingConcentrated(IFLoading):
 		r"""
 		Sets up a concentrated structural loading attribute. 
 		Params:
-			px (object): IFVariationAttr or double
-			py (object): IFVariationAttr or double
-			pz (object, optional): IFVariationAttr or double
-			mx (object, optional): IFVariationAttr or double
-			my (object, optional): IFVariationAttr or double
-			mz (object, optional): IFVariationAttr or double
-			loof1 (object, optional): IFVariationAttr or double
-			loof2 (object, optional): IFVariationAttr or double
-			pore (object, optional): IFVariationAttr or double
-			biMoment (object, optional): IFVariationAttr or double
+			px (IFVariationAttr or float): concentrated load in X
+			py (IFVariationAttr or float): concentrated load in Y
+			pz (IFVariationAttr or float, optional): concentrated load in Z (default = 0.0)
+			mx (IFVariationAttr or float, optional): concentrated moment in X (default = 0.0)
+			my (IFVariationAttr or float, optional): concentrated moment in Y (default = 0.0)
+			mz (IFVariationAttr or float, optional): concentrated moment in Z (default = 0.0)
+			loof1 (IFVariationAttr or float, optional): loof 1 / hinge rotation (default = 0.0)
+			loof2 (IFVariationAttr or float, optional): loof 2 / hinge rotation (default = 0.0)
+			pore (IFVariationAttr or float, optional): pore pressure (default = 0.0)
+			biMoment (IFVariationAttr or float, optional): torsional warping (default = 0.0)
 		Returns:
 			IFLoadingConcentrated: 
 		"""
@@ -26920,18 +26920,18 @@ class IFLoadingBody(IFLoading):
 		r"""
 		Sets up a body force loading attribute. 
 		Params:
-			accX (object): IFVariationAttr or double
-			accY (object): IFVariationAttr or double
-			accZ (object, optional): IFVariationAttr or double
-			angVelX (object, optional): IFVariationAttr or double
-			angVelY (object, optional): IFVariationAttr or double
-			angVelZ (object, optional): IFVariationAttr or double
-			angAccX (object, optional): IFVariationAttr or double
-			angAccY (object, optional): IFVariationAttr or double
-			angAccZ (object, optional): IFVariationAttr or double
-			fluidAccX (object, optional): IFVariationAttr or double
-			fluidAccY (object, optional): IFVariationAttr or double
-			fluidAccZ (object, optional): IFVariationAttr or double
+			accX (IFVariationAttr or float): linear acceleration in global direction
+			accY (IFVariationAttr or float): linear acceleration in global direction
+			accZ (IFVariationAttr or float, optional): linear acceleration in global direction (default = 0.0)
+			angVelX (IFVariationAttr or float, optional): angular velocity about global axis (default = 0.0)
+			angVelY (IFVariationAttr or float, optional): angular velocity about global axis (default = 0.0)
+			angVelZ (IFVariationAttr or float, optional): angular velocity about global axis (default = 0.0)
+			angAccX (IFVariationAttr or float, optional): angular acceleration about global axis (default = 0.0)
+			angAccY (IFVariationAttr or float, optional): angular acceleration about global axis (default = 0.0)
+			angAccZ (IFVariationAttr or float, optional): angular acceleration about global axis (default = 0.0)
+			fluidAccX (IFVariationAttr or float, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
+			fluidAccY (IFVariationAttr or float, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
+			fluidAccZ (IFVariationAttr or float, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
 		Returns:
 			IFLoadingBody: 
 		"""
@@ -26956,11 +26956,11 @@ class IFLoadingTemperature(IFLoading):
 		Sets up a temperature loading attribute. 
 		Params:
 			type (str): 'nodal' or 'element'
-			temp (object): IFVariationAttr or double
+			temp (IFVariationAttr or float): temperature
 			dTdX (object, optional): {dT/dX}<realvariation> temperature gradient along X (default = 0.0)
 			dTdY (object, optional): {dT/dY}<realvariation> temperature gradient along Y (default = 0.0)
 			dTdZ (object, optional): {dT/dZ}<realvariation> temperature gradient along Z (default = 0.0)
-			T0 (object, optional): IFVariationAttr or double
+			T0 (IFVariationAttr or float, optional): initial temperature (default = 0.0)
 			dT0dX (object, optional): {dT0/dX}<realvariation> initial temperature gradient along X (default = 0.0)
 			dT0dY (object, optional): {dT0/dY}<realvariation> initial temperature gradient along Y (default = 0.0)
 			dT0dZ (object, optional): {dT0/dZ}<realvariation> initial temperature gradient along Z (default = 0.0)
@@ -26999,10 +26999,10 @@ class IFLoadingFace(IFLoading):
 		r"""
 		Sets up a face loading attribute. 
 		Params:
-			px (object): IFVariationAttr or double
-			py (object): IFVariationAttr or double
-			pz (object, optional): IFVariationAttr or double
-			pwp (object, optional): IFVariationAttr or double
+			px (IFVariationAttr or float): face pressure in local X
+			py (IFVariationAttr or float): face pressure in local Y
+			pz (IFVariationAttr or float, optional): face pressure in local Z (default = 0.0)
+			pwp (IFVariationAttr or float, optional): pore pressure flux
 		Returns:
 			IFLoadingFace: 
 		"""
@@ -27053,7 +27053,7 @@ class IFLoadingTendon(IFLoading):
 		r"""
 		Set the profile attribute 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. tendon profile attribute
 		Returns:
 			IFLoadingTendon: 
 		"""
@@ -27064,7 +27064,7 @@ class IFLoadingTendon(IFLoading):
 		r"""
 		Set the property attribute 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. tendon property attribute
 		Returns:
 			IFLoadingTendon: 
 		"""
@@ -27080,9 +27080,9 @@ class IFFieldFaceLoading(IFLoading):
 		r"""
 		Sets up a distributed flux loading attribute. 
 		Params:
-			flux (object): IFVariationAttr or double
+			flux (IFVariationAttr or float): 
 			isHygro (bool, optional): True if hygro-thermal
-			moistureFlux (object, optional): IFVariationAttr or double
+			moistureFlux (IFVariationAttr or float, optional): 
 		Returns:
 			IFFieldFaceLoading: 
 		"""
@@ -27099,16 +27099,16 @@ class IFLoadingGlobalDistributed(IFLoading):
 		Sets up a global distributed loading attribute. 
 		Params:
 			type (str): 'Total','Length', or 'Area'
-			wx (object): IFVariationAttr or double
-			wy (object): IFVariationAttr or double
-			wz (object, optional): IFVariationAttr or double
-			mx (object, optional): IFVariationAttr or double
-			my (object, optional): IFVariationAttr or double
-			mz (object, optional): IFVariationAttr or double
-			loof1 (object, optional): IFVariationAttr or double
-			loof2 (object, optional): IFVariationAttr or double
+			wx (IFVariationAttr or float): global distributed load value in X
+			wy (IFVariationAttr or float): global distributed load value in Y
+			wz (IFVariationAttr or float, optional): global distributed load value in Z (default = 0.0)
+			mx (IFVariationAttr or float, optional): global distributed moment in X (default = 0.0)
+			my (IFVariationAttr or float, optional): global distributed moment in Y (default = 0.0)
+			mz (IFVariationAttr or float, optional): global distributed moment in Z (default = 0.0)
+			loof1 (IFVariationAttr or float, optional): loof 1 / hinge rotation (default = 0.0)
+			loof2 (IFVariationAttr or float, optional): loof 2 / hinge rotation (default = 0.0)
 			keepGlobal (bool, optional): if T undo any transformed freedoms to keep loads in the global direction (default false)
-			porePressire (object, optional): IFVariationAttr or double
+			porePressire (IFVariationAttr or float, optional): pre pressure flux (default = 0.0)
 		Returns:
 			IFLoadingGlobalDistributed: 
 		"""
@@ -27124,9 +27124,9 @@ class IFLoadingLocalDistributed(IFLoading):
 		r"""
 		Sets up a local distributed loading attribute. 
 		Params:
-			wx (object): IFVariationAttr or double
-			wy (object): IFVariationAttr or double
-			wz (object, optional): IFVariationAttr or double
+			wx (IFVariationAttr or float): uniformly distributed load in X
+			wy (IFVariationAttr or float): uniformly distributed load in Y
+			wz (IFVariationAttr or float, optional): uniformly distributed load in Z (default = 0.0)
 			type (str, optional): distributed type
 		Returns:
 			IFLoadingLocalDistributed: 
@@ -27144,7 +27144,7 @@ class IFPrescribedDisplacementLoad(IFLoading):
 		set the displacement for a freedom 
 		Params:
 			freedom (str): freedom
-			load (object): IFVariationAttr or double
+			load (IFVariationAttr or float): displacement
 		Returns:
 			IFPrescribedDisplacementLoad: 
 		"""
@@ -27161,7 +27161,7 @@ class IFPrescribedVelocityLoad(IFLoading):
 		set the velocity for a freedom 
 		Params:
 			freedom (str): freedom
-			load (object): IFVariationAttr or double
+			load (IFVariationAttr or float): displacement
 		Returns:
 			IFPrescribedVelocityLoad: 
 		"""
@@ -27178,7 +27178,7 @@ class IFPrescribedAccelerationLoad(IFLoading):
 		set the acceleration for a freedom 
 		Params:
 			freedom (str): freedom
-			load (object): IFVariationAttr or double
+			load (IFVariationAttr or float): displacement
 		Returns:
 			IFPrescribedAccelerationLoad: 
 		"""
@@ -27195,9 +27195,9 @@ class IFLoadingFlux(IFLoading):
 		Sets up a concentrated flux loading attribute. 
 		Params:
 			type (str): 
-			FLUX (object): IFVariationAttr or double
+			FLUX (IFVariationAttr or float): 
 			isHygro (bool, optional): True if hygro-thermal
-			liquidFlux (object, optional): IFVariationAttr or double
+			liquidFlux (IFVariationAttr or float, optional): 
 		Returns:
 			IFLoadingFlux: 
 		"""
@@ -27225,7 +27225,7 @@ class IFPrescribedTemperatureLoad(IFLoading):
 		set the temperature 
 		Params:
 			freedom (str): freedom "PHI"
-			load (object): IFVariationAttr or double
+			load (IFVariationAttr or float): temperature
 		Returns:
 			IFPrescribedTemperatureLoad: 
 		"""
@@ -27236,7 +27236,7 @@ class IFPrescribedTemperatureLoad(IFLoading):
 		r"""
 		set the humidity 
 		Params:
-			humidity (object): IFVariationAttr or double
+			humidity (IFVariationAttr or float): humidity
 		Returns:
 			IFPrescribedTemperatureLoad: 
 		"""
@@ -27247,7 +27247,7 @@ class IFPrescribedTemperatureLoad(IFLoading):
 		r"""
 		set the saturation 
 		Params:
-			saturation (object): IFVariationAttr or double
+			saturation (IFVariationAttr or float): saturation
 		Returns:
 			IFPrescribedTemperatureLoad: 
 		"""
@@ -27266,7 +27266,7 @@ class IFLoadingInitialTemperature(IFLoading):
 			type (str): "Nodal" or "Element"
 			temp (object): temperature <realvariation>
 			dof2Type (str): humidity or saturation
-			value (object): IFVariationAttr or double
+			value (IFVariationAttr or float): humidity or saturation
 			isLiquid (bool, optional): is liquid or set concrete
 		Returns:
 			IFLoadingInitialTemperature: 
@@ -27304,13 +27304,13 @@ class IFLoadingEnvironmental(IFLoading):
 		r"""
 		 
 		Params:
-			Environmental (object): IFVariationAttr or double
-			Convective (object): IFVariationAttr or double
-			Radiation (object): IFVariationAttr or double
+			Environmental (IFVariationAttr or float): environmental temperature
+			Convective (IFVariationAttr or float): convective coefficient
+			Radiation (IFVariationAttr or float): radiation coefficient
 			temp (float): reference temperature
 			isHygro (bool, optional): true for hygro false for thermal
-			relativeHumidity (object, optional): IFVariationAttr or double
-			vapourMassTransfer (object, optional): IFVariationAttr or double
+			relativeHumidity (IFVariationAttr or float, optional): relative humidity
+			vapourMassTransfer (IFVariationAttr or float, optional): vapour mass transfer coefficient
 			useChiltonColburn (bool, optional): true for Chilton Colburn analogy for vapour mass transfer coefficient
 		Returns:
 			IFLoadingEnvironmental: 
@@ -27336,10 +27336,10 @@ class IFInternalHeatLoading(IFLoading):
 		r"""
 		Adds a row 
 		Params:
-			internalHeat (object): IFVariationAttr or double
+			internalHeat (IFVariationAttr or float): internal heat gen.
 			temp (float, optional): Reference temperature
 			isHygro (bool, optional): true for hygro false for thermal
-			moistureHeat (object, optional): IFVariationAttr or double
+			moistureHeat (IFVariationAttr or float, optional): hygro moisture water heat gen.
 		Returns:
 			IFInternalHeatLoading: 
 		"""
@@ -27435,7 +27435,7 @@ class IFLoadingDiscretePoint(IFLoadingDiscrete):
 		Sets up a discrete point loading attribute. 
 		Params:
 			dirType (str): untransformed load direction 'X','Y','Z','Normal','None','globalXYZ','transformXYZ'
-			Dir (array of float): An array of 3 real numbers, representing a 3d vector
+			Dir (array of float): An array of 3 real numbers, representing a 3d vector. projection vector
 			nGridX (int, optional): number of grid points in X (default = 0)
 			nGridY (int, optional): number of grid points in Y (default = 0)
 		Returns:
@@ -27455,7 +27455,7 @@ class IFLoadingDiscretePatch(IFLoadingDiscrete):
 		Params:
 			type (str): 'surf8','surf4','line3','line2','multiQuad','multiStraight'
 			dirType (str): untransformed load direction 'X','Y','Z','Normal','None','patchX','patchY','globalXYZ','transformXYZ'
-			Dir (array of float, optional): An array of 3 real numbers, representing a 3d vector
+			Dir (array of float, optional): An array of 3 real numbers, representing a 3d vector. projection vector (default = [0,0,1])
 		Returns:
 			IFLoadingDiscretePatch: 
 		"""
@@ -27544,7 +27544,7 @@ class IFDiscreteCompoundLoading(IFLoadingDiscreteBase):
 		Add discrete loading attribute to this compound attribute 
 		Params:
 			pLoadingAttr (IFLoading): discrete loading attribute to add
-			pOffsetCoord (array of float, optional): An array of 3 real numbers, representing 3d coordinates
+			pOffsetCoord (array of float, optional): An array of 3 real numbers, representing 3d coordinates. optional offset coordinates
 			pTransAttr (IFTransformationAttr, optional): optional transformation to apply
 			haveTrans (bool, optional): optional boolean to indicate if using transformation attribute
 			factor (float, optional): optional factor on the load, default 1.0
@@ -27648,7 +27648,7 @@ class IFInitialVelocityLoad(IFLoading):
 		set the velocity for a freedom 
 		Params:
 			freedom (str): freedom
-			load (object): IFVariationAttr or double
+			load (IFVariationAttr or float): displacement
 		Returns:
 			IFInitialVelocityLoad: 
 		"""
@@ -27665,7 +27665,7 @@ class IFInitialAccelerationLoad(IFLoading):
 		set the acceleration for a freedom 
 		Params:
 			freedom (str): freedom
-			load (object): IFVariationAttr or double
+			load (IFVariationAttr or float): displacement
 		Returns:
 			IFInitialAccelerationLoad: 
 		"""
@@ -27694,7 +27694,7 @@ class IFSurfDistrLoading(IFLoading):
 		set the loading direction type 
 		Params:
 			type (str): type, "globalX", ....
-			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object. local coordinates for local directions
 		Returns:
 			IFSurfDistrLoading: 
 		"""
@@ -27706,7 +27706,7 @@ class IFSurfDistrLoading(IFLoading):
 		set the reference direction type 
 		Params:
 			type (str): type, "surfaceZ", ....
-			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object. local coordinates for local directions
 		Returns:
 			IFSurfDistrLoading: 
 		"""
@@ -27719,7 +27719,7 @@ class IFSurfDistrLoading(IFLoading):
 		Params:
 			numberSubBeams (int): number of sub-beams
 			subBeamAngle (float): sub-beam angle
-			subBeamLoadIntensity (object, optional): IFVariationAttr or double
+			subBeamLoadIntensity (IFVariationAttr or float, optional): sub-beam load intensity
 		Returns:
 			IFSurfDistrLoading: 
 		"""
@@ -27730,7 +27730,7 @@ class IFSurfDistrLoading(IFLoading):
 		r"""
 		set the loading 
 		Params:
-			surfLoadIntensity (object): IFVariationAttr or double
+			surfLoadIntensity (IFVariationAttr or float): surface load intensity
 			areaLoadFactorExpr (str, optional): Any function of area that evaluates to a number, note all numbers must be in US English, i.e. "1.2", not the current locale (e.g. Italian/Swedish/French "1,2")
 			scalingType (str, optional): load scaling type
 		Returns:
@@ -27852,8 +27852,8 @@ class IFTemperatureProfileLoad(IFLoading):
 		integrate this temperature profile over the given beam section and return the stress profile for each material in the section 
 		Params:
 			nrmCrd (float): normalised coord along the beam
-			beamSectionAttr (IFGeometricLine): The name or ID of a name, or a pointer to a IFGeometricLine object
-			materialAttr (IFMaterial): The name or ID of a name, or a pointer to a IFMaterial object
+			beamSectionAttr (IFGeometricLine): The name or ID of a name, or a pointer to a IFGeometricLine object. beam section attribute
+			materialAttr (IFMaterial): The name or ID of a name, or a pointer to a IFMaterial object. material attribute
 			numberPoints (int): number of point at which to evaluate the profile, <= 0 for the default
 			pForce (float): axial force in the beam
 			pMoment (float): moment about the neutral axis
@@ -27968,8 +27968,8 @@ class IFStrainProfileLoad(IFLoading):
 		integrate this strain profile over the given beam section and return the stress profile for each material in the section 
 		Params:
 			nrmCrd (float): normalised coord along the beam
-			beamSectionAttr (IFGeometricLine): The name or ID of a name, or a pointer to a IFGeometricLine object
-			materialAttr (IFMaterial): The name or ID of a name, or a pointer to a IFMaterial object
+			beamSectionAttr (IFGeometricLine): The name or ID of a name, or a pointer to a IFGeometricLine object. beam section attribute
+			materialAttr (IFMaterial): The name or ID of a name, or a pointer to a IFMaterial object. material attribute
 			numberPoints (int): number of point at which to evaluate the profile, <= 0 for the default
 			pForce (float): axial force in the beam
 			pMoment (float): moment about the neutral axis
@@ -28013,7 +28013,7 @@ class IFWaterPressureDistrLoad(IFLoading):
 		r"""
 		Set the phreatic attribute and assignment type 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. WPDL phreatic attribute
 			assignType (str, optional): "faces" or "continuum"
 		Returns:
 			IFWaterPressureDistrLoad: 
@@ -28025,7 +28025,7 @@ class IFWaterPressureDistrLoad(IFLoading):
 		r"""
 		Set the profile attribute 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. tendon profile attribute
 		Returns:
 			IFWaterPressureDistrLoad: 
 		"""
@@ -28042,7 +28042,7 @@ class IFBeamProjectedPressureLoad(IFLoading):
 		set the loading direction type 
 		Params:
 			type (str): type, "globalX", ....
-			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord, optional): The name or ID of a localcoord, or a pointer to a IFLocalCoord object. local coordinates for local directions
 		Returns:
 			IFBeamProjectedPressureLoad: 
 		"""
@@ -28053,7 +28053,7 @@ class IFBeamProjectedPressureLoad(IFLoading):
 		r"""
 		set the loading intensity 
 		Params:
-			loadingPressure (object): IFVariationAttr or double
+			loadingPressure (IFVariationAttr or float): pressure load intensity
 		Returns:
 			IFBeamProjectedPressureLoad: 
 		"""
@@ -28082,7 +28082,7 @@ class IFViscousSupportLoad(IFLoading):
 		set the velocity for a freedom 
 		Params:
 			freedom (str): freedom "U", "V", "W"
-			velocity (object): IFVariationAttr or double
+			velocity (IFVariationAttr or float): displacement
 		Returns:
 			IFViscousSupportLoad: 
 		"""
@@ -28128,7 +28128,7 @@ class IFConstraintConstant(IFConstraint):
 		r"""
 		Sets the optional primary point object. Renamed from setMasterPoint() (P768). 
 		Params:
-			point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object
+			point (IFPoint): The name or ID of a point, or a pointer to a IFPoint object. primary point
 		Returns:
 			IFConstraintConstant: 
 		"""
@@ -28437,8 +28437,8 @@ class IFAnisotropicMaterial(IFMaterial):
 		 
 		Params:
 			MassDensity (IFVariationAttr or float): Density
-			Angle (object): IFVariationAttr or double
-			Matrix (object): IFVariationAttr or double
+			Angle (IFVariationAttr or float): 
+			Matrix (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFAnisotropicMaterial: 
@@ -28558,7 +28558,7 @@ class IFPiecewiseLinearJointMaterial(IFMaterial):
 			selected (bool): TRUE for curve input, FALSE for elastic spring
 			Force (array of realvariation, optional): 
 			Displacement (array of realvariation, optional): 
-			r (object, optional): IFVariationAttr or double
+			r (IFVariationAttr or float, optional): stiffness factor, r (default 1.0)
 			controlForce (array of realvariation, optional): control forces for materials 43-47
 			points (array of ints, optional): points in each curve for materials 43-47
 		Returns:
@@ -28574,7 +28574,7 @@ class IFPiecewiseLinearJointMaterial(IFMaterial):
 			momentAngle (int): moment Angle index
 			Moment (array of realvariation): 
 			Rotation (array of realvariation): 
-			r (object): IFVariationAttr or double
+			r (IFVariationAttr or float): stiffness factor, r (default 1.0)
 			controlForce (array of realvariation): control forces for material 43-47
 			points (array of ints): points in each curve for material 43-47
 		Returns:
@@ -29019,7 +29019,7 @@ class IFMatrixJointMaterial(IFMaterial):
 		Params:
 			type (str): matrix type
 			bFull (bool): full matrix input option (TRUE for full matrix, FALSE for upper right quadrant)
-			values (object): IFVariationAttr or double
+			values (IFVariationAttr or float): matrix values
 		Returns:
 			IFMatrixJointMaterial: 
 		"""
@@ -29077,9 +29077,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (object): IFVariationAttr or double
-			Param2 (object): IFVariationAttr or double
-			Param3 (object): IFVariationAttr or double
+			Param1 (IFVariationAttr or float): 
+			Param2 (IFVariationAttr or float): 
+			Param3 (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29091,9 +29091,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (object): IFVariationAttr or double
-			Param2 (object): IFVariationAttr or double
-			Param3 (object): IFVariationAttr or double
+			Param1 (IFVariationAttr or float): 
+			Param2 (IFVariationAttr or float): 
+			Param3 (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29105,12 +29105,12 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (object): IFVariationAttr or double
-			Param2 (object): IFVariationAttr or double
-			Param3 (object): IFVariationAttr or double
-			Param4 (object): IFVariationAttr or double
-			Param5 (object): IFVariationAttr or double
-			Param6 (object): IFVariationAttr or double
+			Param1 (IFVariationAttr or float): 
+			Param2 (IFVariationAttr or float): 
+			Param3 (IFVariationAttr or float): 
+			Param4 (IFVariationAttr or float): 
+			Param5 (IFVariationAttr or float): 
+			Param6 (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29122,14 +29122,14 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (object): IFVariationAttr or double
-			Param2 (object): IFVariationAttr or double
-			Param3 (object): IFVariationAttr or double
-			Param4 (object): IFVariationAttr or double
-			Param5 (object): IFVariationAttr or double
-			Param6 (object): IFVariationAttr or double
-			Param7 (object): IFVariationAttr or double
-			Param8 (object): IFVariationAttr or double
+			Param1 (IFVariationAttr or float): 
+			Param2 (IFVariationAttr or float): 
+			Param3 (IFVariationAttr or float): 
+			Param4 (IFVariationAttr or float): 
+			Param5 (IFVariationAttr or float): 
+			Param6 (IFVariationAttr or float): 
+			Param7 (IFVariationAttr or float): 
+			Param8 (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29141,14 +29141,14 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			StressX (object): IFVariationAttr or double
-			StressY (object): IFVariationAttr or double
-			StressZ (object): IFVariationAttr or double
-			StressXY (object): IFVariationAttr or double
-			StressYZ (object): IFVariationAttr or double
-			StressXZ (object): IFVariationAttr or double
-			initialYield (object, optional): IFVariationAttr or double
-			heatFraction (object, optional): IFVariationAttr or double
+			StressX (IFVariationAttr or float): 
+			StressY (IFVariationAttr or float): 
+			StressZ (IFVariationAttr or float): 
+			StressXY (IFVariationAttr or float): 
+			StressYZ (IFVariationAttr or float): 
+			StressXZ (IFVariationAttr or float): 
+			initialYield (IFVariationAttr or float, optional): 
+			heatFraction (IFVariationAttr or float, optional): 
 			temp (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29169,9 +29169,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Threshold (object): IFVariationAttr or double
-			ParamA (object): IFVariationAttr or double
-			ParamB (object): IFVariationAttr or double
+			Threshold (IFVariationAttr or float): 
+			ParamA (IFVariationAttr or float): 
+			ParamB (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29183,9 +29183,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Threshold (object): IFVariationAttr or double
-			ParamA (object): IFVariationAttr or double
-			DamageRatio (object): IFVariationAttr or double
+			Threshold (IFVariationAttr or float): 
+			ParamA (IFVariationAttr or float): 
+			DamageRatio (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29197,11 +29197,11 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			StrengthXT (object): IFVariationAttr or double
-			StrengthXC (object): IFVariationAttr or double
-			ShearStrength (object): IFVariationAttr or double
-			StrengthYT (object): IFVariationAttr or double
-			StrengthYC (object): IFVariationAttr or double
+			StrengthXT (IFVariationAttr or float): 
+			StrengthXC (IFVariationAttr or float): 
+			ShearStrength (IFVariationAttr or float): 
+			StrengthYT (IFVariationAttr or float): 
+			StrengthYC (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29214,9 +29214,9 @@ class IFMaterialTropicSet(IFMaterial):
 		 
 		Params:
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RH (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			Fcm (object): IFVariationAttr or double
+			RH (IFVariationAttr or float): relative humidity
+			H (IFVariationAttr or float): member geometry parameter
+			Fcm (IFVariationAttr or float): mean compressive strength
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29229,8 +29229,8 @@ class IFMaterialTropicSet(IFMaterial):
 		 
 		Params:
 			type (str): type of shrinkage curve either "Time" or "DOC"
-			F (object): IFVariationAttr or double
-			Vs (object): IFVariationAttr or double
+			F (IFVariationAttr or float): array of time/degree of cure at each point on curve
+			Vs (IFVariationAttr or float): array of linear shrinkage at time/degree of cure at each point on curve
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29242,8 +29242,8 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			ShearModulus (object): IFVariationAttr or double
-			DecayConstant (object): IFVariationAttr or double
+			ShearModulus (IFVariationAttr or float): 
+			DecayConstant (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29255,7 +29255,7 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		set the maximum suction pressure for the Two Phase material component 
 		Params:
-			suction (object): IFVariationAttr or double
+			suction (IFVariationAttr or float): maximum suction pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29266,7 +29266,7 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		set the maximum cavitation pressure for the Two Phase material component 
 		Params:
-			cavitation (object): IFVariationAttr or double
+			cavitation (IFVariationAttr or float): maximum cavitation pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29277,14 +29277,14 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add an undrained Two Phase material component 
 		Params:
-			BulkModulusSolid (object): IFVariationAttr or double
-			BulkModulusFluid (object): IFVariationAttr or double
-			Porosity (object): IFVariationAttr or double
-			UnitWeightFluid (object): IFVariationAttr or double
-			PermeabilityX (object): IFVariationAttr or double
-			PermeabilityY (object): IFVariationAttr or double
-			PermeabilityZ (object): IFVariationAttr or double
-			fluidDensity (object, optional): IFVariationAttr or double
+			BulkModulusSolid (IFVariationAttr or float): Solid bulk modulus
+			BulkModulusFluid (IFVariationAttr or float): Fluid bulk modulus
+			Porosity (IFVariationAttr or float): 
+			UnitWeightFluid (IFVariationAttr or float): 
+			PermeabilityX (IFVariationAttr or float): 
+			PermeabilityY (IFVariationAttr or float): 
+			PermeabilityZ (IFVariationAttr or float): 
+			fluidDensity (IFVariationAttr or float, optional): 
 			temp (float, optional): temperature
 			fluidBulkModulusType (str, optional): "absolute","factor","Poisson"
 			twoPhaseDensityType (str, optional): "Soil grain","Fully saturated"
@@ -29298,16 +29298,16 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add a partially drained Two Phase material component 
 		Params:
-			pBulkModulusSolid (object): IFVariationAttr or double
-			pBulkModulusFluid (object): IFVariationAttr or double
-			pPorosity (object): IFVariationAttr or double
-			pUnitWeightFluid (object): IFVariationAttr or double
-			pPermeabilityX (object): IFVariationAttr or double
-			pPermeabilityY (object): IFVariationAttr or double
-			pPermeabilityZ (object): IFVariationAttr or double
-			fluidDensity (object): IFVariationAttr or double
-			irreducibleSat (object): IFVariationAttr or double
-			satSaturation (object): IFVariationAttr or double
+			pBulkModulusSolid (IFVariationAttr or float): 
+			pBulkModulusFluid (IFVariationAttr or float): 
+			pPorosity (IFVariationAttr or float): 
+			pUnitWeightFluid (IFVariationAttr or float): 
+			pPermeabilityX (IFVariationAttr or float): 
+			pPermeabilityY (IFVariationAttr or float): 
+			pPermeabilityZ (IFVariationAttr or float): 
+			fluidDensity (IFVariationAttr or float): 
+			irreducibleSat (IFVariationAttr or float): 
+			satSaturation (IFVariationAttr or float): 
 			scanningCurveFactor (float): 
 			temp (float, optional): temperature
 			fluidBulkModulusType (str, optional): "absolute","factor","Poisson"
@@ -29324,17 +29324,17 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add a constnat water content Two Phase material component 
 		Params:
-			pBulkModulusSolid (object): IFVariationAttr or double
-			pBulkModulusFluid (object): IFVariationAttr or double
-			pPorosity (object): IFVariationAttr or double
-			pUnitWeightFluid (object): IFVariationAttr or double
-			pPermeabilityX (object): IFVariationAttr or double
-			pPermeabilityY (object): IFVariationAttr or double
-			pPermeabilityZ (object): IFVariationAttr or double
-			fluidDensity (object): IFVariationAttr or double
-			irreducibleSat (object): IFVariationAttr or double
-			satSaturation (object): IFVariationAttr or double
-			permeabilityFactor (object): IFVariationAttr or double
+			pBulkModulusSolid (IFVariationAttr or float): 
+			pBulkModulusFluid (IFVariationAttr or float): 
+			pPorosity (IFVariationAttr or float): 
+			pUnitWeightFluid (IFVariationAttr or float): 
+			pPermeabilityX (IFVariationAttr or float): 
+			pPermeabilityY (IFVariationAttr or float): 
+			pPermeabilityZ (IFVariationAttr or float): 
+			fluidDensity (IFVariationAttr or float): 
+			irreducibleSat (IFVariationAttr or float): 
+			satSaturation (IFVariationAttr or float): 
+			permeabilityFactor (IFVariationAttr or float): 
 			temp (float, optional): temperature
 			fluidBulkModulusType (str, optional): "absolute","factor","Poisson"
 			defnType (str, optional): "saturation", "water content"
@@ -29350,10 +29350,10 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Valiantzas draining curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			extraction (object): IFVariationAttr or double
-			weightFactor (object): IFVariationAttr or double
-			airEntry (object): IFVariationAttr or double
-			permeability (object): IFVariationAttr or double
+			extraction (IFVariationAttr or float): 
+			weightFactor (IFVariationAttr or float): 
+			airEntry (IFVariationAttr or float): 
+			permeability (IFVariationAttr or float): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29365,10 +29365,10 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Valiantzas filling curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			extraction (object): IFVariationAttr or double
-			weightFactor (object): IFVariationAttr or double
-			airEntry (object): IFVariationAttr or double
-			permeability (object): IFVariationAttr or double
+			extraction (IFVariationAttr or float): 
+			weightFactor (IFVariationAttr or float): 
+			airEntry (IFVariationAttr or float): 
+			permeability (IFVariationAttr or float): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29380,9 +29380,9 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Van Ganuchten-Maulam draining curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			parameterN (object): IFVariationAttr or double
-			parameterAlpha (object): IFVariationAttr or double
-			permeability (object): IFVariationAttr or double
+			parameterN (IFVariationAttr or float): 
+			parameterAlpha (IFVariationAttr or float): 
+			permeability (IFVariationAttr or float): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29394,9 +29394,9 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Van Ganuchten-Maulam filling curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			parameterN (object): IFVariationAttr or double
-			parameterAlpha (object): IFVariationAttr or double
-			permeability (object): IFVariationAttr or double
+			parameterN (IFVariationAttr or float): 
+			parameterAlpha (IFVariationAttr or float): 
+			permeability (IFVariationAttr or float): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29408,8 +29408,8 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Brooks Coley draining curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			poreSizeDistr (object): IFVariationAttr or double
-			airEntry (object): IFVariationAttr or double
+			poreSizeDistr (IFVariationAttr or float): 
+			airEntry (IFVariationAttr or float): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29421,8 +29421,8 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Brooks Coley filling curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			poreSizeDistr (object): IFVariationAttr or double
-			airEntry (object): IFVariationAttr or double
+			poreSizeDistr (IFVariationAttr or float): 
+			airEntry (IFVariationAttr or float): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29433,16 +29433,16 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add a piecewise Two Phase material component 
 		Params:
-			pBulkModulusSolid (object): IFVariationAttr or double
-			pBulkModulusFluid (object): IFVariationAttr or double
-			pPorosity (object): IFVariationAttr or double
-			pUnitWeightFluid (object): IFVariationAttr or double
-			pPermeabilityX (object): IFVariationAttr or double
-			pPermeabilityY (object): IFVariationAttr or double
-			pPermeabilityZ (object): IFVariationAttr or double
-			fluidDensity (object): IFVariationAttr or double
-			irreducibleSat (object): IFVariationAttr or double
-			satSaturation (object): IFVariationAttr or double
+			pBulkModulusSolid (IFVariationAttr or float): 
+			pBulkModulusFluid (IFVariationAttr or float): 
+			pPorosity (IFVariationAttr or float): 
+			pUnitWeightFluid (IFVariationAttr or float): 
+			pPermeabilityX (IFVariationAttr or float): 
+			pPermeabilityY (IFVariationAttr or float): 
+			pPermeabilityZ (IFVariationAttr or float): 
+			fluidDensity (IFVariationAttr or float): 
+			irreducibleSat (IFVariationAttr or float): 
+			satSaturation (IFVariationAttr or float): 
 			scanningCurveFactor (float): 
 			curveTolerance (float): 
 			temp (float, optional): temperature
@@ -29483,8 +29483,8 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		Ko Initialisation material row for isotropic elastic materials 
 		Params:
-			YoungsModulus (object): IFVariationAttr or double
-			lateralEarthPressure (object): IFVariationAttr or double
+			YoungsModulus (IFVariationAttr or float): Youngs modulus
+			lateralEarthPressure (IFVariationAttr or float): lateral earth pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29496,9 +29496,9 @@ class IFMaterialTropicSet(IFMaterial):
 		Ko Initialisation material row for Cam_Clay material 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void raio in Ko material
-			YoungsModulus (object): IFVariationAttr or double
-			lateralEarthPressure (object): IFVariationAttr or double
-			specificVolume (object): IFVariationAttr or double
+			YoungsModulus (IFVariationAttr or float): Youngs modulus
+			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
+			specificVolume (IFVariationAttr or float): Specific volume on NCL
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29510,11 +29510,11 @@ class IFMaterialTropicSet(IFMaterial):
 		Ko Initialiatsion material row for Cam_Clay OCR standard material 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			overConsolidationRatio (object): IFVariationAttr or double
-			YoungsModulus (object): IFVariationAttr or double
-			PoissonsRatio (object): IFVariationAttr or double
-			lateralEarthPressure (object): IFVariationAttr or double
-			specificVolume (object): IFVariationAttr or double
+			overConsolidationRatio (IFVariationAttr or float): Solid bulk modulus
+			YoungsModulus (IFVariationAttr or float): Youngs modulus
+			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
+			specificVolume (IFVariationAttr or float): Specific volume on NCL
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29526,12 +29526,12 @@ class IFMaterialTropicSet(IFMaterial):
 		Ko Initialiatsion material row for Cam_Clay OCR SIN material 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			overConsolidationRatio (object): IFVariationAttr or double
-			YoungsModulus (object): IFVariationAttr or double
-			PoissonsRatio (object): IFVariationAttr or double
-			lateralEarthPressure (object): IFVariationAttr or double
-			specificVolume (object): IFVariationAttr or double
-			sineAngleFriction (object, optional): IFVariationAttr or double
+			overConsolidationRatio (IFVariationAttr or float): Solid bulk modulus
+			YoungsModulus (IFVariationAttr or float): Youngs modulus
+			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
+			specificVolume (IFVariationAttr or float): Specific volume on NCL
+			sineAngleFriction (IFVariationAttr or float, optional): Sine of angle of friction
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29543,12 +29543,12 @@ class IFMaterialTropicSet(IFMaterial):
 		Ko Initialiatsion material row for Cam_Clay OCR general material 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			overConsolidationRatio (object): IFVariationAttr or double
-			YoungsModulus (object): IFVariationAttr or double
-			PoissonsRatio (object): IFVariationAttr or double
-			lateralEarthPressure (object): IFVariationAttr or double
-			specificVolume (object): IFVariationAttr or double
-			coeffEarthPressure (object, optional): IFVariationAttr or double
+			overConsolidationRatio (IFVariationAttr or float): Solid bulk modulus
+			YoungsModulus (IFVariationAttr or float): Youngs modulus
+			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
+			specificVolume (IFVariationAttr or float): Specific volume on NCL
+			coeffEarthPressure (IFVariationAttr or float, optional): Coefficient of earth pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29560,11 +29560,11 @@ class IFMaterialTropicSet(IFMaterial):
 		pre-overburden pressure Ko Initialiatsion material row 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			PreOverburdenPressure (object): IFVariationAttr or double
-			YoungsModulus (object): IFVariationAttr or double
-			PoissonsRatio (object): IFVariationAttr or double
-			lateralEarthPressure (object): IFVariationAttr or double
-			specificVolume (object): IFVariationAttr or double
+			PreOverburdenPressure (IFVariationAttr or float): pre-overburden pressure
+			YoungsModulus (IFVariationAttr or float): Youngs modulus
+			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
+			specificVolume (IFVariationAttr or float): Specific volume on NCL
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29573,9 +29573,9 @@ class IFMaterialTropicSet(IFMaterial):
 
 	def addTwoPhaseInterface(self, hydraulicConductivity) -> IFMaterialTropicSet:
 		r"""
-		add soil structure interface two hhase material component 
+		add soil structure interface two phase material component 
 		Params:
-			hydraulicConductivity (object): IFVariationAttr or double
+			hydraulicConductivity (IFVariationAttr or float): hydraulic conductivity across interface
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29694,9 +29694,9 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 			Poisson (IFVariationAttr or float): Poisson's ratio
 			Density (IFVariationAttr or float): Density
 			temperature (float): temperature
-			thermalExp (object, optional): Coefficient of thermal expansion
-			massDamping (IFVariationAttr or float, optional): Mass Rayleigh damping constant
-			stiffDamping (IFVariationAttr or float, optional): Stiffness Rayleigh damping constant
+			thermalExp (object, optional): Coefficient of thermal expansion.
+			massDamping (IFVariationAttr or float, optional): Mass Rayleigh damping constant.
+			stiffDamping (IFVariationAttr or float, optional): Stiffness Rayleigh damping constant.
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -29707,7 +29707,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear stress potential von Mises properties to isotropic material attribute 
 		Params:
-			InitialTension (object): IFVariationAttr or double
+			InitialTension (IFVariationAttr or float): Initial tensile yield stress
 			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
 			temperature (float, optional): temperature
 		Returns:
@@ -29720,8 +29720,8 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear stress potential modified von Mises properties to isotropic material attribute 
 		Params:
-			InitialTension (object): IFVariationAttr or double
-			InitialCompression (object): IFVariationAttr or double
+			InitialTension (IFVariationAttr or float): Initial tensile yield stress
+			InitialCompression (IFVariationAttr or float): Initial compressive yield stress
 			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
 			temperature (float, optional): temperature
 		Returns:
@@ -29734,8 +29734,8 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add Tresca properties to isotropic material attribute 
 		Params:
-			StressSlope (object): IFVariationAttr or double
-			PlasticStrain (object): IFVariationAttr or double
+			StressSlope (IFVariationAttr or float): 
+			PlasticStrain (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29747,12 +29747,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add Mohr Colulomb properties to isotropic material attribute 
 		Params:
-			InitialCohesion (object): IFVariationAttr or double
-			InitialFriction (object): IFVariationAttr or double
-			FinalFraction (object): IFVariationAttr or double
-			DilationAngle (object): IFVariationAttr or double
-			CohesionSlope (object): IFVariationAttr or double
-			PlasticStrain (object): IFVariationAttr or double
+			InitialCohesion (IFVariationAttr or float): 
+			InitialFriction (IFVariationAttr or float): 
+			FinalFraction (IFVariationAttr or float): 
+			DilationAngle (IFVariationAttr or float): 
+			CohesionSlope (IFVariationAttr or float): 
+			PlasticStrain (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29764,12 +29764,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear Drucker Prager properties to isotropic material attribute (Mdl=64) 
 		Params:
-			InitialCohesion (object): IFVariationAttr or double
-			InitialFriction (object): IFVariationAttr or double
+			InitialCohesion (IFVariationAttr or float): Initial cohesion
+			InitialFriction (IFVariationAttr or float): Initial friction angle
 			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
-			CohesionSlope (object): IFVariationAttr or double
-			FrictionSlope (object): IFVariationAttr or double
-			PlasticStrain (object): IFVariationAttr or double
+			CohesionSlope (IFVariationAttr or float): Slope of cohesion against plastic strain
+			FrictionSlope (IFVariationAttr or float): Slope of friction angle against plastic strain
+			PlasticStrain (IFVariationAttr or float): Limit of hardening curve
 			temperature (float, optional): temperature
 			modelNumber (int, optional): model 64 or 74, 74 bt default
 		Returns:
@@ -29782,20 +29782,20 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties to isotropic material attribute (Mdl=94) 
 		Params:
-			CompressiveStrength (object): IFVariationAttr or double
-			TensileStrength (object): IFVariationAttr or double
-			PeakStrain (object): IFVariationAttr or double
-			EffectiveStrain (object): IFVariationAttr or double
-			FractureEnergy (object): IFVariationAttr or double
-			PrincipalRatio (object): IFVariationAttr or double
-			YieldSurface (object): IFVariationAttr or double
-			Dilatancy (object): IFVariationAttr or double
-			InterlockState (object): IFVariationAttr or double
-			ContactMultiplier (object): IFVariationAttr or double
-			FinalMultiplier (object): IFVariationAttr or double
-			ShearIntercept (object): IFVariationAttr or double
-			FrictionSlope (object): IFVariationAttr or double
-			AngularLimit (object): IFVariationAttr or double
+			CompressiveStrength (IFVariationAttr or float): 
+			TensileStrength (IFVariationAttr or float): 
+			PeakStrain (IFVariationAttr or float): 
+			EffectiveStrain (IFVariationAttr or float): 
+			FractureEnergy (IFVariationAttr or float): 
+			PrincipalRatio (IFVariationAttr or float): 
+			YieldSurface (IFVariationAttr or float): 
+			Dilatancy (IFVariationAttr or float): 
+			InterlockState (IFVariationAttr or float): 
+			ContactMultiplier (IFVariationAttr or float): 
+			FinalMultiplier (IFVariationAttr or float): 
+			ShearIntercept (IFVariationAttr or float): 
+			FrictionSlope (IFVariationAttr or float): 
+			AngularLimit (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29807,27 +29807,27 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 109 to isotropic material attribute 
 		Params:
-			CompressiveStrength (object): IFVariationAttr or double
-			TensileStrength (object): IFVariationAttr or double
-			PeakStrain (object): IFVariationAttr or double
-			EffectiveStrain (object): IFVariationAttr or double
-			FractureEnergy (object): IFVariationAttr or double
-			PrincipalRatio (object): IFVariationAttr or double
-			YieldSurface (object): IFVariationAttr or double
-			Dilatancy (object): IFVariationAttr or double
-			InterlockState (object): IFVariationAttr or double
-			ContactMultiplier (object): IFVariationAttr or double
-			FinalMultiplier (object): IFVariationAttr or double
-			ShearIntercept (object): IFVariationAttr or double
-			limitingFriction (object): IFVariationAttr or double
-			crackFixityStrain (object): IFVariationAttr or double
-			zoneWidth (object): IFVariationAttr or double
-			softeningFactor (object): IFVariationAttr or double
-			materialConstAp (object): IFVariationAttr or double
-			materialConstV (object): IFVariationAttr or double
-			shapenessCoeffZ1 (object): IFVariationAttr or double
-			shapenessCoeffZ2 (object): IFVariationAttr or double
-			shapenessCoeffLM (object): IFVariationAttr or double
+			CompressiveStrength (IFVariationAttr or float): 
+			TensileStrength (IFVariationAttr or float): 
+			PeakStrain (IFVariationAttr or float): 
+			EffectiveStrain (IFVariationAttr or float): 
+			FractureEnergy (IFVariationAttr or float): 
+			PrincipalRatio (IFVariationAttr or float): 
+			YieldSurface (IFVariationAttr or float): 
+			Dilatancy (IFVariationAttr or float): 
+			InterlockState (IFVariationAttr or float): 
+			ContactMultiplier (IFVariationAttr or float): 
+			FinalMultiplier (IFVariationAttr or float): 
+			ShearIntercept (IFVariationAttr or float): 
+			limitingFriction (IFVariationAttr or float): 
+			crackFixityStrain (IFVariationAttr or float): 
+			zoneWidth (IFVariationAttr or float): 
+			softeningFactor (IFVariationAttr or float): 
+			materialConstAp (IFVariationAttr or float): 
+			materialConstV (IFVariationAttr or float): 
+			shapenessCoeffZ1 (IFVariationAttr or float): 
+			shapenessCoeffZ2 (IFVariationAttr or float): 
+			shapenessCoeffLM (IFVariationAttr or float): 
 			numberIterations (int): 
 			maximumIterations (int): 
 			temperature (float, optional): temperature
@@ -29842,29 +29842,29 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 109 with Chinese creep to isotropic material attribute 
 		Params:
-			CompressiveStrength (object): IFVariationAttr or double
-			TensileStrength (object): IFVariationAttr or double
-			PeakStrain (object): IFVariationAttr or double
-			EffectiveStrain (object): IFVariationAttr or double
-			FractureEnergy (object): IFVariationAttr or double
-			PrincipalRatio (object): IFVariationAttr or double
-			YieldSurface (object): IFVariationAttr or double
-			Dilatancy (object): IFVariationAttr or double
-			InterlockState (object): IFVariationAttr or double
-			ContactMultiplier (object): IFVariationAttr or double
-			FinalMultiplier (object): IFVariationAttr or double
-			ShearIntercept (object): IFVariationAttr or double
-			limitingFriction (object): IFVariationAttr or double
-			crackFixityStrain (object): IFVariationAttr or double
-			zoneWidth (object): IFVariationAttr or double
-			softeningFactor (object): IFVariationAttr or double
-			materialConstAp (object): IFVariationAttr or double
-			materialConstV (object): IFVariationAttr or double
-			shapenessCoeffZ1 (object): IFVariationAttr or double
-			shapenessCoeffZ2 (object): IFVariationAttr or double
-			shapenessCoeffLM (object): IFVariationAttr or double
-			vParamA (object): IFVariationAttr or double
-			vParamB (object): IFVariationAttr or double
+			CompressiveStrength (IFVariationAttr or float): 
+			TensileStrength (IFVariationAttr or float): 
+			PeakStrain (IFVariationAttr or float): 
+			EffectiveStrain (IFVariationAttr or float): 
+			FractureEnergy (IFVariationAttr or float): 
+			PrincipalRatio (IFVariationAttr or float): 
+			YieldSurface (IFVariationAttr or float): 
+			Dilatancy (IFVariationAttr or float): 
+			InterlockState (IFVariationAttr or float): 
+			ContactMultiplier (IFVariationAttr or float): 
+			FinalMultiplier (IFVariationAttr or float): 
+			ShearIntercept (IFVariationAttr or float): 
+			limitingFriction (IFVariationAttr or float): 
+			crackFixityStrain (IFVariationAttr or float): 
+			zoneWidth (IFVariationAttr or float): 
+			softeningFactor (IFVariationAttr or float): 
+			materialConstAp (IFVariationAttr or float): 
+			materialConstV (IFVariationAttr or float): 
+			shapenessCoeffZ1 (IFVariationAttr or float): 
+			shapenessCoeffZ2 (IFVariationAttr or float): 
+			shapenessCoeffLM (IFVariationAttr or float): 
+			vParamA (IFVariationAttr or float): 
+			vParamB (IFVariationAttr or float): 
 			numberIterations (int): 
 			maximumIterations (int): 
 			temperature (float, optional): temperature
@@ -29879,39 +29879,39 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 119 to this isotropic material attribute 
 		Params:
-			pCompressiveStrength (object): IFVariationAttr or double
-			pTensileStrength (object): IFVariationAttr or double
-			pPeakStrain (object): IFVariationAttr or double
-			pEffectiveStrain (object): IFVariationAttr or double
-			pFractureEnergy (object): IFVariationAttr or double
-			pPrincipalRatio (object): IFVariationAttr or double
-			pYieldSurface (object): IFVariationAttr or double
-			pDilatancy (object): IFVariationAttr or double
-			pInterlockState (object): IFVariationAttr or double
-			pContactMultiplier (object): IFVariationAttr or double
-			pFinalMultiplier (object): IFVariationAttr or double
-			pShearIntercept (object): IFVariationAttr or double
-			pLimitingFriction (object): IFVariationAttr or double
-			pCrackFixityStrain (object): IFVariationAttr or double
-			pZoneWidth (object): IFVariationAttr or double
-			pSofteningFactor (object): IFVariationAttr or double
-			pMaterialConstAp (object): IFVariationAttr or double
-			pMaterialConstV (object): IFVariationAttr or double
-			pShapenessCoeffZ1 (object): IFVariationAttr or double
-			pShapenessCoeffZ2 (object): IFVariationAttr or double
-			pShapenessCoeffLM (object): IFVariationAttr or double
-			pFibreYoungsModulus (object): IFVariationAttr or double
-			pFibreVolumeFraction (object): IFVariationAttr or double
-			pFibreLength (object): IFVariationAttr or double
-			pFibreDiameter (object): IFVariationAttr or double
-			pFibreMatrixParameter (object): IFVariationAttr or double
-			pFibreMatrixRatio (object): IFVariationAttr or double
-			pFibreSlidingStress (object): IFVariationAttr or double
-			pFibreSnubbingParameter (object): IFVariationAttr or double
-			pFibreSurParametere1 (object): IFVariationAttr or double
-			pFibreSurParametere2 (object): IFVariationAttr or double
-			pEffectivePullOut (object): IFVariationAttr or double
-			pLimitCrackOpening (object): IFVariationAttr or double
+			pCompressiveStrength (IFVariationAttr or float): fc
+			pTensileStrength (IFVariationAttr or float): ft
+			pPeakStrain (IFVariationAttr or float): Ec
+			pEffectiveStrain (IFVariationAttr or float): E0
+			pFractureEnergy (IFVariationAttr or float): Gf
+			pPrincipalRatio (IFVariationAttr or float): Br
+			pYieldSurface (IFVariationAttr or float): Zo
+			pDilatancy (IFVariationAttr or float): E
+			pInterlockState (IFVariationAttr or float): mg
+			pContactMultiplier (IFVariationAttr or float): mhi
+			pFinalMultiplier (IFVariationAttr or float): mful
+			pShearIntercept (IFVariationAttr or float): ro
+			pLimitingFriction (IFVariationAttr or float): p
+			pCrackFixityStrain (IFVariationAttr or float): mcf
+			pZoneWidth (IFVariationAttr or float): fpz
+			pSofteningFactor (IFVariationAttr or float): Rs
+			pMaterialConstAp (IFVariationAttr or float): Ap
+			pMaterialConstV (IFVariationAttr or float): An
+			pShapenessCoeffZ1 (IFVariationAttr or float): Cz1
+			pShapenessCoeffZ2 (IFVariationAttr or float): Cz2
+			pShapenessCoeffLM (IFVariationAttr or float): Clm
+			pFibreYoungsModulus (IFVariationAttr or float): Ef
+			pFibreVolumeFraction (IFVariationAttr or float): Vf
+			pFibreLength (IFVariationAttr or float): Lf
+			pFibreDiameter (IFVariationAttr or float): df
+			pFibreMatrixParameter (IFVariationAttr or float): Beta
+			pFibreMatrixRatio (IFVariationAttr or float): Betarf
+			pFibreSlidingStress (IFVariationAttr or float): Tau0
+			pFibreSnubbingParameter (IFVariationAttr or float): fsn
+			pFibreSurParametere1 (IFVariationAttr or float): alphapf
+			pFibreSurParametere2 (IFVariationAttr or float): alphanf
+			pEffectivePullOut (IFVariationAttr or float): rpl
+			pLimitCrackOpening (IFVariationAttr or float): rdb
 			numberIterations (int): ifcf
 			maximumIterations (int): itmx
 			temperature (float, optional): temperature
@@ -29926,41 +29926,41 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 119 with Chinese creep to thieisotropic material attribute 
 		Params:
-			pCompressiveStrength (object): IFVariationAttr or double
-			pTensileStrength (object): IFVariationAttr or double
-			pPeakStrain (object): IFVariationAttr or double
-			pEffectiveStrain (object): IFVariationAttr or double
-			pFractureEnergy (object): IFVariationAttr or double
-			pPrincipalRatio (object): IFVariationAttr or double
-			pYieldSurface (object): IFVariationAttr or double
-			pDilatancy (object): IFVariationAttr or double
-			pInterlockState (object): IFVariationAttr or double
-			pContactMultiplier (object): IFVariationAttr or double
-			pFinalMultiplier (object): IFVariationAttr or double
-			pShearIntercept (object): IFVariationAttr or double
-			pLimitingFriction (object): IFVariationAttr or double
-			pCrackFixityStrain (object): IFVariationAttr or double
-			pZoneWidth (object): IFVariationAttr or double
-			pSofteningFactor (object): IFVariationAttr or double
-			pMaterialConstAp (object): IFVariationAttr or double
-			pMaterialConstV (object): IFVariationAttr or double
-			pShapenessCoeffZ1 (object): IFVariationAttr or double
-			pShapenessCoeffZ2 (object): IFVariationAttr or double
-			pShapenessCoeffLM (object): IFVariationAttr or double
-			pFibreYoungsModulus (object): IFVariationAttr or double
-			pFibreVolumeFraction (object): IFVariationAttr or double
-			pFibreLength (object): IFVariationAttr or double
-			pFibreDiameter (object): IFVariationAttr or double
-			pFibreMatrixParameter (object): IFVariationAttr or double
-			pFibreMatrixRatio (object): IFVariationAttr or double
-			pFibreSlidingStress (object): IFVariationAttr or double
-			pFibreSnubbingParameter (object): IFVariationAttr or double
-			pFibreSurParametere1 (object): IFVariationAttr or double
-			pFibreSurParametere2 (object): IFVariationAttr or double
-			pEffectivePullOut (object): IFVariationAttr or double
-			pLimitCrackOpening (object): IFVariationAttr or double
-			vParamA (object): IFVariationAttr or double
-			vParamB (object): IFVariationAttr or double
+			pCompressiveStrength (IFVariationAttr or float): fc
+			pTensileStrength (IFVariationAttr or float): ft
+			pPeakStrain (IFVariationAttr or float): Ec
+			pEffectiveStrain (IFVariationAttr or float): E0
+			pFractureEnergy (IFVariationAttr or float): Gf
+			pPrincipalRatio (IFVariationAttr or float): Br
+			pYieldSurface (IFVariationAttr or float): Zo
+			pDilatancy (IFVariationAttr or float): E
+			pInterlockState (IFVariationAttr or float): mg
+			pContactMultiplier (IFVariationAttr or float): mhi
+			pFinalMultiplier (IFVariationAttr or float): mful
+			pShearIntercept (IFVariationAttr or float): ro
+			pLimitingFriction (IFVariationAttr or float): p
+			pCrackFixityStrain (IFVariationAttr or float): mcf
+			pZoneWidth (IFVariationAttr or float): fpz
+			pSofteningFactor (IFVariationAttr or float): Rs
+			pMaterialConstAp (IFVariationAttr or float): Ap
+			pMaterialConstV (IFVariationAttr or float): An
+			pShapenessCoeffZ1 (IFVariationAttr or float): Cz1
+			pShapenessCoeffZ2 (IFVariationAttr or float): Cz2
+			pShapenessCoeffLM (IFVariationAttr or float): Clm
+			pFibreYoungsModulus (IFVariationAttr or float): Ef
+			pFibreVolumeFraction (IFVariationAttr or float): Vf
+			pFibreLength (IFVariationAttr or float): Lf
+			pFibreDiameter (IFVariationAttr or float): df
+			pFibreMatrixParameter (IFVariationAttr or float): Beta
+			pFibreMatrixRatio (IFVariationAttr or float): Betarf
+			pFibreSlidingStress (IFVariationAttr or float): Tau0
+			pFibreSnubbingParameter (IFVariationAttr or float): fsn
+			pFibreSurParametere1 (IFVariationAttr or float): alphapf
+			pFibreSurParametere2 (IFVariationAttr or float): alphanf
+			pEffectivePullOut (IFVariationAttr or float): rpl
+			pLimitCrackOpening (IFVariationAttr or float): rdb
+			vParamA (IFVariationAttr or float): A
+			vParamB (IFVariationAttr or float): B
 			numberIterations (int): ifcf
 			maximumIterations (int): itmx
 			temperature (float, optional): temperature
@@ -29975,59 +29975,59 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 105 to isotropic material attribute 
 		Params:
-			CompressiveStrength (object): IFVariationAttr or double
-			TensileStrength (object): IFVariationAttr or double
-			PeakStrain (object): IFVariationAttr or double
-			EffectiveStrain (object): IFVariationAttr or double
-			FractureEnergy (object): IFVariationAttr or double
-			PrincipalRatio (object): IFVariationAttr or double
-			YieldSurface (object): IFVariationAttr or double
-			Dilatancy (object): IFVariationAttr or double
-			InterlockState (object): IFVariationAttr or double
-			ContactMultiplier (object): IFVariationAttr or double
-			FinalMultiplier (object): IFVariationAttr or double
-			ShearIntercept (object): IFVariationAttr or double
-			limitingFriction (object): IFVariationAttr or double
-			crackFixityStrain (object): IFVariationAttr or double
-			zoneWidth (object): IFVariationAttr or double
-			softeningFactor (object): IFVariationAttr or double
-			materialConstAp (object): IFVariationAttr or double
-			materialConstV (object): IFVariationAttr or double
-			shapenessCoeffZ1 (object): IFVariationAttr or double
-			shapenessCoeffZ2 (object): IFVariationAttr or double
-			shapenessCoeffLM (object): IFVariationAttr or double
-			ultimateHydration (object): IFVariationAttr or double
-			dryingShrinkage (object): IFVariationAttr or double
-			chemicalShrinkage (object): IFVariationAttr or double
-			scalingConstant (object): IFVariationAttr or double
-			creep28factor (object): IFVariationAttr or double
-			relaxationMultiplier (object): IFVariationAttr or double
-			creepMultiplier (object): IFVariationAttr or double
-			picketpMultiplier (object): IFVariationAttr or double
-			degreePercolation (object): IFVariationAttr or double
-			degreeFirstCure (object): IFVariationAttr or double
-			moisturePickett (object): IFVariationAttr or double
-			saturationPickett (object): IFVariationAttr or double
-			ageCreepStarts (object): IFVariationAttr or double
-			shortRelaxtion (object): IFVariationAttr or double
-			firstLongRelax (object): IFVariationAttr or double
-			secondLongRelax (object): IFVariationAttr or double
-			shortTermViscous (object): IFVariationAttr or double
-			longTermElastic (object): IFVariationAttr or double
+			CompressiveStrength (IFVariationAttr or float): 
+			TensileStrength (IFVariationAttr or float): 
+			PeakStrain (IFVariationAttr or float): 
+			EffectiveStrain (IFVariationAttr or float): 
+			FractureEnergy (IFVariationAttr or float): 
+			PrincipalRatio (IFVariationAttr or float): 
+			YieldSurface (IFVariationAttr or float): 
+			Dilatancy (IFVariationAttr or float): 
+			InterlockState (IFVariationAttr or float): 
+			ContactMultiplier (IFVariationAttr or float): 
+			FinalMultiplier (IFVariationAttr or float): 
+			ShearIntercept (IFVariationAttr or float): 
+			limitingFriction (IFVariationAttr or float): 
+			crackFixityStrain (IFVariationAttr or float): 
+			zoneWidth (IFVariationAttr or float): 
+			softeningFactor (IFVariationAttr or float): 
+			materialConstAp (IFVariationAttr or float): 
+			materialConstV (IFVariationAttr or float): 
+			shapenessCoeffZ1 (IFVariationAttr or float): 
+			shapenessCoeffZ2 (IFVariationAttr or float): 
+			shapenessCoeffLM (IFVariationAttr or float): 
+			ultimateHydration (IFVariationAttr or float): 
+			dryingShrinkage (IFVariationAttr or float): 
+			chemicalShrinkage (IFVariationAttr or float): 
+			scalingConstant (IFVariationAttr or float): 
+			creep28factor (IFVariationAttr or float): 
+			relaxationMultiplier (IFVariationAttr or float): 
+			creepMultiplier (IFVariationAttr or float): 
+			picketpMultiplier (IFVariationAttr or float): 
+			degreePercolation (IFVariationAttr or float): 
+			degreeFirstCure (IFVariationAttr or float): 
+			moisturePickett (IFVariationAttr or float): 
+			saturationPickett (IFVariationAttr or float): 
+			ageCreepStarts (IFVariationAttr or float): 
+			shortRelaxtion (IFVariationAttr or float): 
+			firstLongRelax (IFVariationAttr or float): 
+			secondLongRelax (IFVariationAttr or float): 
+			shortTermViscous (IFVariationAttr or float): 
+			longTermElastic (IFVariationAttr or float): 
 			numberIterations (int): 
 			maximumIterations (int): 
 			creepFactorType (int): 
 			temperature (float, optional): temperature
 			ageStartType (int, optional): age when nonlinear creep starts type
 			vEvolvutionType (int, optional): evolution of properties
-			vLogisticCoeff_E (object, optional): IFVariationAttr or double
-			vPowerCoeff_FC (object, optional): IFVariationAttr or double
-			vPowerCoeff_FT (object, optional): IFVariationAttr or double
-			vTempDegStarts (object, optional): IFVariationAttr or double
-			vTempDegFinish (object, optional): IFVariationAttr or double
-			vDegraCoeff_E (object, optional): IFVariationAttr or double
-			vDegraCoeff_FC (object, optional): IFVariationAttr or double
-			vDegraCoeff_FT (object, optional): IFVariationAttr or double
+			vLogisticCoeff_E (IFVariationAttr or float, optional): 
+			vPowerCoeff_FC (IFVariationAttr or float, optional): 
+			vPowerCoeff_FT (IFVariationAttr or float, optional): 
+			vTempDegStarts (IFVariationAttr or float, optional): 
+			vTempDegFinish (IFVariationAttr or float, optional): 
+			vDegraCoeff_E (IFVariationAttr or float, optional): 
+			vDegraCoeff_FC (IFVariationAttr or float, optional): 
+			vDegraCoeff_FT (IFVariationAttr or float, optional): 
 			vUseDefaultCreepData (bool, optional): 
 			defnType (str, optional): "fracture" or "strain"
 		Returns:
@@ -30041,7 +30041,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		Add nonlinear stress resultant properties to isotropic material attribute (Mdl=29) 
 		Params:
 			sectionShape (str): 
-			YieldStress (object): IFVariationAttr or double
+			YieldStress (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30053,11 +30053,11 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear optimised von Mises properties to isotropic material attribute (Mdl=75) 
 		Params:
-			YieldStress (object): IFVariationAttr or double
+			YieldStress (IFVariationAttr or float): 
 			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
-			TensionIsotropic (object): IFVariationAttr or double
-			TensionKinematic (object): IFVariationAttr or double
-			TensionPlastic (object): IFVariationAttr or double
+			TensionIsotropic (IFVariationAttr or float): 
+			TensionKinematic (IFVariationAttr or float): 
+			TensionPlastic (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30080,11 +30080,11 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Thermal conductivity
+			C (IFVariationAttr or float): Volumetric heat coefficient if density not specified or specific heat capacity if density specified
+			H (IFVariationAttr or float): Enthalpy
 			temp (float): Reference temperature
-			rho (object, optional): IFVariationAttr or double
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30095,17 +30095,17 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Thermal conductivity
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			rho (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			P1 (object): IFVariationAttr or double
-			P2 (object): IFVariationAttr or double
-			T (object): IFVariationAttr or double
-			gravityX (object, optional): IFVariationAttr or double
-			gravityY (object, optional): IFVariationAttr or double
-			gravityZ (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Specific heat capacity
+			rho (IFVariationAttr or float): Density
+			H (IFVariationAttr or float): Enthalpy
+			P1 (IFVariationAttr or float): Porosity
+			P2 (IFVariationAttr or float): Permeability
+			T (IFVariationAttr or float): Tortuosity
+			gravityX (IFVariationAttr or float, optional): x direction component of gravity
+			gravityY (IFVariationAttr or float, optional): y direction component of gravity
+			gravityZ (IFVariationAttr or float, optional): z direction component of gravity
 			gravityType (str, optional): gravity type
 		Returns:
 			IFMaterialIsotropic: 
@@ -30117,23 +30117,23 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Thermal conductivity
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			A3 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
-			E3 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): 
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			A3 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
+			E3 (IFVariationAttr or float): 
 			R (float): 
-			B1 (object): IFVariationAttr or double
-			B2 (object): IFVariationAttr or double
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			B1 (IFVariationAttr or float): 
+			B2 (IFVariationAttr or float): 
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30144,20 +30144,20 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Thermal conductivity
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			n2 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			n2 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30168,32 +30168,32 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Thermal conductivity
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			G (object): IFVariationAttr or double
-			p1 (object): IFVariationAttr or double
-			q1 (object): IFVariationAttr or double
-			r1 (object): IFVariationAttr or double
-			p2 (object): IFVariationAttr or double
-			r2 (object): IFVariationAttr or double
-			Cr (object): IFVariationAttr or double
-			S (object): IFVariationAttr or double
-			Z (object): IFVariationAttr or double
-			Tmx (object): IFVariationAttr or double
-			Tc (object): IFVariationAttr or double
-			FE (object): IFVariationAttr or double
-			D (object): IFVariationAttr or double
-			Q (object): IFVariationAttr or double
-			G0 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			G (IFVariationAttr or float): 
+			p1 (IFVariationAttr or float): 
+			q1 (IFVariationAttr or float): 
+			r1 (IFVariationAttr or float): 
+			p2 (IFVariationAttr or float): 
+			r2 (IFVariationAttr or float): 
+			Cr (IFVariationAttr or float): 
+			S (IFVariationAttr or float): 
+			Z (IFVariationAttr or float): 
+			Tmx (IFVariationAttr or float): 
+			Tc (IFVariationAttr or float): 
+			FE (IFVariationAttr or float): 
+			D (IFVariationAttr or float): 
+			Q (IFVariationAttr or float): 
+			G0 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30204,12 +30204,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Thermal conductivity
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30234,18 +30234,18 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			Tr (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			Tr (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -30261,26 +30261,26 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			Tr (object): IFVariationAttr or double
-			C3S (object): IFVariationAttr or double
-			C2S (object): IFVariationAttr or double
-			C3A (object): IFVariationAttr or double
-			C4AF (object): IFVariationAttr or double
-			FreeCao (object): IFVariationAttr or double
-			SO3 (object): IFVariationAttr or double
-			MgO (object): IFVariationAttr or double
-			Blaine (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			Tr (IFVariationAttr or float): 
+			C3S (IFVariationAttr or float): 
+			C2S (IFVariationAttr or float): 
+			C3A (IFVariationAttr or float): 
+			C4AF (IFVariationAttr or float): 
+			FreeCao (IFVariationAttr or float): 
+			SO3 (IFVariationAttr or float): 
+			MgO (IFVariationAttr or float): 
+			Blaine (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -30297,10 +30297,10 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add Modified Mohr Coulomb model 
 		Params:
 			type (str): material type
-			frictionAngleDegs (object): IFVariationAttr or double
-			dilationAngleDegs (object): IFVariationAttr or double
+			frictionAngleDegs (IFVariationAttr or float): friction angle degrees
+			dilationAngleDegs (IFVariationAttr or float): dilation angle degrees
 			temp (float): temperature
-			dampingFactor (object, optional): IFVariationAttr or double
+			dampingFactor (IFVariationAttr or float, optional): damping factor (default 0.0)
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30312,7 +30312,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		set the cohesion value for Modified Mohr Coulomb model for the give row index 
 		Params:
 			rowIndex (int): 
-			cohesion (object): IFVariationAttr or double
+			cohesion (IFVariationAttr or float): cohesion
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30324,7 +30324,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		set the tensiloe stress value for Modified Mohr Coulomb model for the give row index 
 		Params:
 			rowIndex (int): 
-			tensile (object): IFVariationAttr or double
+			tensile (IFVariationAttr or float): tensiloe stress
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30336,7 +30336,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		set the compressive stress value for Modified Mohr Coulomb model for the give row index 
 		Params:
 			rowIndex (int): 
-			compressive (object): IFVariationAttr or double
+			compressive (IFVariationAttr or float): compressive stress
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30383,30 +30383,30 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Initial conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			rho (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			P1 (object): IFVariationAttr or double
-			P2 (object): IFVariationAttr or double
-			T (object): IFVariationAttr or double
-			K1 (object): IFVariationAttr or double
-			C1 (object): IFVariationAttr or double
-			rho1 (object): IFVariationAttr or double
-			entrappedAir (object): IFVariationAttr or double
-			W (object): IFVariationAttr or double
-			UH (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Initial specific heat capacity
+			rho (IFVariationAttr or float): Initial density
+			H (IFVariationAttr or float): Enthalpy
+			P1 (IFVariationAttr or float): Initial porosity
+			P2 (IFVariationAttr or float): Permeability
+			T (IFVariationAttr or float): Tortuosity
+			K1 (IFVariationAttr or float): factored K
+			C1 (IFVariationAttr or float): factored specific heat capacity
+			rho1 (IFVariationAttr or float): factored density
+			entrappedAir (IFVariationAttr or float): entrapped are volume ratio
+			W (IFVariationAttr or float): water saturation
+			UH (IFVariationAttr or float): ultimate hydration
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			admix (object): IFVariationAttr or double
-			gravityX (object, optional): IFVariationAttr or double
-			gravityY (object, optional): IFVariationAttr or double
-			gravityZ (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			admix (IFVariationAttr or float): 
+			gravityX (IFVariationAttr or float, optional): x direction component of gravity
+			gravityY (IFVariationAttr or float, optional): y direction component of gravity
+			gravityZ (IFVariationAttr or float, optional): z direction component of gravity
 			gravityType (str, optional): gravity type
 			densityType (str, optional): density type, "kiln" or "ambient"
 			conductivityType (str, optional): conductivity type, "dependent" or "constant"
@@ -30426,38 +30426,38 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (object): IFVariationAttr or double
+			K (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			rho (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			P1 (object): IFVariationAttr or double
-			P2 (object): IFVariationAttr or double
-			T (object): IFVariationAttr or double
-			K1 (object): IFVariationAttr or double
-			C1 (object): IFVariationAttr or double
-			rho1 (object): IFVariationAttr or double
-			entrappedAir (object): IFVariationAttr or double
-			W (object): IFVariationAttr or double
-			UH (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Initial specific heat capacity
+			rho (IFVariationAttr or float): Initial density
+			H (IFVariationAttr or float): Enthalpy
+			P1 (IFVariationAttr or float): initial porosity
+			P2 (IFVariationAttr or float): initial permeability
+			T (IFVariationAttr or float): tortuosity
+			K1 (IFVariationAttr or float): factored K
+			C1 (IFVariationAttr or float): factored specific heat capacity
+			rho1 (IFVariationAttr or float): factored density
+			entrappedAir (IFVariationAttr or float): entrapped are volume ratio
+			W (IFVariationAttr or float): water sat
+			UH (IFVariationAttr or float): ultimate hydr
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			admix (object): IFVariationAttr or double
-			C3S (object): IFVariationAttr or double
-			C2S (object): IFVariationAttr or double
-			C3A (object): IFVariationAttr or double
-			C4AF (object): IFVariationAttr or double
-			FreeCao (object): IFVariationAttr or double
-			SO3 (object): IFVariationAttr or double
-			MgO (object): IFVariationAttr or double
-			Blaine (object): IFVariationAttr or double
-			gravityX (object, optional): IFVariationAttr or double
-			gravityY (object, optional): IFVariationAttr or double
-			gravityZ (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			admix (IFVariationAttr or float): 
+			C3S (IFVariationAttr or float): 
+			C2S (IFVariationAttr or float): 
+			C3A (IFVariationAttr or float): 
+			C4AF (IFVariationAttr or float): 
+			FreeCao (IFVariationAttr or float): 
+			SO3 (IFVariationAttr or float): 
+			MgO (IFVariationAttr or float): 
+			Blaine (IFVariationAttr or float): 
+			gravityX (IFVariationAttr or float, optional): x direction component of gravity
+			gravityY (IFVariationAttr or float, optional): y direction component of gravity
+			gravityZ (IFVariationAttr or float, optional): z direction component of gravity
 			gravityType (str, optional): gravity type
 			densityType (str, optional): density type, "kiln" or "ambient"
 			conductivityType (str, optional): conductivity type, "dependent" or "constant"
@@ -30477,12 +30477,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for CEB-FIP 
 		Params:
-			MeanConcreteCompStrength (object): IFVariationAttr or double
+			MeanConcreteCompStrength (IFVariationAttr or float): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): 
+			NominalThickness (IFVariationAttr or float): 
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			Temperature (float): temperature
 			adjustForTemperature (bool, optional): if T adjust for temperature during life cycle
@@ -30497,12 +30497,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for Eurocode2 
 		Params:
-			MeanConcreteCompStrength (object): IFVariationAttr or double
+			MeanConcreteCompStrength (IFVariationAttr or float): compressive strength
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): relative humidity
+			NominalThickness (IFVariationAttr or float): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			SilicaFumeType (int): silica fume type
 			Temperature (float): temperature
@@ -30516,12 +30516,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for India IRC:112-2011 
 		Params:
-			MeanConcreteCompStrength (object): IFVariationAttr or double
+			MeanConcreteCompStrength (IFVariationAttr or float): compressive strength
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): relative humidity
+			NominalThickness (IFVariationAttr or float): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			temperature (float): temperature
 		Returns:
@@ -30534,14 +30534,14 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for JTG3362 2018 
 		Params:
-			MeanConcreteCompStrength (object): IFVariationAttr or double
+			MeanConcreteCompStrength (IFVariationAttr or float): compressive strength
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): relative humidity
+			NominalThickness (IFVariationAttr or float): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
-			FlyAshPer (object): IFVariationAttr or double
+			FlyAshPer (IFVariationAttr or float): fly ash percentage
 			Temperature (float): temperature
 			AdjustForTemperature (bool, optional): if T adjust for temperature during life cycle
 		Returns:
@@ -30554,17 +30554,17 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for fib 2010 
 		Params:
-			UniaxialConcreteCompStrength (object): IFVariationAttr or double
+			UniaxialConcreteCompStrength (IFVariationAttr or float): uniaxial compressive strength
 			CementType (str): "32.5 N", "32.5 R, 42.5 N", or "42.5 R, 52.5 N, 52.5 R"
-			RelativeHumidity (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			RelativeHumidity (IFVariationAttr or float): relative humidity
+			NominalThickness (IFVariationAttr or float): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			AggregateType (str): "Normal", "Lightweight low strength","Lightweight high strength"
 			AdjustTemperature (bool): adjust for temperature during service life
-			Moisture (object): IFVariationAttr or double
-			OverDryDensity (object): IFVariationAttr or double
+			Moisture (IFVariationAttr or float): moisture content for cryogenic conditions (by % mass)
+			OverDryDensity (IFVariationAttr or float): over dry density
 			PermanentLoadsDominate (bool): permanent loads dominate
 			PrevailingTemperature (float): temperature
 		Returns:
@@ -30577,7 +30577,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 CEBFIP code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30589,7 +30589,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 Euro code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30601,7 +30601,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 JTG3362 2018 code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30613,7 +30613,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 fib 2010 code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30625,7 +30625,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 IRC code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30637,7 +30637,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 AASHTO code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30649,9 +30649,9 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 Chinese code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
-			vParamA (object): IFVariationAttr or double
-			vParamB (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
+			vParamA (IFVariationAttr or float): parameter A
+			vParamB (IFVariationAttr or float): parameter A
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30663,7 +30663,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 AS5100 code 
 		Params:
-			heatFraction (object): IFVariationAttr or double
+			heatFraction (IFVariationAttr or float): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30675,16 +30675,16 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add Chinese creep component 
 		Params:
-			vF1 (object): IFVariationAttr or double
-			vG1 (object): IFVariationAttr or double
-			vP1 (object): IFVariationAttr or double
-			vR1 (object): IFVariationAttr or double
-			vF2 (object): IFVariationAttr or double
-			vG2 (object): IFVariationAttr or double
-			vP2 (object): IFVariationAttr or double
-			vR2 (object): IFVariationAttr or double
-			vF3 (object): IFVariationAttr or double
-			vR3 (object): IFVariationAttr or double
+			vF1 (IFVariationAttr or float): parameter F1
+			vG1 (IFVariationAttr or float): parameter G1
+			vP1 (IFVariationAttr or float): parameter P1
+			vR1 (IFVariationAttr or float): parameter R1
+			vF2 (IFVariationAttr or float): parameter F2
+			vG2 (IFVariationAttr or float): parameter G2
+			vP2 (IFVariationAttr or float): parameter P2
+			vR2 (IFVariationAttr or float): parameter R2
+			vF3 (IFVariationAttr or float): parameter F3
+			vR3 (IFVariationAttr or float): parameter R3
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30697,11 +30697,11 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add codified creep for AS5100.5 
 		Params:
 			environmentalFactorType (str): defining the environmental factor type, "Arid","Interior","Temperate","Tropical","Custom"
-			EnvironmentalFactor (object): IFVariationAttr or double
-			MeanConcreteCompStrength (object): IFVariationAttr or double
-			NominalThickness (object): IFVariationAttr or double
+			EnvironmentalFactor (IFVariationAttr or float): environmental Factor rk4, only use if the environmental factor type = "Custom", else ignored
+			MeanConcreteCompStrength (IFVariationAttr or float): mean compressive strength fr
+			NominalThickness (IFVariationAttr or float): nominal;l thickness Hr
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (object): IFVariationAttr or double
+			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			Temperature (float): temperature
 		Returns:
@@ -30715,8 +30715,8 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add AASHTO creep component 
 		Params:
 			rowIndex (int): 
-			vMeanConcreteCompStrength (object): IFVariationAttr or double
-			vRelativeHumidity (object): IFVariationAttr or double
+			vMeanConcreteCompStrength (IFVariationAttr or float): compressive strength
+			vRelativeHumidity (IFVariationAttr or float): relative humidity
 			temperature (float): temperature
 			whichEdition (str, optional): AASHTO edition
 		Returns:
@@ -30745,7 +30745,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 			rowIndex (int): row index
 			useNotionalThickness (bool): using nominal thickness
 			UseFullPerimeter (bool): use the full perimeter
-			value (object): IFVariationAttr or double
+			value (IFVariationAttr or float): nominal thickness or interior perimeter factor
 			whichEdition (str, optional): AASHTO edition
 		Returns:
 			IFMaterialIsotropic: 
@@ -30772,7 +30772,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		set AASHTO weight class 
 		Params:
 			rowIndex (int): row index
-			K1 (object): IFVariationAttr or double
+			K1 (IFVariationAttr or float): aggregate correction
 			weightClass (str): weight class
 			whichEdition (str, optional): AASHTO edition
 		Returns:
@@ -30859,8 +30859,8 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add AS5100.5 shrinkage component 
 		Params:
 			aggregateSourceType (str): defining the aggregate source for the shrinkage strain, "Sydney","Melbourne","Elsewhere","Custom"
-			ecsdb (object): IFVariationAttr or double
-			rhos (object): IFVariationAttr or double
+			ecsdb (IFVariationAttr or float): final drying basic shrinkage strain, only use if the aggregate source type = "Custom", else ignored
+			rhos (IFVariationAttr or float): percentage of reinforcement
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30876,11 +30876,11 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic plane stress properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			ShearXY (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float): temperature
 			defnPageType (str, optional): "Plane stress", "Axisymmetric shell"
@@ -30894,14 +30894,14 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic plane strain properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			YoungZ (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			YoungZ (IFVariationAttr or float): Young's modulus in Z
+			ShearXY (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float): 
 		Returns:
@@ -30914,10 +30914,10 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic sheet properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float): 
 		Returns:
@@ -30930,13 +30930,13 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic thick shell properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			ShearYZ (object): IFVariationAttr or double
-			ShearXZ (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			ShearXY (IFVariationAttr or float): 
+			ShearYZ (IFVariationAttr or float): 
+			ShearXZ (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float): 
 		Returns:
@@ -30949,14 +30949,14 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic axisymmetric solid properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			YoungZ (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio
-			Angle (object): IFVariationAttr or double
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			YoungZ (IFVariationAttr or float): Young's modulus in Z
+			ShearXY (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
+			Angle (IFVariationAttr or float): 
 			Density (IFVariationAttr or float): Density
 			temperature (float): 
 		Returns:
@@ -30969,15 +30969,15 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic solid properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus
-			YoungY (IFVariationAttr or float): Young's modulus
-			YoungZ (IFVariationAttr or float): Young's modulus
-			ShearXY (object): IFVariationAttr or double
-			ShearYZ (object): IFVariationAttr or double
-			ShearXZ (object): IFVariationAttr or double
-			PoissonXY (IFVariationAttr or float): Poisson's ratio
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio
+			YoungX (IFVariationAttr or float): Young's modulus in X
+			YoungY (IFVariationAttr or float): Young's modulus in Y
+			YoungZ (IFVariationAttr or float): Young's modulus in Z
+			ShearXY (IFVariationAttr or float): 
+			ShearYZ (IFVariationAttr or float): 
+			ShearXZ (IFVariationAttr or float): 
+			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
 			Density (IFVariationAttr or float): Density
 			temperature (float): 
 		Returns:
@@ -30990,12 +30990,12 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear plastic stress potential properties for Hill criteria to orthotropic material attribute 
 		Params:
-			StressX (object): IFVariationAttr or double
-			StressY (object): IFVariationAttr or double
-			StressZ (object): IFVariationAttr or double
-			StressXY (object): IFVariationAttr or double
-			StressYZ (object): IFVariationAttr or double
-			StressXZ (object): IFVariationAttr or double
+			StressX (IFVariationAttr or float): 
+			StressY (IFVariationAttr or float): 
+			StressZ (IFVariationAttr or float): 
+			StressXY (IFVariationAttr or float): 
+			StressYZ (IFVariationAttr or float): 
+			StressXZ (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -31007,15 +31007,15 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear plastic stress potential properties for Hoffman criteria to orthotropic material attribute 
 		Params:
-			StressXTension (object): IFVariationAttr or double
-			StressXCompression (object): IFVariationAttr or double
-			StressYTension (object): IFVariationAttr or double
-			StressYCompression (object): IFVariationAttr or double
-			StressZTension (object): IFVariationAttr or double
-			StressZCompression (object): IFVariationAttr or double
-			StressXY (object): IFVariationAttr or double
-			StressYZ (object): IFVariationAttr or double
-			StressXZ (object): IFVariationAttr or double
+			StressXTension (IFVariationAttr or float): 
+			StressXCompression (IFVariationAttr or float): 
+			StressYTension (IFVariationAttr or float): 
+			StressYCompression (IFVariationAttr or float): 
+			StressZTension (IFVariationAttr or float): 
+			StressZCompression (IFVariationAttr or float): 
+			StressXY (IFVariationAttr or float): 
+			StressYZ (IFVariationAttr or float): 
+			StressXZ (IFVariationAttr or float): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -31038,13 +31038,13 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31055,13 +31055,13 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31072,25 +31072,25 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field generic resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			A3 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
-			E3 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			A3 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
+			E3 (IFVariationAttr or float): 
 			R (float): 
-			B1 (object): IFVariationAttr or double
-			B2 (object): IFVariationAttr or double
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			B1 (IFVariationAttr or float): 
+			B2 (IFVariationAttr or float): 
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31101,25 +31101,25 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field generic resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			A3 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
-			E3 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			A3 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
+			E3 (IFVariationAttr or float): 
 			R (float): 
-			B1 (object): IFVariationAttr or double
-			B2 (object): IFVariationAttr or double
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			B1 (IFVariationAttr or float): 
+			B2 (IFVariationAttr or float): 
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31130,22 +31130,22 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			n2 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			n2 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31156,22 +31156,22 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			n2 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			n2 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31182,34 +31182,34 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			G (object): IFVariationAttr or double
-			p1 (object): IFVariationAttr or double
-			q1 (object): IFVariationAttr or double
-			r1 (object): IFVariationAttr or double
-			p2 (object): IFVariationAttr or double
-			r2 (object): IFVariationAttr or double
-			Cr (object): IFVariationAttr or double
-			S (object): IFVariationAttr or double
-			Z (object): IFVariationAttr or double
-			Tmx (object): IFVariationAttr or double
-			Tc (object): IFVariationAttr or double
-			FE (object): IFVariationAttr or double
-			D (object): IFVariationAttr or double
-			Q (object): IFVariationAttr or double
-			G0 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			G (IFVariationAttr or float): 
+			p1 (IFVariationAttr or float): 
+			q1 (IFVariationAttr or float): 
+			r1 (IFVariationAttr or float): 
+			p2 (IFVariationAttr or float): 
+			r2 (IFVariationAttr or float): 
+			Cr (IFVariationAttr or float): 
+			S (IFVariationAttr or float): 
+			Z (IFVariationAttr or float): 
+			Tmx (IFVariationAttr or float): 
+			Tc (IFVariationAttr or float): 
+			FE (IFVariationAttr or float): 
+			D (IFVariationAttr or float): 
+			Q (IFVariationAttr or float): 
+			G0 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31220,34 +31220,34 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			G (object): IFVariationAttr or double
-			p1 (object): IFVariationAttr or double
-			q1 (object): IFVariationAttr or double
-			r1 (object): IFVariationAttr or double
-			p2 (object): IFVariationAttr or double
-			r2 (object): IFVariationAttr or double
-			Cr (object): IFVariationAttr or double
-			S (object): IFVariationAttr or double
-			Z (object): IFVariationAttr or double
-			Tmx (object): IFVariationAttr or double
-			Tc (object): IFVariationAttr or double
-			FE (object): IFVariationAttr or double
-			D (object): IFVariationAttr or double
-			Q (object): IFVariationAttr or double
-			G0 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			G (IFVariationAttr or float): 
+			p1 (IFVariationAttr or float): 
+			q1 (IFVariationAttr or float): 
+			r1 (IFVariationAttr or float): 
+			p2 (IFVariationAttr or float): 
+			r2 (IFVariationAttr or float): 
+			Cr (IFVariationAttr or float): 
+			S (IFVariationAttr or float): 
+			Z (IFVariationAttr or float): 
+			Tmx (IFVariationAttr or float): 
+			Tc (IFVariationAttr or float): 
+			FE (IFVariationAttr or float): 
+			D (IFVariationAttr or float): 
+			Q (IFVariationAttr or float): 
+			G0 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31258,14 +31258,14 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31276,14 +31276,14 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31308,20 +31308,20 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			Tr (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			Tr (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31337,20 +31337,20 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			Tr (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			Tr (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31366,28 +31366,28 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			Tr (object): IFVariationAttr or double
-			C3S (object): IFVariationAttr or double
-			C2S (object): IFVariationAttr or double
-			C3A (object): IFVariationAttr or double
-			C4AF (object): IFVariationAttr or double
-			FreeCao (object): IFVariationAttr or double
-			SO3 (object): IFVariationAttr or double
-			MgO (object): IFVariationAttr or double
-			Blaine (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			Tr (IFVariationAttr or float): 
+			C3S (IFVariationAttr or float): 
+			C2S (IFVariationAttr or float): 
+			C3A (IFVariationAttr or float): 
+			C4AF (IFVariationAttr or float): 
+			FreeCao (IFVariationAttr or float): 
+			SO3 (IFVariationAttr or float): 
+			MgO (IFVariationAttr or float): 
+			Blaine (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31403,28 +31403,28 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
 			CementType (str): 
-			wcem (object): IFVariationAttr or double
-			wcra (object): IFVariationAttr or double
-			wslg (object): IFVariationAttr or double
-			wpfa (object): IFVariationAttr or double
-			pfacao (object): IFVariationAttr or double
-			Tr (object): IFVariationAttr or double
-			C3S (object): IFVariationAttr or double
-			C2S (object): IFVariationAttr or double
-			C3A (object): IFVariationAttr or double
-			C4AF (object): IFVariationAttr or double
-			FreeCao (object): IFVariationAttr or double
-			SO3 (object): IFVariationAttr or double
-			MgO (object): IFVariationAttr or double
-			Blaine (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			wcem (IFVariationAttr or float): 
+			wcra (IFVariationAttr or float): 
+			wslg (IFVariationAttr or float): 
+			wpfa (IFVariationAttr or float): 
+			pfacao (IFVariationAttr or float): 
+			Tr (IFVariationAttr or float): 
+			C3S (IFVariationAttr or float): 
+			C2S (IFVariationAttr or float): 
+			C3A (IFVariationAttr or float): 
+			C4AF (IFVariationAttr or float): 
+			FreeCao (IFVariationAttr or float): 
+			SO3 (IFVariationAttr or float): 
+			MgO (IFVariationAttr or float): 
+			Blaine (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31440,20 +31440,20 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add plane stress masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (object): IFVariationAttr or double
-			Fcxx (object): IFVariationAttr or double
-			Ftyy (object): IFVariationAttr or double
-			Fcyy (object): IFVariationAttr or double
-			Ftxy (object): IFVariationAttr or double
-			Fcxy (object): IFVariationAttr or double
-			ht (object): IFVariationAttr or double
-			alphaf (object): IFVariationAttr or double
-			alphap (object): IFVariationAttr or double
-			gammad (object): IFVariationAttr or double
-			Gftx (object): IFVariationAttr or double
-			Gfcx (object): IFVariationAttr or double
-			Gfty (object): IFVariationAttr or double
-			Gfcy (object): IFVariationAttr or double
+			Ftxx (IFVariationAttr or float): tensile strength in x direction
+			Fcxx (IFVariationAttr or float): compressive strength in x direction
+			Ftyy (IFVariationAttr or float): tensile strength in y direction
+			Fcyy (IFVariationAttr or float): compressive strength in y direction
+			Ftxy (IFVariationAttr or float): tensile shear strength xy
+			Fcxy (IFVariationAttr or float): compressive shear strength xy
+			ht (IFVariationAttr or float): tensile hardening/softerning parameter
+			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or float): dilancy angle parameter
+			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31467,22 +31467,22 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add plane strain masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (object): IFVariationAttr or double
-			Fcxx (object): IFVariationAttr or double
-			Ftyy (object): IFVariationAttr or double
-			Fcyy (object): IFVariationAttr or double
-			Ftzz (object): IFVariationAttr or double
-			Fczz (object): IFVariationAttr or double
-			Ftxy (object): IFVariationAttr or double
-			Fcxy (object): IFVariationAttr or double
-			ht (object): IFVariationAttr or double
-			alphaf (object): IFVariationAttr or double
-			alphap (object): IFVariationAttr or double
-			gammad (object): IFVariationAttr or double
-			Gftx (object): IFVariationAttr or double
-			Gfcx (object): IFVariationAttr or double
-			Gfty (object): IFVariationAttr or double
-			Gfcy (object): IFVariationAttr or double
+			Ftxx (IFVariationAttr or float): tensile strength in x direction
+			Fcxx (IFVariationAttr or float): compressive strength in x direction
+			Ftyy (IFVariationAttr or float): tensile strength in y direction
+			Fcyy (IFVariationAttr or float): compressive strength in y direction
+			Ftzz (IFVariationAttr or float): tensile strength in z direction
+			Fczz (IFVariationAttr or float): compressive strength in z direction
+			Ftxy (IFVariationAttr or float): tensile shear strength xy
+			Fcxy (IFVariationAttr or float): compressive shear strength xy
+			ht (IFVariationAttr or float): tensile hardening/softerning parameter
+			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or float): dilancy angle parameter
+			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31496,24 +31496,24 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thick shell masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (object): IFVariationAttr or double
-			Fcxx (object): IFVariationAttr or double
-			Ftyy (object): IFVariationAttr or double
-			Fcyy (object): IFVariationAttr or double
-			Ftxy (object): IFVariationAttr or double
-			Fcxy (object): IFVariationAttr or double
-			Ftxz (object): IFVariationAttr or double
-			Fcxz (object): IFVariationAttr or double
-			Ftyz (object): IFVariationAttr or double
-			Fcyz (object): IFVariationAttr or double
-			ht (object): IFVariationAttr or double
-			alphaf (object): IFVariationAttr or double
-			alphap (object): IFVariationAttr or double
-			gammad (object): IFVariationAttr or double
-			Gftx (object): IFVariationAttr or double
-			Gfcx (object): IFVariationAttr or double
-			Gfty (object): IFVariationAttr or double
-			Gfcy (object): IFVariationAttr or double
+			Ftxx (IFVariationAttr or float): tensile strength in x direction
+			Fcxx (IFVariationAttr or float): compressive strength in x direction
+			Ftyy (IFVariationAttr or float): tensile strength in y direction
+			Fcyy (IFVariationAttr or float): compressive strength in y direction
+			Ftxy (IFVariationAttr or float): tensile shear strength xy
+			Fcxy (IFVariationAttr or float): compressive shear strength xy
+			Ftxz (IFVariationAttr or float): tensile shear strength xz
+			Fcxz (IFVariationAttr or float): compressive shear strength xz
+			Ftyz (IFVariationAttr or float): tensile shear strength yz
+			Fcyz (IFVariationAttr or float): compressive shear strength yz
+			ht (IFVariationAttr or float): tensile hardening/softerning parameter
+			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or float): dilancy angle parameter
+			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31527,26 +31527,26 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add solid masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (object): IFVariationAttr or double
-			Fcxx (object): IFVariationAttr or double
-			Ftyy (object): IFVariationAttr or double
-			Fcyy (object): IFVariationAttr or double
-			Ftzz (object): IFVariationAttr or double
-			Fczz (object): IFVariationAttr or double
-			Ftxy (object): IFVariationAttr or double
-			Fcxy (object): IFVariationAttr or double
-			Ftyz (object): IFVariationAttr or double
-			Fcyz (object): IFVariationAttr or double
-			Ftxz (object): IFVariationAttr or double
-			Fcxz (object): IFVariationAttr or double
-			ht (object): IFVariationAttr or double
-			alphaf (object): IFVariationAttr or double
-			alphap (object): IFVariationAttr or double
-			gammad (object): IFVariationAttr or double
-			Gftx (object): IFVariationAttr or double
-			Gfcx (object): IFVariationAttr or double
-			Gfty (object): IFVariationAttr or double
-			Gfcy (object): IFVariationAttr or double
+			Ftxx (IFVariationAttr or float): tensile strength in x direction
+			Fcxx (IFVariationAttr or float): compressive strength in x direction
+			Ftyy (IFVariationAttr or float): tensile strength in y direction
+			Fcyy (IFVariationAttr or float): compressive strength in y direction
+			Ftzz (IFVariationAttr or float): tensile strength in z direction
+			Fczz (IFVariationAttr or float): compressive strength in z direction
+			Ftxy (IFVariationAttr or float): tensile shear strength xy
+			Fcxy (IFVariationAttr or float): compressive shear strength xy
+			Ftyz (IFVariationAttr or float): tensile shear strength yz
+			Fcyz (IFVariationAttr or float): compressive shear strength yz
+			Ftxz (IFVariationAttr or float): tensile shear strength xz
+			Fcxz (IFVariationAttr or float): compressive shear strength xz
+			ht (IFVariationAttr or float): tensile hardening/softerning parameter
+			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or float): dilancy angle parameter
+			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31572,8 +31572,8 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		define the hardening/softening curve parameters for the masonry material properties to this orthotropic material attribute 
 		Params:
 			rowIndex (int): zero base index of the row to which to add data
-			Kpc (object): IFVariationAttr or double
-			hc (object): IFVariationAttr or double
+			Kpc (IFVariationAttr or float): plastic hardening parameter for compressive strength
+			hc (IFVariationAttr or float): compressive hardening/softening parameter
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31613,13 +31613,13 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31630,13 +31630,13 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31647,25 +31647,25 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field generic resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			A3 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
-			E3 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			A3 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
+			E3 (IFVariationAttr or float): 
 			R (float): 
-			B1 (object): IFVariationAttr or double
-			B2 (object): IFVariationAttr or double
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			B1 (IFVariationAttr or float): 
+			B2 (IFVariationAttr or float): 
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31676,25 +31676,25 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field generic resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			A3 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
-			E3 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			A3 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
+			E3 (IFVariationAttr or float): 
 			R (float): 
-			B1 (object): IFVariationAttr or double
-			B2 (object): IFVariationAttr or double
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			B1 (IFVariationAttr or float): 
+			B2 (IFVariationAttr or float): 
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31705,22 +31705,22 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			n2 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			n2 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31731,22 +31731,22 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			m1 (object): IFVariationAttr or double
-			n1 (object): IFVariationAttr or double
-			n2 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			m1 (IFVariationAttr or float): 
+			n1 (IFVariationAttr or float): 
+			n2 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31757,34 +31757,34 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			G (object): IFVariationAttr or double
-			p1 (object): IFVariationAttr or double
-			q1 (object): IFVariationAttr or double
-			r1 (object): IFVariationAttr or double
-			p2 (object): IFVariationAttr or double
-			r2 (object): IFVariationAttr or double
-			Cr (object): IFVariationAttr or double
-			S (object): IFVariationAttr or double
-			Z (object): IFVariationAttr or double
-			Tmx (object): IFVariationAttr or double
-			Tc (object): IFVariationAttr or double
-			FE (object): IFVariationAttr or double
-			D (object): IFVariationAttr or double
-			Q (object): IFVariationAttr or double
-			G0 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			G (IFVariationAttr or float): 
+			p1 (IFVariationAttr or float): 
+			q1 (IFVariationAttr or float): 
+			r1 (IFVariationAttr or float): 
+			p2 (IFVariationAttr or float): 
+			r2 (IFVariationAttr or float): 
+			Cr (IFVariationAttr or float): 
+			S (IFVariationAttr or float): 
+			Z (IFVariationAttr or float): 
+			Tmx (IFVariationAttr or float): 
+			Tc (IFVariationAttr or float): 
+			FE (IFVariationAttr or float): 
+			D (IFVariationAttr or float): 
+			Q (IFVariationAttr or float): 
+			G0 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31795,34 +31795,34 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			A1 (object): IFVariationAttr or double
-			A2 (object): IFVariationAttr or double
-			E1 (object): IFVariationAttr or double
-			E2 (object): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			A1 (IFVariationAttr or float): 
+			A2 (IFVariationAttr or float): 
+			E1 (IFVariationAttr or float): 
+			E2 (IFVariationAttr or float): 
 			R (float): 
-			G (object): IFVariationAttr or double
-			p1 (object): IFVariationAttr or double
-			q1 (object): IFVariationAttr or double
-			r1 (object): IFVariationAttr or double
-			p2 (object): IFVariationAttr or double
-			r2 (object): IFVariationAttr or double
-			Cr (object): IFVariationAttr or double
-			S (object): IFVariationAttr or double
-			Z (object): IFVariationAttr or double
-			Tmx (object): IFVariationAttr or double
-			Tc (object): IFVariationAttr or double
-			FE (object): IFVariationAttr or double
-			D (object): IFVariationAttr or double
-			Q (object): IFVariationAttr or double
-			G0 (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			G (IFVariationAttr or float): 
+			p1 (IFVariationAttr or float): 
+			q1 (IFVariationAttr or float): 
+			r1 (IFVariationAttr or float): 
+			p2 (IFVariationAttr or float): 
+			r2 (IFVariationAttr or float): 
+			Cr (IFVariationAttr or float): 
+			S (IFVariationAttr or float): 
+			Z (IFVariationAttr or float): 
+			Tmx (IFVariationAttr or float): 
+			Tc (IFVariationAttr or float): 
+			FE (IFVariationAttr or float): 
+			D (IFVariationAttr or float): 
+			Q (IFVariationAttr or float): 
+			G0 (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31833,14 +31833,14 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			THETA (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31851,14 +31851,14 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (object): IFVariationAttr or double
-			KY (object): IFVariationAttr or double
-			KZ (object): IFVariationAttr or double
+			KX (IFVariationAttr or float): Conductivity in x
+			KY (IFVariationAttr or float): Conductivity in x
+			KZ (IFVariationAttr or float): Conductivity in x
 			temp (float): Reference temperature
-			C (object): IFVariationAttr or double
-			H (object): IFVariationAttr or double
-			V (object): IFVariationAttr or double
-			rho (object, optional): IFVariationAttr or double
+			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or float): Enthalpy
+			V (IFVariationAttr or float): 
+			rho (IFVariationAttr or float, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31933,8 +31933,8 @@ class IFMaterialResultantUser(IFMaterialTropicSet):
 		r"""
 		 
 		Params:
-			Moment (object): IFVariationAttr or double
-			Curvature (object): IFVariationAttr or double
+			Moment (IFVariationAttr or float): 
+			Curvature (IFVariationAttr or float): 
 			axialForce (float): 
 			row (int): 
 		Returns:
@@ -32132,7 +32132,7 @@ class IFCompositeBeam(IFComposite):
 		 
 		Params:
 			layerName (str): Layer name
-			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object.
 		Returns:
 			IFCompositeBeam: 
 		"""
@@ -32151,7 +32151,7 @@ class IFCompositeShell(IFComposite):
 			layerName (str): Layer name
 			thickness (float): Relative thickness
 			angle (float): Angle of fibre relative to reference axis
-			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object.
 			volumeFraction (float, optional): volume fraction for a non-draped composite
 		Returns:
 			IFCompositeShell: 
@@ -32171,9 +32171,9 @@ class IFCompositeWoven(IFComposite):
 			layerName (str): 
 			thickness (float): 
 			volumeFraction (float): 
-			startPoint (IFPoint): The name or ID of a point, or a pointer to a IFPoint object
-			startDirection (array of float): An array of 3 real numbers, representing 3d coordinates
-			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object
+			startPoint (IFPoint): The name or ID of a point, or a pointer to a IFPoint object.
+			startDirection (array of float): An array of 3 real numbers, representing 3d coordinates.
+			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object.
 			lyrOffsetDir (str, optional): layer drape offset direction "default", "positive" or "negative"
 		Returns:
 			IFCompositeWoven: 
@@ -32193,7 +32193,7 @@ class IFCompositeFiberSIM(IFComposite):
 			layerName (str): name of the layer to change
 			thickness (float): thickness of the layer
 			volumeFraction (float): initial volume fibre fraction
-			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object. material of the layer
 			refOffsetLayerName (str, optional): name of the layer from which this layer is offset
 			lyrOffsetDir (str, optional): layer drape offset direction "default", "positive" or "negative"
 		Returns:
@@ -32214,7 +32214,7 @@ class IFCompositeSimulayt(IFComposite):
 			layerName (str): name of the layer to change
 			thickness (float): thickness of the layer
 			volumeFraction (float): initial volume fibre fraction
-			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a material, or a pointer to a IFMaterial object. material of the layer
 			refOffsetLayerName (str, optional): name of the layer from which this layer is offset
 			lyrOffsetDir (str, optional): layer drape offset direction "default", "positive" or "negative"
 		Returns:
@@ -32357,7 +32357,7 @@ class IFInfluenceEnvelope(IFAttribute):
 		r"""
 		Uses the specified local coordinate as the results transformation for this attribute. 
 		Params:
-			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 			shellPlane (int): Shell plane for resultants (1, 2 or 3)
 		Returns:
 			None: 
@@ -32369,7 +32369,7 @@ class IFInfluenceEnvelope(IFAttribute):
 		r"""
 		Uses the specified path as the results transformation for this attribute. 
 		Params:
-			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			skew (bool, optional): True if local y = transverse
 		Returns:
 			None: 
@@ -32399,7 +32399,7 @@ class IFInfluenceEnvelope(IFAttribute):
 		r"""
 		Uses the given attribute type to obtain the results transformation for this attribute. 
 		Params:
-			type (object): "Loading", "Support", "Material", etc
+			type (object): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -32470,7 +32470,7 @@ class IFDirectMethodInfluence(IFAttribute):
 		r"""
 		Uses the specified local coordinate as the results transformation for this attribute. 
 		Params:
-			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 			shellPlane (int): Shell plane for resultants (1, 2 or 3)
 		Returns:
 			None: 
@@ -32482,7 +32482,7 @@ class IFDirectMethodInfluence(IFAttribute):
 		r"""
 		Uses the specified path as the results transformation for this attribute. 
 		Params:
-			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			skew (bool, optional): True if local y = transverse
 		Returns:
 			None: 
@@ -32512,7 +32512,7 @@ class IFDirectMethodInfluence(IFAttribute):
 		r"""
 		Uses the given attribute type to obtain the results transformation for this attribute. 
 		Params:
-			type (object): "Loading", "Support", "Material", etc
+			type (object): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -32689,7 +32689,7 @@ class IFTendonProfile(IFAttribute):
 		r"""
 		Adds tendon coordinates 
 		Params:
-			X (object): Two dimensional array of doubles. The first dimension is the number coordinates to be added, the second dimension must be 3 (X,Y,Z)
+			X (object): Two dimensional array of doubles. The first dimension is the number coordinates to be added, the second dimension must be 3 (X,Y,Z).
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -33231,7 +33231,7 @@ class IFNonlinearUserThermal(IFMaterial):
 		r"""
 		 
 		Params:
-			pProps (object): IFVariationAttr or double
+			pProps (IFVariationAttr or float): 
 			pTemp (float, optional): optional temperature
 		Returns:
 			IFNonlinearUserThermal: 
@@ -33248,16 +33248,16 @@ class IFCamClayMaterialSet(IFMaterialTropicSet):
 		r"""
 		
 		Params:
-			pInitialVoidRatio (object): IFVariationAttr or double
-			pSwellingIndex (object): IFVariationAttr or double
-			pCompressionIndex (object): IFVariationAttr or double
-			pGradientCriticalStateLine (object): IFVariationAttr or double
-			pPreConsolidationPressure (object): IFVariationAttr or double
-			pPoissonsRatio (object): IFVariationAttr or double
-			pCoeffThermalExpansion (object): IFVariationAttr or double
-			pMassDensity (object): IFVariationAttr or double
-			pMassRayleighDampingConst (object): IFVariationAttr or double
-			pStiffRayleighDampingConst (object): IFVariationAttr or double
+			pInitialVoidRatio (IFVariationAttr or float): 
+			pSwellingIndex (IFVariationAttr or float): 
+			pCompressionIndex (IFVariationAttr or float): 
+			pGradientCriticalStateLine (IFVariationAttr or float): 
+			pPreConsolidationPressure (IFVariationAttr or float): 
+			pPoissonsRatio (IFVariationAttr or float): 
+			pCoeffThermalExpansion (IFVariationAttr or float): 
+			pMassDensity (IFVariationAttr or float): 
+			pMassRayleighDampingConst (IFVariationAttr or float): 
+			pStiffRayleighDampingConst (IFVariationAttr or float): 
 			temp (float): reference temperature
 		Returns:
 			IFCamClayMaterialSet: 
@@ -33296,13 +33296,13 @@ class IFSoilStructureMaterialSet(IFMaterialTropicSet):
 		r"""
 		add properties to a normal type soil structure interface material 
 		Params:
-			pNormalStiffFactor (object): IFVariationAttr or double
-			pTangentStiffFactor (object): IFVariationAttr or double
-			pConstCohesion (object): IFVariationAttr or double
-			pConstAngleFriction (object): IFVariationAttr or double
-			pConstDilatancy (object): IFVariationAttr or double
-			pVirtualThick (object): IFVariationAttr or double
-			pTensionLimit (object): IFVariationAttr or double
+			pNormalStiffFactor (IFVariationAttr or float): normal stiffness
+			pTangentStiffFactor (IFVariationAttr or float): tangential stiffness
+			pConstCohesion (IFVariationAttr or float): cohesion if constant not a graph
+			pConstAngleFriction (IFVariationAttr or float): angle of friction if constant not a graph
+			pConstDilatancy (IFVariationAttr or float): dilatancy if constant not a graph
+			pVirtualThick (IFVariationAttr or float): virtual thickness if strain type graphs
+			pTensionLimit (IFVariationAttr or float): cut off tension limit
 			temp (float): reference temperature
 		Returns:
 			IFSoilStructureMaterialSet: 
@@ -33314,12 +33314,12 @@ class IFSoilStructureMaterialSet(IFMaterialTropicSet):
 		r"""
 		add properties to a displacement type soil structure interface material 
 		Params:
-			pNormalStiffFactor (object): IFVariationAttr or double
-			pNormalPressure (object): IFVariationAttr or double
-			pConstCohesion (object): IFVariationAttr or double
-			pConstDilatancy (object): IFVariationAttr or double
-			pVirtualThick (object): IFVariationAttr or double
-			pTensionLimit (object): IFVariationAttr or double
+			pNormalStiffFactor (IFVariationAttr or float): normal stiffness
+			pNormalPressure (IFVariationAttr or float): normal compressive pressure
+			pConstCohesion (IFVariationAttr or float): cohesion if constant not a graph
+			pConstDilatancy (IFVariationAttr or float): dilatancy if constant not a graph
+			pVirtualThick (IFVariationAttr or float): virtual thickness if strain type graphs
+			pTensionLimit (IFVariationAttr or float): cut off tension limit
 			temp (float): reference temperature
 		Returns:
 			IFSoilStructureMaterialSet: 
@@ -33446,9 +33446,9 @@ class IFPiecewiseLinearBarMaterial(IFMaterial):
 			minYoungsMod (float): minimum value of Young's modulus
 			curveTolerance (float): curve tolerance parameter
 			density (IFVariationAttr or float): Density
-			thermalExpansion (object): Coefficient of thermal expansion
-			massRayleigh (object): Mass Rayleigh damping constant
-			stiffRayleigh (object): Stiffness Rayleigh damping constant
+			thermalExpansion (object): Coefficient of thermal expansion.
+			massRayleigh (object): Mass Rayleigh damping constant.
+			stiffRayleigh (object): Stiffness Rayleigh damping constant.
 			temperature (float, optional): temperature, default 0.0
 		Returns:
 			IFPiecewiseLinearBarMaterial: 
@@ -33478,12 +33478,12 @@ class IFThermalLinkMaterial(IFMaterial):
 		r"""
 		add a row of data to this linear thermal link material 
 		Params:
-			gapConductance (object): IFVariationAttr or double
-			convectiveCoeff (object): IFVariationAttr or double
-			radiativeCoeff (object): IFVariationAttr or double
-			gapConductanceDeriv (object): IFVariationAttr or double
-			convectiveCoeffDeriv (object): IFVariationAttr or double
-			radiativeCoeffDeriv (object): IFVariationAttr or double
+			gapConductance (IFVariationAttr or float): gap conductance at origin
+			convectiveCoeff (IFVariationAttr or float): convective heat transfer at origin
+			radiativeCoeff (IFVariationAttr or float): radiative heat transfer at origin
+			gapConductanceDeriv (IFVariationAttr or float): variation of gap conductance with opening distance
+			convectiveCoeffDeriv (IFVariationAttr or float): variation of convective heat transfe with opening distance
+			radiativeCoeffDeriv (IFVariationAttr or float): variation of radiative heat transfe with opening distance
 			temperature (float, optional): temperature, default 0.0
 		Returns:
 			IFThermalLinkMaterial: 
@@ -33495,9 +33495,9 @@ class IFThermalLinkMaterial(IFMaterial):
 		r"""
 		add a row of data to this nonlinear thermal link material 
 		Params:
-			gapConductance (object): IFVariationAttr or double
-			convectiveCoeff (object): IFVariationAttr or double
-			radiativeCoeff (object): IFVariationAttr or double
+			gapConductance (IFVariationAttr or float): gap conductance for point on graph
+			convectiveCoeff (IFVariationAttr or float): convective heat transfer for point on graph
+			radiativeCoeff (IFVariationAttr or float): radiative heat transfer for point on graph
 			distance (float): total distance for point on graph
 			temperature (float, optional): temperature, default 0.0
 		Returns:
@@ -33526,25 +33526,25 @@ class IFDuncanChangMaterialSet(IFMaterialTropicSet):
 		r"""
 		add constant Poisson's ratio data to this Duncan-Chang soil material 
 		Params:
-			cohesion (object): IFVariationAttr or double
-			angleFriction (object): IFVariationAttr or double
-			changeOfAngleFriction (object): IFVariationAttr or double
-			failureRatio (object): IFVariationAttr or double
-			density (object): IFVariationAttr or double
-			coeffThermalExpansion (object): IFVariationAttr or double
-			atmosphericPressure (object): IFVariationAttr or double
-			initYoungsModNumber (object): IFVariationAttr or double
-			YoungsModulusNumber (object): IFVariationAttr or double
-			initYoungsModExponent (object): IFVariationAttr or double
-			PoissonsRatio (object): IFVariationAttr or double
-			YoungsModulusAtFail (object): IFVariationAttr or double
-			PoissonsRatioAtFail (object): IFVariationAttr or double
-			RayleighMassDamping (object): IFVariationAttr or double
-			RayleighStiffnessDamping (object): IFVariationAttr or double
+			cohesion (IFVariationAttr or float): cohesion
+			angleFriction (IFVariationAttr or float): angle of friction
+			changeOfAngleFriction (IFVariationAttr or float): change of angle of friction with pressure
+			failureRatio (IFVariationAttr or float): failure ratio
+			density (IFVariationAttr or float): density
+			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
+			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
+			initYoungsModNumber (IFVariationAttr or float): initial Young's modulus number
+			YoungsModulusNumber (IFVariationAttr or float): Young's modulus number for loading/unloading
+			initYoungsModExponent (IFVariationAttr or float): initial Young's modulus exponent
+			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
+			YoungsModulusAtFail (IFVariationAttr or float): Young's modulus when soil fails in shear
+			PoissonsRatioAtFail (IFVariationAttr or float): Poisson's ratio when soil fails
+			RayleighMassDamping (IFVariationAttr or float): Raleigh mass damping constant
+			RayleighStiffnessDamping (IFVariationAttr or float): Raleigh stiffness damping constant
 			temperature (float, optional): temperature, default 0.0
-			minStressSoilStiff (object, optional): IFVariationAttr or double
-			accuracyControl (object, optional): IFVariationAttr or double
-			maxStressInTension (object, optional): IFVariationAttr or double
+			minStressSoilStiff (IFVariationAttr or float, optional): minimum stress used to calculate soild stiffness
+			accuracyControl (IFVariationAttr or float, optional): accuracy control
+			maxStressInTension (IFVariationAttr or float, optional): maximum stress in tension
 		Returns:
 			IFDuncanChangMaterialSet: 
 		"""
@@ -33555,27 +33555,27 @@ class IFDuncanChangMaterialSet(IFMaterialTropicSet):
 		r"""
 		add direct variation Poisson's ratio data to this Duncan-Chang soil material 
 		Params:
-			cohesion (object): IFVariationAttr or double
-			angleFriction (object): IFVariationAttr or double
-			changeOfAngleFriction (object): IFVariationAttr or double
-			failureRatio (object): IFVariationAttr or double
-			density (object): IFVariationAttr or double
-			coeffThermalExpansion (object): IFVariationAttr or double
-			atmosphericPressure (object): IFVariationAttr or double
-			initYoungsModNumber (object): IFVariationAttr or double
-			YoungsModulusNumber (object): IFVariationAttr or double
-			initYoungsModExponent (object): IFVariationAttr or double
-			PoissonsRatioTangent (object): IFVariationAttr or double
-			cellPressureFactor (object): IFVariationAttr or double
-			PoissonsRatioAtAtmos (object): IFVariationAttr or double
-			YoungsModulusAtFail (object): IFVariationAttr or double
-			PoissonsRatioAtFail (object): IFVariationAttr or double
-			RayleighMassDamping (object): IFVariationAttr or double
-			RayleighStiffnessDamping (object): IFVariationAttr or double
+			cohesion (IFVariationAttr or float): cohesion
+			angleFriction (IFVariationAttr or float): angle of friction
+			changeOfAngleFriction (IFVariationAttr or float): change of angle of friction with pressure
+			failureRatio (IFVariationAttr or float): failure ratio
+			density (IFVariationAttr or float): density
+			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
+			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
+			initYoungsModNumber (IFVariationAttr or float): initial Young's modulus number
+			YoungsModulusNumber (IFVariationAttr or float): Young's modulus number for loading/unloading
+			initYoungsModExponent (IFVariationAttr or float): initial Young's modulus exponent
+			PoissonsRatioTangent (IFVariationAttr or float): parameter used in calculation of Poisson's ratio tangent
+			cellPressureFactor (IFVariationAttr or float): factor applied to cell pressure moderation component
+			PoissonsRatioAtAtmos (IFVariationAttr or float): Poisson's ratio at atmospheric cell pressure
+			YoungsModulusAtFail (IFVariationAttr or float): Young's modulus when soil fails in shear
+			PoissonsRatioAtFail (IFVariationAttr or float): Poisson's ratio when soil fails
+			RayleighMassDamping (IFVariationAttr or float): Raleigh mass damping constant
+			RayleighStiffnessDamping (IFVariationAttr or float): Raleigh stiffness damping constant
 			temperature (float, optional): temperature, default 0.0
-			minStressSoilStiff (object, optional): IFVariationAttr or double
-			accuracyControl (object, optional): IFVariationAttr or double
-			maxStressInTension (object, optional): IFVariationAttr or double
+			minStressSoilStiff (IFVariationAttr or float, optional): minimum stress used to calculate soild stiffness
+			accuracyControl (IFVariationAttr or float, optional): accuracy control
+			maxStressInTension (IFVariationAttr or float, optional): maximum stress in tension
 		Returns:
 			IFDuncanChangMaterialSet: 
 		"""
@@ -33586,26 +33586,26 @@ class IFDuncanChangMaterialSet(IFMaterialTropicSet):
 		r"""
 		add indirect variation from bulk modulus Poisson's ratio data to this Duncan-Chang soil material 
 		Params:
-			cohesion (object): IFVariationAttr or double
-			angleFriction (object): IFVariationAttr or double
-			changeOfAngleFriction (object): IFVariationAttr or double
-			failureRatio (object): IFVariationAttr or double
-			density (object): IFVariationAttr or double
-			coeffThermalExpansion (object): IFVariationAttr or double
-			atmosphericPressure (object): IFVariationAttr or double
-			initYoungsModNumber (object): IFVariationAttr or double
-			YoungsModulusNumber (object): IFVariationAttr or double
-			initYoungsModExponent (object): IFVariationAttr or double
-			bulkModulusNumber (object): IFVariationAttr or double
-			bulkModulusExponent (object): IFVariationAttr or double
-			YoungsModulusAtFail (object): IFVariationAttr or double
-			PoissonsRatioAtFail (object): IFVariationAttr or double
-			RayleighMassDamping (object): IFVariationAttr or double
-			RayleighStiffnessDamping (object): IFVariationAttr or double
+			cohesion (IFVariationAttr or float): cohesion
+			angleFriction (IFVariationAttr or float): angle of friction
+			changeOfAngleFriction (IFVariationAttr or float): change of angle of friction with pressure
+			failureRatio (IFVariationAttr or float): failure ratio
+			density (IFVariationAttr or float): density
+			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
+			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
+			initYoungsModNumber (IFVariationAttr or float): initial Young's modulus number
+			YoungsModulusNumber (IFVariationAttr or float): Young's modulus number for loading/unloading
+			initYoungsModExponent (IFVariationAttr or float): initial Young's modulus exponent
+			bulkModulusNumber (IFVariationAttr or float): bulk modulus number
+			bulkModulusExponent (IFVariationAttr or float): bulk modulus exponent
+			YoungsModulusAtFail (IFVariationAttr or float): Young's modulus when soil fails in shear
+			PoissonsRatioAtFail (IFVariationAttr or float): Poisson's ratio when soil fails
+			RayleighMassDamping (IFVariationAttr or float): Raleigh mass damping constant
+			RayleighStiffnessDamping (IFVariationAttr or float): Raleigh stiffness damping constant
 			temperature (float, optional): temperature, default 0.0
-			minStressSoilStiff (object, optional): IFVariationAttr or double
-			accuracyControl (object, optional): IFVariationAttr or double
-			maxStressInTension (object, optional): IFVariationAttr or double
+			minStressSoilStiff (IFVariationAttr or float, optional): minimum stress used to calculate soild stiffness
+			accuracyControl (IFVariationAttr or float, optional): accuracy control
+			maxStressInTension (IFVariationAttr or float, optional): maximum stress in tension
 		Returns:
 			IFDuncanChangMaterialSet: 
 		"""
@@ -33621,18 +33621,18 @@ class IFElastoPlasticInterfaceSet(IFMaterialTropicSet):
 		r"""
 		add 2D elasto plastic interface to the material set 
 		Params:
-			YoungsModulusInPlane (object): IFVariationAttr or double
-			YoungsModulusOutPlane (object): IFVariationAttr or double
-			ShearModulus (object): IFVariationAttr or double
+			YoungsModulusInPlane (IFVariationAttr or float): Inplane Young's Modulus
+			YoungsModulusOutPlane (IFVariationAttr or float): Out of plane Young's Modulus
+			ShearModulus (IFVariationAttr or float): 
 			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
 			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant
+			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
 			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			Cohesion (object): IFVariationAttr or double
-			FrictionAngle (object): IFVariationAttr or double
-			UniaxialYieldStress (object): IFVariationAttr or double
+			Cohesion (IFVariationAttr or float): Cohesion
+			FrictionAngle (IFVariationAttr or float): Friction angle
+			UniaxialYieldStress (IFVariationAttr or float): Uniaxial yield stress
 			temperature (float): temperature
 		Returns:
 			IFElastoPlasticInterfaceSet: 
@@ -33644,20 +33644,20 @@ class IFElastoPlasticInterfaceSet(IFMaterialTropicSet):
 		r"""
 		add 3D elasto plastic interface to the material set 
 		Params:
-			YoungsModulusInPlane (object): IFVariationAttr or double
-			YoungsModulusOutPlane (object): IFVariationAttr or double
-			ShearModulusInPlane (object): IFVariationAttr or double
-			ShearModulusOutPlane (object): IFVariationAttr or double
-			PoissonsRatioInPlane (object): IFVariationAttr or double
-			PoissonsRatioOutPlane (object): IFVariationAttr or double
+			YoungsModulusInPlane (IFVariationAttr or float): Inplane  Young's Modulus
+			YoungsModulusOutPlane (IFVariationAttr or float): Out of plane  Young's Modulus
+			ShearModulusInPlane (IFVariationAttr or float): Inplane shear modulus
+			ShearModulusOutPlane (IFVariationAttr or float): Out of plane shear modulus
+			PoissonsRatioInPlane (IFVariationAttr or float): Inplane Poisson's Ratio
+			PoissonsRatioOutPlane (IFVariationAttr or float): Out of plane Poisson's Ratio
 			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant
+			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
 			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			Cohesion (object): IFVariationAttr or double
-			FrictionAngle (object): IFVariationAttr or double
-			UniaxialYieldStress (object): IFVariationAttr or double
+			Cohesion (IFVariationAttr or float): Cohesion
+			FrictionAngle (IFVariationAttr or float): Friction angle
+			UniaxialYieldStress (IFVariationAttr or float): Uniaxial yield stress
 			temperature (float): temperature
 		Returns:
 			IFElastoPlasticInterfaceSet: 
@@ -33683,24 +33683,24 @@ class IFHoekBrownMaterialSet(IFMaterialTropicSet):
 		r"""
 		Add the Hoek-Brown material data 
 		Params:
-			youngModulus (object): IFVariationAttr or double
-			youngModulusFailure (object): IFVariationAttr or double
-			poissonsRatio (object): IFVariationAttr or double
-			density (object): IFVariationAttr or double
-			uniaxialCompressiveStrength (object): IFVariationAttr or double
-			empiricalStrengthParameterMb (object): IFVariationAttr or double
-			empiricalStrengthParameterMi (object): IFVariationAttr or double
-			empiricalStrengthParameterS (object): IFVariationAttr or double
-			empiricalStrengthParameterAlpha (object): IFVariationAttr or double
-			geologicalStrengthIndex (object): IFVariationAttr or double
-			damageCoefficient (object): IFVariationAttr or double
-			dilatancyAngle (object): IFVariationAttr or double
-			dilatancyTransitionStress (object): IFVariationAttr or double
-			dilatancyTransitionRate (object): IFVariationAttr or double
-			stressTolerance (object): IFVariationAttr or double
-			coeffThermalExpansion (object): IFVariationAttr or double
-			rayleighMassDamping (object): IFVariationAttr or double
-			rayleighStiffnessDamping (object): IFVariationAttr or double
+			youngModulus (IFVariationAttr or float): 
+			youngModulusFailure (IFVariationAttr or float): 
+			poissonsRatio (IFVariationAttr or float): 
+			density (IFVariationAttr or float): 
+			uniaxialCompressiveStrength (IFVariationAttr or float): 
+			empiricalStrengthParameterMb (IFVariationAttr or float): 
+			empiricalStrengthParameterMi (IFVariationAttr or float): 
+			empiricalStrengthParameterS (IFVariationAttr or float): 
+			empiricalStrengthParameterAlpha (IFVariationAttr or float): 
+			geologicalStrengthIndex (IFVariationAttr or float): 
+			damageCoefficient (IFVariationAttr or float): 
+			dilatancyAngle (IFVariationAttr or float): 
+			dilatancyTransitionStress (IFVariationAttr or float): 
+			dilatancyTransitionRate (IFVariationAttr or float): 
+			stressTolerance (IFVariationAttr or float): 
+			coeffThermalExpansion (IFVariationAttr or float): 
+			rayleighMassDamping (IFVariationAttr or float): 
+			rayleighStiffnessDamping (IFVariationAttr or float): 
 			maxNumberStressIter (int): 
 			strengthParameter (str): 
 			flowRule (str): 
@@ -33720,21 +33720,21 @@ class IFBarcelonaBasicMaterialSet(IFMaterialTropicSet):
 		r"""
 		Add the Barcelona Basic material data 
 		Params:
-			compressionIndexFullySaturated (object): IFVariationAttr or double
-			swellingIndex (object): IFVariationAttr or double
-			poissonsRatio (object): IFVariationAttr or double
-			gradientCriticalStateLine (object): IFVariationAttr or double
-			infiniteSuctionStiffControl (object): IFVariationAttr or double
-			stiffIncreaseWithSuctionControl (object): IFVariationAttr or double
-			referencePressure (object): IFVariationAttr or double
-			elasticStiffSuctionChanges (object): IFVariationAttr or double
-			atmosphericPressure (object): IFVariationAttr or double
-			preConsolidationPressure (object): IFVariationAttr or double
-			initialVoidRatio (object): IFVariationAttr or double
-			coeffThermalExpansion (object): IFVariationAttr or double
-			massDensity (object): IFVariationAttr or double
-			massRayleighDampingConst (object): IFVariationAttr or double
-			stiffRayleighDampingConst (object): IFVariationAttr or double
+			compressionIndexFullySaturated (IFVariationAttr or float): compression index at fully saturated state
+			swellingIndex (IFVariationAttr or float): swelling index
+			poissonsRatio (IFVariationAttr or float): poisson’s ratio
+			gradientCriticalStateLine (IFVariationAttr or float): gradient of critical state line
+			infiniteSuctionStiffControl (IFVariationAttr or float): stiffness at infinite suction control
+			stiffIncreaseWithSuctionControl (IFVariationAttr or float): increase in stiffness with suction control
+			referencePressure (IFVariationAttr or float): reference pressure
+			elasticStiffSuctionChanges (IFVariationAttr or float): elastic stiffness for changes in suction
+			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
+			preConsolidationPressure (IFVariationAttr or float): pre-consolidation pressure
+			initialVoidRatio (IFVariationAttr or float): initial void ratio
+			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
+			massDensity (IFVariationAttr or float): density
+			massRayleighDampingConst (IFVariationAttr or float): mass Rayleigh damping constant
+			stiffRayleighDampingConst (IFVariationAttr or float): stiffness Rayleigh damping constant
 			referenceTemperature (float): reference temperature
 		Returns:
 			IFBarcelonaBasicMaterialSet: 
@@ -33751,7 +33751,7 @@ class IFCompoundMaterial(IFMaterial):
 		r"""
 		Add a material to this compound material 
 		Params:
-			material (IFMaterial): The name or ID of a loadset, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a loadset, or a pointer to a IFMaterial object. material attribute to add
 			nameReference (str, optional): A simple name to reference the material within this attribute
 		Returns:
 			IFCompoundMaterial: 
@@ -33774,7 +33774,7 @@ class IFCompoundMaterial(IFMaterial):
 		r"""
 		Choose which material within this compound material is considered active. The choice is made by specifying the material directly. 
 		Params:
-			material (IFMaterial): The name or ID of a loadset, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a loadset, or a pointer to a IFMaterial object. material attribute to make active
 		Returns:
 			IFCompoundMaterial: 
 		"""
@@ -33807,7 +33807,7 @@ class IFCompoundMaterial(IFMaterial):
 		Set the material at a particular position within this. This method is provided to make changes to an existing compound material, therefore it is an error if the given index / reference name is not already in use. (i.e. you must call IFCompoundMaterial.addMaterial() before you can call IFCompoundMaterial.setMaterial() with the same position or reference name) 
 		Params:
 			refIndex (str or int): index(integer) or reference name(string)
-			material (IFMaterial): The name or ID of a loadset, or a pointer to a IFMaterial object
+			material (IFMaterial): The name or ID of a loadset, or a pointer to a IFMaterial object. material attribute to add
 			affectsSolution (bool, optional): Default true. Usually any change to any assigned attribute causes modeller to think that one or more analyses need to be solved. This flag allows you to indicate that the material being modified does not, in fact, affect solution (e.g. a reinforcing material which is only used in design calcs)
 		Returns:
 			IFCompoundMaterial: 
@@ -33962,7 +33962,7 @@ class IFPileMaterialLayup(IFMaterial):
 		r"""
 		add a PY curve and level to the layup 
 		Params:
-			pyCurve (IFPYCurve): The name or ID of a localcoordinate, or a pointer to a IFPYCurve object
+			pyCurve (IFPYCurve): The name or ID of a localcoordinate, or a pointer to a IFPYCurve object.
 			topOfLayer (float): 
 		Returns:
 			IFPileMaterialLayup: 
@@ -34353,7 +34353,7 @@ class IFPreLoadset(IFLoadset):
 		r"""
 		Copy assignments from the given loadcase/load curve into this loadcase/load curve. If only the source load curve is given then all assignments from all attributes will be copied. 
 		Params:
-			sourceLoadcase (object): 
+			sourceLoadcase (object): Load curve to copy assignments from
 			attrType (str, optional): Type of attribute whose assignments will be copied
 			attributes (array, optional): Names and/or numbers of the attributes whose assignments will be copied
 		Returns:
@@ -34406,7 +34406,7 @@ class IFPreLoadset(IFLoadset):
 		r"""
 		change the load factors on the loadcase assignments from the given value to the given value 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. attribute to change load factor
 			fromLoadFactor (float or str): existing load factor (may be a number, or a quoted expression that resolves to a number)
 			toLoadFactor (float or str): new load factor (may be a number, or a quoted expression that resolves to a number)
 		Returns:
@@ -34424,7 +34424,7 @@ class IFLoadcase(IFPreLoadset):
 		r"""
 		Move this loadcase to be below the given loadcase in the LUSAS datafile 
 		Params:
-			ID (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			ID (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object.
 			updateCombs (bool, optional): update combinations and envelopes to reflect the change?
 		Returns:
 			IFLoadcase: 
@@ -34581,7 +34581,7 @@ class IFLoadcase(IFPreLoadset):
 		r"""
 		Creates and returns an array of IFAssignment objects, each of which represents one attribute assignment within this loadcase. The array can be restricted by using the optional argument to specify a given attribute type, e.g. "loading". If not given, all loadcase dependant assignments are returned. Note that the IFAssignment objects returned are copies of the ones in actual use - modifying them will have no effect. If you wish to modify assignment details it is necessary to re-assign the attribute to the object 
 		Params:
-			attributeType (object, optional): "Loading", "Support", "Material", etc
+			attributeType (object, optional): "Loading", "Support", "Material", etc.
 			andAssignedObjects (bool, optional): default false, if true add the assigned objects to the IFAssignment objects returned
 		Returns:
 			array of IFAssignment objects: The returned array
@@ -34593,7 +34593,7 @@ class IFLoadcase(IFPreLoadset):
 		r"""
 		Removes any assignments of the given type 
 		Params:
-			attributeType (str): "Loading", "Support", "Material", etc
+			attributeType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -34710,8 +34710,8 @@ class IFLoadcase(IFPreLoadset):
 		r"""
 		Creates a clone loadcase 
 		Params:
-			analysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object
-			loadcase (IFLoadcase, optional): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object
+			analysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object. Analysis in which to create copy
+			loadcase (IFLoadcase, optional): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object. Loadcase after which the copy will be inserted (if NULL, insert at the beginning).
 			update (bool, optional): Set this to true to update combinations and envelopes to reflect the re-ordering change
 			copyMaterials (str, optional): "copy","no copy","inherit" material and composite assignments
 		Returns:
@@ -34795,7 +34795,7 @@ class IFLoadCurve(IFPreLoadset):
 			terminationValue (float): 
 			incrementValue (float): 
 			assignmentFactor (float): 
-			variation (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object
+			variation (IFVariationAttr): The name or ID of a variation, or a pointer to a IFVariationAttr object.
 		Returns:
 			IFLoadCurve: 
 		"""
@@ -34901,7 +34901,7 @@ class IFLoadCurve(IFPreLoadset):
 		r"""
 		Creates a clone load curve 
 		Params:
-			analysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object
+			analysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object. Analysis in which to create copy
 		Returns:
 			IFLoadCurve: the new load curve that has been created
 		"""
@@ -34952,7 +34952,7 @@ class IFBasicCombination(IFLoadset):
 		Add the specified loadset.  
 		Params:
 			factor (float): 
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -34967,7 +34967,7 @@ class IFBasicCombination(IFLoadset):
 		Add the specified loadsets.  
 		Params:
 			factors (array of float): 
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -35038,7 +35038,7 @@ class IFBasicCombination(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35102,7 +35102,7 @@ class IFSmartCombination(IFLoadset):
 		Params:
 			factor (float): permanent or beneficial factor
 			variableFactor (float): variable factor or adverse - beneficial factor
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35118,7 +35118,7 @@ class IFSmartCombination(IFLoadset):
 		Params:
 			factors (array of float): permanent or beneficial factors
 			variableFactors (array of float): variable factor or adverse - beneficial factors
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): default = array of 0
 			eigens (array of ints, optional): default = array of -1
 			harms (array of ints, optional): default = array of -1
@@ -35237,7 +35237,7 @@ class IFSmartCombination(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35303,7 +35303,7 @@ class IFEnvelope(IFLoadset):
 		r"""
 		Add the specified loadset.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35317,7 +35317,7 @@ class IFEnvelope(IFLoadset):
 		r"""
 		Add the specified loadsets.  
 		Params:
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -35388,7 +35388,7 @@ class IFEnvelope(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35473,7 +35473,7 @@ class IFFatigue(IFLoadset):
 		Specify the results entity and component which define this fatigue loadset. Note that whilst the entity must be 'stress', it can be modified to include a particular element stress model, e.g. 'stress - solid'. 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 		Returns:
 			IFFatigue: 
 		"""
@@ -35484,7 +35484,7 @@ class IFFatigue(IFLoadset):
 		r"""
 		This function is now obsolete and no longer supported. Please use IFFatigue.setResults instead (which allows specification of element stress model) 
 		Params:
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 		Returns:
 			IFFatigue: 
 		"""
@@ -35506,7 +35506,7 @@ class IFFatigue(IFLoadset):
 		Params:
 			factor (float): 
 			cycles (float): 
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35522,7 +35522,7 @@ class IFFatigue(IFLoadset):
 		Params:
 			factor (array of float): 
 			cycles (array of float): 
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -35635,7 +35635,7 @@ class IFFatigue(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35704,7 +35704,7 @@ class IFIMD(IFLoadset):
 		r"""
 		Add the specified mode. An error is generated if the loadset given is not an eigenvalue result.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35718,7 +35718,7 @@ class IFIMD(IFLoadset):
 		r"""
 		Add the specified modes.  
 		Params:
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -35733,9 +35733,9 @@ class IFIMD(IFLoadset):
 		 
 		Params:
 			type (str): "Force", "Displacement", "Velocity", or "Acceleration"
-			node (IFNode): The name or ID of a node, or a pointer to a IFNode object
+			node (IFNode): The name or ID of a node, or a pointer to a IFNode object.
 			largeMass (float): large mass
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			amplitude (float, optional): amplitude
 		Returns:
 			IFIMD: 
@@ -35747,7 +35747,7 @@ class IFIMD(IFLoadset):
 		r"""
 		 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35761,7 +35761,7 @@ class IFIMD(IFLoadset):
 		r"""
 		 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35775,8 +35775,8 @@ class IFIMD(IFLoadset):
 		r"""
 		 
 		Params:
-			real (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
-			imaginary (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			real (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
+			imaginary (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFIMD: 
 		"""
@@ -35815,7 +35815,7 @@ class IFIMD(IFLoadset):
 		r"""
 		 
 		Params:
-			psd (IFPSD): The name or ID of a PSD, or a pointer to a IFPSD object
+			psd (IFPSD): The name or ID of a PSD, or a pointer to a IFPSD object.
 		Returns:
 			IFIMD: 
 		"""
@@ -35826,7 +35826,7 @@ class IFIMD(IFLoadset):
 		r"""
 		 
 		Params:
-			spectrum (IFSpectralCurve): The name or ID of a spectralcurve, or a pointer to a IFSpectralCurve object
+			spectrum (IFSpectralCurve): The name or ID of a spectralcurve, or a pointer to a IFSpectralCurve object.
 		Returns:
 			IFIMD: 
 		"""
@@ -35934,7 +35934,7 @@ class IFIMD(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -35956,8 +35956,8 @@ class IFLoadsetResultsContainer(IFLoadset):
 			entity (str): Name of results entity
 			component (str): Name of results component
 			packedDim (int, optional): Dimensionality of the component
-			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
-			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
+			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for this result - default is database units
+			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for the optional extra 'per length/area' denominator - default is database units
 			hasSeparator (bool, optional): has a separator after the component name in the components droplits
 		Returns:
 			IFPrimaryScriptedResultsComponentSet: object which will hold results
@@ -35981,7 +35981,7 @@ class IFLoadsetResultsContainer(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -36037,7 +36037,7 @@ class IFLoadsetTargetValues(IFLoadset):
 			signeType (str): signe type ("Positive only" or "Allow negative")
 			constantFactor (float): multiplier of constant variable (loadset)
 			variableFactor (float): multiplier of variable (loadset)
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name. loadset ID
 			resFile (int, optional): default = 0; results file ID
 			eigen (int, optional): default = -1; eigen ID
 			harm (int, optional): default = -1; harmonic ID
@@ -36055,7 +36055,7 @@ class IFLoadsetTargetValues(IFLoadset):
 			signTypes (array of strs): array of sign types
 			constantFactors (array of float): array of multipliers
 			variableFactors (array of float): array of multipliers
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names. array of loadsets ID
 			resFiles (array of ints, optional): array of results files ID
 			eigens (array of ints, optional): array of eigens ID
 			harms (array of ints, optional): array of harmonics ID
@@ -36326,7 +36326,7 @@ class IFLoadsetTargetValues(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -36496,7 +36496,7 @@ class IFCableTuningLoadcase(IFLoadset):
 		r"""
 		Choose another loadset to act in the treeview as the logical parent of this loadset. In other words, move this loadset within the given loadset in the treeview. This is particularly useful for nesting combinations or envelopes, where only the 'outer' loadset is useful in its own right, but the ones 'within' are needed for calculation purposes.  
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -36510,7 +36510,7 @@ class IFCableTuningLoadcase(IFLoadset):
 		r"""
 		Move this loadcase to be below the given loadcase in the LUSAS datafile 
 		Params:
-			ID (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			ID (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object.
 			updateCombs (bool, optional): update combinations and envelopes to reflect the change?
 		Returns:
 			IFCableTuningLoadcase: 
@@ -36522,8 +36522,8 @@ class IFCableTuningLoadcase(IFLoadset):
 		r"""
 		Creates a clone loadcase 
 		Params:
-			analysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object
-			loadcase (IFLoadcase, optional): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object
+			analysis (IFAnalysisBaseClass): The name or ID of a "Analysis", or a pointer to a IFAnalysisBaseClass object. Analysis in which to create copy
+			loadcase (IFLoadcase, optional): The name or ID of a "Loadcase", or a pointer to a IFLoadcase object. Loadcase after which the copy will be inserted (if NULL, insert at the beginning).
 			update (bool, optional): Set this to true to update combinations and envelopes to reflect the re-ordering change
 			copyMaterials (str, optional): "copy","no copy","inherit" material and composite assignments
 		Returns:
@@ -36627,7 +36627,7 @@ class IFCableTuningAnalysis(IFAnalysisBaseClass):
 			signeType (str): signe type ("Positive only" or "Allow negative")
 			constantFactor (float): multiplier of constant variable (loadset)
 			variableFactor (float): multiplier of variable (loadset)
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name. loadset ID
 			resFile (int, optional): default = 0; results file ID
 			eigen (int, optional): default = -1; eigen ID
 			harm (int, optional): default = -1; harmonic ID
@@ -36645,7 +36645,7 @@ class IFCableTuningAnalysis(IFAnalysisBaseClass):
 			signTypes (array of strs): array of sign types
 			constantFactors (array of float): array of multipliers
 			variableFactors (array of float): array of multipliers
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names. array of loadsets ID
 			resFiles (array of ints, optional): array of results files ID
 			eigens (array of ints, optional): array of eigens ID
 			harms (array of ints, optional): array of harmonics ID
@@ -37073,8 +37073,8 @@ class IFGraphWizard(IFGraphBase):
 		r"""
 		 
 		Params:
-			xGraphDataset (IFAttribute): The name or ID of a dataset, or a pointer to a IFAttribute object
-			yGraphDataset (IFAttribute): The name or ID of a dataset, or a pointer to a IFAttribute object
+			xGraphDataset (IFAttribute): The name or ID of a dataset, or a pointer to a IFAttribute object. dataset to be used for the X direction
+			yGraphDataset (IFAttribute): The name or ID of a dataset, or a pointer to a IFAttribute object. dataset to be used for the Y direction
 		Returns:
 			None: 
 		"""
@@ -37085,7 +37085,7 @@ class IFGraphWizard(IFGraphBase):
 		r"""
 		 
 		Params:
-			graphDataset (IFAttribute): The name or ID of a dataset, or a pointer to a IFAttribute object
+			graphDataset (IFAttribute): The name or ID of a dataset, or a pointer to a IFAttribute object. dataset to be used
 		Returns:
 			None: 
 		"""
@@ -37245,8 +37245,8 @@ class IFGraph(IFGraphBase):
 		r"""
 		Add a curve to an existing graph. If no input is given, an empty curve is added for later modification. If either x or y is specified, both must be. In each case, data can be specified as the name, ID, or a pointer to an IFDataset object, or a raw array of real numbers. There is no requirement to provide x data in the same format as y data, but the number of data points must be the same. Optionally a multiplication factor may be given, which can be used to exaggerate the y values (it has no effect on the x values) 
 		Params:
-			X (IFDataset, optional): The name or ID of a graphdataset, or a pointer to a IFDataset object
-			Y (IFDataset, optional): The name or ID of a graphdataset, or a pointer to a IFDataset object
+			X (IFDataset, optional): The name or ID of a graphdataset, or a pointer to a IFDataset object. graph dataset for X
+			Y (IFDataset, optional): The name or ID of a graphdataset, or a pointer to a IFDataset object. graph dataset for Y
 			factorX (float, optional): multiplier for X
 			factorY (float, optional): multiplier for Y
 		Returns:
@@ -37351,7 +37351,7 @@ class IFGraph(IFGraphBase):
 		r"""
 		Specify which loadcase is used for graphing If not set, the view's active one will be used 
 		Params:
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name.
 			resFile (int, optional): default = 0
 			eigen (int, optional): default = -1
 			harm (int, optional): default = -1
@@ -37623,7 +37623,7 @@ class IFPrintResultsWizard(IFAttribute):
 		r"""
 		Uses the specified local coordinate as the results transformation in print results output. 
 		Params:
-			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 			shellPlane (int): Shell plane for resultants (1, 2 or 3)
 		Returns:
 			None: 
@@ -37635,7 +37635,7 @@ class IFPrintResultsWizard(IFAttribute):
 		r"""
 		Uses the specified path as the results transformation for this sub-chapter. 
 		Params:
-			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			skew (bool, optional): True if local y = transverse
 		Returns:
 			None: 
@@ -37665,7 +37665,7 @@ class IFPrintResultsWizard(IFAttribute):
 		r"""
 		Uses the given attribute type to obtain the results transformation for this sub-chapter. 
 		Params:
-			type (object): "Loading", "Support", "Material", etc
+			type (object): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -38207,7 +38207,7 @@ class IFSelectLoadsetsDialog(IFDialog):
 		r"""
 		Specifies the loadsets to be shown as the available list. It is an error to call both this function and also functions similar to IFSelectLoadsetsDialog.setStructural (which specify a category of loadset, where this function specifies a specific list)  
 		Params:
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -38222,7 +38222,7 @@ class IFSelectLoadsetsDialog(IFDialog):
 		r"""
 		Specifies the loadsets to be shown as the initial selection  
 		Params:
-			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names
+			IDs (object): Array of IFLoadset objects, loadset IDs or loadset names.
 			resFiles (array of ints, optional): 
 			eigens (array of ints, optional): 
 			harms (array of ints, optional): 
@@ -38582,8 +38582,8 @@ class IFPrimaryScriptedResultsComponentSet(IFScriptedResultsComponentSet):
 		Params:
 			component (str): Name of results component
 			packedDim (int, optional): Dimensionality of the component
-			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
-			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object
+			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for this result - default is database units
+			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for the optional extra 'per length/area' denominator - default is database units
 			hasSeparator (bool, optional): has a separator after the component name in the components droplist
 		Returns:
 			None: 
@@ -40134,7 +40134,7 @@ class IFView(IFResultsContext):
 		r"""
 		Set active the given path For each visible point, a label is added to show its distance along this path. 
 		Params:
-			path (IFComposite): The name or ID of a composite, or a pointer to a IFComposite object
+			path (IFComposite): The name or ID of a composite, or a pointer to a IFComposite object. Specifies a composite attribute
 		Returns:
 			None: 
 		"""
@@ -40687,7 +40687,7 @@ class IFWireframeLayer(IFLayer):
 		r"""
 		Allocates a colour to each attribute, and colours the plot according to those colours. If an object has more than one attribute of the given type assigned, that object is drawn in black. 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			generateKey (bool): display a colour key?
 		Returns:
 			None: 
@@ -40700,7 +40700,7 @@ class IFWireframeLayer(IFLayer):
 		Draw all objects which have at least one assignment of the given attribute type in the colour specified. Others with no assignment will be drawn in a neutral grey 
 		Params:
 			pen (int): pen number
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -40772,10 +40772,10 @@ class IFWireframeLayer(IFLayer):
 		Colour the plot by the number of parents of each line. Thus a line will be (for example) red if it is not attached to any surface, green if attached to only one, blue if attached to two and yellow if attached to three or more. Point connectivity is shown the same way. Note that this plot does not show how surfaces connect to volumes - use IFWireframeLayer.colourBySurfaceConnectivity for this 
 		Params:
 			generateKey (bool): display a colour key?
-			pen0 (object, optional): pen number
-			pen1 (object, optional): pen number
-			pen2 (object, optional): pen number
-			pen3 (object, optional): pen number
+			pen0 (object, optional): pen number to draw objects with 0 parents
+			pen1 (object, optional): pen number to draw objects with 1 parent
+			pen2 (object, optional): pen number to draw objects with 2 parents
+			pen3 (object, optional): pen number to draw objects with 3 or more parents
 			draw0 (bool, optional): Draw objects with 0 parents? (default true)
 			draw1 (bool, optional): Draw objects with 1 parent? (default true)
 			draw2 (bool, optional): Draw objects with 2 parents? (default true)
@@ -40802,10 +40802,10 @@ class IFWireframeLayer(IFLayer):
 		Colour the plot by the number of parents of each surface. Thus a surface will be (for example) red if it is not attached to any volume, green if attached to only one, blue if attached to two and yellow if attached to three or more. Point connectivity is shown the same way. Note that this plot does not show how lines connect to surfaces - use IFWireframeLayer.colourByLineConnectivity for this 
 		Params:
 			generateKey (bool): display a colour key?
-			pen0 (object, optional): pen number
-			pen1 (object, optional): pen number
-			pen2 (object, optional): pen number
-			pen3 (object, optional): pen number
+			pen0 (object, optional): pen number to draw objects with 0 parents
+			pen1 (object, optional): pen number to draw objects with 1 parent
+			pen2 (object, optional): pen number to draw objects with 2 parents
+			pen3 (object, optional): pen number to draw objects with 3 or more parents
 			draw0 (bool, optional): Draw objects with 0 parents? (default true)
 			draw1 (bool, optional): Draw objects with 1 parent? (default true)
 			draw2 (bool, optional): Draw objects with 2 parents? (default true)
@@ -41313,7 +41313,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Set this layer to draw no visualisation for the specified attribute type Transparency settings of attributes will not be changed  (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41324,7 +41324,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Set this layer to draw visualisation for all attributes of specified attribute type. Transparency settings of attributes will not be changed  (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41335,7 +41335,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Set this layer to draw visualisation for all attributes of specified attribute type. All attributes will be drawn opaque (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41346,7 +41346,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Set this layer to draw visualisation for all attributes of specified attribute type. All attributes will be drawn transparent (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41357,7 +41357,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Equivalent to the 'attributes not yet defined' checkbox for a particular attribute type. 0 means that attributes will not be visualised until explicitly requested. 1 means that attributes are automatically visualised as they are defined, and drawn opaque 2 means that attributes are automatically visualised as they are defined, and drawn transparent (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			visibilityType (int): 0 = not visualised, 1 = visualised opaque, 2 = visualised transparent
 		Returns:
 			None: 
@@ -41369,7 +41369,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Adds the given attribute(s) to the list being visualised Attributes may be given as objects or as a type and name(s) Transparency settings of attributes will not be changed (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc, Subsequent arguments can provide specifc names or ids of the first argument type
+			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc, Subsequent arguments can provide specifc names or ids of the first argument type.
 			attr2 (object, optional): 
 			attr3 (object, optional): 
 		Returns:
@@ -41382,7 +41382,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Adds the given attribute(s) to the list being visualised Attributes may be given as objects or as a type and name(s) The attributes will be drawn opaque (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type
+			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type.
 			attr2 (object, optional): 
 		Returns:
 			None: 
@@ -41394,7 +41394,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Adds the given attribute(s) to the list being visualised Attributes may be given as objects or as a type and name(s) The attributes will be drawn transparent (at present opacity/transparency is only meaningful for geometric attributes) 
 		Params:
-			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type
+			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc. Subsequent arguments can provide specifc names or ids of the first argument type.
 			attr2 (object, optional): 
 		Returns:
 			None: 
@@ -41406,7 +41406,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Removes the given attribute(s) from the list being visualised Attributes may be given as objects or as a type and name(s) 
 		Params:
-			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc, Subsequent arguments can provide specifc names or ids of the first argument type
+			attr1 (object): Can be an object type 'Point', 'Line', 'Element', etc or an Attribute type such as 'Loading', 'Support', 'Material', etc, Subsequent arguments can provide specifc names or ids of the first argument type.
 			attr2 (object, optional): 
 			attr3 (object, optional): 
 		Returns:
@@ -41419,7 +41419,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the drawing style for drawing specified attribute 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			styleName (str): "Colour", "Arrows", "Symbols", "Codes"
 		Returns:
 			None: 
@@ -41431,7 +41431,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the arrow head size used when draw attributes as arrows 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			size (float): arrow size in mm
 		Returns:
 			None: 
@@ -41443,7 +41443,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the maximum arrow head size used to display attributes 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			size (float): maximum arrow size in mm
 		Returns:
 			None: 
@@ -41455,7 +41455,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the maximum arrow head size used to display attributes 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			size (float): minimum arrow size in mm
 		Returns:
 			None: 
@@ -41467,7 +41467,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the symbol used to display the specified attribute type 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			symbolName (str): name of symbol - one of "Asterisk", "Barred X", "Boxed cross", "Circle", "Cross", "Diamond", "Double triangle", "Horizontal Arrow", "Letter X", "Letter Y", "Letter Z", "Reverse arrow", "Square", "Triangle", "Vertical Arrow", "Vertical line"
 			symbolSize (float, optional): 
 			symbolAngle (float, optional): 
@@ -41481,7 +41481,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the pen used to display specified attribute type 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			pen (int): pen number
 		Returns:
 			None: 
@@ -41493,7 +41493,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the font used by this drawing layer for text (e.g. support letter codes) 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			font (font, optional): 
 		Returns:
 			None: 
@@ -41505,7 +41505,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the number of significant figures used to display numerical values 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			sigfig (int): 
 			trailingZeros (bool, optional): true for 1.200, false for 1.2
 		Returns:
@@ -41518,7 +41518,7 @@ class IFVisualiseLayer(IFLayer):
 		r"""
 		Sets the number of decimal places used to display numerical values 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			nDP (int): 
 		Returns:
 			None: 
@@ -41606,7 +41606,7 @@ class IFAttributesLayer(IFVisualiseLayer):
 		r"""
 		Visualises the local x direction of the given attribute type 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41617,7 +41617,7 @@ class IFAttributesLayer(IFVisualiseLayer):
 		r"""
 		Visualises the local y direction of the given attribute type 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41628,7 +41628,7 @@ class IFAttributesLayer(IFVisualiseLayer):
 		r"""
 		Visualises the local z direction of the given attribute type 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41639,7 +41639,7 @@ class IFAttributesLayer(IFVisualiseLayer):
 		r"""
 		Visualises both the local x and local y directions of the given attribute type 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41661,7 +41661,7 @@ class IFAttributesLayer(IFVisualiseLayer):
 		r"""
 		if ignoreHistory is true display attribute data for the active loadcase only if ignoreHistory is false display attribute data up to and including the active loadcase 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			ignoreHistory (bool): 
 		Returns:
 			None: 
@@ -41729,7 +41729,7 @@ class IFAttributesLayer(IFVisualiseLayer):
 		r"""
 		Sets the specified attribute type to be drawn on the deform mesh 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			isDeformed (bool): 
 		Returns:
 			None: 
@@ -41741,7 +41741,7 @@ class IFAttributesLayer(IFVisualiseLayer):
 		r"""
 		 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -41820,7 +41820,7 @@ class IFUtilitiesLayer(IFVisualiseLayer):
 		r"""
 		Sets whether or not to show definition coordinates along tendon profiles and reference paths 
 		Params:
-			attrType (str): "Loading", "Support", "Material", etc
+			attrType (str): "Loading", "Support", "Material", etc.
 			show (bool): 
 		Returns:
 			None: 
@@ -41881,7 +41881,7 @@ class IFResultsLayer(IFLayer):
 		Set Results entity and component 
 		Params:
 			entity (str): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 		Returns:
 			None: 
 		"""
@@ -41904,7 +41904,7 @@ class IFResultsLayer(IFLayer):
 		Retrieves results entity and component previously set with IFResultsLayer.setResults 
 		Params:
 			entity (object): Results entity i.e. "Force/Moment - Thick Shell" etc..
-			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details
+			component (object): Sx, Sy, Sxy, etc.. See element reference manual for details.
 		Returns:
 			None: 
 		"""
@@ -41953,7 +41953,7 @@ class IFResultsLayer(IFLayer):
 		r"""
 		Uses the specified local coordinate as the results transformation for this drawing layer. When a combination or envelope is active in the view, it is an error if the individual transformation settings of the individual layers are not same as the settings of the parent view 
 		Params:
-			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object
+			localCoords (IFLocalCoord): The name or ID of a localcoord, or a pointer to a IFLocalCoord object.
 			shellPlane (int): Shell plane for resultants (1, 2 or 3)
 		Returns:
 			None: 
@@ -41965,7 +41965,7 @@ class IFResultsLayer(IFLayer):
 		r"""
 		Uses the specified path as the results transformation for this drawing layer. When a combination or envelope is active in the view, it is an error if the individual transformation settings of the individual layers are not same as the settings of the parent view 
 		Params:
-			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
+			path (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object.
 			skew (bool, optional): True if local y = transverse
 		Returns:
 			None: 
@@ -41995,7 +41995,7 @@ class IFResultsLayer(IFLayer):
 		r"""
 		Uses the given attribute type to obtain the results transformation for this drawing layer. When a combination or envelope is active in the view, it is an error if the individual transformation settings of the individual layers are not same as the settings of the parent view 
 		Params:
-			type (object): "Loading", "Support", "Material", etc
+			type (object): "Loading", "Support", "Material", etc.
 		Returns:
 			None: 
 		"""
@@ -42047,8 +42047,8 @@ class IFVectorsLayer(IFResultsLayer):
 		r"""
 		Set pens to display vectors in tension and compression 
 		Params:
-			penTension (int): pen number
-			penCompression (object, optional): pen number
+			penTension (int): pen number to display tensile vectors
+			penCompression (object, optional): pen number to display compressive vectors
 		Returns:
 			None: 
 		"""
@@ -42383,7 +42383,7 @@ class IFContoursLayer(IFResultsLayer):
 		r"""
 		 
 		Params:
-			attr (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attr (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object.
 		Returns:
 			None: 
 		"""
@@ -42865,7 +42865,7 @@ class IFValuesLayer(IFResultsLayer):
 		r"""
 		Sets display options for yield / crack / crush results 
 		Params:
-			pen (int): pen number
+			pen (int): pen number to use for displaying yield
 			zone (int): interface zone
 			mode (int): delamination mode
 			crackSize (float, optional): crack size (used by cracking concrete model only)
@@ -42980,7 +42980,7 @@ class IFSliceGroup(IFGroup):
 		r"""
 		Converts the given global coordinates into the local coordinate space of this slice 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -42993,7 +42993,7 @@ class IFSliceGroup(IFGroup):
 		r"""
 		Converts the given coordinates from the local coordinate space of this slice into global coordinates 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -43093,7 +43093,7 @@ class IFStoreyGroup(IFGroup):
 			mx (float): }
 			my (float): } moments about the axes
 			mz (float): }
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. loadcase
 		Returns:
 			IFStoreyGroup: 
 		"""
@@ -43104,7 +43104,7 @@ class IFStoreyGroup(IFGroup):
 		r"""
 		remove the building storey primary location loads for the given loadcase 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. loadcase
 		Returns:
 			IFStoreyGroup: 
 		"""
@@ -43130,7 +43130,7 @@ class IFStoreyGroup(IFGroup):
 			symbolName (str): name of symbol - one of "Asterisk", "Barred X", "Boxed cross", "Circle", "Cross", "Diamond", "Double triangle", "Horizontal Arrow", "Letter X", "Letter Y", "Letter Z", "Reverse arrow", "Square", "Triangle", "Vertical Arrow", "Vertical line"
 			symbolSize (float): symbol size
 			symbolAngle (float): symbol rotation
-			pen (int): pen number
+			pen (int): pen number symbol pen
 			symbolId (int, optional): symbol Id
 		Returns:
 			int: ID of the symbol created
@@ -43246,7 +43246,7 @@ class IFStoreyGroup(IFGroup):
 		Params:
 			symbolId (int): symbol Id
 		Returns:
-			array of float: An array of 3 real numbers, representing 3d coordinates
+			array of float: An array of 3 real numbers, representing 3d coordinates. symbol location
 		"""
 		pass
 
@@ -43389,7 +43389,7 @@ class IFStoreyGroup(IFGroup):
 		r"""
 		return the building storey primary location loads for a loadcase 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. loadcase
 		Returns:
 			array: 
 		"""
@@ -43494,7 +43494,7 @@ class IFRailTrackLayout(IFDatabaseMember):
 		r"""
 		Add a track definition to the rail layout 
 		Params:
-			trackDefVar (IFRailTrackDefinition): The name of a trackdefinition, or a pointer to a IFRailTrackDefinition object
+			trackDefVar (IFRailTrackDefinition): The name of a trackdefinition, or a pointer to a IFRailTrackDefinition object.
 		Returns:
 			None: 
 		"""
@@ -43570,7 +43570,7 @@ class IFAnnotation(IFDatabaseMember):
 		r"""
 		Move the annotation to the position specified For annotations with size (bitmaps, polygons, arrows etc) this function sets the anchor or start position, and the rest of the object is moved accordingly without distortion 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -43867,7 +43867,7 @@ class IFLineAnnotation(IFAnnotation):
 		r"""
 		Sets start position of annotation line 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -43880,7 +43880,7 @@ class IFLineAnnotation(IFAnnotation):
 		r"""
 		Sets end position of annotation line 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -43907,7 +43907,7 @@ class IFPolygonAnnotation(IFAnnotation):
 		r"""
 		Adds a new polygon point 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -43936,7 +43936,7 @@ class IFArrowAnnotation(IFAnnotation):
 		r"""
 		Sets arrow start position 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -43949,7 +43949,7 @@ class IFArrowAnnotation(IFAnnotation):
 		r"""
 		Sets arrow end position 
 		Params:
-			X (object): Array of 3 real numbers representing a coordinate axis in 3D space
+			X (object): Array of 3 real numbers representing a coordinate axis in 3D space.
 			Y (object, optional): 
 			Z (object, optional): 
 		Returns:
@@ -44139,7 +44139,7 @@ class IFTabulateDataObj(IFExportDataObj):
 		r"""
 		Sets up the influence line attribute to be used, therefore specifying an influence line analysis 
 		Params:
-			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object
+			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object.
 		Returns:
 			IFTabulateDataObj: 
 		"""
@@ -44161,8 +44161,8 @@ class IFTabulateDataObj(IFExportDataObj):
 		r"""
 		Sets up the influence line assignment to be used, therefore specifying an influence line analysis 
 		Params:
-			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object
-			assignment (IFAssignment): The name or ID of a assignment, or a pointer to a IFAssignment object
+			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object.
+			assignment (IFAssignment): The name or ID of a assignment, or a pointer to a IFAssignment object.
 		Returns:
 			IFTabulateDataObj: 
 		"""
@@ -44202,7 +44202,7 @@ class IFTabulateDataObj(IFExportDataObj):
 		r"""
 		Sets up the search area attribute to be used in an influence line analysis 
 		Params:
-			searchArea (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object
+			searchArea (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object.
 		Returns:
 			IFTabulateDataObj: 
 		"""
@@ -44287,7 +44287,7 @@ class IFTabulateDataObj(IFExportDataObj):
 		r"""
 		add loadcase to tabulate 
 		Params:
-			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object
+			ID (IFLoadset): The name or ID of a loadset, or a pointer to a IFLoadset object.
 		Returns:
 			IFTabulateDataObj: 
 		"""
@@ -44298,7 +44298,7 @@ class IFTabulateDataObj(IFExportDataObj):
 		r"""
 		add loadcurves to tabulate 
 		Params:
-			ID (IFLoadCurve): The name or ID of a loadcurve, or a pointer to a IFLoadCurve object
+			ID (IFLoadCurve): The name or ID of a loadcurve, or a pointer to a IFLoadCurve object.
 		Returns:
 			IFTabulateDataObj: 
 		"""
@@ -44807,7 +44807,7 @@ class IFLPIGridWindow(IFGridWindow):
 		Create a new tab in the grid view, which will represent the given loadset. This is equivalent to IFLPIGridWindow.createTab(loadset.getName() & "(" & primaryComponent & ")") except that modeller will also attach the correct icon to the tab. For loadsets that do not support primary components, the primary component will be ignored and will not appear in brackets. Returns the generated name of the new tab, suitable for passing to IFLPIGridWindow.setRowHeaders and IFLPIGridWindow.setData 
 		Params:
 			primaryComponent (str): Primary component (if any)
-			ID (object): IFLoadset object, loadset ID or loadset name
+			ID (object): IFLoadset object, loadset ID or loadset name. // -1 means 'all loadcases'
 			resFile (int, optional): default = 0   //
 			eigen (int, optional): default = -1  // -1 means 'not an eigenvalue'
 			harm (int, optional): default = -1  // -1 means 'not a harmonic'
@@ -44953,7 +44953,7 @@ class IFAnalysis(IFAnalysisBaseClass):
 		r"""
 		Sets up the loadset from which the starting deformations for this analysis will be taken, and the factor that will be applied to those deformations. Calling this function clears any settings previously set using IFAnalysisBaseClass.setRestartFromDump or IFAnalysisBaseClass.setRestartFromLoadcase 
 		Params:
-			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object
+			loadcase (IFLoadcase): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Model loadcase from which results should be taken
 			timestep (int): Index of time step, increment or eigenvalue within the results of given loadcase (-1 means "last")
 			factor (float): factor
 		Returns:
@@ -44975,7 +44975,7 @@ class IFAnalysis(IFAnalysisBaseClass):
 		r"""
 		Sets up the coupling relationship between two analyses. Note - coupled analyses in LUSAS are currently limited to just one structural analysis and just one thermal analysis. Pass in false to indicate that this analysis is not coupled with any other. 
 		Params:
-			analysis (IFAnalysis): The name or ID of a analysis, or a pointer to a IFAnalysis object
+			analysis (IFAnalysis): The name or ID of a analysis, or a pointer to a IFAnalysis object. the analysis to couple with
 		Returns:
 			IFAnalysis: Return this object
 		"""
@@ -45216,7 +45216,7 @@ class IFRLOEnvelopeRun(IFTLOEnvelopeRun):
 		r"""
 		Set the railway layout used for this RLO 
 		Params:
-			trackLayout (IFRailTrackDefinition): The name or ID of a "trackdefinition", or a pointer to a IFRailTrackDefinition object
+			trackLayout (IFRailTrackDefinition): The name or ID of a "trackdefinition", or a pointer to a IFRailTrackDefinition object. railway track layout
 		Returns:
 			None: 
 		"""
@@ -45272,7 +45272,7 @@ class IFVLORun(IFTLORunBase):
 		r"""
 		Adds an influence assignment to be analysed by this VLO run 
 		Params:
-			infObj (IFInfluence): The name or ID of a influence, or a pointer to a IFInfluence object
+			infObj (IFInfluence): The name or ID of a influence, or a pointer to a IFInfluence object.
 			loadPositive (bool): true if positive area should be loaded by TLO
 			loadNegative (bool): false if positive area should be loaded by TLO
 			includeAditionalPatterns (bool): AASHTO codes only
@@ -45346,7 +45346,7 @@ class IFVLORun(IFTLORunBase):
 		r"""
 		Creates a clone VLO Run 
 		Params:
-			analysis (IFVLOAnalysis): The name or ID of a "VLOanalysis", or a pointer to a IFVLOAnalysis object
+			analysis (IFVLOAnalysis): The name or ID of a "VLOanalysis", or a pointer to a IFVLOAnalysis object. VLO analysis in which to create copy
 		Returns:
 			IFVLORun: the new VLO run that has been created
 		"""
@@ -45507,7 +45507,7 @@ class IFRLORun(IFVLORun):
 		r"""
 		Set the railway layout used for this RLO 
 		Params:
-			trackLayout (IFRailTrackDefinition): The name or ID of a "trackdefinition", or a pointer to a IFRailTrackDefinition object
+			trackLayout (IFRailTrackDefinition): The name or ID of a "trackdefinition", or a pointer to a IFRailTrackDefinition object. railway track layout
 		Returns:
 			None: 
 		"""
@@ -45568,7 +45568,7 @@ class IFReciprocalMethodInfAnalysis(IFAnalysisBaseClass):
 		r"""
 		Follows the internal knowledge of "this" to tabulate and solve the given influence. If you set ignoreModified to be true, then LUSAS's internal knowledge is ignored, and the analysis will be solved whether LUSAS thinks it necessary or not. To solve all influences, use IFAnalysisBaseClass.solve. Returns 0 for success, or a failure code from LUSAS solver. 
 		Params:
-			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object
+			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object.
 			ignoreModified (bool, optional): default false. Can be set true to ignore the modification state of this and its prerequisites
 		Returns:
 			int: 
@@ -45580,8 +45580,8 @@ class IFReciprocalMethodInfAnalysis(IFAnalysisBaseClass):
 		r"""
 		Follows the internal knowledge of "this" to tabulate and solve the given influence assignment. If you set ignoreModified to be true, then LUSAS's internal knowledge is ignored, and the analysis will be solved whether LUSAS thinks it necessary or not. To solve all influences, use IFAnalysisBaseClass.solve. Returns 0 for success, or a failure code from LUSAS solver. 
 		Params:
-			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object
-			assignment (IFAssignment): The name or ID of a assignment, or a pointer to a IFAssignment object
+			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object.
+			assignment (IFAssignment): The name or ID of a assignment, or a pointer to a IFAssignment object.
 			ignoreModified (bool, optional): default false. Can be set true to ignore the modification state of this and its prerequisites
 		Returns:
 			int: 
@@ -45593,7 +45593,7 @@ class IFReciprocalMethodInfAnalysis(IFAnalysisBaseClass):
 		r"""
 		Open results for the given influence for this analysis. Note - there is no error for any results which are missing, or need to be solved, or need updating from a previous version. Nonetheless, such files will not be loaded. Optionally (default true) skip any results that LUSAS considers to be out of date. To open results for all influences, use IFAnalysisBaseClass.openResults. 
 		Params:
-			influence (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object
+			influence (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object.
 			scanOutputFiles (bool, optional): default true. Can be set false to skip parsing output files and repeating errors and warnings into the text output window
 			skipOutOfDate (bool, optional): default true. Can be set false to force LUSAS to load results files it believes to be out of date
 		Returns:
@@ -45606,8 +45606,8 @@ class IFReciprocalMethodInfAnalysis(IFAnalysisBaseClass):
 		r"""
 		Open results for the given influence assignment for this analysis. Note - there is no error for any results which are missing, or need to be solved, or need updating from a previous version. Nonetheless, such files will not be loaded. Optionally (default true) skip any results that LUSAS considers to be out of date. To open results for all influences, use IFAnalysisBaseClass.openResults. 
 		Params:
-			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object
-			assignment (IFAssignment): The name or ID of a assignment, or a pointer to a IFAssignment object
+			influenceLine (IFInfluence): The name or ID of a influenceline, or a pointer to a IFInfluence object.
+			assignment (IFAssignment): The name or ID of a assignment, or a pointer to a IFAssignment object.
 			scanOutputFiles (bool, optional): default true. Can be set false to skip parsing output files and repeating errors and warnings into the text output window
 			skipOutOfDate (bool, optional): default true. Can be set false to force LUSAS to load results files it believes to be out of date
 		Returns:
@@ -45927,7 +45927,7 @@ class IFResultsTransformationAttr(IFAttribute):
 			isSkewedPath (bool, optional): Is the path transformation skewed? (only relevant when type is path)
 			attributeType (str, optional): The attribute type (currently only material is allowed)
 			localCoordSetID (int, optional): The local coordinate set identifier (only relevant when type is local coord)
-			pathID (IFReferencePath, optional): The name or ID of a path, or a pointer to a IFReferencePath object
+			pathID (IFReferencePath, optional): The name or ID of a path, or a pointer to a IFReferencePath object. The path identifier (only relevant when type is path)
 		Returns:
 			IFResultsTransformationAttr: 
 		"""
@@ -45969,7 +45969,7 @@ class IFReinforcementSection(IFAttribute):
 		r"""
 		Set the geometric attribute used in the dialog to visualise and validate the reinforcement properties 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. geometric attribute
 		Returns:
 			IFReinforcementSection: 
 		"""
@@ -46046,7 +46046,7 @@ class IFReinforcementSection(IFAttribute):
 		r"""
 		Create an array of IFReinforcementSectionBar objects which represents the information in this attribute, applied onto the given section 
 		Params:
-			geometricAttr (object, optional): 
+			geometricAttr (object, optional): of IFReinforcementSectionBar objects
 		Returns:
 			None: 
 		"""
@@ -46100,7 +46100,7 @@ class IFReinforcementLine(IFAttribute):
 		r"""
 		Set the attribute that describes the advanced shear and torsion properites of this attribute 
 		Params:
-			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. advanced shear and torsion properties of this attribute
 		Returns:
 			IFReinforcementLine: 
 		"""
@@ -46151,9 +46151,9 @@ class IFStaticMovingLoadAnalysis(IFAnalysis):
 		r"""
 		Conveniently set all inputs 
 		Params:
-			loadAttr (IFLoadingDiscreteBase): The name or ID of a load, or a pointer to a IFLoadingDiscreteBase object
-			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
-			searchArea (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object
+			loadAttr (IFLoadingDiscreteBase): The name or ID of a load, or a pointer to a IFLoadingDiscreteBase object. Any kind of discrete loading: point, patch or compound loading
+			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object. The reference path along which the load moves
+			searchArea (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object. The features that will receive the loading
 			projectionType (str): "area" or "line"
 			includeProjectionMoments (int or str): "none" (0), "all" (1), "Except those caused by projection" (2), "About X" (3), "About Y" (4), "About Z" (5), "About X and Y" (6), "About X and Z" (7), or "About Y and Z" (8)
 			pathPatchTransform (int or str): "none" (0), "horizontal" (1), or "3D" (2)
@@ -46296,9 +46296,9 @@ class IFPedestrianMovingLoadAnalysis(IFAnalysis):
 		r"""
 		Conveniently set all inputs 
 		Params:
-			defn (IFPedestrianLoadDefinition): The name or ID of a pedestrianloaddefinition, or a pointer to a IFPedestrianLoadDefinition object
-			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object
-			searchArea (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object
+			defn (IFPedestrianLoadDefinition): The name or ID of a pedestrianloaddefinition, or a pointer to a IFPedestrianLoadDefinition object.
+			refPath (IFReferencePath): The name or ID of a referencepath, or a pointer to a IFReferencePath object. The reference path along which the load moves
+			searchArea (IFSearchArea): The name or ID of a searcharea, or a pointer to a IFSearchArea object. The features that will receive the loading
 			projectionType (str): "area" or "line"
 			includeProjectionMoments (int or str): "none" (0), "all" (1), "Except those caused by projection" (2), "About X" (3), "About Y" (4), "About Z" (5), "About X and Y" (6), "About X and Z" (7), or "About Y and Z" (8)
 			timeStep (float): The analysis' timestep in seconds
@@ -48307,7 +48307,7 @@ All other objects in the LPI are accessed through these global variables and fun
 		pass
 
 
-	def getUnitSets(self) -> list:
+	def getUnitSets(self) -> list[IFUnitSet]:
 		r"""
 		Returns an array of all IFUnitSet previously created using IFModeller.createUnitSet. 
 		Returns:
@@ -48453,7 +48453,7 @@ All other objects in the LPI are accessed through these global variables and fun
 		r"""
 		Inserts a new menu item before the specified item in the context (right click) menu for all attributes of the given type. Note that that attribute type can be either "all", or a whole type (e.g. "Geometric") or a sub type (e.g. "Line Geometric") The specified item can be represented as either text or ID and could refer to either a sub menu or a menu item 
 		Params:
-			attributeType (str): "Loading", "Support", "Material", etc
+			attributeType (str): "Loading", "Support", "Material", etc.
 			beforeItem (str or int): menu item before which new item is to be placed
 			itemText (str): text of new item
 			command (str): command to execute when menu item selected
@@ -48995,8 +48995,8 @@ All other objects in the LPI are accessed through these global variables and fun
 		pass
 
 
-import win32com.client as win32
 
 
 def get_lusas_modeller() -> IFModeller:
+	import win32com.client as win32
 	return win32.dynamic.Dispatch('Lusas.Modeller.22.0')
