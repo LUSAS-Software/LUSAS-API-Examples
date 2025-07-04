@@ -13,16 +13,22 @@ These examples are tailored for **LUSAS v21.1** (see repository branches for oth
 ## 📁 Repository Structure
 
 - `python/` – Python examples
-- `jupyter_notebook/` – Python notebooks for interactive use and documentation
+- `jupyter_notebook/` – Python code blocks notebooks
 - `vbscript/` – Legacy examples in VBScript (default LUSAS command bar language)
 - `dotnet/` – .NET interop examples (C# & VB.NET)
 - `grasshopper/` – Rhinoceros Grasshopper examples
 
     Browse each directory to read more about each interaction method.
 
+    Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and have ability to combine `python` code, text, and visualizations in a single document.
+
 ## Prerequisites
 
-- Installed LUSAS v22+ (most scripts will work with the free version but the use of a licensed version is recommended)
+- Installed LUSAS v22+
+  
+  Most scripts will work with the free [evaluation licence](https://www.lusas.com/evaluation/index.html), however the use of a full or [academic](https://www.lusas.com/academic/index.html) licence is recommended.
+
+  The latest LUSAS installer can be found [at the downloads section](https://www.lusas.com/user_area/download/index.html) of the official website.
 - For Python and Jupyter Notebook examples:
   - Installed Python (v3+)
 - For C# examples:
