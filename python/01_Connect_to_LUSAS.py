@@ -44,4 +44,5 @@ if lusas.existsDatabase():
     lusas.project().save()
     lusas.project().close()
 
-lusas.quit()
+# Optionally, close LUSAS
+#lusas.quit()
