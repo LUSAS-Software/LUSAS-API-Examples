@@ -137,7 +137,6 @@ Function sweep_rotationally_Ext(targetObjSet, origin, hofType, degree, aboutAxis
     database.deleteAttribute attr
 End Function
 
-
 ' This function deletes all contents of the database.
 Sub delete_all_database_contents(db)
     database.closeAllResults()
@@ -181,7 +180,6 @@ Function create_reinforcing_bar_attributes(db, diameters)
     create_reinforcing_bar_attributes = names
 End Function
 
-
 ' This function creates a circular section in the LUSAS database.
 Function create_circular_section(db, name, dia)
     Dim util, attr
@@ -206,4 +204,11 @@ Function create_rectangular_section(db, name, breadth, depth)
     attr.setFromLibrary "Utilities", "", name, 0, 0, 0
 
     Set create_rectangular_section = attr
+End Function
+
+' This function checks if a value is NaN (Not a Number) accounting for LUSAS modeller NA value equal to 2.2250738585072014e-308.
+Function isNan(value)
+    ' Check if value is NaN/Null
+    ' Also check for the specific LUSAS modeller NA value
+    isNan = IsNull(value) Or (value = 2.2250738585072014E-308)
 End Function
