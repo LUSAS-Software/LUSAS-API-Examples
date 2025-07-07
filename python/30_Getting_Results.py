@@ -56,6 +56,7 @@ for n in targetNodes:
     # Non supported nodes will return a value of 2.2250738585072014e-308.
     # This is the smallest possible value represented by a 64bit double precision variable.
     # This value is equivalent to N/A.
+    # This can also be checked using the Helpers.isNan() function.
     fx = n.getResults("Reaction", "FX")
     if fx == 2.2250738585072014e-308:
         fx = 0
