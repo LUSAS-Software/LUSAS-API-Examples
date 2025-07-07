@@ -6,6 +6,7 @@
 # 
 
 # Libraries:
+import os
 # LUSAS LPI module (easier connection and autocomplete)
 from shared.LPI import *
 
@@ -19,14 +20,14 @@ if not lusas.existsDatabase():
 # Save database in variable
 database = lusas.db()
 
-# To successfully run the code below you must have a model solved.
+# To successfully run the code below you must have a model solved (e.g. the model generated from example 15).
 
 # Script results parameters
-prw_name = "Shell Results With Global Transform"
-export_dir = "C:\Temp\\"
+prw_name = "Displacements"
+export_dir = os.path.expanduser("~\\Desktop") # export in user desktop
 
 ######################################################
-## Create a print results wizard for thick shell element results
+## Create a print results wizard for Thick 3D Beam element results
 
 # Shell Results
 attr = database.createPrintResultsWizard(prw_name)
@@ -35,12 +36,12 @@ attr = database.createPrintResultsWizard(prw_name)
 attr.setResultsType("Components")
 attr.setResultsOrder("Mesh")
 attr.setResultsContent("Tabular")
-attr.setResultsEntity("Force/Moment - Thick Shell")
+attr.setResultsEntity("Displacement")
 attr.setExtent("Elements showing results", "")
-attr.setResultsLocation("ElementNodal")
+attr.setResultsLocation("Nodal")
 attr.setLoadcasesOption("Active") # Active loadset only
 # Target Components
-components = ["Nx","Ny","Nxy","Mx","My","Mxy","Sx","Sy"]
+components = ["DX","DY","DZ","THX","THY","THZ","RSLT"]
 attr.setComponents(components)
 
 attr.setResultsTransformGlobal()
@@ -61,11 +62,13 @@ attr = None
 # Export the results defined by the Print Results Wizard
 
 # Get the Print Results Wizard attribute object
-prwAttr : 'IFAttribute' = database.getAttribute("Print Results Wizard", prw_name)
+prwAttr : "IFPrintResultsWizard" = database.getAttribute("Print Results Wizard", prw_name)
 
 # Display the table of results
 table = prwAttr.showResults()
 # Save the grid view to a file
-table.saveAs(f"{export_dir}{prw_name}_results.xls", "Microsoft Excel")
-table.saveAs(f"{export_dir}{prw_name}_results.txt", "Text")
+table.saveAs(f"{export_dir}\\{prw_name}_results.xls", "Microsoft Excel")
+print(f"Results saved to {export_dir}\\{prw_name}_results.xls")
+table.saveAs(f"{export_dir}\\{prw_name}_results.txt", "Text")
+print(f"Results saved to {export_dir}\\{prw_name}_results.txt")
 table.close()
