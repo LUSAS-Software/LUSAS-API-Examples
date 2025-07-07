@@ -125,7 +125,7 @@ call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell""
    - Click OK on all windows to close them.
    - Now you can run python commands in the command prompt.
 
-2. **Python error `AttributeError: module 'win32com.gen_py.XXXXXXXXXXXXXXXX' has not attribute 'CLSIDToClassMap'`**
+2. **Python error `AttributeError: module 'win32com.gen_py.XXXXXXXXXXXXXXXX' has not attribute 'CLSIDToClassMap'`** (How to delete pyWin32 cache)
 
    First, ensure that you are using the `LPI.py` or `LPI_21_1.py` library and that the object at the error line has the called method.
    Python is case sensitive which may sometimes cause issues with pywin32. These issues are usually fixed by deleting the pywin32 cache. To do so, follow these steps:
@@ -133,21 +133,35 @@ call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell""
    - Delete the folder that matches the error message `XXXXXXXXXXXXXXXX`
    - Run the script again.
 
-3. **Casting**
-
-   Some LPI commands will return the general object types which may require casting to access fully access them. As an example, getting a loadcase object can be done through the `getLoadsetByName()` command which will return an `IFLoadset` object. If you are sure that this object is a loadcase, you can cast it as an `IFLoadcase` object using the command `win32.CastTo(myLoadset, "IFLoadcase")`. This is also done when accessing attributes through the `getAttribute()` LPI command, as seen at the end of the `06b_Getting_Results_PRW.py` example where a Print Results Wizard is acquired and then cast to `IFPrintResultsWizard`.
-
-4. **Invisible LUSAS Modeller instances**
+3. **Invisible LUSAS Modeller instances**
 
    To speed-up the script execution, the UI can be disabled using the `lusas.setVisible(False)` command. This will completely hide LUSAS modeller which can cause confusion if the `lusas.setVisible(True)` command is not executed at the end of the script (e.g. due to a code error). The modeller instance would still be accessible through the LPI and its process will be listed under the `Background processes` in Window's `Task Manager`.
    
    It is noted that in LUSAS v22+, it may be preferable to use `lusas.enableUI(False)` instead to avoid hiding the modeller window. The UI will then remain unresponsive until `lusas.enableUI(True)` is called.
 
-5. **ModuleNotFoundError**
+4. **ModuleNotFoundError**
 
    The `ModuleNotFoundError: No module named 'shared'` error means Python can’t find the `LPI.py` file and the `shared` folder. To fix it, copy the `shared` folder into the same folder where your Python script is located.
 
-6. **Architecture of COM launched LUSAS Modeller instance (32/64bit)**
+## 🔍 Tips for Advanced Users
+
+1. **Early and Late binding**
+
+   There are 3 ways to connect on COM applications using pyWin32 which will affect the type of the returned objects:
+   - `win32com.client.Dispatch("Application")` returns a COM object or a win32com.gen_py object if the object is already cached.
+   - `win32com.client.gencache.EnsureDispatch.Dispatch("Application")` (early binding) returns a win32com.gen_py object.
+   - `win32com.client.dynamic.Dispatch("Application")` (late binding) returns a COM object.
+
+   The `get_lusas_modeller()` command used in the provided examples connects on LUSAS using the `win32com.client.dynamic.Dispatch()`.
+   This is preferred as object casting is not required and requested methods are handled directly by the connected application as opposed to the generated Python cache.
+
+2. **pyWin32 Casting** (when early binding is used)
+
+   Some LPI commands will return the general object types.
+   When late binding is used, casting is not required to access methods available in sub classes (e.g. for IFLoadcase but not for IFLoadset).
+   When early binding is used, casting is required to avoid errors raised by the generated classes in the win32com cache. As an example, getting a loadcase object can be done through the `getLoadsetByName()` command which will return an `IFLoadset` object. If you are sure that this object is a loadcase, you can cast it as an `IFLoadcase` object using the command `win32com.client.CastTo(myLoadset, "IFLoadcase")`. This is also commonly done when accessing attributes through the `getAttribute()` LPI command, for example when acquiring a Print Results Wizard it would need to be cast from an IFAttribute to an `IFPrintResultsWizard`.
+
+3. **Architecture of COM launched LUSAS Modeller instance (32/64bit)**
 
    To change the preferred LUSAS Modeller architecture when LUSAS is launched through COM, run one of the following commands in CMD with admin permissions:
    - To follow the architecture of the parent process:
