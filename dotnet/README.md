@@ -20,8 +20,7 @@ VB.NET is especially suitable if you're already familiar with VBScript syntax an
 
 | Name         | Description                                                                                          | Language     | Repository                                  |
 | ------------ | ---------------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------- |
-| LusasToolkit | A set of custom functionalities (e.g. copy assignments, generate combinations from spreadsheets etc) | C# / Plugin | https://github.com/CadairIdris/LusasToolkit |
-| LUSAS-Lookup | Inspection of the LUSAS' database and the available methods of each object                           | C# / Plugin | https://github.com/GreatApo/LUSAS-Lookup    |
+| LUSAS-Lookup | Inspection of the LUSAS' database and the available methods of each object                           | C# / Plugin  | https://github.com/GreatApo/LUSAS-Lookup    |
 
 ## ⚙️ Setting up
 
