@@ -4,7 +4,6 @@
 ' Example:      4_Line_Creation.lvb
 ' Description:  Creates lines
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-25
 ' 
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs
@@ -27,8 +26,8 @@ Call geometryData.setLowerOrderGeometryType("coordinates")
 Call geometryData.setCreateMethod("straight")
 
 ' Now we add the start and end coordinates
-Call geometryData.addCoords(0.0, 3.0, 0.0)
-Call geometryData.addCoords(3.0, 3.0, 0.0)
+Call geometryData.addCoords(1.0, 0.0, 0.0)
+Call geometryData.addCoords(1.0, 0.0, 4.0)
 
 ' Now we instruct the database to the create the line. It will return an IFObject set containing the newly created line
 set object_set = database.createLine(geometryData)
@@ -41,7 +40,7 @@ For Each line in lines
     set p1 = line.getStartPoint()
     set p2 = line.getEndPoint()
 
-    Call getTextWindow().writeLine("Line: " & line.getID() & " between points (" & p1.getX() & "," & p1.getY() & "," & p1.getZ() & ") to (" & p2.getX() & "," & p2.getY() & "," & p2.getZ() & ")")
+    Call getTextWindow().writeLine("Line " & line.getID() & " created by points (" & p1.getX() & "," & p1.getY() & "," & p1.getZ() & ") and (" & p2.getX() & "," & p2.getY() & "," & p2.getZ() & ").")
 Next
 
 '#####################################################
@@ -58,9 +57,9 @@ Call geometryData.setCreateMethod("arc")
 Call geometryData.setStartMiddleEnd()
 
 ' Now we add the start, middle and end coordinates
-Call geometryData.addCoords(0.0, 4.0, 0.0)
-Call geometryData.addCoords(2, 5.0, 0.0)
-Call geometryData.addCoords(4.0, 4.0, 0.0)
+Call geometryData.addCoords(1.0, 0.0, 4.0)
+Call geometryData.addCoords(1.0 + 1.5, 0.0, 4.0 + 1.0)
+Call geometryData.addCoords(1.0 + 3.0, 0.0, 4.0)
 
 ' Now we instruct the database to the create the line. It will return an IFObject set containing the newly created line
 set object_set = database.createLine(geometryData)
@@ -68,19 +67,16 @@ set object_set = database.createLine(geometryData)
 ' Get all points from the returned object set
 lines = object_set.getObjects("Line")
 
-' Loop through the lines and print their ids and coordinates
+' Loop through the lines and print their ids and lengths
 For Each line in lines
-    set p1 = line.getStartPoint()
-    set p2 = line.getEndPoint()
-
-    Call getTextWindow().writeLine("Line: " & line.getID() & " between points (" & p1.getX() & "," & p1.getY() & "," & p1.getZ() & ") to (" & p2.getX() & "," & p2.getY() & "," & p2.getZ() & ")")
+    Call getTextWindow().writeLine("Line " & line.getID() & " created (arc, length: " & line.getLineLength() & ")")
 Next
 
 '#####################################################
 '## Circle
 
-radius = 6
-z = 3.5
+radius = 3 / 2
+z = 0
 ' The options and settings for creating all geometry in LUSAS is defined in the IFGeometryData object.
 ' To start any geometry creation, get the geometryData object and set all the defaults
 Call geometryData.setAllDefaults()
@@ -92,14 +88,19 @@ Call geometryData.makeCircle()
 Call geometryData.setStartEndCentre()
 
 ' Start point at X=radius
-Call geometryData.addCoords(radius, 0.0, z)
+Call geometryData.addCoords(1, 0.0, z)
 ' Specify the plane (X/Y)
-Call geometryData.addCoords(0.0, 1.0, z)
+Call geometryData.addCoords(0, 1, z)
 ' Centre of the circle at the origin
-Call geometryData.addCoords(0.0, 0.0, z)
+Call geometryData.addCoords(1 + radius, 0, z)
 
 ' Create the line in the database with the settings specified.
 set object_set = database.createLine(geometryData)
+
+' Loop through the lines and print their ids
+For Each line in lines
+    Call getTextWindow().writeLine("Line " & line.getID() & " created (circle).")
+Next
 
 
 '#####################################################
@@ -107,7 +108,7 @@ set object_set = database.createLine(geometryData)
 
 ' Existing points can also be used to create lines.
 ' This can be done adding the start and end points in an IFObjectSet.
-set point1 = database.getObject("point", 3) 'assumes point with ID 3 exists (created from the arc)
+set point1 = database.createPoint(4.0, 0.0, 0.0)
 
 ' geometryData object contains all the settings to perform a geometry creation
 Call geometryData.setAllDefaults()
@@ -122,7 +123,8 @@ Call obs.add(point1) ' Add first point (using point Object)
 Call obs.add("point", 4) ' Add second point (using point ID, assumes point with ID 4 exists, created from the arc)
 
 ' Create the line, get the line objects array from the returned object set and return the 1 and only line
-new_line = obs.createLine(geometryData).getObjects("Line")
+set new_line = obs.createLine(geometryData).getObjects("Line")(0)
+Call getTextWindow().writeLine("Line " & new_line.getID() & " from points.")
 
 
 '#####################################################
@@ -133,7 +135,7 @@ set point1 = database.getObject("point", 1) 'assumes point with ID 1 exists
 set point2 = database.getObject("point", 2) 'assumes point with ID 2 exists
 
 ' sweep vector x, y, z
-vector = Array(0, 0, 2)
+vector = Array(3, 0, 0)
 
 ' Create a translation attribute
 set attr = database.createTranslationTransAttr("Temp_SweepTranslation", vector)
@@ -168,19 +170,31 @@ Next
 ' The Helper module contains some useful functions to simplify the geometry creation process.
 
 ' Points creation:
-Set point1 = create_point(2.0, 1.0, 0.0)
-Set point2 = create_point(3.0, 2.0, 0.0)
+Set point1 = create_point(1, 5, 5)
+Set point2 = create_point(1 + 3, 5, 5)
 
 ' Lines creation:
 Set line1 = create_line_from_points(point1, point2)
-Set line2 = create_line_by_coordinates(0, 0, 0, 1, 1, 0)
+Call getTextWindow().writeLine("Line " & line1.getID() & " from points (using helpers).")
+Set line2 = create_line_by_coordinates(1, 0, 4, 1, 5, 5)
+Call getTextWindow().writeLine("Line " & line2.getID() & " by coordinates (using helpers).")
 
 ' Lines creation by translational sweeps:
-sweepVector = Array(1, 0, 0)
+sweepVector = Array(0, 0, -5)
 lines1 = sweep_points(Array(point1, point2), sweepVector)
+For Each line in lines1
+    Call getTextWindow().writeLine("Line " & line.getID() & " created by sweep (using helpers).")
+Next
 
 ' Lines creation by rotational sweeps:
-angle = 45 ' degrees
-rotationOrigin = Array(0, 0, 0) ' origin of rotation
-axis = "z" ' axis of rotation
-lines2 = sweep_points_rotationally(Array(point1, point2), angle, rotationOrigin, axis)
+angle = 180 ' degrees
+rotationOrigin = Array(2.5, 0, 5) ' origin of rotation
+axis = "y" ' axis of rotation
+lines2 = sweep_points_rotationally(Array(point1), angle, rotationOrigin, axis)
+For Each line in lines2
+    Call getTextWindow().writeLine("Line " & line.getID() & " created by rotational sweep (using helpers).")
+Next
+
+' Set isometric view (top side view) and fit view
+call view.setIsometric()
+Call view.setScaledToFit(True)

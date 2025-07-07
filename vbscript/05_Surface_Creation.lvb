@@ -4,7 +4,6 @@
 ' Example:      5_Surface_Creation.lvb
 ' Description:  Creates surfaces
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-25
 ' 
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs
@@ -25,12 +24,13 @@ Call geometry_data.setCreateMethod("coons")
 Call geometry_data.setLowerOrderGeometryType("coordinates")
 
 ' Specify surface coordinates
-Call geometry_data.addCoords(0, 0, -5)
-Call geometry_data.addCoords(1, 0, -5)
-Call geometry_data.addCoords(1, 1, -5)
-Call geometry_data.addCoords(0, 1, -5)
+Call geometry_data.addCoords(0, 0, 0)
+Call geometry_data.addCoords(1, 0, 0)
+Call geometry_data.addCoords(1, 1, 0)
+Call geometry_data.addCoords(0, 1, 0)
 
 Set surface1 = database.createSurface(geometry_data).getObjects("Surface")(0)
+Call getTextWindow().writeLine("Surface " & surface1.getID() & " created by coordinates.")
 
 
 '######################################################
@@ -40,8 +40,8 @@ Set surface1 = database.createSurface(geometry_data).getObjects("Surface")(0)
 ' (add surface in ObjectSet, add Lower Order Line Features in the set, then keep only lines in the set)
 Set objSet = newObjectSet().add(surface1).addLOF("Line").keep("Line")
 
-'## Copy the lines by 2m in x direction
-vector = Array(2.0, 0.0, 0.0)
+'## Copy the lines by 1m in Z direction
+vector = Array(0, 0, 1)
 ' Create a translation attribute
 set transform = database.createTranslationTransAttr("Trn1", vector)
 ' Create a geometryData object to contain all the settings for the copy
@@ -65,6 +65,7 @@ Set linesObj = newObjectSet().add(newLines)
 
 ' Create the surface using the lines
 Set new_surface = linesObj.createSurface(geometry_data).getObjects("Surface")(0)
+Call getTextWindow().writeLine("Surface " & new_surface.getID() & " created by lines.")
 
 
 '######################################################
@@ -98,7 +99,7 @@ Call database.deleteAttribute(attr)
 ' Print new line IDs
 newSurfaces = objSet.getObjects("Surface")
 For Each surface in newSurfaces
-    Call getTextWindow().writeLine("Surface " & surface.getID() & " created from sweep.")
+    Call getTextWindow().writeLine("Surface " & surface.getID() & " created by sweep.")
 Next
 
 
@@ -106,21 +107,33 @@ Next
 '## Use functions from shared\Helpers.vbs
 ' The Helper module contains some useful functions to simplify the geometry creation process.
 
-' Lines creation by coordinates:
-set line1 = create_line_by_coordinates(0, 0, 3, 1, 1, 3)
-
 ' Surface creation by coordinates:
 xs = Array(0, 1, 1, 0)
-ys = Array(0, 0, 1, 1)
-zs = Array(0, 0, 0, 0)
+ys = Array(1, 1, 1, 1)
+zs = Array(0, 0, 1, 1)
 set surface1 = create_surface_by_coordinates(xs, ys, zs)
+Call getTextWindow().writeLine("Surface " & surface1.getID() & " created by coordinates (using helpers).")
+
+' Lines creation by coordinates:
+set line1 = create_line_by_coordinates(1, 0, 0, 2, 0, 0)
+Call getTextWindow().writeLine("Line " & line1.getID() & " created by coordinates (using helpers).")
 
 ' Surface creation by translational sweeps:
-sweepVector = Array(0, 0, 1)
+sweepVector = Array(0, 1, 0)
 surfaces1 = sweep_lines(Array(line1), sweepVector)
+For Each surface in surfaces1
+    Call getTextWindow().writeLine("Surface " & surface.getID() & " created by sweep (using helpers).")
+Next
 
 ' Surface creation by rotational sweeps:
-angle = 45 ' degrees
-rotationOrigin = Array(0, 0, 0) ' origin of rotation
-axis = "z" ' axis of rotation
+angle = -90 ' degrees
+rotationOrigin = Array(1, 0, 0) ' origin of rotation
+axis = "y" ' axis of rotation
 surfaces2 = sweep_lines_rotationally(Array(line1), angle, rotationOrigin, axis)
+For Each surface in surfaces2
+    Call getTextWindow().writeLine("Surface " & surface.getID() & " created by rotational sweep (using helpers).")
+Next
+
+' Set isometric view (top side view) and fit view
+call view.setIsometric()
+Call view.setScaledToFit(True)
