@@ -3,6 +3,7 @@
 #
 # Example:      05_Surface_Creation.py
 # Description:  Creates surfaces in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

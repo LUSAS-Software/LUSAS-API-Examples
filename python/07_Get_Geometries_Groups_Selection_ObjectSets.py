@@ -3,6 +3,7 @@
 #
 # Example:      07_Get_Existing_Geometries.py
 # Description:  Use ObjectSets (Database, Groups, Selection etc) and filter geometries
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

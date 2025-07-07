@@ -3,6 +3,7 @@
 #
 # Example:      01_Connect_to_LUSAS.py
 # Description:  Connects on the running LUSAS instance and prints in the log
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries

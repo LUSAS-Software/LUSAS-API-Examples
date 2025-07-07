@@ -3,6 +3,7 @@
 #
 # Example:      12_Create_and_assign_material.py
 # Description:  Creates and assigns materials in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

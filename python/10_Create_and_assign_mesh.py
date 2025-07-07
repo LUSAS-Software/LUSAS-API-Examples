@@ -3,6 +3,7 @@
 #
 # Example:      10_Create_and_assign_mesh.py
 # Description:  Creates and assigns meshes in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

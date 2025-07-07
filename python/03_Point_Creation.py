@@ -3,6 +3,7 @@
 #
 # Example:      03_Point_Creation.py
 # Description:  Creates points in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

@@ -3,6 +3,7 @@
 #
 # Example:      11_Create_and_assign_section.py
 # Description:  Creates and assigns a section in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:
