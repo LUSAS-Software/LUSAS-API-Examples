@@ -24,7 +24,7 @@ if len(allAnalyses) > 1 or allAnalyses[0].getName() != "Analysis 1":
     raise Exception("This example assumes that only one structural analysis called 'Analysis 1' exists in the model")
 
 # Get the structural analysis
-structAnalysis = database.getAnalysis("Analysis 1")
+structAnalysis : IFAnalysis = database.getAnalysis("Analysis 1")
 
 ## Create new thermal analysis
 thermalAnalysis = database.createAnalysisThermal("Analysis 1 (Thermal)", True, "Nonlinear and transient")
