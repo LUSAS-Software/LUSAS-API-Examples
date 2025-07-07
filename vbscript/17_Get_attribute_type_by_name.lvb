@@ -1,10 +1,9 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      15_Get_attribute_type_by_name.lvb
+' Example:      17_Get_attribute_type_by_name.lvb
 ' Description:  This example asks the user for an attribute name and prints the attribute type(s) in the log window.
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-29
 ' 
 $ENGINE=VBSCRIPT
 

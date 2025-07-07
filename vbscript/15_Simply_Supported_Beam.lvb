@@ -1,0 +1,62 @@
+' LUSAS API (LPI) EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      15_Simply_Supported_Beam.lvb
+' Description:  Create a simply supported concrete beam.
+' Author:       Finite Element Analysis Ltd
+' 
+' Libraries: Load the Helpers.vbs which contains useful functions
+$INCLUDE %RunningScriptPath%\shared\Helpers.vbs
+$ENGINE=VBScript
+
+' Throw error if a model is open and not saved
+If db().isModified() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "This script will create a new model. Please save the current model and try again" & vbCrLf)
+End If
+
+
+' Create a new model
+Call newProject("Structural", "Simple_beam_model")
+Call database.setAnalysisCategory("3D")
+Call database.setVerticalDir("Z")
+
+' Set units to N and m
+Call database.setModelUnits(getUnitSet("N,m,kg,s,C"))
+
+' Create a new line in the model
+Set line1 = create_line_by_coordinates(0.0, 1.0, 0.0, 5.0, 1.0, 0.0)
+
+' Mesh
+Set mesh = database.createMeshLine("Beam Mesh").setSize("BMI21", 1).assignTo(line1, 1)
+Call database.updateMesh()
+
+' Rectangular section
+Call database.createParametricSection("Sct1").setType("Rectangular Solid").setDimensions(Array("B", "D"), Array(0.4, 0.6))
+Set paramSection = database.createGeometricLine("LGeo1").setFromLibrary("Utilities", "", "Sct1", 0, 0, 0)
+Call paramSection.setValue("elementType", "3D Thick Beam")
+Call paramSection.assignTo(line1, 1)
+
+' Concrete material
+Call database.createIsotropicMaterial("Concrete", 35.0E9, 0.2, 2.54842E3).assignTo(line1, 1)
+
+' Pin supports at line ends
+Set lineEndsObjectSet = newObjectSet().add(Array(line1.getStartPoint(), line1.getEndPoint()))
+Call database.createSupportStructural("Pinned").setStructural("R", "R", "R", "F", "F", "F").assignTo(lineEndsObjectSet, 1)
+
+' Apply UDL
+Call database.createLoadingGlobalDistributed("GlbD1").setGlobalDistributed("Length", 0, 0, -4000 * 2).assignTo(line1, 1)
+
+
+' Solve and set the contour layer to show the user defined result "isCracked" with a two tone contour plot
+Call database.getAnalysis("Analysis 1").solve(False)
+Call database.openAllResults(False)
+
+' Add the contours layer to the view if it does not exist and set it to deflections
+If not view.existsContoursLayer() Then
+    Call view.insertContoursLayer()
+End If
+Call view.contours().setResults("Displacement", "RSLT")
+Call view.contours().chooseSettings(1)
+
+' Set top-left-front view (isometric)
+Call view.setIsometric()
