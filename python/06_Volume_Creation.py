@@ -17,6 +17,9 @@ lusas = get_lusas_modeller()
 if not lusas.existsDatabase():
     raise Exception("A model must be open before running this code")
 
+# Save database in variable
+database = lusas.database()
+
 
 ######################################################
 ### Create a Volumes from Surfaces
@@ -44,7 +47,8 @@ surfsObj = lusas.newObjectSet()
 surfsObj.add(surfaces)
 
 # Create the volume using the surfaces
-vlm : IFVolume = lusas.db().createVolume(geom_data).getObjects("Volume")[0]
+vlm : IFVolume = database.createVolume(geom_data).getObjects("Volume")[0]
+print(f"Volume {vlm.getID()} created by surfaces.")
 
 
 ######################################################
@@ -57,7 +61,7 @@ surface = surfaces[0] # Bottom Surface
 vector = [0, 0, -1]
 
 # Create a translation attribute
-attr = lusas.db().createTranslationTransAttr("Temp_SweepTranslation", vector)
+attr = database.createTranslationTransAttr("Temp_SweepTranslation", vector)
 attr.setSweepType("straight")
 attr.setHofType("Volume") # Set target geometry
 
@@ -73,12 +77,12 @@ obs = lusas.newObjectSet().add(surface)
 objSet = obs.sweep(geomData)
 
 # Delete the translation attribute
-lusas.db().deleteAttribute(attr)
+database.deleteAttribute(attr)
 
 # Print new line IDs
 newVolumes : list[IFVolume] = objSet.getObjects("Volume")
 for volume in newVolumes:
-    print(f"Volume {volume.getID()} created from sweep.")
+    print(f"Volume {volume.getID()} created by sweep.")
 
 
 ######################################################
@@ -90,11 +94,20 @@ import shared.Helpers as Helpers
 Helpers.initialise(lusas)
 
 # Surface creation by coordinates:
-xs = [0, 1, 1, 0]
-ys = [0, 0, 1, 1]
-zs = [-4, -4, -4, -4]
+xs = [1.0, 2, 2, 1]
+ys = [0.0, 0, 1, 1]
+zs = [0.0, 0, 0, 0]
 surface1 = Helpers.create_surface_by_coordinates(xs, ys, zs)
+print(f"Surface {surface1.getID()} created by coordinates (using helpers).")
 
 # Volume creation by sweeps:
-volumes1 = Helpers.sweep_surfaces([surface1], [0, 0, 1])
-volumes2 = Helpers.sweep_surfaces_rotationally([surface1], 45, [0,0,-4], "y") # 45 degrees
+volumes1 = Helpers.sweep_surfaces([surface1], [0, 0, -1])
+for volume in volumes1:
+    print(f"Volume {volume.getID()} created by sweep (using helpers).")
+
+volumes2 = Helpers.sweep_surfaces_rotationally([surface1], -90, [1, 0, 0], "y") # 45 degrees
+for volume in volumes2:
+    print(f"Volume {volume.getID()} created by rotational sweep (using helpers).")
+
+# Fit view
+lusas.view().setScaledToFit(True)

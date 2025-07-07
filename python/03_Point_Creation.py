@@ -17,6 +17,8 @@ lusas = get_lusas_modeller()
 if not lusas.existsDatabase():
     raise Exception("A model must be open before running this code")
 
+# Save database in variable
+database = lusas.database()
 
 ### Creating Points
 
@@ -31,7 +33,7 @@ geometry_data.addCoords(1.0, 1.0, 0.0)
 geometry_data.addCoords(2.0, 2.0, 0.0)
 
 # Now we instruct the database to the create the points. It will return an IFObject set containing the newly created points
-object_set:'IFObjectSet' = lusas.database().createPoint(geometry_data)
+object_set:'IFObjectSet' = database.createPoint(geometry_data)
 
 # Get all points from the returned object set
 points:list['IFPoint'] = object_set.getObjects("Point")
