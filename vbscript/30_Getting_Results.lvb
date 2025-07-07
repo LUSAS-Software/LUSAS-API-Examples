@@ -6,18 +6,16 @@
 '               This example does the extraction in different approaches. It is recommended to use the results component set approach for most cases.
 '               To compare the different approaches, it is recommended that the Jupyter Notebook example is used instead.
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-28
 ' 
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs
 $ENGINE=VBScript
 
-' Check if a model is open
+' To successfully run the code below you must have a model solved (e.g. the model generated from example 15).
+' Check if a model is open:
 If not existsDatabase() Then
     Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
 End If
-
-' To successfully run the code below you must have a model solved.
 
 ' Get selected items and add related Elements and Nodes
 Set target = newObjectSet().add(selection()).addLOF("Element").addLOF("Node")
@@ -53,19 +51,17 @@ Call textWin.writeLine("Reaction results:")
 For Each n in targetNodes
     ' Non supported nodes will return a value of 2.2250738585072014e-308. This is the smallest possible value represented by a 64bit double precision variable.
     ' We can avoid this small value by asking if a result is available
-    If n.hasResults("Reaction", "FX") Then
-        fx = n.getResults("Reaction", "FX")
-    Else
+    ' This can also be checked using the isNan() function from the Helpers.
+    fx = n.getResults("Reaction", "FX")
+    If fx = 2.2250738585072014e-308 Then
         fx = 0.0
     End If
-    If n.hasResults("Reaction", "FY") Then
-        fy = n.getResults("Reaction", "FY")
-    Else
+    fy = n.getResults("Reaction", "FY")
+    If isNan(fy) Then
         fy = 0.0
     End If
-    If n.hasResults("Reaction", "FZ") Then
-        fz = n.getResults("Reaction", "FZ")
-    Else
+    fz = n.getResults("Reaction", "FZ")
+    If isNan(fz) Then
         fz = 0.0
     End If
     Call textWin.writeLine(fx & ", " & fy & ", " & fz)

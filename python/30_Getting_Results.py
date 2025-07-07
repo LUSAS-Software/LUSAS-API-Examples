@@ -16,7 +16,8 @@ import time
 # Connect on LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
-# Throw error if no model is open
+# To successfully run the code below you must have a model solved (e.g. the model generated from example 15).
+# Throw error if no model is open:
 if not lusas.existsDatabase():
     raise Exception("A model must be open before running this code")
 
