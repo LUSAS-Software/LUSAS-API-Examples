@@ -17,6 +17,9 @@ lusas = get_lusas_modeller()
 if not lusas.existsDatabase():
     raise Exception("A model must be open before running this code")
 
+# Save database in variable
+database = lusas.database()
+
 
 ######################################################
 ### Straight line By Coordinates
@@ -30,11 +33,11 @@ geometry_data.setLowerOrderGeometryType("coordinates")
 geometry_data.setCreateMethod("straight")
 
 # Now we add the start and end coordinates
-geometry_data.addCoords(0.0, 3.0, 0.0)
-geometry_data.addCoords(3.0, 3.0, 0.0)
+geometry_data.addCoords(1.0, 0.0, 0.0)
+geometry_data.addCoords(1.0, 0.0, 4.0)
 
 # Now we instruct the database to the create the line. It will return an IFObject set containing the newly created line
-object_set:'IFObjectSet' = lusas.database().createLine(geometry_data)
+object_set = database.createLine(geometry_data)
 
 # Get all points from the returned object set
 lines:list['IFLine'] = object_set.getObjects("Line")
@@ -43,7 +46,7 @@ lines:list['IFLine'] = object_set.getObjects("Line")
 for line in lines:
     p1 = line.getStartPoint()
     p2 = line.getEndPoint()
-    print(f"Line:{line.getID()} between points ({p1.getX()},{p1.getY()},{p1.getZ()}) to ({p2.getX()},{p2.getY()},{p2.getZ()}) ")
+    print(f"Line {line.getID()} created by points ({p1.getX()},{p1.getY()},{p1.getZ()}) and ({p2.getX()},{p2.getY()},{p2.getZ()}).")
 
 
 ######################################################
@@ -60,12 +63,12 @@ geometry_data.setCreateMethod("arc")
 geometry_data.setStartMiddleEnd()
 
 # Now we add the start, middle and end coordinates
-geometry_data.addCoords(0.0, 4.0, 0.0)
-geometry_data.addCoords(2, 5.0, 0.0)
-geometry_data.addCoords(4.0, 4.0, 0.0)
+geometry_data.addCoords(1.0, 0.0, 4.0)
+geometry_data.addCoords(1.0 + 1.5, 0.0, 4.0 + 1.0)
+geometry_data.addCoords(1.0 + 3.0, 0.0, 4.0)
 
 # Now we instruct the database to the create the line. It will return an IFObject set containing the newly created line
-object_set:'IFObjectSet' = lusas.database().createLine(geometry_data)
+object_set:'IFObjectSet' = database.createLine(geometry_data)
 
 # Get all points from the returned object set
 lines:list['IFLine'] = object_set.getObjects("Line")
@@ -74,14 +77,14 @@ lines:list['IFLine'] = object_set.getObjects("Line")
 for line in lines:
     p1 = line.getStartPoint()
     p2 = line.getEndPoint()
-    print(f"Line:{line.getID()}, length:{line.getLineLength()} between points ({p1.getX()},{p1.getY()},{p1.getZ()}) to ({p2.getX()},{p2.getY()},{p2.getZ()}) ")
+    print(f"Line {line.getID()} created (arc, length: {line.getLineLength()}).")
 
 
 ######################################################
 ### Circle
 
-radius = 6
-z = 3.5
+radius = 3 / 2
+z = 0
 # The options and settings for creating all geometry in LUSAS is defined in the IFGeometryData object.
 # To start any geometry creation, get the geometryData object and set all the defaults
 geometry_data = lusas.geometryData().setAllDefaults()
@@ -93,14 +96,19 @@ geometry_data.makeCircle()
 geometry_data.setStartEndCentre()
 
 # Start point at X=radius
-geometry_data.addCoords(radius, 0.0, z)
+geometry_data.addCoords(1, 0, z)
 # Specify the plane (X/Y)
-geometry_data.addCoords(0.0, 1.0, z)
+geometry_data.addCoords(0, 1, z)
 # Centre of the circle at the origin
-geometry_data.addCoords(0.0, 0.0, z)
+geometry_data.addCoords(1 + radius, 0, z)
 
 # Create the line in the database with the settings specified.
-object_set:'IFObjectSet' = lusas.database().createLine(geometry_data)
+object_set:'IFObjectSet' = database.createLine(geometry_data)
+
+# Print new lines IDs
+newLines : list[IFLine] = object_set.getObjects("Lines")
+for line in newLines:
+    print(f"Line {line.getID()} created (circle).")
 
 
 ######################################################
@@ -108,7 +116,8 @@ object_set:'IFObjectSet' = lusas.database().createLine(geometry_data)
 
 # Existing points can also be used to create lines.
 # This can be done adding the start and end points in an IFObjectSet.
-point1 = lusas.db().getObject("point", 1) #assumes point with ID 1 exists
+point1 = database.getObject("point", 1) #assumes point with ID 1 exists
+point1 = database.createPoint(4.0, 0.0, 0.0)
 
 # geometryData object contains all the settings to perform a geometry creation
 geometry_data = lusas.geometryData().setAllDefaults()        
@@ -120,24 +129,25 @@ obs = lusas.newObjectSet()
 
 # Add existing points to the object set
 obs.add(point1) # Add first point (using point Object)
-obs.add("point", 2) # Add second point (using point ID, assumes point with ID 2 exists)
+obs.add("point", 4) # Add second point (using point ID, assumes point with ID 4 exists)
 
 # Create the line, get the line objects array from the returned object set and return the 1 and only line
-new_line:IFLine = obs.createLine(geometry_data).getObjects("Line")
+new_line : IFLine = obs.createLine(geometry_data).getObjects("Line")[0]
+print(f"Line {new_line.getID()} created from points.")
 
 
 ######################################################
 ### Line from Point translational sweep
 
 # Create a point
-point1 = lusas.db().getObject("point", 1) #assumes point with ID 1 exists
-point2 = lusas.db().getObject("point", 2) #assumes point with ID 2 exists
+point1 = database.getObject("point", 1) #assumes point with ID 1 exists
+point2 = database.getObject("point", 2) #assumes point with ID 2 exists
 
 # sweep vector x, y, z
-vector = [1, 0, 0] 
+vector = [3, 0, 0] # 3m in X direction
 
 # Create a translation attribute
-attr = lusas.db().createTranslationTransAttr("Temp_SweepTranslation", vector)
+attr = database.createTranslationTransAttr("Temp_SweepTranslation", vector)
 attr.setSweepType("straight")
 attr.setHofType("Line") # Set target geometry
 
@@ -146,8 +156,8 @@ geomData.setMaximumDimension(1) # Target geometries (0: Points, 1: Lines, 2: Sur
 geomData.setTransformation(attr)
 geomData.sweptArcType("straight")
 
-# Create an object set to contain the points and be swept
-obs = lusas.newObjectSet()                 
+# Create an object set to contain the points to sweep
+obs = lusas.newObjectSet()
 obs.add(point1)
 obs.add(point2)
 
@@ -155,9 +165,9 @@ obs.add(point2)
 objSet = obs.sweep(geomData)
 
 # Delete the translation attribute
-lusas.db().deleteAttribute(attr)
+database.deleteAttribute(attr)
 
-# Print new line IDs
+# Print new lines IDs
 newLines : list[IFLine] = objSet.getObjects("Lines")
 for line in newLines:
     print(f"Line {line.getID()} created from sweep.")
@@ -172,13 +182,22 @@ import shared.Helpers as Helpers
 Helpers.initialise(lusas)
 
 # Points creation:
-point1 = Helpers.create_point(2.0, 1.0, 0.0)
-point2 = Helpers.create_point(3.0, 2.0, 0.0)
+point1 = Helpers.create_point(1, 5, 5)
+point2 = Helpers.create_point(1 + 3, 5, 5)
 
 # Lines creation:
 line1 = Helpers.create_line_from_points(point1, point2)
-line2 = Helpers.create_line_by_coordinates(0, 0, 0, 1, 1, 0)
+print(f"Line {line1.getID()} created from points (using helpers).")
+line2 = Helpers.create_line_by_coordinates(1, 0, 4, 1, 5, 5)
+print(f"Line {line2.getID()} created by coordinates (using helpers).")
 
 # Lines creation by sweeps:
-lines1 = Helpers.sweep_points([point1, point2], [1, 0, 0])
-lines2 = Helpers.sweep_points_rotationally([point1, point2], 45) # 45 degrees
+lines1 = Helpers.sweep_points([point1, point2], [0, 0, -5])
+for line in lines1:
+    print(f"Line {line.getID()} created from sweep (using helpers).")
+lines2 = Helpers.sweep_points_rotationally([point1], 180, [2.5, 0, 5], "y") # 180 degrees
+for line in lines2:
+    print(f"Line {line.getID()} created from rotational sweep (using helpers).")
+
+# Fit view
+lusas.view().setScaledToFit(True)
