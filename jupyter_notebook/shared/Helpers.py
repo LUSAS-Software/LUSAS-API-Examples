@@ -8,6 +8,7 @@
 # and for creating geometric attributes based on parametric definitions.
 # The library must be initialised with the a reference to LUSAS Modeller before using these functions.
 
+import math
 from shared.LPI import *
 
 def initialise(modeller:'IFModeller'):
@@ -55,7 +56,7 @@ def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float,
     geometry_data.setCreateMethod("straight")
     geometry_data.addCoords(x1, y1, z1)
     geometry_data.addCoords(x2, y2, z2)
-    newLine:IFLine = lusas.database().createLine(geometry_data).getObject("Line")
+    newLine:IFLine = lusas.database().createLine(geometry_data).getObjects("Line")[0]
     return newLine
 
 def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
@@ -79,24 +80,24 @@ def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     # Create the line, get the line object array from the returned object set
     return obs.createLine(geom_data).getObject("Line")
 
-def create_line(p1:list, p2:list) -> 'IFLine':
+def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     """Helper function to create a straight line from two point coordinates defined 
 
     Args:
-        p1 (list): List of 3 floats x,y,z
-        p2 (list): List of 3 floats x,y,z
+        p1 (list[float]): List of 3 floats x,y,z
+        p2 (list[float]): List of 3 floats x,y,z
 
     Returns:
         IFLine: Straight line between the two point coordinates
-    """    
+    """
     assert len(p1) == len(p2) == 3, "Point coordinates must be a list of 3 values (x,y,z)"
     # geometryData object contains all the settings to perform a geometry creation
     geom_data = lusas.geometryData().setAllDefaults()  
-    # set the options for creating straight lines from coordinates
+    # Set the options for creating straight lines from coordinates
     geom_data.setCreateMethod("straight")        
     geom_data.setLowerOrderGeometryType("coordinates")        
     
-    # Add the cordinates, lines directions will follow the order of the coordinates
+    # Add the coordinates, lines directions will follow the order of the coordinates
     geom_data.addCoords(p1[0], p1[1], p1[2])    # Set the coordinates of the first point X,Y,Z
     geom_data.addCoords(p2[0], p2[1], p2[2])    # Set the coordinates of the second point X,Y,Z
 
@@ -119,7 +120,7 @@ def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -
     geometry_data.setLowerOrderGeometryType("coordinates")
     for i in range(len(x)):
         geometry_data.addCoords(x[i], y[i], z[i])
-    surf : IFSurface = lusas.db().createSurface(geometry_data).getObject("Surface")
+    surf : IFSurface = lusas.db().createSurface(geometry_data).getObjects("Surface")[0]
     return surf
 
 def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
@@ -133,14 +134,13 @@ def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     """
     # Create a geometryData object to contain all the settings for the geometry creation
     geometry_data = lusas.newGeometryData()
-    # set the options for creating geometries from surfaces
+    # Set the options for creating geometries from surfaces
     geometry_data.setCreateMethod("solidVolume")
     geometry_data.setExtractAllVolumes()
     # create an object set to contain the surfaces and use this set to create the volume
-    surfsObj = lusas.newObjectSet()
-    surfsObj.add(surfaces)
+    surfsObj = lusas.newObjectSet().add(surfaces)
     # Create the volume using the surfaces
-    vlm : IFVolume = lusas.db().createVolume(geometry_data).getObject("Volume")
+    vlm : IFVolume = surfsObj.createVolume(geometry_data).getObjects("Volume")[0]
     return vlm
 
 def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
@@ -351,11 +351,26 @@ def delete_all_database_contents(db:'IFDatabase'):
     db.deleteAllNoGroups()
     db.deleteAllAttributes()
     db.deleteAllUtilities()
-    db.deleteAll()
+    db.Delete("all")
 
     db.createAnalysisStructural("Analysis 1")
 
+def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
+    """
+    Get all loadcases of an analysis. In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
 
+    Args:
+        analysis (IFAnalysis): Analysis object
+
+    Returns:
+        list[IFLoadcase]: List of loadcases in the analysis
+    """
+    analysisName = analysis.getName()
+    allLoadcases : list['IFLoadcase'] = lusas.db().getLoadsets("Loadcase")
+    loadcases : list['IFLoadcase'] = list(filter(lambda lc: lc.getAnalysis().getName() == analysisName, allLoadcases))
+    # or
+    # loadcases : list['IFLoadcase'] = lusas.db().getLoadsets("loadcase", "all", analysisName)
+    return loadcases
 
 def create_reinforcing_bar_attributes(db:'IFDatabase', diameters:list) -> list:
     """Create geometric attributes representing individual bars in the LUSAS Database
@@ -394,12 +409,10 @@ def create_circular_section(db:'IFDatabase', name:str, dia:float) -> 'IFGeometri
     """    
     util = db.createParametricSection(name).setType("Circular Solid").setDimensions(['D'], [dia])
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
-    
-
 
 
 def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:float) -> 'IFGeometricLine':
-    """Creates a geometric attribute based on a parametric rectandular definition
+    """Creates a geometric attribute based on a parametric rectangular definition
 
     Args:
         db (IFDatabase): Reference to the database
@@ -414,5 +427,14 @@ def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:f
     util.setDimensions(['B', 'D'], [breadth, depth])
 
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
-    
 
+def isNan(value: float) -> bool:
+    """Check if a value is NaN (Not a Number) accounting for LUSAS modeller NA value equal to 2.2250738585072014e-308.
+
+    Args:
+        value (float): Value to check
+
+    Returns:
+        bool: True if the value is NaN, False otherwise
+    """
+    return math.isnan(value) or value == 2.2250738585072014e-308

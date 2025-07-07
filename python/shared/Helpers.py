@@ -8,6 +8,7 @@
 # and for creating geometric attributes based on parametric definitions.
 # The library must be initialised with the a reference to LUSAS Modeller before using these functions.
 
+import math
 from shared.LPI import *
 
 def initialise(modeller:'IFModeller'):
@@ -350,7 +351,7 @@ def delete_all_database_contents(db:'IFDatabase'):
     db.deleteAllNoGroups()
     db.deleteAllAttributes()
     db.deleteAllUtilities()
-    db.deleteAll()
+    db.Delete("all")
 
     db.createAnalysisStructural("Analysis 1")
 
@@ -411,7 +412,7 @@ def create_circular_section(db:'IFDatabase', name:str, dia:float) -> 'IFGeometri
 
 
 def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:float) -> 'IFGeometricLine':
-    """Creates a geometric attribute based on a parametric rectandular definition
+    """Creates a geometric attribute based on a parametric rectangular definition
 
     Args:
         db (IFDatabase): Reference to the database
@@ -426,3 +427,14 @@ def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:f
     util.setDimensions(['B', 'D'], [breadth, depth])
 
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
+
+def isNan(value: float) -> bool:
+    """Check if a value is NaN (Not a Number) accounting for LUSAS modeller NA value equal to 2.2250738585072014e-308.
+
+    Args:
+        value (float): Value to check
+
+    Returns:
+        bool: True if the value is NaN, False otherwise
+    """
+    return math.isnan(value) or value == 2.2250738585072014e-308
