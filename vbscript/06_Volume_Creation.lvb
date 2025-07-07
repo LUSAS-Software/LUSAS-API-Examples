@@ -4,7 +4,6 @@
 ' Example:      6_Volume_Creation.lvb
 ' Description:  Creates volumes
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-25
 ' 
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs
@@ -86,17 +85,28 @@ Next
 ' The Helper module contains some useful functions to simplify the geometry creation process.
 
 ' Surface creation by coordinates:
-xs = Array(0, 1, 1, 0)
+xs = Array(1, 2, 2, 1)
 ys = Array(0, 0, 1, 1)
-zs = Array(-4, -4, -4, -4)
+zs = Array(0, 0, 0, 0)
 Set surface1 = create_surface_by_coordinates(xs, ys, zs)
+Call getTextWindow().writeLine("Surface " & surface1.getID() & " created by coordinates (using helpers).")
 
 ' Volume creation by translational sweeps:
-sweepVector = Array(0, 0, 1)
+sweepVector = Array(0, 0, -1)
 volumes1 = sweep_surfaces(Array(surface1), sweepVector)
+For Each surface in volumes1
+    Call getTextWindow().writeLine("Volume " & surface.getID() & " created by sweep (using helpers).")
+Next
 
 ' Volume creation by rotational sweeps:
-angle = -45 ' degrees
-rotationOrigin = Array(0, 0, -4) ' origin of rotation
-axis = "x" ' axis of rotation
+angle = -90 ' degrees
+rotationOrigin = Array(1, 0, 0) ' origin of rotation
+axis = "y" ' axis of rotation
 volumes2 = sweep_surfaces_rotationally(Array(surface1), angle, rotationOrigin, axis)
+For Each surface in volumes1
+    Call getTextWindow().writeLine("Volume " & surface.getID() & " created by rotational sweep (using helpers).")
+Next
+
+' Set isometric view (top side view) and fit view
+call view.setIsometric()
+Call view.setScaledToFit(True)
