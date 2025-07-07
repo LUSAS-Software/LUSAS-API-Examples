@@ -42,9 +42,9 @@ start = time.time()
 # Print displacements (model units)
 print("Displacement results:")
 for n in targetNodes:
-    dx = n.getResults("Displacement", "DX")[0]
-    dy = n.getResults("Displacement", "DY")[0]
-    dz = n.getResults("Displacement", "DZ")[0]
+    dx = n.getResults("Displacement", "DX")
+    dy = n.getResults("Displacement", "DY")
+    dz = n.getResults("Displacement", "DZ")
     print(dx, dy, dz)
 print(f"Execution time for displacement results: {time.time() - start} seconds")
 
@@ -56,13 +56,14 @@ for n in targetNodes:
     # Non supported nodes will return a value of 2.2250738585072014e-308.
     # This is the smallest possible value represented by a 64bit double precision variable.
     # This value is equivalent to N/A.
-    fx = n.getResults("Reaction", "FX")[0]
+    # This can also be checked using the Helpers.isNan() function.
+    fx = n.getResults("Reaction", "FX")
     if fx == 2.2250738585072014e-308:
         fx = 0
-    fy = n.getResults("Reaction", "FY")[0]
+    fy = n.getResults("Reaction", "FY")
     if fy == 2.2250738585072014e-308:
         fy = 0
-    fz = n.getResults("Reaction", "FZ")[0]
+    fz = n.getResults("Reaction", "FZ")
     if fz == 2.2250738585072014e-308:
         fz = 0
 
@@ -106,7 +107,7 @@ for e in targetElements:
         if stressType == "Thick 3D Beam":
             # Get bending moment My for each internal point
             for i in range(0, e.countInternalPoints()):
-                my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My")[0]
+                my = e.getInternalResults(i, "Force/Moment - Thick 3D Beam", "My")
                 print(my)
             # Or get the internal results as an array
             my = e.getInternalResultsArray("Force/Moment - Thick 3D Beam", "My")
