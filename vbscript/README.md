@@ -17,8 +17,9 @@ Visual Basic Script (*VBScript*) code (files with *.vb or *.lvb extensions) can 
 | Attributes | Create/assign materials               | 12_Create_and_assign_material.lvb |
 | Attributes | Create/assign supports                | 13_Create_and_assign_supports.lvb |
 | Attributes | Create/assign loads                   | 14_Create_and_assign_loads.lvb    |
-| Attributes | Prints the attribute type(s) for the user given attribute names (UI input) | 15_Get_attribute_type_by_name.lvb |
+| Attributes | Create a simply supported beam        | 15_Simply_Supported_Beam.lvb      |
 | Attributes | Extracts all attributes' properties in a data grid or CSV for the user given attribute names (UI input) | 16_Extract_attribute_values.lvb |
+| Attributes | Prints the attribute type(s) for the user given attribute names (UI input) | 17_Get_attribute_type_by_name.lvb |
 | Analyses   | Create/solve analyses and loadcases   | 20_Create_and_Run_Analyses_and_Loadcases.lvb |
 | Analyses   | Create Combinations and Envelopes     | 21_Create_Combinations_and_Envelopes.lvb |
 | Analyses   | Create Coupled Structural-Thermal Analysis | 22_Coupled_Structural_Thermal_Analysis.lvb |
