@@ -105,9 +105,10 @@ volumes1 = Helpers.sweep_surfaces([surface1], [0, 0, -1])
 for volume in volumes1:
     print(f"Volume {volume.getID()} created by sweep (using helpers).")
 
-volumes2 = Helpers.sweep_surfaces_rotationally([surface1], -90, [1, 0, 0], "y") # 45 degrees
+volumes2 = Helpers.sweep_surfaces_rotationally([surface1], -90, [1, 0, 0], "y") # -90 degrees around Y axis
 for volume in volumes2:
     print(f"Volume {volume.getID()} created by rotational sweep (using helpers).")
 
-# Fit view
+# Set isometric view (top side view) and fit view
+lusas.view().setIsometric()
 lusas.view().setScaledToFit(True)

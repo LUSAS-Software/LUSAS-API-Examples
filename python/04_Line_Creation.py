@@ -116,7 +116,6 @@ for line in newLines:
 
 # Existing points can also be used to create lines.
 # This can be done adding the start and end points in an IFObjectSet.
-point1 = database.getObject("point", 1) #assumes point with ID 1 exists
 point1 = database.createPoint(4.0, 0.0, 0.0)
 
 # geometryData object contains all the settings to perform a geometry creation
@@ -194,10 +193,11 @@ print(f"Line {line2.getID()} created by coordinates (using helpers).")
 # Lines creation by sweeps:
 lines1 = Helpers.sweep_points([point1, point2], [0, 0, -5])
 for line in lines1:
-    print(f"Line {line.getID()} created from sweep (using helpers).")
-lines2 = Helpers.sweep_points_rotationally([point1], 180, [2.5, 0, 5], "y") # 180 degrees
+    print(f"Line {line.getID()} created by sweep (using helpers).")
+lines2 = Helpers.sweep_points_rotationally([point1], 180, [2.5, 0, 5], "y") # 180 degrees around Y axis
 for line in lines2:
-    print(f"Line {line.getID()} created from rotational sweep (using helpers).")
+    print(f"Line {line.getID()} created by rotational sweep (using helpers).")
 
-# Fit view
+# Set isometric view (top side view) and fit view
+lusas.view().setIsometric()
 lusas.view().setScaledToFit(True)

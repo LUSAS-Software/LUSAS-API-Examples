@@ -40,24 +40,32 @@ surface1 : IFSurface = database.createSurface(geometry_data).getObjects("Surface
 print(f"Surface {surface1.getID()} created by coordinates.")
 
 ######################################################
-#### Create a Surface by Lines
+#### Create a Surface by Lines (copy lines from previously created surface)
 
-# Create the perimeter lines
 
-line1 = database.getObject("line", 1) #assumes line with ID 1 exists
-line2 = database.getObject("line", 2) #assumes line with ID 2 exists
-line3 = database.getObject("line", 3) #assumes line with ID 3 exists
-line4 = database.getObject("line", 4) #assumes line with ID 4 exists
+# Get the perimeter lines of the created surface
+# (add surface in ObjectSet, add Lower Order Line Features in the set, then keep only lines in the set)
+objSet = lusas.newObjectSet().add(surface1).addLOF("Line").keep("Line")
 
-# Create a geometryData object to contain all the settings for the geometry creation
-geometry_data = lusas.geometryData().setAllDefaults()
+## Copy the lines by 1m in Z direction
+vector = [0, 0, 1]
+# Create a translation attribute
+transform = database.createTranslationTransAttr("Trn1", vector)
+# Create a geometryData object to contain all the settings for the copy
+geometry_data = lusas.newGeometryData()
+geometry_data.setAllDefaults()
+geometry_data.setTransformation(transform)
+# Copy the lines
+linesObj = objSet.copy(geometry_data).keep("Line")
+# Delete the translation attribute
+database.deleteAttribute(transform)
+
+## Create a surface from the lines
+# Reset the geometryData object that will contain all the settings for the geometry creation
+geometry_data.setAllDefaults()
 # set the options for creating geometries from lines
 geometry_data.setCreateMethod("coons")
 geometry_data.setLowerOrderGeometryType("lines")
-
-# Create an object set to contain the lines and use this set to create the surface
-linesObj = lusas.newObjectSet()
-linesObj.add([line1, line2, line3, line4])
 
 # Create the surface using the lines
 new_surface : IFSurface = linesObj.createSurface(geometry_data).getObjects("Surface")[0]
@@ -108,8 +116,8 @@ Helpers.initialise(lusas)
 
 # Surface creation by coordinates:
 xs = [0.0, 1, 1, 0]
-ys = [0.0, 0, 1, 1]
-zs = [1.0, 1, 1, 1]
+ys = [1.0, 1, 1, 1]
+zs = [0, 0, 1, 1]
 surface1 = Helpers.create_surface_by_coordinates(xs, ys, zs)
 print(f"Surface {surface1.getID()} created by coordinates (using helpers).")
 
@@ -122,9 +130,10 @@ surfaces1 = Helpers.sweep_lines([line1], [0, 1, 0])
 for surface in surfaces1:
     print(f"Surface {surface.getID()} created by sweep (using helpers).")
 
-surfaces2 = Helpers.sweep_lines_rotationally([line1], -90, [1, 0, 0], "y") # 45 degrees
+surfaces2 = Helpers.sweep_lines_rotationally([line1], -90, [1, 0, 0], "y") # -90 degrees around Y axis
 for surface in surfaces1:
     print(f"Surface {surface.getID()} created by rotational sweep (using helpers).")
 
-# Fit view
+# Set isometric view (top side view) and fit view
+lusas.view().setIsometric()
 lusas.view().setScaledToFit(True)
