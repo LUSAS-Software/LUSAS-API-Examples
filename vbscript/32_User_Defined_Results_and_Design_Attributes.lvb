@@ -4,7 +4,6 @@
 ' Example:      32_User_Defined_Results_and_Design_Attributes.lvb
 ' Description:  Create User Defined Results and Design Attributes
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-05-02
 ' 
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs

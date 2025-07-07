@@ -3,6 +3,7 @@
 #
 # Example:      06_Volume_Creation.py
 # Description:  Creates volumes in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

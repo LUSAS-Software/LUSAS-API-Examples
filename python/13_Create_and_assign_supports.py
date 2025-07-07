@@ -3,6 +3,7 @@
 #
 # Example:      13_Create_and_assign_supports.py
 # Description:  Creates and assigns supports in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

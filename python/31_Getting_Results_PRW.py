@@ -3,6 +3,7 @@
 #
 # Example:      31_Getting_Results_PRW.py
 # Description:  Extract results from the running LUSAS model using a Print Results Wizard (PRW)
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

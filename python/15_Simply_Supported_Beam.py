@@ -3,6 +3,7 @@
 #
 # Example:      15_Simply_Supported_Beam.py
 # Description:  Create a simply supported concrete beam.
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

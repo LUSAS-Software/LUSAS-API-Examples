@@ -3,6 +3,7 @@
 #
 # Example:      14_Create_and_assign_loads.py
 # Description:  Creates and assigns loads in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

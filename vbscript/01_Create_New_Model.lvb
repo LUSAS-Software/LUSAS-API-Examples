@@ -3,6 +3,7 @@
 '
 ' Example:      1_Create_New_Model.lvb
 ' Description:  Create a new LUSAS model
+' Author:       Finite Element Analysis Ltd
 ' 
 $ENGINE=VBScript
 

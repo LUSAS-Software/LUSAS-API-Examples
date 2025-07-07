@@ -3,6 +3,7 @@
 #
 # Example:      21_Create_Combinations_and_Envelopes.py
 # Description:  Creates combinations and envelopes in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

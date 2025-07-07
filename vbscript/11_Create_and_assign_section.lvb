@@ -4,7 +4,6 @@
 ' Example:      11_Create_and_assign_section.lvb
 ' Description:  Creates and assigns a section
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-28
 ' 
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs

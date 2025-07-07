@@ -3,6 +3,7 @@
 #
 # Example:      02_Create_New_Model.py
 # Description:  Create a new LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

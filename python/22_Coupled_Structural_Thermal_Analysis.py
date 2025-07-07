@@ -3,6 +3,7 @@
 #
 # Example:      22_Coupled_Structural_Thermal_Analysis.py
 # Description:  Creates coupled Thermal-Structural analysis in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

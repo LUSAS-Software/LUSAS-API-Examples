@@ -4,7 +4,6 @@
 ' Example:      3_Point_Creation.lvb
 ' Description:  Creates points
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-25
 '
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs

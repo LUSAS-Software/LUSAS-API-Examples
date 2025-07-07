@@ -3,6 +3,7 @@
 #
 # Example:      04_Line_Creation.py
 # Description:  Creates lines in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

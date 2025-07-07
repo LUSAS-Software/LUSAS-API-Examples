@@ -3,6 +3,7 @@
 #
 # Example:      32_User_Defined_Results_and_Design_Attributes.py
 # Description:  Create User Defined Results and Design Attributes in the running LUSAS model.
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

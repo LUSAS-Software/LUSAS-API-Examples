@@ -5,7 +5,6 @@
 ' Description:  This example asks the user for an attribute name or type and extracts all 
 '               attributes' properties in a CSV or a LUSAS data grid.
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-29
 ' 
 $ENGINE=VBSCRIPT
 

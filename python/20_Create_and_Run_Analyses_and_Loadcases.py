@@ -3,6 +3,7 @@
 #
 # Example:      20_Create_and_Run_Analyses_and_loadcases.py
 # Description:  Creates analyses, loadcases and solves them in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
 # 
 
 # Libraries:

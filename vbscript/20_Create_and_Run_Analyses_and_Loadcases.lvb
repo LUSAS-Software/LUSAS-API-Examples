@@ -4,7 +4,6 @@
 ' Example:      20_Create_and_Run_Analyses_and_loadcases.lvb
 ' Description:  Creates analyses, loadcases and solves them
 ' Author:       Finite Element Analysis Ltd
-' Date:         2025-04-28
 ' 
 ' Libraries: Load the Helpers.vbs which contains useful functions
 $INCLUDE %RunningScriptPath%\shared\Helpers.vbs
