@@ -1,0 +1,73 @@
+' LUSAS API (LPI) EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      18_Extract_Geometric_Properties.lvb
+' Description:  Extract geometric properties of lines (beams) and surfaces.
+' Author:       Finite Element Analysis Ltd
+' 
+$ENGINE=VBSCRIPT
+
+' Get all lines in the model
+all_lines = database.getObjects("Line")
+
+' Filter lines to keep only those with at least one geometric assignment
+Set lines = CreateObject("System.Collections.ArrayList")
+Dim line
+For Each line in all_lines
+    If UBound(line.getAssignments("Geometric")) >= 0 Then
+        lines.Add line
+    End If
+Next
+Call getTextWindow().writeLine("Found " & lines.count + 1 & " lines with geometric assignments out of " & UBound(all_lines) & " total lines")
+
+Dim length, section, area, t, Iyy, Ixx
+
+' Print geometric properties of each line
+If lines.Count > 0 Then
+    Call getTextWindow().writeLine("Line ID, Length, Section, Area, Iyy, Izz")
+    For Each line in lines
+        ' Get assigned geometric attribute
+        Set geomAttr = line.getAssignments("Geometric")(0).getAttribute()
+        
+        ' Get geometric properties
+        length = line.getLineLength()
+        section = geomAttr.getName()
+        area = geomAttr.getValue("A")
+        Iyy = geomAttr.getValue("Iyy")
+        Ixx = geomAttr.getValue("Izz")
+        Call getTextWindow().writeLine(line.getID() & ", " & length & ", " & section & ", " & area & ", " & Ixx & ", " & Iyy)
+
+        ' To see all the supported geometric properties, uncomment the next line:
+        ' Call getTextWindow().writeLine(geomAttr.getValueNames())
+    Next
+End If
+
+' Get all surfaces in the model
+all_surfs = database.getObjects("Surface")
+
+' Filter surfaces to keep only those with at least one geometric assignment
+Set surfs = CreateObject("System.Collections.ArrayList")
+Dim surf
+For Each surf in all_surfs
+    If UBound(surf.getAssignments("Geometric")) >= 0 Then
+        surfs.Add surf
+    End If
+Next
+Call getTextWindow().writeLine("Found " & surfs.count & " surfaces with geometric assignments out of " & UBound(all_surfs) & " total surfaces")
+
+' Print geometric properties of surfaces
+If surfs.Count > 0 Then
+    Call getTextWindow().writeLine("Surface ID, Area, Thickness")
+    For Each surf in surfs
+        ' Get assigned geometric attribute
+        Set geomAttr = surf.getAssignments("Geometric")(0).getAttribute()
+        
+        ' Get geometric properties
+        area = surf.getArea()
+        t = geomAttr.getValue("t")
+        Call getTextWindow().writeLine(surf.getID() & ", " & area & ", " & t)
+
+        ' To see all the supported geometric properties, uncomment the next line:
+        ' Call getTextWindow().writeLine(geomAttr.getValueNames())
+    Next
+End If
