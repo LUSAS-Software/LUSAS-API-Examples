@@ -20,6 +20,7 @@ Visual Basic Script (*VBScript*) code (files with *.vb or *.lvb extensions) can 
 | Attributes | Create a simply supported beam        | 15_Simply_Supported_Beam.lvb      |
 | Attributes | Extracts all attributes' properties in a data grid or CSV for the user given attribute names (UI input) | 16_Extract_attribute_values.lvb |
 | Attributes | Prints the attribute type(s) for the user given attribute names (UI input) | 17_Get_attribute_type_by_name.lvb |
+| Attributes | Extract geometric properties of lines (beams) and surfaces | 18_Extract_Geometric_Properties.lvb |
 | Analyses   | Create/solve analyses and loadcases   | 20_Create_and_Run_Analyses_and_Loadcases.lvb |
 | Analyses   | Create Combinations and Envelopes     | 21_Create_Combinations_and_Envelopes.lvb |
 | Analyses   | Create Coupled Structural-Thermal Analysis | 22_Coupled_Structural_Thermal_Analysis.lvb |
