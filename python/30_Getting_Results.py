@@ -68,6 +68,7 @@ for n in targetNodes:
     fz = n.getResults("Reaction", "FZ")
     if fz == 2.2250738585072014e-308:
         fz = 0
+
     print(fx, fy, fz)
 
     total_fx += fx

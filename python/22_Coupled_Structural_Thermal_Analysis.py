@@ -33,14 +33,6 @@ thermalAnalysis.setAsBase()
 thermalAnalysis.setUndeformedMeshStart()
 thermalAnalysis.setCoupled("Analysis 1")
 
-## Set coupling options
-database.options().setString("Coupling Type", "Thermal", False, "")
-database.options().setString("Coupling Method", "Time", False, "")
-database.options().setDouble("Coupling Write Start", 1e-3, False, "")
-database.options().setDouble("Coupling Read Start", 1e-3, False, "")
-database.options().setBoolean("Initialise Reference Temperatures", True, False, "")
-
-
 ## Set coupling model options (the options set in the "Couple analysis options" dialog)
 # Set the thermal analysis to run first
 database.options().setString("Coupling Type", "Thermal", False, "")
