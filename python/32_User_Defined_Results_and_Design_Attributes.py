@@ -126,21 +126,15 @@ database.getAttribute("Design", "fctm 2.21 MPa").assignTo(line1, 1)
 
 ## Create User Defined Result that read the design attribute fctm values and calculate if the section is cracked:
 
-# Set UDR options to disable variable checking when model has no design assignments yet
-opt = lusas.newUDROptions()
-opt.setErrorCheckingLevel("NoVars")
-
 # - fctm UDR
 # To avoid errors on elements that do not have a design attribute assigned, we can use the "isDefined" function 
 # to check if the design.concrete_cracking.fctm exists (design attribute is assigned). If it does not exist the UDR will return no value using the "none()" function.
-user_defined_results.setUserResultComponent("udr_fctm", results_entity, f"if (isDefined(design.{attr_scope}.fctm), design.{attr_scope}.fctm, none())", "Tensile capacity", opt)
+user_defined_results.setUserResultComponent("Design_fctm", results_entity, f"if (isDefined(design.{attr_scope}.fctm), design.{attr_scope}.fctm, none())", "Tensile capacity")
 
 # - isCracked UDR
 # Determine if the stress exceeds the tensile limit
-# Mind that when the UDR "fctm" returns the "none()" function, that value is almost 0. So we should manually check if the design.concrete_cracking.fctm
-# exists to avoid assuming fctm is 0.
-# In this case, once again we will return the "none()" function, so that modeller does not show the result.
-user_defined_results.setUserResultComponent("isCracked", results_entity, f"if (isDefined(udr_fctm), if(max_fct > udr_fctm, 1, 0), none())", "1 = cracked, 0 = not cracked")
+# Once again we will return the "none()" function if the design value does not exist (= design attribute is not assigned), so modeller does not show any results.
+user_defined_results.setUserResultComponent("isCracked", results_entity, f"if(isDefined(design.{attr_scope}.fctm), if(max(s_top, s_bot) > design.{attr_scope}.fctm, 1.0, 0.0), none())", "1 = cracked, 0 = not cracked")
 
 
 # It should be noted that instead of manually creating design attributes for each concrete type,
@@ -161,3 +155,7 @@ if not lusas.view().existsContoursLayer():
     lusas.view().insertContoursLayer()
 lusas.view().contours().setResults(results_entity, "isCracked")
 lusas.view().contours().chooseSettings(4)
+lusas.view().insertValuesLayer()
+
+# Set top-side view
+lusas.view().setIsometric()
