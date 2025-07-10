@@ -12,7 +12,7 @@ from shared.LPI import *
 # Helpers module (easier geometry creation)
 import shared.Helpers as Helpers
 
-# Connect on LUSAS and check if a model is open
+# Connect to LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
 # Throw error if no model is open

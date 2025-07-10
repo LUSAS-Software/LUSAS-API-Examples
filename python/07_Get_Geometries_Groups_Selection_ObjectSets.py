@@ -14,7 +14,7 @@ from shared.LPI import *
 import shared.Helpers as Helpers
 
 
-# Connect on LUSAS and check if a model is open
+# Connect to LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
 # Throw error if no model is open
@@ -59,7 +59,7 @@ surfaces : list[IFSurface] = object_set.getObjects("Surfaces")
 # Get all volumes
 volumes : list[IFVolume] = object_set.getObjects("Volumes")
 
-# Print number of geometries
+# Print number of objects of each type
 print(f"The model contains:")
 print(f" - {object_set.count("Nodes")} Nodes")
 print(f" - {object_set.count("Elements")} Elements")

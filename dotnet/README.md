@@ -27,7 +27,7 @@ VB.NET is especially suitable if you're already familiar with VBScript syntax an
 To work with VB.NET or C#, you need an IDE and a compiler. We recommend using [Visual Studio 2019](https://www.visualstudio.com/downloads) that combines both.
 
 Projects can be compiled as:
-- executables (`.exe`) that can externally connect on LUSAS through COM and do not require any additional setup,
+- executables (`.exe`) that can externally connect to LUSAS through COM and do not require any additional setup,
 - libraries (`.dll`) that can be loaded in LUSAS as custom modules (plugins).
 
 To easily create new plugin projects in Visual Studio, the LUSAS project template can used:

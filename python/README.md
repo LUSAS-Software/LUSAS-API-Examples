@@ -75,7 +75,7 @@ If you are using *Visual Studio Code* as your (IDE), it is recommended that you 
 
 Python can be executed in the traditional way, outside LUSAS, or similarly to *VBScripts*, through the Main Menu shortcut "Run Script".
 
-The examples in this directory assume that Python will connect on LUSAS externally. The connection will be established through the Component Object Model (COM) system, similarly to connecting on other software like MS Excel. A Python script can be run externally with the following CMD command: 
+The examples in this directory assume that Python will connect to LUSAS externally. The connection will be established through the Component Object Model (COM) system, similarly to connecting on other software like MS Excel. A Python script can be run externally with the following CMD command: 
 
 ```bash
 cd LUSAS-API-Examples/python/

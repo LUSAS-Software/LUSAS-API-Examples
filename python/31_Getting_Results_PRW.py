@@ -11,7 +11,7 @@ import os
 # LUSAS LPI module (easier connection and autocomplete)
 from shared.LPI import *
 
-# Connect on LUSAS and check if a model is open
+# Connect to LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
 # Throw error if no model is open

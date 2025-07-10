@@ -11,7 +11,7 @@
 from shared.LPI import *
 import csv
 
-# Connect on LUSAS and check if a model is open
+# Connect to LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
 # To successfully run this example you must have a model open (e.g. the model generated from example 15).
