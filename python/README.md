@@ -14,7 +14,7 @@ It is recommended that beginners start from the `Jupyter Notebook` folder, which
 | Geometry   | Creates lines                         | 04_Line_Creation.py    |
 | Geometry   | Creates surfaces                      | 05_Surface_Creation.py |
 | Geometry   | Creates volumes                       | 06_Volume_Creation.py  |
-| Geometry   | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | 07_Get_Geometries_Groups_Selection_ObjectSets.py |
+| Geometry   | Use ObjectSets (Database, Groups, Selection etc) to filter features (points, lines, surface, nodes, elements etc) | 07_Get_Geometries_Groups_Selection_ObjectSets.py |
 | Attributes | Create/assign meshes                 | 10_Create_and_assign_mesh.py     |
 | Attributes | Create/assign sections               | 11_Create_and_assign_section.py  |
 | Attributes | Create/assign materials              | 12_Create_and_assign_material.py |

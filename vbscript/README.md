@@ -11,7 +11,7 @@ Visual Basic Script (*VBScript*) code (files with *.vb or *.lvb extensions) can 
 | Geometry   | Creates lines                         | 04_Line_Creation.lvb    |
 | Geometry   | Creates surfaces                      | 05_Surface_Creation.lvb |
 | Geometry   | Creates volumes                       | 06_Volume_Creation.lvb  |
-| Geometry   | Use ObjectSets (Database, Groups, Selection etc) and filter geometries | 07_Get_Geometries_Groups_Selection_ObjectSets.lvb |
+| Geometry   | Use ObjectSets (Database, Groups, Selection etc) to filter features (points, lines, surface, nodes, elements etc) | 07_Get_Geometries_Groups_Selection_ObjectSets.lvb |
 | Attributes | Create/assign meshes                  | 10_Create_and_assign_mesh.lvb     |
 | Attributes | Create/assign sections                | 11_Create_and_assign_section.lvb  |
 | Attributes | Create/assign materials               | 12_Create_and_assign_material.lvb |

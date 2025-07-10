@@ -1,8 +1,8 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      07_Get_Existing_Geometries.py
-# Description:  Use ObjectSets (Database, Groups, Selection etc) and filter geometries
+# Example:      07_ObjectSets.py
+# Description:  Example on how to use ObjectSets (Database, Groups, Selection etc) to filter features (points, lines, surface, nodes, elements etc)
 # Author:       Finite Element Analysis Ltd
 # 
 
@@ -36,28 +36,28 @@ Helpers.sweep_surfaces([surf], [0, 0, 1])
 
 
 ##############################################################################
-# Access existing geometries
+# Get model objects by type
 
 # Get model database (which is a special type of IFObjectSet)
 object_set = lusas.db()
 
 # Get all nodes
-nodes : list[IFNode] = object_set.getObjects("Nodes")
+nodes : list["IFNode"] = object_set.getObjects("Nodes")
 
 # Get all elements
-elements : list[IFElement] = object_set.getObjects("Elements")
+elements : list["IFElement"] = object_set.getObjects("Elements")
 
 # Get all points
-points : list[IFPoint] = object_set.getObjects("Points")
+points : list["IFPoint"] = object_set.getObjects("Points")
 
 # Get all lines
-lines : list[IFLine] = object_set.getObjects("Lines")
+lines : list["IFLine"] = object_set.getObjects("Lines")
 
 # Get all surface
-surfaces : list[IFSurface] = object_set.getObjects("Surfaces")
+surfaces : list["IFSurface"] = object_set.getObjects("Surfaces")
 
 # Get all volumes
-volumes : list[IFVolume] = object_set.getObjects("Volumes")
+volumes : list["IFVolume"] = object_set.getObjects("Volumes")
 
 # Print number of objects of each type
 print(f"The model contains:")
@@ -77,7 +77,7 @@ else:
 
 
 ##############################################################################
-# Set of features (object sets)
+# Add and remove objects from sets
 
 # Create a new object set
 new_object_set = lusas.newObjectSet()
@@ -91,9 +91,9 @@ if len(points) > 0:
 print(f"The new object set now contains {new_object_set.count("Points")} / {len(points)} Points")
 
 
-# Object sets can also be used to access lower or higher order geometries (e.g. the lines of a surface, or the volumes that contain the included surfaces).
+# Object sets can also be used to access lower or higher order features (e.g. the lines of a surface, or the volumes that contain the included surfaces).
 
-# Add higher order Line feature (the lines using the object set contained points)
+# Add higher order Line features (the lines using the object set contained points)
 new_object_set.addHOF("Lines")
 
 print(f"The new object set now contains {new_object_set.count("Points")} Points and {new_object_set.count("Lines")}  Lines")
