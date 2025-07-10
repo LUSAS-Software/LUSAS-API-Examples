@@ -147,8 +147,8 @@ print(f"Selection contains {lusas.selection().count("all")} feature(s)")
 # Geometry filtering - Get volume top points example
 
 # 1. Get all volume points by adding it in an objectSet
-t_object_set = lusas.newObjectSet().add(volumes[0]).addLOF("Points")
-volumePoints : list[IFPoint] = t_object_set.getObjects("Points")
+object_set = lusas.newObjectSet().add(volumes[0]).addLOF("Points")
+volumePoints : list[IFPoint] = object_set.getObjects("Points")
 
 # 2. Print points info
 print("Volume points:")
