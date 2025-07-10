@@ -14,7 +14,7 @@ from shared.LPI import *
 # Time module to measure execution time
 import time
 
-# Connect on LUSAS and check if a model is open
+# Connect to LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
 # To successfully run this example you must have a model solved (e.g. the model generated from example 15).
