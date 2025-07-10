@@ -9,7 +9,7 @@ This directory includes a plethora of examples going through most of the LPI. Ju
 | General    | Connects on LUSAS instance                                      | 01 Getting Connected.ipynb    |
 | General    | Handle string parsing and returned values                       | 02 Expression Parsing and Return values.ipynb |
 | Geometry   | Creates points, lines, surfaces and volumes                     | 03 Geometry creation.ipynb    |
-| Geometry   | Use ObjectSets (Database, Groups, Selection etc) to filter features (points, lines, surface, nodes, elements etc) | 04 Get Geometries, Groups, Selection and ObjectSets.ipynb |
+| Geometry   | Use ObjectSets (Database, Groups, Selection etc) to filter features (points, lines, surface, nodes, elements etc) | 04 ObjectSets.ipynb |
 | Geometry   | Creates a simple multi-storey 3D Frame geometry out of lines     | 05 Simple 3D Frame.ipynb      |
 | Attributes | Creates and solves a steel beam cantilever model by creating basic mesh, geometric, material, support and loading attributes. | 10 Simple Cantilever beam.ipynb |
 | Attributes / Results | Creates and solves a steel beam simply supported model and processes the results. | 11 Simply Supported Line Beam.ipynb |
