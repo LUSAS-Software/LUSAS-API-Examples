@@ -15,15 +15,12 @@ import shared.Helpers as Helpers
 # Connect to LUSAS and check if a model is open
 lusas = get_lusas_modeller()
 
-# Throw error if no model is open
-# alternatively, you can use `lusas.newProject("Structural")` to create a new model
-if not lusas.existsDatabase():
-    raise Exception("A model must be open before running this code")
+# Throw error if open model is not saved
+if lusas.existsDatabase() and lusas.db().isModified():
+    raise Exception("This script will create a new model. Please save or close the current model and try again")
 
 # Initialise
 Helpers.initialise(lusas) # Initialise the Helpers module
-database = lusas.db() # Save database in variable
-
 
 # User defined results are formulae that can be evaluated using model parameters such as geometric and material attribute values
 # as well as load effects from the analysis allow new results to be displayed in any LUSAS results processing tools (Contours, Reports, Diagrams etc).
@@ -36,7 +33,14 @@ database = lusas.db() # Save database in variable
 
 
 ######################################################
-## Create a simply supported concrete beam to use in this example
+## Create a simply supported concrete beam model to use in this example
+
+# Create a new model
+lusas.newProject("Structural", "Simple_beam_model_UDRs")
+database = lusas.db()
+
+database.setAnalysisCategory("3D")
+database.setVerticalDir("Z")
 
 # Set units to N and m
 database.setModelUnits(lusas.getUnitSet("N,m,kg,s,C"))
@@ -155,5 +159,5 @@ database.openAllResults(False)
 # Add the contours layer to the view if it does not exist
 if not lusas.view().existsContoursLayer():
     lusas.view().insertContoursLayer()
-lusas.view().contours().setResults("Concrete Cracking", "isCracked")
+lusas.view().contours().setResults(results_entity, "isCracked")
 lusas.view().contours().chooseSettings(4)
