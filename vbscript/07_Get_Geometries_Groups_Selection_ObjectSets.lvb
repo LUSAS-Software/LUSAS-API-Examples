@@ -1,8 +1,8 @@
 ' LUSAS API (LPI) EXAMPLES
 ' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 '
-' Example:      7_Get_Existing_Geometries.lvb
-' Description:  Use ObjectSets (Database, Groups, Selection etc) and filter geometries
+' Example:      07_ObjectSets.lvb
+' Description:  Example on how to use ObjectSets (Database, Groups, Selection etc) to filter features (points, lines, surface, nodes, elements etc)
 ' Author:       Finite Element Analysis Ltd
 ' 
 
@@ -26,7 +26,7 @@ Call sweep_surfaces(Array(surf), Array(0, 0, 1))
 
 
 '##############################################################################
-'## Access existing geometries
+'## Get model objects by type
 
 ' Get model database (which is a special type of IFObjectSet)
 Set object_set = database
@@ -67,7 +67,7 @@ Else
 End IF
 
 '##############################################################################
-'## Set of features (object sets)
+'## Add and remove objects from sets
 
 ' Create a new object set
 Set new_object_set = newObjectSet()
@@ -82,9 +82,9 @@ End If
 Call getTextWindow().writeLine("The new object set now contains " & new_object_set.count("Points") & " / " & UBound(points) + 1 & " Points")
 
 
-' Object sets can also be used to access lower or higher order geometries (e.g. the lines of a surface, or the volumes that contain the included surfaces).
+' Object sets can also be used to access lower or higher order features (e.g. the lines of a surface, or the volumes that contain the included surfaces).
 
-' Add higher order Line feature (the lines using the object set contained points)
+' Add higher order Line features (the lines using the object set contained points)
 Call new_object_set.addHOF("Lines")
 
 Call getTextWindow().writeLine("The new object set now contains " & new_object_set.count("Points") & " Points and " & new_object_set.count("Lines") & "  Lines")
