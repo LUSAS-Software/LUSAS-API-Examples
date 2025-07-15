@@ -133,7 +133,7 @@ user_defined_results.setUserResultComponent("Design_fctm", results_entity, f"if 
 
 # - isCracked UDR
 # Determine if the stress exceeds the tensile limit
-# Once again we will return the "none()" function if the design value does not exist (= design attribute is not assigned), so modeller does not show any results.
+# Once again we will return the "none()" function if the design value does not exist (= design attribute is not assigned), so Modeller does not show any results.
 user_defined_results.setUserResultComponent("isCracked", results_entity, f"if(isDefined(design.{attr_scope}.fctm), if(max(s_top, s_bot) > design.{attr_scope}.fctm, 1.0, 0.0), none())", "1 = cracked, 0 = not cracked")
 
 

@@ -206,9 +206,9 @@ Function create_rectangular_section(db, name, breadth, depth)
     Set create_rectangular_section = attr
 End Function
 
-' This function checks if a value is NaN (Not a Number) accounting for LUSAS modeller NA value equal to 2.2250738585072014e-308.
+' This function checks if a value is NaN (Not a Number) accounting for LUSAS Modeller NA value equal to 2.2250738585072014e-308.
 Function isNan(value)
     ' Check if value is NaN/Null
-    ' Also check for the specific LUSAS modeller NA value
+    ' Also check for the specific LUSAS Modeller NA value
     isNan = IsNull(value) Or (value = 2.2250738585072014E-308)
 End Function

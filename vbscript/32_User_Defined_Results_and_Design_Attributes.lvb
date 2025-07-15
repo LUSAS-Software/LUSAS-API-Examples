@@ -132,7 +132,7 @@ Call user_defined_results.setUserResultComponent("udr_fctm", results_entity, "if
 ' Determine if the stress exceeds the tensile limit
 ' Mind that when the UDR "fctm" returns the "none()" function, that value is almost 0. So we should manually check if the design.concrete_cracking.fctm
 ' exists to avoid assuming fctm is 0.
-' In this case, once again we will return the "none()" function, so that modeller does not show the result.
+' In this case, once again we will return the "none()" function, so that Modeller does not show the result.
 Call user_defined_results.setUserResultComponent("isCracked", results_entity, "if (isDefined(udr_fctm), if(max_fct > udr_fctm, 1, 0), none())", "1 = cracked, 0 = not cracked")
 'Call user_defined_results.setUserResultComponent("isCracked", results_entity, "if (isDefined(design." & attr_scope & ".fctm), if(max_fct > design." & attr_scope & ".fctm, 1, 0), none())", "1 = cracked, 0 = not cracked", opt)
 

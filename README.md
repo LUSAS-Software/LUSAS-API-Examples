@@ -20,7 +20,7 @@ These examples are tailored for **LUSAS v22.0** (see repository branches for oth
 
     Browse each directory to read more about each interaction method.
 
-    Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and have ability to combine `python` code, text, and visualizations in a single document.
+    Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and has the ability to combine `python` code, text, and visualizations in a single document.
 
 ## Prerequisites
 

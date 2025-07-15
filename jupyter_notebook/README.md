@@ -1,6 +1,6 @@
 # Jupyter Notebook Examples
 
-This directory includes a plethora of examples going through most of the LPI. Jupyter Notebook examples is the recommended way to interact with LUSAS for beginners.
+This directory includes a plethora of examples going through most of the LPI. Working through Jupyter Notebook examples is the recommended way to interact with LUSAS for beginners.
 
 ## 📚 Examples Included
 

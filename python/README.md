@@ -136,9 +136,9 @@ call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell""
 
 3. **Invisible LUSAS Modeller instances**
 
-   To speed-up the script execution, the UI can be disabled using the `lusas.setVisible(False)` command. This will completely hide LUSAS modeller which can cause confusion if the `lusas.setVisible(True)` command is not executed at the end of the script (e.g. due to a code error). The modeller instance would still be accessible through the LPI and its process will be listed under the `Background processes` in Window's `Task Manager`.
+   To speed-up the script execution, the UI can be disabled using the `lusas.setVisible(False)` command. This will completely hide LUSAS Modeller which can cause confusion if the `lusas.setVisible(True)` command is not executed at the end of the script (e.g. due to a code error). The Modeller instance would still be accessible through the LPI and its process will be listed under the `Background processes` in Window's `Task Manager`.
    
-   It is noted that in LUSAS v22+, it may be preferable to use `lusas.enableUI(False)` instead to avoid hiding the modeller window. The UI will then remain unresponsive until `lusas.enableUI(True)` is called.
+   It is noted that in LUSAS v22+, it may be preferable to use `lusas.enableUI(False)` instead to avoid hiding the Modeller window. The UI will then remain unresponsive until `lusas.enableUI(True)` is called.
 
 4. **ModuleNotFoundError**
 

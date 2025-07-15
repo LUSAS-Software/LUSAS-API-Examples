@@ -429,7 +429,7 @@ def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:f
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
 
 def isNan(value: float) -> bool:
-    """Check if a value is NaN (Not a Number) accounting for LUSAS modeller NA value equal to 2.2250738585072014e-308.
+    """Check if a value is NaN (Not a Number) accounting for LUSAS Modeller NA value equal to 2.2250738585072014e-308.
 
     Args:
         value (float): Value to check

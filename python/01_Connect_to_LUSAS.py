@@ -16,7 +16,7 @@ lusas = win32.dynamic.Dispatch("Lusas.Modeller.22.0")
 #          You can install the missing library by running the command "pip install pywin32==308" in the terminal.
 #          For more information please refer to the installation guide.
 
-# Ensure modeller is visible
+# Ensure Modeller is visible
 lusas.setVisible(True)
 
 # Print in the LUSAS log to test the connection
