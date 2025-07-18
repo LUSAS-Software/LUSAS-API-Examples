@@ -18,6 +18,7 @@ lusas = win32.dynamic.Dispatch("Lusas.Modeller.22.0")
 
 # Ensure Modeller is visible
 lusas.setVisible(True)
+lusas.enableUI(True)
 
 # Print in the LUSAS log to test the connection
 lusas.getTextWindow().writeLine("Hello world!")
@@ -30,6 +31,10 @@ lusas.getTextWindow().writeLine("Hello world!")
 from shared.LPI import *
 
 lusas = get_lusas_modeller()
+# Ensure Modeller is visible
+lusas.setVisible(True)
+lusas.enableUI(True)
+
 lusas.getTextWindow().writeLine("Hello world! (LPI module)")
 
 
