@@ -1,4 +1,4 @@
-![LPI-examples-cover](./_img/header-logo-long-purple.png)
+![LPI-examples-cover](./_img/header-logo-lusas_api_examples.png)
 
 # LUSAS API (LPI) Examples
 
