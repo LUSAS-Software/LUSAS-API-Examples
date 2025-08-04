@@ -6,6 +6,8 @@ This repository provides practical and minimal examples of using the LUSAS Progr
 
 These examples are tailored for **LUSAS v21.1** (see repository branches for other versions).
 
+The full LPI documentation can be found inside the LUSAS installation folder at: `C:\Program Files (x86)\LUSAS211\Programs (x86)\LPIHelp\lpi.html`
+
 ## What is LUSAS?
 
 [LUSAS](https://www.lusas.com/) is a powerful finite element analysis software used for structural, bridge, geotechnical, and general engineering simulation. The **LUSAS Programming Interface (LPI)** allows automation of model generation, material assignment, loading, solving, and result extraction (read more about it [on the website](https://www.lusas.com/products/information/lusas_programmable_interface.html)).
