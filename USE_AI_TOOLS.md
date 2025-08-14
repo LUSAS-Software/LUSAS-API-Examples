@@ -77,7 +77,7 @@ If you encounter an error, use AI to try to resolve it:
 
   Ask AI targeted questions for best results.
   
-  If you notice that the AI hallucinates or the answers deviate from the repository content, you can be refrase your prompts to start with:
+  If you notice that the AI hallucinates or the answers deviate from the repository content, refrase your prompts to start with:
 
   > Base on this repository, ...
 
