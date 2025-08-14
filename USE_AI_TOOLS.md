@@ -11,11 +11,11 @@ The easiest way to use an LLM (Large Language Model) with this repository is by 
 2. Navigate to the repository's [main page](https://github.com/LUSAS-Software/LUSAS-API-Examples).
 3. Click on the `Chat with Copilot` button at the top of the page:
 
-  ![Chat-with-copilot-button](./_img/ai-chat_with_copilot.png)
+  <img title="Chat-with-copilot-button" src="./_img/ai-chat_with_copilot.png" width="width: 500px;">
 4. Ask a question; for example:
   > Are there any examples that create materials?
 
-  ![Copilot-example-query](./_img/ai-example_query.png)
+  <img title="Copilot-example-query" src="./_img/ai-example_query.png" width="width: 500px;">
 ---
 
 
