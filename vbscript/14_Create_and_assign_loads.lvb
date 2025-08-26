@@ -74,3 +74,17 @@ Call pointLoadAttr.assignTo(surfPoints, 1)
 Call database.createMeshLine("Dummy Line Mesh").setSize("BMI21", 1).assignTo(lines, 1)
 Call database.createMeshSurface("Dummy Surface Mesh").setRegular("QTS4", 0, 0, True).assignTo(surface1, 1)
 Call database.updateMesh()
+
+
+'##############################################################################
+' Get features (i.e. points, line, surfaces) where attribute is assigned
+
+' Get all objects on which the thickness attribute is assigned
+set getAsgn = newAssignment().setConsiderAllAssigns(True)
+set assignedObjSet = newObjectSet().add(distrLoadAttr, getAsgn)
+
+' To get the assigned objects for a specific loadcase, the loadcase can be specified with the setLoadset() method, for example:
+' set getAsgn = newAssignment().setLoadset("Loadcase 1")
+
+' Print number of geometries the attribute is assigned on
+Call getTextWindow().writeLine(distrLoadAttr.getName() & " attribute is assigned on " & assignedObjSet.count("all") & " features")

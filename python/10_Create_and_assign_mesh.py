@@ -64,3 +64,17 @@ surfMeshAttr.assignTo(surface1, 1)
 ######################################################
 # Update the mesh to apply the changes
 database.updateMesh()
+
+
+######################################################
+# Get features (i.e. points, line, surfaces) where attribute is assigned
+
+# Get all objects on which the thickness attribute is assigned
+getAsgn = lusas.newAssignment().setConsiderAllAssigns(True)
+assignedObjSet = lusas.newObjectSet().add(surfMeshAttr, getAsgn)
+
+# To get the assigned objects for a specific loadcase, the loadcase can be specified with the setLoadset() method, for example:
+# getAsgn = lusas.newAssignment().setLoadset("Loadcase 1")
+
+# Print number of geometries the attribute is assigned on
+lusas.getTextWindow().writeLine(surfMeshAttr.getName() + " attribute is assigned on " + str(assignedObjSet.count("all")) + " features")
