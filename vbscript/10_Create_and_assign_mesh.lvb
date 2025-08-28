@@ -54,3 +54,21 @@ Call surfMeshAttr.assignTo(surfaces1, 1)
 '#####################################################
 ' Update the mesh to apply the changes
 Call database.updateMesh()
+
+
+'##############################################################################
+' Get features (i.e. points, line, surfaces) where attribute is assigned
+
+' Get all objects on which surface mesh attribute is assigned
+set getAllAsgn = newAssignment().setConsiderAllAssigns(True)
+set allAttrAssignedObjSet = newObjectSet().add(surfMeshAttr, getAllAsgn)
+
+' Print number of geometries the attribute is assigned on
+Call getTextWindow().writeLine("Shell Mesh attribute is assigned on " & allAttrAssignedObjSet.count("all") & " features")
+
+' Or get line mesh attribute assigned objects for a specific loadcase:
+set getLcAsgn = newAssignment().setLoadset("Loadcase 1")
+set lc1AttrAssignedObjSet = newObjectSet().add(lineMeshAttr, getLcAsgn)
+
+' Print number of geometries the attribute is assigned for loadcase 1
+Call getTextWindow().writeLine("Beam Mesh attribute is assigned on " & lc1AttrAssignedObjSet.count("all") & " features (Loadcase 1)")

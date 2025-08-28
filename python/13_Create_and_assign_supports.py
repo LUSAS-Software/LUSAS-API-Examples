@@ -82,3 +82,17 @@ attr.assignTo(surface1, 1)
 database.createMeshLine("Dummy Line Mesh").setSize("BMI21", 1).assignTo(lines, 1)
 database.createMeshSurface("Dummy Surface Mesh").setRegular("QTS4", 0, 0, True).assignTo(surface1, 1)
 database.updateMesh()
+
+
+######################################################
+# Get features (i.e. points, line, surfaces) where attribute is assigned
+
+# Get all objects on which the thickness attribute is assigned
+getAsgn = lusas.newAssignment().setConsiderAllAssigns(True)
+assignedObjSet = lusas.newObjectSet().add(attr, getAsgn)
+
+# To get the assigned objects for a specific loadcase, the loadcase can be specified with the setLoadset() method, for example:
+# getAsgn = lusas.newAssignment().setLoadset("Loadcase 1")
+
+# Print number of geometries the attribute is assigned on
+lusas.getTextWindow().writeLine(attr.getName() + " attribute is assigned on " + str(assignedObjSet.count("all")) + " features")

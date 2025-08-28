@@ -113,3 +113,17 @@ concrete_material_attr.setValueDescription("E3", "Modulus of elasticity 3", Fals
 
 # Assign material to the surface on loadcase 1
 concrete_material_attr.assignTo(surface1, 1)
+
+
+######################################################
+# Get features (i.e. points, line, surfaces) where attribute is assigned
+
+# Get all objects on which the thickness attribute is assigned
+getAsgn = lusas.newAssignment().setConsiderAllAssigns(True)
+assignedObjSet = lusas.newObjectSet().add(concrete_material_attr, getAsgn)
+
+# To get the assigned objects for a specific loadcase, the loadcase can be specified with the setLoadset() method, for example:
+# getAsgn = lusas.newAssignment().setLoadset("Loadcase 1")
+
+# Print number of geometries the attribute is assigned on
+lusas.getTextWindow().writeLine(concrete_material_attr.getName() + " attribute is assigned on " + str(assignedObjSet.count("all")) + " features")

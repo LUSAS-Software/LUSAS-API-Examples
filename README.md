@@ -41,6 +41,10 @@ The full LPI documentation can be found inside the LUSAS installation folder at:
 
     For step by step installation guides, see each relevant directory.
 
+## 🤖 Using AI tools alongside this repository
+
+See the [use AI tools guide](./USE_AI_TOOLS.md) for tips on leveraging AI assistants (such as GitHub Copilot) to explore, generate, and understand code examples in this repository. The guide covers common AI-assisted workflows, troubleshooting, and best practices to maximize productivity with LUSAS API examples.
+
 ## 🤝 Contributing
 
 We welcome contributions!  You can contribute by:

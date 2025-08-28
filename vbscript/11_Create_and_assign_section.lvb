@@ -114,3 +114,17 @@ Call database.updateMesh()
 Call view().attributes().setVisible(True)
 Call view().attributes().setDrawStyle("Geometric", "Arrows")
 Call view().attributes().visualiseAll("Geometric")
+
+
+'##############################################################################
+' Get features (i.e. points, line, surfaces) where attribute is assigned
+
+' Get all objects on which the thickness attribute is assigned
+set getAsgn = newAssignment().setConsiderAllAssigns(True)
+set assignedObjSet = newObjectSet().add(thicknessAttr, getAsgn)
+
+' To get the assigned objects for a specific loadcase, the loadcase can be specified with the setLoadset() method, for example:
+' set getAsgn = newAssignment().setLoadset("Loadcase 1")
+
+' Print number of geometries the attribute is assigned on
+Call getTextWindow().writeLine(thicknessAttr.getName() & " attribute is assigned on " & assignedObjSet.count("all") & " features")
