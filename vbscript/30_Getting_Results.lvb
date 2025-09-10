@@ -180,6 +180,9 @@ Call context.getCalcResultsSet().add(beamsObjSet)
 ' Set loadset 1 as the active loadset of the context
 Call context.setActiveLoadset(1)
 
+' Get the internal point results for the set context
+Set results_my = database().getResultsComponentSet("Force/Moment - Thick 3D Beam", "My", "Internal", context)
+
 Call textWin.writeLine("") ' Add a blank line to the output window
 Call textWin.writeLine("Force/Moment results: (from ObjectSet using ResultsComponentSet and set context)")
 For Each e in beamsObjSet.getObjects("Element")
