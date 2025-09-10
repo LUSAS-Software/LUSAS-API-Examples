@@ -176,6 +176,9 @@ context.getCalcResultsSet().add(beamsObjSet)
 # Set loadset 1 as the active loadset of the context
 context.setActiveLoadset(1)
 
+# Get the internal point results for the set context
+results_my = lusas.database().getResultsComponentSet("Force/Moment - Thick 3D Beam", "My", "Internal", context)
+
 print("Force/Moment results: (from ObjectSet using ResultsComponentSet and set context)")
 for e in beamsObjSet.getObjects("Element"):
     # Note the unitset is not optional but providing None uses the current database units
