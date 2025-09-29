@@ -47,8 +47,8 @@ The full LPI documentation can be found inside the LUSAS installation folder at:
 To get started running the examples in this repository:
 1. Select the correct branch for your LUSAS version (top of page).
 2. Get the files from `Code` > `Download ZIP` (top of page).
-<img src="./_img/branches+download.png" alt="get-started-branch-download" width="600"/>
 3. Follow the instructions to install and set up [python](./python/README.md) and [jupyter notebooks](./jupyter_notebook/README.md).
+<img src="./_img/branches+download.png" alt="get-started-branch-download" width="600"/>
 
 ## 🤖 Using AI tools alongside this repository
 
