@@ -15,11 +15,11 @@ The full LPI documentation can be found inside the LUSAS installation folder at:
 
 ## 📁 Repository Structure
 
-- `python/` – Python examples
-- `jupyter_notebook/` – Python code blocks notebooks
-- `vbscript/` – Legacy examples in VBScript (default LUSAS command bar language)
-- `dotnet/` – .NET interop examples (C# & VB.NET)
-- `grasshopper/` – Rhinoceros Grasshopper examples
+- [`python/`](./python/) – Python examples
+- [`jupyter_notebook/`](./jupyter_notebook/) – Python code blocks notebooks
+- [`vbscript/`](./vbscript/) – Legacy examples in VBScript (default LUSAS command bar language)
+- [`dotnet/`](./dotnet/) – .NET interop examples (C# & VB.NET)
+- [`grasshopper/`](./grasshopper/) – Rhinoceros Grasshopper examples
 
   Browse each directory to read more about each interaction method.
 
@@ -41,6 +41,14 @@ The full LPI documentation can be found inside the LUSAS installation folder at:
   - Grasshopper LUSAS plugin
 
     For step by step installation guides, see each relevant directory.
+
+## 🏃🏽 Get started
+
+To get started running the examples in this repository:
+1. Select the correct branch for your LUSAS version (top of page).
+2. Get the files from `Code` > `Download ZIP` (top of page).
+<img src="./_img/branches+download.png" alt="get-started-branch-download" width="600"/>
+3. Follow the instructions to install and set up [python](./python/README.md) and [jupyter notebooks](./jupyter_notebook/README.md).
 
 ## 🤖 Using AI tools alongside this repository
 
