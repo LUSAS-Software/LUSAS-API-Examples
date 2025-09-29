@@ -2,7 +2,7 @@
 
 This folder contains Python scripts that interact with LUSAS creating model features or accessing analysis results.
 
-It is recommended that beginners start from the `Jupyter Notebook` folder, which contains a plethora of examples in a friendly Notebook framework of Python blocks.
+It is recommended that beginners start from the [`Jupyter Notebook`](../jupyter_notebook/) folder, which contains a plethora of examples in a friendly Notebook framework of Python blocks.
 
 ## 📚 Examples Included
 
@@ -29,6 +29,7 @@ It is recommended that beginners start from the `Jupyter Notebook` folder, which
 | Results    | Get results with Print Results Wizard             | 31_Getting_Results_PRW.py |
 | Results    | Create User Defined Results and Design Attributes | 32_User_Defined_Results_and_Design_Attributes.py |
 
+Additional examples are included in the [`Parametric_Models`](./Parametric_Models/) folder.
 
 ## ⚙️ Setting up Python on Windows
 
