@@ -108,8 +108,8 @@ $ENGINE=VBSCRIPT
 ' Create a user menu to host all menu entries
 set myMenu = menu.appendMenu("User Menu")
 ' Create a new menu item
-call myMenu.appendItem("My script (cmp shown)", "CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"" " )
-call myMenu.appendItem("My script (cmp hidden)", "CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"", 0, true" )
+call myMenu.appendItem("My script (cmd shown)", "CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"" " )
+call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell"").Run ""py C:\\path_to_my_script\myScript.py"", 0, true" )
 ```
 
 ## 🔍🐛 Troubleshooting
