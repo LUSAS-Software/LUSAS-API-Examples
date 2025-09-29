@@ -1,6 +1,6 @@
-# Jupyter Notebook Wizard Examples
+# Jupyter Notebook Parametric Models Examples
 
-This directory includes examples that create structures.
+This directory includes examples that create parametric structures.
 
 ## 📚 Examples Included
 

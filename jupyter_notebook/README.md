@@ -20,7 +20,7 @@ This directory includes a plethora of examples going through most of the LPI. Wo
 | Results    | Create Print Result Wizards and export to spreadsheets and txts | 31 Getting Results PRW.ipynb  |
 | Results    | Create User Defined Results                                     | 32 User Defined Results.ipynb |
 
-Additional examples are included in the `Tools` and `Wizards` folders.
+Additional examples are included in the [`Tools`](./Tools/) and [`Parametric_Models`](./Parametric_Models/) folders.
 
 Some more examples can be found in [this repository](https://github.com/CadairIdris/LusasNoteBooks/tree/master) by @CadairIdris.
 
