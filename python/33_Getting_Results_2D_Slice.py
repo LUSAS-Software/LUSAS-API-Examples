@@ -93,10 +93,22 @@ NA_VALUE = 2.2250738585072014e-308
 
 if print_in_grid:
     # Print results to grid window
-    # Note: Grid window creation may require specific LUSAS LPI grid window type
-    # For now, we'll use text output instead
-    print("Grid output not yet implemented in Python version - using text output instead")
-    print_in_grid = False
+    grid : 'IFLPIGridWindow' = lusas.createGridWindow(lusas.nextGridWindowID())
+    title = f"Slice results ({entity}, {component}, {location})"
+    grid.createTab(title, title)
+    grid.setColHeaders(title, ["Distance", "Value"])
+
+    # Create 2D array for grid data
+    data = []
+    for i in range(len(values)):
+        row = [round(distances[i], print_decimals)]
+        if values[i] != NA_VALUE:
+            row.append(round(values[i], print_decimals))
+        else:
+            row.append("NA")
+        data.append(row)
+    
+    grid.setData(title, data, False, False, False)
 
 else:
     # Print results to text window
