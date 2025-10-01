@@ -26,6 +26,8 @@ Visual Basic Script (*VBScript*) code (files with *.vb or *.lvb extensions) can 
 | Analyses   | Create Coupled Structural-Thermal Analysis | 22_Coupled_Structural_Thermal_Analysis.lvb |
 | Results    | Get results from Elements/Nodes            | 30_Getting_Results.lvb     |
 | Results    | Get results with Print Results Wizard      | 31_Getting_Results_PRW.lvb |
+| Results    | Create User Defined Results and Design Attributes | 32_User_Defined_Results_and_Design_Attributes.lvb |
+| Results    | Prints results along a 2D slice and calculates the total resultant and total moment. | 33_Getting_Results_2D_Slice.lvb |
 
 More examples can be found in your LUSAS installation folder at `<lusas_installation_path>\LUSAS220\Programs\scripts\LPIExamples`.
 

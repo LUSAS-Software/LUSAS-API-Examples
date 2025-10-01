@@ -1,0 +1,166 @@
+' LUSAS API (LPI) EXAMPLES
+' (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+'
+' Example:      33_Getting_Results_2D_Slice.lvb
+' Description:  Prints results along a 2D slice and calculates the total resultant and total moment.
+'               The total resultant and total moment are calculated through integration using the trapezoidal rule.
+' Author:       Finite Element Analysis Ltd
+' 
+$ENGINE=VBScript
+
+' To successfully run the code below you must have:
+' - a compatible model:
+    ' - a 2D continuum model,
+    ' - a shell, or a plate model,
+    ' - a slice section which was cut through a solid model
+' - the active loadcase solved
+' - a line that passes the target area selected
+' Caution: In axisymmetric models, the variable transverse thickness is not accounted.
+
+' Result to extract:
+entity = "Stress"
+component = "SY"
+location = "nodal" ' Can be "nodal", "Gauss" / "Internal"
+
+printDecimals = 3 ' Number of decimal places to print in the text window
+printInGrid = true ' If true, results are printed in a grid window instead of the text window
+
+' Check if a model is open:
+If not existsDatabase() Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "A model must be open before running this code" & vbCrLf)
+End If
+
+' Check if a line is selected
+If selection().count("Line") = 0 Then
+    Call Err.Raise(vbObjectError + 10, "Example Script", vbCrLf & "No line selected. Please select a line to get results from." & vbCrLf)
+End If
+' Get the first selected line
+Set targetLine = selection().getObjects("Line")(0)
+
+
+'#####################################################
+' Create an inspection line
+Set inspectionLine = database.createInspectionLine("Temp_InspLine")
+
+' Set inspection line range
+Call inspectionLine.setExtent("Full model") 
+' Can also be "group" folowed by group name
+' inspectionLine.setExtent("group", groupName)
+
+' Set search projection direction to global Z direction
+Call inspectionLine.setProjection(0, 0, 1.0)
+
+' Define the geometry of the inspection line (based on the selected line)
+Set geom_data = newGeometryData()
+Call geom_data.setCreateMethod("straight")
+Call geom_data.setLowerOrderGeometryType("coordinates")
+Set p1 = targetLine.getStartPoint()
+Set p2 = targetLine.getEndPoint()
+Call geom_data.addCoords(p1.getX(false), p1.getY(false), p1.getZ(false), True)
+Call geom_data.addCoords(p2.getX(false), p2.getY(false), p2.getZ(false), True)
+Call inspectionLine.setLocationLine(geom_data)
+
+
+'#####################################################
+' Create/Get slice
+' Get Results Component Sets
+
+' Get the internal point results for all thick beam elements
+Set results_set = database().getResultsComponentSet(entity, component, location)
+component_index = results_set.getComponentNumber(component)
+
+' Get slice results
+Dim distances, values
+Call results_set.getGraphSliceData(component_index, inspectionLine, distances, values)
+
+' Clean up & free up memory
+Set results_set = Nothing
+Call database().Delete(inspectionLine)
+
+
+'#####################################################
+' Print slice results
+
+' For NA values, LUSAS returns the following very small number
+NA_VALUE = 2.2250738585072014e-308
+
+If printInGrid Then
+    ' Print results to grid window
+    Set grid = createGridWindow(nextGridWindowID())
+    title = "Slice results (" & entity & ", " & component & ", " & location & ")"
+    Call grid.createTab(title, title)
+    Call grid.setColHeaders(title, Array("Distance", "Value"))
+
+    ' Create 2D array for grid data
+    Dim data()
+    ReDim data(UBound(values) - LBound(values), 1)
+    For i = LBound(values) To UBound(values)
+        data(i - LBound(values), 0) = Round(distances(i), printDecimals)
+        If values(i) <> NA_VALUE Then
+            data(i - LBound(values), 1) = Round(values(i), printDecimals)
+        Else
+            data(i - LBound(values), 1) = "NA"
+        End If
+    Next
+    Call grid.setData(title, data, False, False, False)
+Else
+    ' Print results to text window
+    Call textWin.writeLine("-----------------", 54)
+    Call textWin.writeLine("Slice results (" & entity & ", " & component & ", " & location & ")", 54)
+    Call textWin.writeLine("Distance, Value", 54)
+
+    For i = LBound(values) To UBound(values)
+        If values(i) <> NA_VALUE Then
+            Call textWin.writeLine(Round(distances(i), printDecimals) & ", " & Round(values(i), printDecimals), 54)
+        Else
+            Call textWin.writeLine(Round(distances(i), printDecimals) & ", NA", 54)
+        End If
+    Next
+End If
+
+
+'#####################################################
+' Post-process results
+
+' Remove NA values (NA values can be returned from elements without results, i.e. deactivated elements)
+Dim filteredDistances(), filteredValues()
+Dim i, n, cnt
+n = UBound(values) - LBound(values) + 1
+ReDim filteredDistances(n - 1)
+ReDim filteredValues(n - 1)
+cnt = 0
+For i = LBound(values) To UBound(values)
+    If values(i) <> NA_VALUE Then
+        filteredDistances(cnt) = distances(i)
+        filteredValues(cnt) = values(i)
+        cnt = cnt + 1
+    End If
+Next
+ReDim Preserve filteredDistances(cnt - 1)
+ReDim Preserve filteredValues(cnt - 1)
+
+' Compute total resultant (integration using trapezoidal rule) and total moment (moment about centroid of slice)
+totalResultant = 0
+totalMoment = 0
+If cnt > 1 Then
+    centroid = (filteredDistances(0) + filteredDistances(cnt - 1)) / 2
+Else
+    centroid = 0
+End If
+For i = 1 To cnt - 1
+    d0 = filteredDistances(i - 1)
+    d1 = filteredDistances(i)
+    v0 = filteredValues(i - 1)
+    v1 = filteredValues(i)
+    segLength = Abs(d1 - d0)
+    avgValue = (v0 + v1) / 2
+    totalResultant = totalResultant + avgValue * segLength
+    segCentroid = (d0 + d1) / 2
+    arm = centroid - segCentroid
+    totalMoment = totalMoment + avgValue * segLength * arm
+Next
+
+' Output results
+Call textWin.writeLine("-----------------", 54)
+Call textWin.writeLine("Slice total resultant: " & Round(totalResultant, printDecimals), 54)
+Call textWin.writeLine("Slice total moment: " & Round(totalMoment, printDecimals), 54)
