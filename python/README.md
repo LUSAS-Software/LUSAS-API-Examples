@@ -28,6 +28,7 @@ It is recommended that beginners start from the [`Jupyter Notebook`](../jupyter_
 | Results    | Get results from Elements/Nodes                   | 30_Getting_Results.py     |
 | Results    | Get results with Print Results Wizard             | 31_Getting_Results_PRW.py |
 | Results    | Create User Defined Results and Design Attributes | 32_User_Defined_Results_and_Design_Attributes.py |
+| Results    | Prints results along a 2D slice and calculates the total resultant and total moment. | 33_Getting_Results_2D_Slice.py |
 
 Additional examples are included in the [`Parametric_Models`](./Parametric_Models/) folder.
 
