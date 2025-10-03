@@ -31,7 +31,7 @@ if not lusas.existsDatabase():
 database = lusas.db()
 
 # Result to extract:
-entity = "Stress - Axisymmetric Solid"
+entity = "Stress"
 component = "SY"
 location = "nodal"  # Can be "nodal", "Gauss" / "Internal"
 
@@ -47,13 +47,20 @@ target_line : 'IFLine' = lusas.selection().getObjects("Line")[0]
 
 
 #####################################################
-# Create an inspection line
+# Create a graph inspection line
 inspection_line = database.createInspectionLine("Temp_InspLine")
 
 # Set inspection line range
 inspection_line.setExtent("Full model")
 # Can also be "group" followed by group name
 # inspection_line.setExtent("group", group_name)
+
+# You can also set a fixed distance interval (in model units) between points where data are extracted
+# if not set, data at the element boundaries will be extracted
+#inspection_line.setFixedDistance(data_interval), e.g. 0.1
+# Alternatively, you can set the number of locations along the line (evenly spaced), e.g. 100 locations
+#inspection_line.setEvenSpacing(100)
+# Mind that if no results are found at these locations along the line, the NA value is returned.
 
 # Set search projection direction to global Z direction
 inspection_line.setProjection(0, 0, 1.0)
@@ -157,8 +164,20 @@ for i in range(1, cnt):
     seg_centroid = (d0 + d1) / 2
     arm = centroid - seg_centroid
     total_moment = total_moment + avg_value * seg_length * arm
+thickness = filtered_distances[cnt - 1] - filtered_distances[0]
 
 # Output results
-print("-" * 50)
-print(f"Slice total resultant: {round(total_resultant, print_decimals)}")
-print(f"Slice total moment: {round(total_moment, print_decimals)}")
+if print_in_grid:
+    grid.createTab("Summary", "Summary")
+    grid.setColHeaders("Summary", ["Description", "Value"])
+    summary_data = [
+        ["Slice total resultant", round(total_resultant, print_decimals)],
+        ["Slice total moment", round(total_moment, print_decimals)],
+        ["Slice thickness", round(thickness, print_decimals)]
+    ]
+    grid.setData("Summary", summary_data, False, False, False)
+else:
+    print("-" * 50)
+    print(f"Slice total resultant: {round(total_resultant, print_decimals)}")
+    print(f"Slice total moment: {round(total_moment, print_decimals)}")
+    print(f"Slice thickness: {round(thickness, print_decimals)}")

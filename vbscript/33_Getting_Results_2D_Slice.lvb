@@ -39,13 +39,20 @@ Set targetLine = selection().getObjects("Line")(0)
 
 
 '#####################################################
-' Create an inspection line
+' Create a graph inspection line
 Set inspectionLine = database.createInspectionLine("Temp_InspLine")
 
 ' Set inspection line range
 Call inspectionLine.setExtent("Full model") 
 ' Can also be "group" folowed by group name
 ' inspectionLine.setExtent("group", groupName)
+
+' You can also set a fixed distance interval (in model units) between points where data are extracted
+' if not set, data at the element boundaries will be extracted, e.g. 0.1
+'Call inspectionLine.setFixedDistance(0.1)
+' Alternatively, you can set the number of locations along the line (evenly spaced), e.g. 100 locations
+'Call inspectionLine.setEvenSpacing(100)
+' Mind that if no results are found at these locations along the line, the NA value is returned.
 
 ' Set search projection direction to global Z direction
 Call inspectionLine.setProjection(0, 0, 1.0)
@@ -84,6 +91,7 @@ Call database().Delete(inspectionLine)
 ' For NA values, LUSAS returns the following very small number
 NA_VALUE = 2.2250738585072014e-308
 
+Set grid = Nothing
 If printInGrid Then
     ' Print results to grid window
     Set grid = createGridWindow(nextGridWindowID())
@@ -159,8 +167,29 @@ For i = 1 To cnt - 1
     arm = centroid - segCentroid
     totalMoment = totalMoment + avgValue * segLength * arm
 Next
+thickness = filteredDistances(cnt - 1) - filteredDistances(0)
 
 ' Output results
-Call textWin.writeLine("-----------------", 54)
-Call textWin.writeLine("Slice total resultant: " & Round(totalResultant, printDecimals), 54)
-Call textWin.writeLine("Slice total moment: " & Round(totalMoment, printDecimals), 54)
+If printInGrid Then
+    ' Print results to grid window
+    Call grid.createTab("Summary", "Summary")
+    Call grid.setColHeaders("Summary", Array("Description", "Value"))
+
+    ' Create 2D array for grid data
+    Dim data2()
+    ReDim data2(2, 1)
+    data2(0, 0) = "Slice total resultant"
+    data2(0, 1) = Round(totalResultant, printDecimals)
+    data2(1, 0) = "Slice total moment"
+    data2(1, 1) = Round(totalMoment, printDecimals)
+    data2(2, 0) = "Slice thickness"
+    data2(2, 1) = Round(thickness, printDecimals)
+    Call grid.setData("Summary", data2, False, False, False)
+Else
+    ' Print results to text window
+    Call textWin.writeLine("-----------------", 54)
+    Call textWin.writeLine("Slice total resultant: " & Round(totalResultant, printDecimals), 54)
+    Call textWin.writeLine("Slice total moment: " & Round(totalMoment, printDecimals), 54)
+    Call textWin.writeLine("Slice thickness: " & Round(thickness, printDecimals), 54)
+End If
+
