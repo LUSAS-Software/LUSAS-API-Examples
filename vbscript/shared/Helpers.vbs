@@ -24,11 +24,20 @@ Function create_line_from_points(p1, p2)
     Set create_line_from_points = newObjectSet().add(p1).add(p2).createLine(geom_data).getObject("Line")
 End Function
 
-' This function creates a line from coordinates.
+' This function creates a surface from coordinates.
 Function create_surface_by_coordinates(x, y, z)
     Set geometry_data = newGeometryData().setCreateMethod("coons").setLowerOrderGeometryType("coordinates")
     For i = 0 To UBound(x)
         geometry_data.addCoords x(i), y(i), z(i)
+    Next
+    Set create_surface_by_coordinates = database.createSurface(geometry_data).getObjects("Surface")(0)
+End Function
+
+' This function creates a surface from a list of lines.
+Function create_surface_from_lines(lines)
+    Set geometry_data = newGeometryData().setCreateMethod("planar").setLowerOrderGeometryType("lines")
+    For i = 0 To UBound(lines)
+        geometry_data.add(lines(i))
     Next
     Set create_surface_by_coordinates = database.createSurface(geometry_data).getObjects("Surface")(0)
 End Function
@@ -38,7 +47,6 @@ Function create_volume_by_surfaces(surfaces)
     Set geometry_data = newGeometryData().setCreateMethod("solidVolume").setExtractAllVolumes()
     Set create_volume_by_surfaces = newObjectSet().add(surfaces).createVolume(geometry_data).getObjects("Volume")(0)
 End Function
-
 
 ' This function sweeps points in the specified direction to create lines.
 ' (sweep_Ext function is required)
