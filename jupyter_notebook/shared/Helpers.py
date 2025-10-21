@@ -123,6 +123,27 @@ def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -
     surf : IFSurface = lusas.db().createSurface(geometry_data).getObjects("Surface")[0]
     return surf
 
+def create_surface_from_lines(lines: list[IFLine]) -> IFSurface:
+    """Helper function to create a surface from a list of lines
+
+    Args:
+        lines (list[IFLine]): List of IFLine objects that define the boundary of the surface
+
+    Returns:
+        IFSurface: Surface in the IFDatabase
+    """
+    # Object contains all the settings to perform a geometry creation
+    geometry_data = lusas.newGeometryData()
+    # Set the options for creating a planar surface
+    geometry_data.setCreateMethod("planar")
+    # Specify that the geometry is defined using lines
+    geometry_data.setLowerOrderGeometryType("lines")
+    # Create an object set and add the input lines to it
+    linesObj = lusas.newObjectSet().add(lines)
+    # Create the surface using the defined geometry and return the surface object
+    surf : IFSurface = linesObj.createSurface(geometry_data).getObjects("Surface")[0]
+    return surf
+
 def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     """Helper function to create a volume from surfaces
 
