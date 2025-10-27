@@ -1,2 +1,3 @@
+# Set language for custom file types
 *.lvb linguist-language=VBScript
 *.lpy linguist-language=Python
