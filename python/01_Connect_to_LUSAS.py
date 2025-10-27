@@ -30,11 +30,14 @@ lusas.getTextWindow().writeLine("Hello world!")
 
 from shared.LPI import *
 
+# Get the LUSAS Modeller object
 lusas = get_lusas_modeller()
-# Ensure Modeller is visible
+
+# Ensure Modeller is visible (can also be set as an argument on the get_lusas_modeller() method)
 lusas.setVisible(True)
 lusas.enableUI(True)
 
+# Write in LUSAS log
 lusas.getTextWindow().writeLine("Hello world! (LPI module)")
 
 
