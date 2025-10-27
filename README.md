@@ -4,7 +4,7 @@
 
 This repository provides practical and minimal examples of using the LUSAS Programming Interface (LPI) in Python, VBScript, Jupyter, and C#.
 
-These examples are tailored for **LUSAS v22.0** (see repository branches for other versions).
+These examples are tailored for **LUSAS v23.0** (see repository branches for other versions).
 
 The full LPI documentation can be found inside the LUSAS installation folder at:
 `C:\Program Files (x86)\LUSAS220\Programs (x86)\LPIHelp\lpi.html`

@@ -2,8 +2,8 @@
 # Copyright Finite Element Analysis Ltd #
 #########################################
 
-# This file provides LPI documentation for LUSAS Modeller v22.0 in a form that editors can use to
-# generate intellisense style code completion and documentation
+# This file provides LPI documentation for LUSAS Modeller v23.0 in a form that editors can use to
+# generate IntelliSense style code completion and documentation
 
 
 from __future__ import annotations
@@ -616,7 +616,7 @@ class IFTextWindow(IFDispatch):
 		Write a line of text to the text output window of LUSAS Modeller 
 		Params:
 			text (str): The line of text to be written to the output window. A new line character will automatically be appended.
-			type (str or int, optional): 0 = "error", 1 = "warning", 2 = "progress", 3 = "information", 4 = "unknown", 5 = "debug", 6 = "blank", or 7 = "impossible"
+			type (str or int, optional): 6 = "error", 22 = "warning", 38 = "progress", 54 = "information", 70 = "unknown", 86 = "debug", 102 = "blank"
 		Returns:
 			None: 
 		"""
@@ -1355,7 +1355,7 @@ class IFFileUtils(IFDispatch):
 
 	def deletePattern(self, pattern, foldersToo=None) -> None:
 		r"""
-		As IFFileUtils.deletePath, but allows standard Windows wildcard characters like * and ? 
+		As IFFileUtils.deletePath, but allows standard Windows wild card characters like * and ? 
 		Params:
 			pattern (str): 
 			foldersToo (bool, optional): Default false, If false, folders will not be deleted
@@ -2040,7 +2040,7 @@ class IFPolylineDefn(IFDispatch):
 
 	def getInterpolatedPosition(self, nrmCoord) -> list[float]:
 		r"""
-		Return the coordinates at the given normalised coordinate, nrmCoord=0.0 at the polyline start nrmCoord=1.0 at the polyline end 
+		Return the coordinates at the given normalised coordinate, nrmCoord=0.0 at the polyline start, nrmCoord=1.0 at the polyline end 
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
@@ -2051,7 +2051,7 @@ class IFPolylineDefn(IFDispatch):
 
 	def getInterpolatedTangent(self, nrmCoord) -> list[float]:
 		r"""
-		Return the tangent at the given normalised coordinate, nrmCoord=0.0 at the polyline start nrmCoord=1.0 at the polyline end 
+		Return the tangent at the given normalised coordinate, nrmCoord=0.0 at the polyline start, nrmCoord=1.0 at the polyline end 
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
@@ -2062,7 +2062,7 @@ class IFPolylineDefn(IFDispatch):
 
 	def getInterpolatedAxes(self, nrmCoord, pOrigin, pxAxis, pyAxis, pzAxis) -> None:
 		r"""
-		get the axes at the given normalised coordinate, nrmCoord=0.0 at the polyline start nrmCoord=1.0 at the polyline end 
+		get the axes at the given normalised coordinate, nrmCoord=0.0 at the polyline start, nrmCoord=1.0 at the polyline end 
 		Params:
 			nrmCoord (float): specified normalised coord
 			pOrigin (array of float): An array of 3 real numbers, representing 3d coordinates. location
@@ -2077,7 +2077,7 @@ class IFPolylineDefn(IFDispatch):
 
 	def getRadiusOfCurvature(self, nrmCoord, pPointOnLine, pCentreOfCurvature, pRadiusOfCurvature) -> int:
 		r"""
-		calculate the centre and radius of curvature at the given normalised coordinate along this polyline nrmCoord=0.0 at the polyline start nrmCoord=1.0 at the polyline end 
+		calculate the centre and radius of curvature at the given normalised coordinate along this polyline, nrmCoord=0.0 at the polyline start, nrmCoord=1.0 at the polyline end 
 		Params:
 			nrmCoord (float): specified normalised coord
 			pPointOnLine (array of float): coordinates of the point on this line
@@ -2496,7 +2496,7 @@ class IFCustomSubReport(IFDispatch):
 		Adds text in the given section in the report. Positioning is relative to the previous text or image that was added. 
 		Params:
 			section (str): "Header", "Details", "Footer".
-			left (int): Additional left positioning from the previous text that was added at the same line. Set -1 for the text to be placed in center
+			left (int): Additional left positioning from the previous text that was added at the same line. Set -1 for the text to be placed in centre
 			top (int): Additional top positioning from the previous text or image that was added.
 			text (str): Text to be added
 		Returns:
@@ -2523,7 +2523,7 @@ class IFCustomSubReport(IFDispatch):
 		Adds an image in the given section in the report. Positioning is relative to the previous text or image that was added Always goes to a new line 
 		Params:
 			section (str): "Header", "Details", "Footer".
-			left (int): Left positioning. Set -1 for the image to be placed in center
+			left (int): Left positioning. Set -1 for the image to be placed in centre
 			top (int): Additional top positioning from the previous text or image that was added.
 			image (str): Path of the image file
 			autoDelete (bool, optional): If True, the image file will be deleted from the hard drive when the report has created. Default value is False.
@@ -3062,7 +3062,7 @@ class IFAttribute(IFDispatch):
 
 	def getPen(self) -> int:
 		r"""
-		 
+		return pen stored by "setPen" 
 		Returns:
 			int: 
 		"""
@@ -3104,7 +3104,7 @@ class IFAttribute(IFDispatch):
 
 	def getEditingMenuID(self, isRelativeID=None) -> int:
 		r"""
-		Get the menu ID that will be generated when this attribute is edited or double-clicked on. See setEditingMenuID 
+		Get the menu ID that will be generated when this attribute is edited or double-clicked on. See setEditingMenuID(). Note that the return value is only meaningful if setEditingMenuID() has previously been called. 
 		Params:
 			isRelativeID (bool, optional): If true, the given menu ID is assumed to be relative to the constant ID_MODULE_MENU_MIN. If false (the default), it is an absolute value
 		Returns:
@@ -3128,7 +3128,7 @@ class IFAttribute(IFDispatch):
 
 	def getDefinitionMenuID(self, isRelativeID=None) -> int:
 		r"""
-		Get the menu ID that will be generated when this attribute is edited or double-clicked on. See setDefinitionMenuID( 
+		Get the menu ID that will be generated when this attribute is edited or double-clicked on. See setDefinitionMenuID() Note that the return value is only meaningful if setDefinitionMenuID() has previously been called. 
 		Params:
 			isRelativeID (bool, optional): If true, the given menu ID is assumed to be relative to the constant ID_MODULE_MENU_MIN. If false (the default), it is an absolute value
 		Returns:
@@ -3267,7 +3267,7 @@ class IFAttribute(IFDispatch):
 
 	def getValue(self, varName, row=None, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this attribute In order to find the list of valid named variables, use IFAttribute.getValueNames. In order to find out what type of variable will be returned, use IFAttribute.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. See IFAttribute.countRows for a description of the optional row argument.
+		Returns the value of a named variable within this attribute In order to find the list of valid named variables, use IFAttribute.getValueNames. In order to find out what type of variable will be returned, use IFAttribute.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. See IFAttribute.countRows for a description of the optional row argument.
  The returned value will be of a type appropriate to the variable being requested. It could be an object, a real number, a variation, a string, an integer etc, or an array of any of these. 
 		Params:
 			varName (str): 
@@ -3327,7 +3327,7 @@ class IFAttribute(IFDispatch):
 
 	def getValueUnits(self, varName, units=None) -> str:
 		r"""
-		Returns the units ("N/mm²", "m/s", etc) of the value that will be returned by IFAttribute.getValue for the given named variable. In order to find the list of valid named variables, use IFAttribute.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
+		Returns the units ("N/mm²", "m/s", etc or "None") of the value that will be returned by IFAttribute.getValue for the given named variable. In order to find the list of valid named variables, use IFAttribute.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
@@ -3774,7 +3774,7 @@ class IFAssignment(IFDispatch):
 
 	def setBetaAngleFromMatrix(self, Beta) -> IFAssignment:
 		r"""
-		Specify the beta angle for assignment of mesh. This ts the beta angle originally calculated from "setBetaAngleMatrix" 
+		Specify the beta angle for assignment of mesh. This is the beta angle originally calculated from "setBetaAngleMatrix" 
 		Params:
 			Beta (IFTransformationAttr): The name or ID of a transformation, or a pointer to a IFTransformationAttr object.
 		Returns:
@@ -3886,7 +3886,7 @@ class IFAssignment(IFDispatch):
 
 	def setConsiderOverrides(self, isConsider) -> IFAssignment:
 		r"""
-		Only used when this object is being pass to an IFObjectSet function such as IFObjectSet.add. Follows the chain of inherited and overridden attributes, such that the objects considered are those 'currently using' this assignment - rather than the usual sense which is 'actually assigned in in the active loadcase'. This flag is switched to false by a call to IFAssignment.setIgnoreAll() 
+		Only used when this object is being pass to an IFObjectSet function such as IFObjectSet.add. Follows the chain of inherited and overridden attributes, such that the objects considered are those 'currently using' this assignment - rather than the usual sense which is 'actually assigned in the active loadcase'. This flag is switched to false by a call to IFAssignment.setIgnoreAll() 
 		Params:
 			isConsider (bool): 
 		Returns:
@@ -4413,7 +4413,7 @@ class IFAssignment(IFDispatch):
 
 	def setTendonProperties(self, fitToLines, offsetFromEnd=None) -> IFAssignment:
 		r"""
-		Set the tendon properties for the assignment. If "fitTiLines" is True there there is no need to set the offsetFromEnd value; 
+		Set the tendon properties for the assignment. If "fitTiLines" is True there is no need to set the offsetFromEnd value; 
 		Params:
 			fitToLines (bool): Extend the tendon profile to fit the lines being assigned to
 			offsetFromEnd (float, optional): 
@@ -4658,6 +4658,15 @@ class IFAssignment(IFDispatch):
 			type (str): assignment type
 		Returns:
 			IFAssignment: 
+		"""
+		pass
+
+
+	def isEndZoneJointMatlAssignment(self) -> int:
+		r"""
+		Return 0 - the assignment is not an end zone joint material assignment 1 - the assignment is the line start, end zone joint material assignment 2 - the assignment is the line end, end zone joint material assignment 3 - the assignment is both the line start and end, end zone joint material assignment 
+		Returns:
+			int: 
 		"""
 		pass
 
@@ -5047,9 +5056,60 @@ class IFAssignment(IFDispatch):
 		pass
 
 
+	def getReinfZonesOrientation(self) -> str:
+		r"""
+		get orientation type of reinforcement zones and bars in surface reinforcement 
+		Returns:
+			str: 
+		"""
+		pass
+
+
+	def setReinfZonesOrientation(self, reinfZonesOrient) -> IFAssignment:
+		r"""
+		set orientation type of reinforcement zones and bars in surface reinforcement. Set the appropriate local coord or reference path prior to selecting options "Local CS" or "Reference path" respectively 
+		Params:
+			reinfZonesOrient (str): "Global axes","Surface local axes","Local CS","Reference path"
+		Returns:
+			IFAssignment: 
+		"""
+		pass
+
+
+	def setReinfZonesOrientationRT(self, resultsTransformAttr) -> IFAssignment:
+		r"""
+		set orientation of reinforcement zones and bars in surface reinforcement according to given results transformation attribute. For backwards compatibility reasons, if the results transformation attribute is equipped with a cylindrical local coordinate attribute with option shell index set to theta - z or it is equipped with a spherical local coordinate attribute with option shell index set to phi - theta, x direction bars are considered to be circumferential in the radial layout of reinforcement bars 
+		Params:
+			resultsTransformAttr (IFResultsTransformationAttr): 
+		Returns:
+			IFAssignment: 
+		"""
+		pass
+
+
+	def setXBarsCircumferential(self, val) -> IFAssignment:
+		r"""
+		sets whether x reinforcement bars will be the circumferential ones in a surface radial reinforcement layout 
+		Params:
+			val (bool): if anything other than VARIANT_FALSE x bars will be circumferential
+		Returns:
+			IFAssignment: 
+		"""
+		pass
+
+
+	def areXBarsCircumferential(self) -> bool:
+		r"""
+		return true if x reinforcement bars have been set to be the circumferential ones in a surface radial reinforcement layout 
+		Returns:
+			bool: 
+		"""
+		pass
+
+
 class IFControl(IFDispatch):
 	"""
-	A control is added to a loadcase to specify how the loadcase behaves in the analysis. This is the base class of all loadcase controls, the derived classs provide specific implementations for each analysis type. 
+	A control is added to a loadcase to specify how the loadcase behaves in the analysis. This is the base class of all loadcase controls, the derived class provide specific implementations for each analysis type. 
 	"""
 
 	def setValue(self, varName, value, index=None, units=None) -> IFControl:
@@ -5068,7 +5128,7 @@ class IFControl(IFDispatch):
 
 	def getValue(self, varName, row=None, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this control In order to find the list of valid named variables, use IFControl.getValueNames. In order to find out what type of variable will be returned, use IFControl.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. See IFControl.countRows for a description of the optional row argument.
+		Returns the value of a named variable within this control In order to find the list of valid named variables, use IFControl.getValueNames. In order to find out what type of variable will be returned, use IFControl.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. See IFControl.countRows for a description of the optional row argument.
  The returned value will be of a type appropriate to the variable being requested. It could be an object, a real number, a variation, a string, an integer etc, or an array of any of these. 
 		Params:
 			varName (str): 
@@ -5113,7 +5173,7 @@ class IFControl(IFDispatch):
 
 	def getValueUnits(self, varName, units=None) -> str:
 		r"""
-		Return the units ("N/mm²", "m/s", etc) of the value that will be returned by IFControl.getValue for the given named variable. In order to find the list of valid named variables, use IFControl.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
+		Return the units ("N/mm²", "m/s", etc or "None") of the value that will be returned by IFControl.getValue for the given named variable. In order to find the list of valid named variables, use IFControl.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
@@ -5364,7 +5424,7 @@ class IFLoadset(IFDispatch):
 
 	def getValue(self, varName, row=None, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this control In order to find the list of valid named variables, use IFLoadset.getValueNames. In order to find out what type of variable will be returned, use IFLoadset.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. See IFLoadset.countRows for a description of the optional row argument.
+		Returns the value of a named variable within this control In order to find the list of valid named variables, use IFLoadset.getValueNames. In order to find out what type of variable will be returned, use IFLoadset.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. See IFLoadset.countRows for a description of the optional row argument.
  The returned value will be of a type appropriate to the variable being requested. It could be an object, a real number, a variation, a string, an integer etc, or an array of any of these. 
 		Params:
 			varName (str): 
@@ -5421,7 +5481,7 @@ class IFLoadset(IFDispatch):
 
 	def getValueUnits(self, varName, units=None) -> str:
 		r"""
-		Return the units ("N/mm²", "m/s", etc) of the value that will be returned by IFLoadset.getValue for the given named variable. In order to find the list of valid named variables, use IFLoadset.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
+		Return the units ("N/mm²", "m/s", etc or "None") of the value that will be returned by IFLoadset.getValue for the given named variable. In order to find the list of valid named variables, use IFLoadset.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
@@ -7395,7 +7455,7 @@ class IFGeometryData(IFDispatch):
 
 	def setLineNrmExtension(self, normalisedDist) -> IFGeometryData:
 		r"""
-		set the nornmalised distance extension tolerance 
+		set the normalised distance extension tolerance 
 		Params:
 			normalisedDist (float): 
 		Returns:
@@ -7739,7 +7799,7 @@ class IFGeometryData(IFDispatch):
 
 	def setRenumberOutput(self, renumber) -> IFGeometryData:
 		r"""
-		Specifies whether or not any objects created are to be automatically renumbered. By default, for most operations, the output set is not renumbered, and therefore the IDs of newy created objects may seem quite unpredictable Any renumbering that does take place would follow the settings from IFDatabase.renumberSettings  
+		Specifies whether or not any objects created are to be automatically renumbered. By default, for most operations, the output set is not renumbered, and therefore the IDs of newly created objects may seem quite unpredictable Any renumbering that does take place would follow the settings from IFDatabase.renumberSettings  
 		Params:
 			renumber (bool): 
 		Returns:
@@ -8099,7 +8159,7 @@ class IFGraphBase(IFDispatch):
 
 	def setTitle(self, graphName) -> None:
 		r"""
-		Set a title for this graph. The title will be shown centered above the graph 
+		Set a title for this graph. The title will be shown centred above the graph 
 		Params:
 			graphName (str): Title to set
 		Returns:
@@ -9704,7 +9764,7 @@ class IFResultsContext(IFDispatch):
 
 	def setFourierAngle(self, angle) -> IFResultsContext:
 		r"""
-		Specify the angle to be used with post-processing of fourier elements 
+		Specify the angle to be used with post-processing of Fourier elements 
 		Params:
 			angle (float): 
 		Returns:
@@ -9715,7 +9775,7 @@ class IFResultsContext(IFDispatch):
 
 	def getFourierAngle(self, angle) -> None:
 		r"""
-		Retrieve the angle to be used with post-processing of fourier elements 
+		Retrieve the angle to be used with post-processing of Fourier elements 
 		Params:
 			angle (float): 
 		Returns:
@@ -10055,7 +10115,7 @@ class IFResultsContext(IFDispatch):
 
 	def getUserDefinedResultsErrors(self, flushList=None) -> list:
 		r"""
-		Retrieve an array of the most recent list of errors encountered processing user defined results The array may be very large, as it will include all nodes/elements/features that reported an error, for each requested component (e.g. diagrams and contours may be looking at different components) The array is structured as a N * 5 array, where N is the total number of errors encoutered, col 0 contains the node/element/feature, col 1 contains the index, col 2 contains the error code, col 3 contains the error message if available, col 4 contains the component name. Messages may come from the system (such as "divide by zero") or they may come from the UDR definition itself, via the error() function. The internally stored list of errors is always flushed each redraw, but can optionally also be flushed by this function. 
+		Retrieve an array of the most recent list of errors encountered processing user defined results The array may be very large, as it will include all nodes/elements/features that reported an error, for each requested component (e.g. diagrams and contours may be looking at different components) The array is structured as a N * 5 array, where N is the total number of errors encountered, col 0 contains the node/element/feature, col 1 contains the index, col 2 contains the error code, col 3 contains the error message if available, col 4 contains the component name. Messages may come from the system (such as "divide by zero") or they may come from the UDR definition itself, via the error() function. The internally stored list of errors is always flushed each redraw, but can optionally also be flushed by this function. 
 		Params:
 			flushList (bool, optional): default false. If true, the internally stored list will be cleared
 		Returns:
@@ -11278,7 +11338,7 @@ class IFAnalysisBaseClass(IFDispatch):
 
 	def getValue(self, varName, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this analysis. In order to find the list of valid named variables, use IFAnalysisBaseClass.getValueNames. In order to find out what type of variable will be returned, use IFAnalysisBaseClass.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. The returned value will be of a type appropriate to the variable being requested. It could be an object, a real number, a variation, a string, an integer etc, or an array of any of these. 
+		Returns the value of a named variable within this analysis. In order to find the list of valid named variables, use IFAnalysisBaseClass.getValueNames. In order to find out what type of variable will be returned, use IFAnalysisBaseClass.getValueType If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. The returned value will be of a type appropriate to the variable being requested. It could be an object, a real number, a variation, a string, an integer etc, or an array of any of these. 
 		Params:
 			varName (str): 
 			units (IFUnitSet, optional): 
@@ -11321,7 +11381,7 @@ class IFAnalysisBaseClass(IFDispatch):
 
 	def getValueUnits(self, varName, units=None) -> str:
 		r"""
-		Return the units ("N/mm²", "m/s", etc) of the value that will be returned by IFAnalysisBaseClass.getValue for the given named variable. In order to find the list of valid named variables, use IFAnalysisBaseClass.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
+		Return the units ("N/mm²", "m/s", etc or "None") of the value that will be returned by IFAnalysisBaseClass.getValue for the given named variable. In order to find the list of valid named variables, use IFAnalysisBaseClass.getValueNames Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
@@ -11580,6 +11640,15 @@ class IFAnalysisBaseClass(IFDispatch):
 		pass
 
 
+	def getLoadcases(self) -> list[IFLoadcase]:
+		r"""
+		Gets the list of loadcases belonging directly to the analysis. Branches, loadcurves and loadsets other than loadcases are ignored. 
+		Returns:
+			array of IFLoadcase: the returned array
+		"""
+		pass
+
+
 class IFVLOInfluenceAssignEntry(IFDispatch):
 	"""
 	Interface for influence assignment to be analysed in VLO 
@@ -11778,7 +11847,7 @@ class IFVLOInfDesignLoadcase(IFDispatch):
 		r"""
 		Add an influence assign result for the given influence entry 
 		Params:
-			pInfName (str): name of influence assigment or inf attribute (for v14.1 inf attributes)
+			pInfName (str): name of influence assignment or inf attribute (for v14.1 inf attributes)
 			assignmentRank (str): not used in here but needed to comply with signature for the late binding in .Net (see function in IFTLOEnvelope)
 			isPositive (bool): not used in here but needed to comply with signature for the late binding in .Net (see function in IFTLOEnvelope)
 		Returns:
@@ -11837,7 +11906,7 @@ class IFTLORunBase(IFDispatch):
 			longInc (float): longitudinal increment
 			transInc (float): transverse increment
 			vehicleDir (int): vehicle direction (forwards/backwards/both)
-			useRationalisedPlacement (bool): use rationalised placement for vehiclular traffic load
+			useRationalisedPlacement (bool): use rationalised placement for vehicular traffic load
 		Returns:
 			None: 
 		"""
@@ -11851,7 +11920,7 @@ class IFTLORunBase(IFDispatch):
 			longInc (float): longitudinal increment
 			transInc (float): transverse increment
 			vehicleDir (int): vehicle direction (forwards/backwards/both)
-			pUseRationalisedPlacement (bool): use rationalised placement for vehiclular traffic load
+			pUseRationalisedPlacement (bool): use rationalised placement for vehicular traffic load
 		Returns:
 			None: 
 		"""
@@ -12239,6 +12308,159 @@ class IFReinforcementSectionBar(IFDispatch):
 		pass
 
 
+class IFSurfaceReinforcementLayoutLayer(IFDispatch):
+	"""
+	Representation of a layer that exists in an IFSurfaceReinforcementLayout attribute 
+	"""
+
+	def isXDirection(self) -> bool:
+		r"""
+		returns whether the rebars of this layer are in x direction or not 
+		Returns:
+			bool: 
+		"""
+		pass
+
+
+	def getGap(self) -> float:
+		r"""
+		returns the gap from the previous layer of reinforcement 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getBarDiameter(self) -> float:
+		r"""
+		returns the main bar diameter 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def hasAltBars(self) -> bool:
+		r"""
+		returns whether the layer has alternate bars or not 
+		Returns:
+			bool: 
+		"""
+		pass
+
+
+	def getAltBarDiameter(self) -> float:
+		r"""
+		returns the alternate bar diameter 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getSpacing(self) -> float:
+		r"""
+		returns the spacing between rebars in this layer 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def coverToCentroid(self) -> float:
+		r"""
+		returns the distance between the centroid of the layer to the face it is declared to belong to 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+class IFSurfaceReinforcementLayoutProps(IFDispatch):
+	"""
+	Representation of the design properties of a IFSurfaceReinforcementLayout attribute e.g. reinforcement area, effective height, actual cover etc. 
+	"""
+
+	def getTopReinforcementAreaX(self) -> float:
+		r"""
+		returns the sum of area of rebars declared as top and are in x direction 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getTopReinforcementAreaY(self) -> float:
+		r"""
+		returns the sum of area of rebars declared as top the surface section and are in y direction 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getBottomReinforcementAreaX(self) -> float:
+		r"""
+		returns the sum of area of rebars declared as bottom and are in x direction 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getBottomReinforcementAreaY(self) -> float:
+		r"""
+		returns the sum of area of rebars declared as bottom are in y direction 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getEffectiveDepthOfBottomXBars(self) -> float:
+		r"""
+		returns the weighted mean effective depth of bottom x reinforcement bars 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getEffectiveDepthOfBottomYBars(self) -> float:
+		r"""
+		returns the weighted mean effective depth of bottom y reinforcement bars 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getEffectiveDepthOfTopXBars(self) -> float:
+		r"""
+		returns the weighted mean effective depth of top x reinforcement bars 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getEffectiveDepthOfTopYBars(self) -> float:
+		r"""
+		returns the weighted mean effective depth of top y reinforcement bars 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+class IFSurfReinfInfoResetter(IFDispatch):
+	"""
+	Simply resets important cached info for surface reinforcement. Required as an input argument for IFSurfaceReinforcement.getElementReinforcement and IFSurfaceReinforcement.getInspectionReinforcement 
+	"""
+
+	pass
+
+
 class IFTransverseReinforcement(IFDispatch):
 	"""
 	Representation of transverse reinforcement, which exists within a IFReinforcementLine at a given location 
@@ -12354,7 +12576,7 @@ class IFDatabaseOperations(IFDatabaseMember):
 		r"""
 		Create a point, either from the given geometry data (which will contain the position of the point, along with any other creation options) or from the 3d position given. In the latter case, all default options are assumed 
 		Params:
-			first (IFGeometryData or float): 
+			first (IFGeometryData or double): 
 			Y (float, optional): 
 			Z (float, optional): 
 		Returns:
@@ -13176,7 +13398,7 @@ As well as interacting with Modeller's own intrinsic set objects, the script pro
 
 	def addColinearNeighbours(self, angularTolerance) -> IFObjectSet:
 		r"""
-		Adds to this set all the neighbouring objects that are colinear within a given tolerance. The effect is recursive, so selecting any one line on a circle, and then calling this routine, will select all the line on that circle, assuming the tolerance is loose enough. 
+		Adds to this set all the neighbouring objects that are collinear within a given tolerance. The effect is recursive, so selecting any one line on a circle, and then calling this routine, will select all the line on that circle, assuming the tolerance is loose enough. 
 		Params:
 			angularTolerance (float): Acceptable angle between neighbours
 		Returns:
@@ -13448,7 +13670,7 @@ class IFGeometry(IFDatabaseOperations):
 
 	def haveInternalPoints(self) -> bool:
 		r"""
-		return ture if this surface has any embedded points 
+		return true if this surface has any embedded points 
 		Returns:
 			bool: 
 		"""
@@ -13555,7 +13777,7 @@ class IFGeometry(IFDatabaseOperations):
 
 	def setValue(self, varName, value, units=None) -> IFGeometry:
 		r"""
-		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			value (object): The type given will depend on the value specified
@@ -13568,7 +13790,7 @@ class IFGeometry(IFDatabaseOperations):
 
 	def getValue(self, varName, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): 
 			units (IFUnitSet, optional): 
@@ -13580,7 +13802,7 @@ class IFGeometry(IFDatabaseOperations):
 
 	def getValueUnits(self, varName, units=None) -> str:
 		r"""
-		Returns the units ("N/mm²", "m/s", etc) of the value that will be returned by IFGeometry.getValue for the given named variable. Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
+		Returns the units ("N/mm²", "m/s", etc or "None") of the value that will be returned by IFGeometry.getValue for the given named variable. Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
@@ -13664,7 +13886,7 @@ class IFGeometry(IFDatabaseOperations):
  The entity may be specified as a string ("displacement", "strain", etc) or as an IFResultsComponentSet object.
  The component may be specified as a string ("Fx", "DX", etc) or as an integer component number. Component numbers may be obtained using IFResultsComponentSet.getComponentNumber and are faster to process than component names.
  If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults.
- Although usually the array will contain only one value, multiple values could be returned if the inspection locaton occurs at an averaging discontinuity (e.g. material boundary) 
+ Although usually the array will contain only one value, multiple values could be returned if the inspection location occurs at an averaging discontinuity (e.g. material boundary) 
 		Params:
 			attr (IFInspectionPoint): The name or ID of a inspectionlocation, or a pointer to a IFInspectionPoint object.
 			index (int): index of location number within attr (corresponds to the row number in the definition dialog) (ignored for inspection locations assigned to points)
@@ -13902,7 +14124,7 @@ class IFPoint(IFGeometry):
 
 	def nearestPositionOn(self, obj, includeLofs=None, returnMinimum=None) -> list[float]:
 		r"""
-		return the coordinates of the closest or furthest point on the given objet to this point 
+		return the coordinates of the closest or furthest point on the given object to this point 
 		Params:
 			obj (IFGeometry): geometry object
 			includeLofs (bool, optional): true to include the nearest defining object of "obj"
@@ -13974,7 +14196,7 @@ class IFLine(IFGeometry):
 
 	def getInterpolatedPosition(self, nrmCoord) -> list[float]:
 		r"""
-		Return the coordinates at the given normalised coordinate, nrmCoord=0.0 at the line start nrmCoord=1.0 at the line end 
+		Return the coordinates at the given normalised coordinate, nrmCoord=0.0 at the line start, nrmCoord=1.0 at the line end 
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
@@ -13985,7 +14207,7 @@ class IFLine(IFGeometry):
 
 	def getInterpolatedTangent(self, nrmCoord) -> list[float]:
 		r"""
-		Return the tangent at the given normalised coordinate, nrmCoord=0.0 at the line start nrmCoord=1.0 at the line end 
+		Return the tangent at the given normalised coordinate, nrmCoord=0.0 at the line start, nrmCoord=1.0 at the line end 
 		Params:
 			nrmCoord (float): normalised coord
 		Returns:
@@ -15167,7 +15389,7 @@ class IFElement(IFMeshFamily):
 
 	def setInternalScriptedResults(self, iPoint, val, entity, component=None, loadcase=None) -> None:
 		r"""
-		Specify a named result value at one internal point of this element Only really useful when called for all internal points of all visible elements Then allows (for example) drawing of beam contours and diagrams of any arbitary values. Note that for most elements, there is no difference between a "Gauss" point and an "internal" point. The difference is only apparent for beams. For example BMI21 as 1 Gauss point (at which the element yields) but 11 internal points (for drawing diagrams and contours) The entity may be given either as a name, or as an index previously registered using IFDatabase.addScriptedResultsEntity. If the entity is given as a string and does not already exist, it will be created. If the component does not already exist within the given entity, a new component is created within the given entity. When called as part of a .NET callback from a LUSAS module, the results component and context are known (provided) and so may be passed directly to this routine in place of the strings. This is much faster. Note that the results will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults 
+		Specify a named result value at one internal point of this element Only really useful when called for all internal points of all visible elements Then allows (for example) drawing of beam contours and diagrams of any arbitrary values. Note that for most elements, there is no difference between a "Gauss" point and an "internal" point. The difference is only apparent for beams. For example BMI21 as 1 Gauss point (at which the element yields) but 11 internal points (for drawing diagrams and contours) The entity may be given either as a name, or as an index previously registered using IFDatabase.addScriptedResultsEntity. If the entity is given as a string and does not already exist, it will be created. If the component does not already exist within the given entity, a new component is created within the given entity. When called as part of a .NET callback from a LUSAS module, the results component and context are known (provided) and so may be passed directly to this routine in place of the strings. This is much faster. Note that the results will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults 
 		Params:
 			iPoint (int): internal point index
 			val (float): Results value
@@ -15514,7 +15736,7 @@ class IFElement(IFMeshFamily):
 		Params:
 			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): 
-			loadcase (IFUnitSet, optional): 
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. loadcase on which to check assignments. If not given, the current loadcase is assumed
 			units (IFUnitSet, optional): 
 			errorFlag (bool, optional): If provided, and an error occurs (e.g. attribute not assigned), this flag is set true, and no error is reported
 			singleLoadcase (bool, optional): if T process just the given loadcase, if F descend the loadcases, default true
@@ -15531,7 +15753,7 @@ class IFElement(IFMeshFamily):
 			node (IFNode): The name or ID of a node, or a pointer to a IFNode object. local node  (0..nNodes-1) or node pointer
 			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): 
-			loadcase (IFUnitSet, optional): 
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. loadcase on which to check assignments. If not given, the current loadcase is assumed
 			units (IFUnitSet, optional): 
 			errorFlag (bool, optional): If provided, and an error occurs (e.g. attribute not assigned), this flag is set true, and no error is reported
 			singleLoadcase (bool, optional): if T process just the given loadcase, if F descend the loadcases, default true
@@ -15548,7 +15770,7 @@ class IFElement(IFMeshFamily):
 			u (float): distance along beam (0..1)
 			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): 
-			loadcase (IFUnitSet, optional): 
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. loadcase on which to check assignments. If not given, the current loadcase is assumed
 			units (IFUnitSet, optional): 
 			errorFlag (bool, optional): If provided, and an error occurs (e.g. attribute not assigned), this flag is set true, and no error is reported
 			singleLoadcase (bool, optional): if T process just the given loadcase, if F descend the loadcases, default true
@@ -15701,7 +15923,7 @@ class IFElement(IFMeshFamily):
 
 	def hasCentroid(self) -> bool:
 		r"""
-		Return true if it is possbile to calcuate the centroid of this element 
+		Return true if it is possible to calculate the centroid of this element 
 		Returns:
 			bool: 
 		"""
@@ -15876,7 +16098,7 @@ class IFGroup(IFObjectSet):
 
 	def setValue(self, varName, value, units=None) -> IFGroup:
 		r"""
-		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			value (object): The type given will depend on the value specified
@@ -15889,7 +16111,7 @@ class IFGroup(IFObjectSet):
 
 	def getValue(self, varName, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): 
 			units (IFUnitSet, optional): 
@@ -15901,7 +16123,7 @@ class IFGroup(IFObjectSet):
 
 	def getValueUnits(self, varName, units=None) -> str:
 		r"""
-		Returns the units ("N/mm²", "m/s", etc) of the value that will be returned by IFGroup.getValue for the given named variable. Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
+		Returns the units ("N/mm²", "m/s", etc or "None") of the value that will be returned by IFGroup.getValue for the given named variable. Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
@@ -16124,7 +16346,7 @@ class IFLayoutGrid(IFGeometry):
 		Sets the labels positioning in local u direction. 
 		Params:
 			pos (str): "Left", "Right", "Both", "None"
-			inReverse (bool): true to reverse the lableing direction
+			inReverse (bool): true to reverse the labelling direction
 		Returns:
 			IFLayoutGrid: grid object
 		"""
@@ -16145,7 +16367,7 @@ class IFLayoutGrid(IFGeometry):
 		Sets the labels positioning in local v direction. 
 		Params:
 			pos (str): "Top", "Bottom", "Both", "None"
-			inReverse (bool): true to reverse the lableing direction
+			inReverse (bool): true to reverse the labelling direction
 		Returns:
 			IFLayoutGrid: grid object
 		"""
@@ -16383,7 +16605,7 @@ class IFLayoutGridRectangular(IFLayoutGrid):
 		Sets the skew angles of the grid. 
 		Params:
 			uAngleDegs (float): angle from grid u towards grid v
-			vAngleDegs (float): angle from grid v towards gridu
+			vAngleDegs (float): angle from grid v towards grid u
 		Returns:
 			IFLayoutGridRectangular: grid object
 		"""
@@ -16417,7 +16639,7 @@ class IFLayoutGridCircular(IFLayoutGrid):
 		r"""
 		Sets the minimum radius of the grid. 
 		Params:
-			radius (float): The minimum radious
+			radius (float): The minimum radius
 		Returns:
 			IFLayoutGridCircular: grid object
 		"""
@@ -16428,7 +16650,7 @@ class IFLayoutGridCircular(IFLayoutGrid):
 		r"""
 		Returns the minimum radius of the grid. 
 		Returns:
-			float: The minimum radious
+			float: The minimum radius
 		"""
 		pass
 
@@ -16759,11 +16981,12 @@ class IFDatabase(IFGroup):
 		pass
 
 
-	def setModelUnits(self, units) -> None:
+	def setModelUnits(self, units, doScaleGeometry=None) -> None:
 		r"""
 		Set the units for this database. This function should only be called before any data has been entered, and should only be called once per new database. Once a value is entered, its numeric value never changes, therefore if the units change, for example, from m to mm, any value already in the database would correspondingly change - e.g. from 1m to 1mm. 
 		Params:
 			units (IFUnitSet): The name of a units, or a pointer to a IFUnitSet object. Units to set current
+			doScaleGeometry (bool, optional): if true and supported by the database scale geometry/properties to the new units
 		Returns:
 			None: 
 		"""
@@ -17291,7 +17514,7 @@ class IFDatabase(IFGroup):
 		pass
 
 
-	def getResultsComponentSet(self, entity, component, locn, context=None) -> IFResultsComponentSet:
+	def getResultsComponentSet(self, entity, component, locn, context=None, storePrestressContributions=None) -> IFResultsComponentSet:
 		r"""
 		Return object which will hold results values of specified type. All options (loadcase, transformation, active fibre, active composite layer, etc) will be taken from the given context. If a context is not given, the current view will be used for all those options and settings instead. Note that for efficiency the requested results are cached and will not be removed from the system (and so will potentially use a large amount of memory) until explicitly removed with a call to IFDatabase.flushScriptedResults. Changes to the context, after the call to IFDatabase.getResultsComponentSet, are IGNORED. Thus, the results cached within the IFResultsComponentSet are orphaned and isolated from the view, once the object has been created. If you need to respect such changes, you should create a new IFResultsComponentSet 
 		Params:
@@ -17299,6 +17522,7 @@ class IFDatabase(IFGroup):
 			component (str): Sx, Sy, Sxy, etc.. See element reference manual for details.
 			locn (str): "nodal", "elementNodal", "Gauss"/"Internal"
 			context (IFResultsContext, optional): If this variable is given, settings such as active loadcase, and active elements will be taken from this context, instead of the current view
+			storePrestressContributions (bool, optional): Whether or not to store additional data to support subsequent retrieval of prestress contributions
 		Returns:
 			IFResultsComponentSet: object holding results values
 		"""
@@ -18138,7 +18362,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Tabulates the model to the given file in LUSAS solver format 
 		Params:
-			data (IFTabulateDataObj or str): data object for the solver datafile tabulation, or just the filename
+			data (IFTabulateDataObj or string): data object for the solver datafile tabulation, or just the filename
 			options (IFLusasRunOptionsObj, optional): 
 		Returns:
 			int: return code, non-zero indicates error
@@ -18150,7 +18374,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Exports the model in the format defined by the data object 
 		Params:
-			data (IFExportDataObj or str): data object for the export, or just the filename
+			data (IFExportDataObj or string): data object for the export, or just the filename
 		Returns:
 			int: return code, non-zero indicates error
 		"""
@@ -18161,7 +18385,7 @@ class IFDatabase(IFGroup):
 		r"""
 		Imports data from file 
 		Params:
-			data (IFImportDataObj or str): data object for the export, or just the filename
+			data (IFImportDataObj or string): data object for the export, or just the filename
 			type (str, optional): "IGS", "DXF", "CMD" etc. If not specified, type assumed from options object or filename extension
 		Returns:
 			int: 
@@ -18438,7 +18662,7 @@ class IFDatabase(IFGroup):
 
 	def createTLOEnvelopeRun(self, runName, isTLO, informPanel=None) -> IFTLOEnvelopeRun:
 		r"""
-		Create a new envlope run of TLO (and, if necessary, the analysis to contain it). TLO run names need to be unique, it is not possible to have two runs with the same name, even if they are in different analyses 
+		Create a new envelope run of TLO (and, if necessary, the analysis to contain it). TLO run names need to be unique, it is not possible to have two runs with the same name, even if they are in different analyses 
 		Params:
 			runName (str): Name of the TLO envelope Run, if empty string given then a default name will be generated
 			isTLO (bool): if TRUE, an TLO Envelope Run is created
@@ -18451,7 +18675,7 @@ class IFDatabase(IFGroup):
 
 	def createTLOEnvelopeRunBranch(self, loadcase, runName, isTLO, informPanel=None) -> IFTLOEnvelopeRun:
 		r"""
-		Create a new envlope run of TLO (and, if necessary, the analysis to contain it). TLO run names need to be unique, it is not possible to have two runs with the same name, even if they are in different analyses 
+		Create a new envelope run of TLO (and, if necessary, the analysis to contain it). TLO run names need to be unique, it is not possible to have two runs with the same name, even if they are in different analyses 
 		Params:
 			loadcase (IFLoadcase): The name of a loadcase, or a pointer to a IFLoadcase object. Stage within which to create this branch
 			runName (str): Name of the TLO envelope Run, if empty string given then a default name will be generated
@@ -18739,13 +18963,14 @@ class IFDatabase(IFGroup):
 		pass
 
 
-	def deleteAttributes(self, attrType, arg2=None, reportError=None) -> int:
+	def deleteAttributes(self, attrType, arg2=None, reportError=None, doDeassignFirst=None) -> int:
 		r"""
-		Deletes all attributes/utilities of the specified type Optionally, output can be restricted to only those with the given name(s) and/or in the given range of IDs. Delete is only possible if the attribute is not assigned. Returns the number actually deleted - so you may check that the operation was successful by first calling IFDatabase.getAttributes and comparing the number of objects returned by that function with the return value of this one.  
+		Deletes all attributes/utilities of the specified type Optionally, output can be restricted to only those with the given name(s) and/or in the given range of IDs. Returns the number actually deleted - so you may check that the operation was successful by first calling IFDatabase.getAttributes and comparing the number of objects returned by that function with the return value of this one.  
 		Params:
 			attrType (object): "Loading", "Support", "Material", etc.
 			arg2 (str, optional): names and/or IDs of attributes, e.g. "bob;1T5" (default all)
 			reportError (bool, optional): flag to indicate if an error should be reported when the attribute type is unrecognised (default = True)
+			doDeassignFirst (bool, optional): if true allow attributes to be deassigned first, if false do not delete assigned attributes (default = False)
 		Returns:
 			int: the number of attributes successfully deleted
 		"""
@@ -19903,7 +20128,7 @@ class IFDatabase(IFGroup):
 		Creates a field face loading attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			flux (IFVariationAttr or float, optional): 
+			flux (IFVariationAttr or double, optional): 
 		Returns:
 			IFFieldFaceLoading: 
 		"""
@@ -20407,12 +20632,12 @@ class IFDatabase(IFGroup):
 		Creates an isotropic material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			Young (IFVariationAttr or float): Young's modulus
-			Poisson (IFVariationAttr or float): Poisson's ratio
-			Density (IFVariationAttr or float): Density
-			alpha (IFVariationAttr or float, optional): Coefficient of thermal expansion.
-			massDamping (IFVariationAttr or float, optional): Mass Rayleigh damping constant.
-			stiffDamping (IFVariationAttr or float, optional): Stiffness Rayleigh damping constant.
+			Young (IFVariationAttr or double): Young's modulus
+			Poisson (IFVariationAttr or double): Poisson's ratio
+			Density (IFVariationAttr or double): Density
+			alpha (IFVariationAttr or double, optional): Coefficient of thermal expansion.
+			massDamping (IFVariationAttr or double, optional): Mass Rayleigh damping constant.
+			stiffDamping (IFVariationAttr or double, optional): Stiffness Rayleigh damping constant.
 			temp (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -20425,12 +20650,12 @@ class IFDatabase(IFGroup):
 		Creates an orthotropic material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			ShearXY (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			ShearXY (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float, optional): temperature
 			defnPageType (str, optional): "Plane stress", "Axisymmetric shell"
 		Returns:
@@ -20444,15 +20669,15 @@ class IFDatabase(IFGroup):
 		Creates an orthotropic plane strain material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			YoungZ (IFVariationAttr or float): Young's modulus in Z
-			ShearXY (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			YoungZ (IFVariationAttr or double): Young's modulus in Z
+			ShearXY (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or double): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or double): Poisson's ratio in XZ
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -20465,11 +20690,11 @@ class IFDatabase(IFGroup):
 		Creates an orthotropic sheet material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -20482,14 +20707,14 @@ class IFDatabase(IFGroup):
 		Creates an orthotropic thick material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			ShearXY (IFVariationAttr or float): 
-			ShearYZ (IFVariationAttr or float): 
-			ShearXZ (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			ShearXY (IFVariationAttr or double): 
+			ShearYZ (IFVariationAttr or double): 
+			ShearXZ (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -20502,15 +20727,15 @@ class IFDatabase(IFGroup):
 		Creates an axisymmetric orthotropic material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			YoungZ (IFVariationAttr or float): Young's modulus in Z
-			ShearXY (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			YoungZ (IFVariationAttr or double): Young's modulus in Z
+			ShearXY (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or double): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or double): Poisson's ratio in XZ
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -20523,16 +20748,16 @@ class IFDatabase(IFGroup):
 		Creates a solid orthotropic material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			YoungZ (IFVariationAttr or float): Young's modulus in Z
-			ShearXY (IFVariationAttr or float): 
-			ShearYZ (IFVariationAttr or float): 
-			ShearXZ (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			YoungZ (IFVariationAttr or double): Young's modulus in Z
+			ShearXY (IFVariationAttr or double): 
+			ShearYZ (IFVariationAttr or double): 
+			ShearXZ (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or double): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or double): Poisson's ratio in XZ
+			Density (IFVariationAttr or double): Density
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -20545,9 +20770,9 @@ class IFDatabase(IFGroup):
 		Creates an anisotropic material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			MassDensity (IFVariationAttr or float): Density
-			Angle (IFVariationAttr or float): 
-			Matrix (IFVariationAttr or float): 
+			MassDensity (IFVariationAttr or double): Density
+			Angle (IFVariationAttr or double): 
+			Matrix (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFAnisotropicMaterial: 
@@ -20576,8 +20801,8 @@ class IFDatabase(IFGroup):
 		Creates a frictional joint attribute (Mdl=34) 
 		Params:
 			AttrName (str): The unique name of this attribute.
-			FrictionCoeff (IFVariationAttr or float): 
-			InitialGap (IFVariationAttr or float): 
+			FrictionCoeff (IFVariationAttr or double): 
+			InitialGap (IFVariationAttr or double): 
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20688,7 +20913,7 @@ class IFDatabase(IFGroup):
 		Creates a lead rubber bearing joint attribute (Mdl=36) 
 		Params:
 			AttrName (str): The unique name of this attribute.
-			BiaxialCoef (IFVariationAttr or float): 
+			BiaxialCoef (IFVariationAttr or double): 
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20706,9 +20931,9 @@ class IFDatabase(IFGroup):
 		Creates a frictional pendulum joint attribute (Mdl=37) 
 		Params:
 			AttrName (str): The unique name of this attribute.
-			ContactArea (IFVariationAttr or float): 
-			RadiusSlide (IFVariationAttr or float): 
-			BiaxialCoef (IFVariationAttr or float): 
+			ContactArea (IFVariationAttr or double): 
+			RadiusSlide (IFVariationAttr or double): 
+			BiaxialCoef (IFVariationAttr or double): 
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20724,8 +20949,8 @@ class IFDatabase(IFGroup):
 		Creates a non-linear user joint attribute 
 		Params:
 			AttrName (str): The unique name of this attribute.
-			ModelID (IFVariationAttr or float): user model number
-			NStateVar (IFVariationAttr or float): number of state variables
+			ModelID (IFVariationAttr or double): user model number
+			NStateVar (IFVariationAttr or double): number of state variables
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node"
 			Stiffness (array of realvariation): 
 			Mass (array of realvariation): 
@@ -20744,7 +20969,7 @@ class IFDatabase(IFGroup):
 			AttrName (str): The unique name of this attribute.
 			MassPosition (str): Mass Position "Between nodes", "At first node" or "At second node" Position of mass or masses: "Between nodes", "At first node", "At second node"
 			CouplingType (str): Direction used to define axial force: "Uncoupled", "Local X", "Local Y", "Local Z"
-			Stiffness (array of realvariation): Elastic spring stiffesses for each freedom
+			Stiffness (array of realvariation): Elastic spring stiffnesses for each freedom
 			Mass (array of realvariation): Mass for each freedom
 		Returns:
 			IFPiecewiseLinearJointMaterial: 
@@ -20759,18 +20984,6 @@ class IFDatabase(IFGroup):
 			AttrName (str): The unique name of this attribute.
 		Returns:
 			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def createPlasticHingePMMJointMaterial(self, AttrName, hingeType) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Creates a plastic hinge PMM joint attribute 
-		Params:
-			AttrName (str): The unique name of this attribute.
-			hingeType (int): 1=Fx-My, 2=Fx-Mz, 3=My-Mz, 4=Fx-My-Mz
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
 		"""
 		pass
 
@@ -20946,8 +21159,8 @@ class IFDatabase(IFGroup):
 		Creates a 2D mass material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			MassX (IFVariationAttr or float): 
-			MassY (IFVariationAttr or float): 
+			MassX (IFVariationAttr or double): 
+			MassY (IFVariationAttr or double): 
 			type (str, optional): distribution type
 		Returns:
 			IFMaterialMass: 
@@ -20960,9 +21173,9 @@ class IFDatabase(IFGroup):
 		Creates a 3D mass material attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
-			MassX (IFVariationAttr or float): Mass acting in X direction
-			MassY (IFVariationAttr or float): Mass acting in Y direction
-			MassZ (IFVariationAttr or float): Mass acting in Z direction
+			MassX (IFVariationAttr or double): Mass acting in X direction
+			MassY (IFVariationAttr or double): Mass acting in Y direction
+			MassZ (IFVariationAttr or double): Mass acting in Z direction
 			type (str, optional): distribution type
 		Returns:
 			IFMaterialMass: 
@@ -20975,9 +21188,9 @@ class IFDatabase(IFGroup):
 		Creates a material attribute for nonlinear user material 
 		Params:
 			attrName (str): The unique name of this attribute.
-			Young (IFVariationAttr or float): Young's modulus
-			Poisson (IFVariationAttr or float): Poisson's ratio
-			Density (IFVariationAttr or float): Density
+			Young (IFVariationAttr or double): Young's modulus
+			Poisson (IFVariationAttr or double): Poisson's ratio
+			Density (IFVariationAttr or double): Density
 		Returns:
 			IFMaterialNonlinearUser: 
 		"""
@@ -20989,9 +21202,9 @@ class IFDatabase(IFGroup):
 		Creates a material attribute for nonlinear resultant material 
 		Params:
 			attrName (str): The unique name of this attribute.
-			Young (IFVariationAttr or float): Young's modulus
-			Poisson (IFVariationAttr or float): Poisson's ratio
-			Density (IFVariationAttr or float): Density
+			Young (IFVariationAttr or double): Young's modulus
+			Poisson (IFVariationAttr or double): Poisson's ratio
+			Density (IFVariationAttr or double): Density
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialResultantUser: 
@@ -21004,20 +21217,20 @@ class IFDatabase(IFGroup):
 		Creates a material attribute for CEB-FIP material (Mdl=86) 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungsModulus (IFVariationAttr or float): Young's modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
-			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
-			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			MeanConcreteCompStrength (IFVariationAttr or float): 
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio
+			MassDensity (IFVariationAttr or double): Density
+			CoeffThermalExpansion (IFVariationAttr or double): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or double): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or double): Stiffness Rayleigh damping constant.
+			HeatFractionCoeff (IFVariationAttr or double): Heat fraction coefficient
+			MeanConcreteCompStrength (IFVariationAttr or double): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (IFVariationAttr or float): 
-			NominalThickness (IFVariationAttr or float): 
+			RelativeHumidity (IFVariationAttr or double): 
+			NominalThickness (IFVariationAttr or double): 
 			IncludeShrinkage (bool, optional): shrinkage switch
 			UseNominalThickness (bool, optional): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float, optional): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double, optional): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool, optional): if using section perimeter this sets the interior factor to 1
 		Returns:
 			IFMaterialIsotropic: 
@@ -21030,20 +21243,20 @@ class IFDatabase(IFGroup):
 		Creates a material attribute for Eurocode2 material (Mdl=86) 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungsModulus (IFVariationAttr or float): Young's modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
-			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
-			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			MeanConcreteCompStrength (IFVariationAttr or float): 
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio
+			MassDensity (IFVariationAttr or double): Density
+			CoeffThermalExpansion (IFVariationAttr or double): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or double): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or double): Stiffness Rayleigh damping constant.
+			HeatFractionCoeff (IFVariationAttr or double): Heat fraction coefficient
+			MeanConcreteCompStrength (IFVariationAttr or double): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (IFVariationAttr or float): 
-			NominalThickness (IFVariationAttr or float): 
+			RelativeHumidity (IFVariationAttr or double): 
+			NominalThickness (IFVariationAttr or double): 
 			IncludeShrinkage (bool): shrinkage switch
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			AutogenousShrinkage (bool): autogenous shrinkage flag
 			UseFullPerimeter (bool, optional): if using section perimeter this sets the interior factor to 1
 			pSilicaFumeType (int, optional): silica fume type
@@ -21058,20 +21271,20 @@ class IFDatabase(IFGroup):
 		Creates a material attribute for India IRC:112-2011 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungsModulus (IFVariationAttr or float): Young's modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
-			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
-			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			MeanConcreteCompStrength (IFVariationAttr or float): 
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio
+			MassDensity (IFVariationAttr or double): Density
+			CoeffThermalExpansion (IFVariationAttr or double): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or double): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or double): Stiffness Rayleigh damping constant.
+			HeatFractionCoeff (IFVariationAttr or double): Heat fraction coefficient
+			MeanConcreteCompStrength (IFVariationAttr or double): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (IFVariationAttr or float): 
-			NominalThickness (IFVariationAttr or float): 
+			RelativeHumidity (IFVariationAttr or double): 
+			NominalThickness (IFVariationAttr or double): 
 			IncludeShrinkage (bool): shrinkage switch
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			AutogenousShrinkage (bool): autogenous shrinkage flag
 			UseFullPerimeter (bool, optional): if using section perimeter this sets the interior factor to 1
 		Returns:
@@ -21085,25 +21298,25 @@ class IFDatabase(IFGroup):
 		Creates a material attribute for Chinese creep material (Mdl=86) 
 		Params:
 			attrName (str): The unique name of this attribute.
-			YoungsModulus (IFVariationAttr or float): Young's modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
-			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
-			A (IFVariationAttr or float): 
-			B (IFVariationAttr or float): 
-			F1 (IFVariationAttr or float): 
-			G1 (IFVariationAttr or float): 
-			P1 (IFVariationAttr or float): 
-			R1 (IFVariationAttr or float): 
-			F2 (IFVariationAttr or float): 
-			G2 (IFVariationAttr or float): 
-			P2 (IFVariationAttr or float): 
-			R2 (IFVariationAttr or float): 
-			F3 (IFVariationAttr or float): 
-			R3 (IFVariationAttr or float): 
-			AR (IFVariationAttr or float, optional): 
-			BR (IFVariationAttr or float, optional): 
-			Hf (IFVariationAttr or float, optional): 
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio
+			MassDensity (IFVariationAttr or double): Density
+			CoeffThermalExpansion (IFVariationAttr or double): Coefficient of thermal expansion.
+			A (IFVariationAttr or double): 
+			B (IFVariationAttr or double): 
+			F1 (IFVariationAttr or double): 
+			G1 (IFVariationAttr or double): 
+			P1 (IFVariationAttr or double): 
+			R1 (IFVariationAttr or double): 
+			F2 (IFVariationAttr or double): 
+			G2 (IFVariationAttr or double): 
+			P2 (IFVariationAttr or double): 
+			R2 (IFVariationAttr or double): 
+			F3 (IFVariationAttr or double): 
+			R3 (IFVariationAttr or double): 
+			AR (IFVariationAttr or double, optional): 
+			BR (IFVariationAttr or double, optional): 
+			Hf (IFVariationAttr or double, optional): 
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -21381,226 +21594,6 @@ class IFDatabase(IFGroup):
 		pass
 
 
-	def createShearTorsionAdvPropsDefinition(self, attrName) -> IFShearTorsionAdvPropsDefinition:
-		r"""
-		Creates a new advanced shear and torsion properties utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFShearTorsionAdvPropsDefinition: returned attribute
-		"""
-		pass
-
-
-	def createMBWDefinition(self, attrName) -> IFMBWDefinition:
-		r"""
-		Creates a new Masonry Bridge Wizard definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFMBWDefinition: returned attribute
-		"""
-		pass
-
-
-	def createTankDefinition(self, attrName) -> IFTankDefinition:
-		r"""
-		Creates a new Tank definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFTankDefinition: returned attribute
-		"""
-		pass
-
-
-	def createKogasTankDefinition(self, attrName) -> IFKogasTankDefinition:
-		r"""
-		Creates a new KOGAS Tank definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFKogasTankDefinition: returned attribute
-		"""
-		pass
-
-
-	def createTankReinforcementDefinition(self, attrName) -> IFTankReinforcementDefinition:
-		r"""
-		Creates a new Tank reinforcement definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFTankReinforcementDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardBridgeDefinition(self, attrName) -> IFBridgeWizardBridgeDefinition:
-		r"""
-		Creates a new Bridge Wizard Bridge definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardBridgeDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardSupportDefinition(self, attrName) -> IFBridgeWizardSupportDefinition:
-		r"""
-		Creates a new Bridge Wizard Support definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardSupportDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardStiffenerDefinition(self, attrName) -> IFBridgeWizardStiffenerDefinition:
-		r"""
-		Creates a new Bridge Wizard Stiffener definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardStiffenerDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardSpanDefinition(self, attrName) -> IFBridgeWizardSpanDefinition:
-		r"""
-		Creates a new Bridge Wizard Span definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardSpanDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardSectionDefinition(self, attrName) -> IFBridgeWizardSectionDefinition:
-		r"""
-		Creates a new Bridge Wizard Section definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardSectionDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardTubSectionDefinition(self, attrName) -> IFBridgeWizardTubSectionDefinition:
-		r"""
-		Not implemented 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardTubSectionDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardGirderDefinition(self, attrName) -> IFBridgeWizardGirderDefinition:
-		r"""
-		Creates a new Bridge Wizard Girder definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardGirderDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardBracingDefinition(self, attrName) -> IFBridgeWizardBracingDefinition:
-		r"""
-		Creates a new Bridge Wizard Bracing Assembly definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardBracingDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeWizardBracingRunDefinition(self, attrName) -> IFBridgeWizardBracingRunDefinition:
-		r"""
-		Creates a new Bridge Wizard Bracing Run definition utility. 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeWizardBracingRunDefinition: returned attribute
-		"""
-		pass
-
-
-	def createBridgeDesignGirderMaterial(self, attrName) -> IFBridgeDesignGirderMaterial:
-		r"""
-		Composite bridge design material definition. Describes the various materials used in a composite design 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeDesignGirderMaterial: returned attribute
-		"""
-		pass
-
-
-	def createBridgeDesignTransverseStiffener(self, attrName) -> IFBridgeDesignTransverseStiffener:
-		r"""
-		Transverse stiffener definition used in bridge design 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeDesignTransverseStiffener: returned attribute
-		"""
-		pass
-
-
-	def createBridgeDesignLongitudinalStiffener(self, attrName) -> IFBridgeDesignLongitudinalStiffener:
-		r"""
-		Longitudinal stiffener definition used in bridge design 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBridgeDesignLongitudinalStiffener: returned attribute
-		"""
-		pass
-
-
-	def createPushoverCurve(self, attrName) -> IFPushoverCurve:
-		r"""
-		Creates a new Pushover Curve 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFPushoverCurve: returned attribute
-		"""
-		pass
-
-
-	def createStoreyLoading(self, attrName) -> IFBuildingLoading:
-		r"""
-		Creates a new Storey Loading attribute 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBuildingLoading: returned attribute
-		"""
-		pass
-
-
-	def createSeismicStoreyLoading(self, attrName) -> IFBuildingLoading:
-		r"""
-		Creates a new eismic Storey Loading attribute 
-		Params:
-			attrName (str): The unique name of this attribute.
-		Returns:
-			IFBuildingLoading: returned attribute
-		"""
-		pass
-
-
 	def createScriptedAttribute(self, attrName, subType, isUtility=None) -> IFScriptedAttribute:
 		r"""
 		Creates a new attribute / utility with no initial behaviour. The only difference between an attribute and a utility is that utilities cannot be assigned and are shown in a different panel in the UI. LUSAS will not visualise or tabulate this attribute / utility, but it may be created, edited and assigned just like any other attribute / utility. It is the user's responsibility to attach any meaning, calculation, behaviour etc. A sub type is allowed to distinguish between different types of scripted attribute / utility. Values 0, 1 and 2 are reserved by LUSAS. 
@@ -21801,7 +21794,7 @@ class IFDatabase(IFGroup):
 
 	def createElastoPlasticMaterialSet(self, attrName) -> IFElastoPlasticInterfaceSet:
 		r"""
-		Creates a Elasto platic interface material set attribute 
+		Creates a Elasto plastic interface material set attribute 
 		Params:
 			attrName (str): The unique name of this attribute.
 		Returns:
@@ -22184,7 +22177,7 @@ class IFDatabase(IFGroup):
 		r"""
 		return array of the storey primary nodes 
 		Params:
-			ascendingHeight (bool): true for acscending storey height, false for descending
+			ascendingHeight (bool): true for ascending storey height, false for descending
 		Returns:
 			array of IFNode objects: storey primary nodes array
 		"""
@@ -22226,7 +22219,7 @@ class IFDatabase(IFGroup):
 
 	def createCompositeDesignMember(self, name) -> IFCompositeDesignMember:
 		r"""
-		Create a utility for the Composite Design Member facility. The underlying implemenation is the same as a beam shell slice utility- see comments therein 
+		Create a utility for the Composite Design Member facility. The underlying implementation is the same as a beam shell slice utility- see comments therein 
 		Params:
 			name (str): name of this object
 		Returns:
@@ -22352,6 +22345,17 @@ class IFDatabase(IFGroup):
 		pass
 
 
+	def createSurfaceReinforcementLayout(self, attrName) -> IFSurfaceReinforcementLayout:
+		r"""
+		Creates a surface reinforcement layout attribute 
+		Params:
+			attrName (str): The unique name of this attribute.
+		Returns:
+			IFSurfaceReinforcementLayout: newly created attribute
+		"""
+		pass
+
+
 	def createReinforcementLine(self, attrName) -> IFReinforcementLine:
 		r"""
 		Creates a reinforcement line attribute 
@@ -22359,6 +22363,17 @@ class IFDatabase(IFGroup):
 			attrName (str): The unique name of this attribute.
 		Returns:
 			IFReinforcementLine: newly created attribute
+		"""
+		pass
+
+
+	def createSurfaceReinforcement(self, attrName) -> IFSurfaceReinforcement:
+		r"""
+		Creates a surface reinforcement attribute 
+		Params:
+			attrName (str): The unique name of this attribute.
+		Returns:
+			IFSurfaceReinforcement: newly created attribute
 		"""
 		pass
 
@@ -22403,6 +22418,17 @@ class IFDatabase(IFGroup):
 			attrName (str): The unique name of this attribute.
 		Returns:
 			IFUndrained: newly created attribute
+		"""
+		pass
+
+
+	def createHSSMaterialSet(self, attrName) -> IFHSSMaterialSet:
+		r"""
+		Creates a hardening soil material set with small strain hardening attribute 
+		Params:
+			attrName (str): 
+		Returns:
+			IFHSSMaterialSet: newly created attribute
 		"""
 		pass
 
@@ -22479,8 +22505,8 @@ class IFDatabase(IFGroup):
 		Params:
 			origModelFile (str): name of the original 32bit model file (which must exist)
 			databaseTypeID (int): For future expansion. Must be 0
-			textoutput (str, optional): name of a file to recieve the contents of the 32bit text output window (which must not exist)
-			scriptFile (str, optional): name of a file to recieve the contents of the conversion script (which must not exist)
+			textoutput (str, optional): name of a file to receive the contents of the 32bit text output window (which must not exist)
+			scriptFile (str, optional): name of a file to receive the contents of the conversion script (which must not exist)
 		Returns:
 			None: 
 		"""
@@ -22565,7 +22591,7 @@ class IFDatabase(IFGroup):
 			attrType (object): "Loading", "Support", "Material", etc.
 			varName (str): name you would like to use for a new attribute
 		Returns:
-			str: guaranteed unique name if succesful
+			str: guaranteed unique name if successful
 		"""
 		pass
 
@@ -22687,7 +22713,7 @@ class IFModuleChapter(IFReportChapter):
 
 	def createValue(self, varNname, energy=None, force=None, length=None, mass=None, time=None, temperature=None, perUnitLength=None) -> IFModuleChapter:
 		r"""
-		Creates a new value within this object for subsequent use. The initial value will be 0.0 until modified by a call to IFModuleChapter.setValue. LUSAS will not use this value for any purpose, but will store it in model files, and allow subsequent modification with IFModuleChapter.setValue and/or subsequent access with IFGroup.getValue. The value may have any simple data type - integer, boolean, real or string, or it may be a LUSAS LPI object representing an attribute. Or it may be an array of any of these. Note that arrays cannot mix types - e.g. you can have an array of strings OR an array of booleans, but you cannot have an array that contains both strings and booleans, and similarly for all other types. For numbers, it will often be desirable, but is not compulsory, to attach unit information to the value, such that its value can be fetched or modified in a known system of units. This is done using the six optional integers. The integers represent the indices, or 'power' of each scalar quantity - e.g. 2=squared,3=cubed and so on. Each integer may be positive or negative. E.g. specifying '0,0,1,0,0,0' would mean that the new quantity is a length; '0,0,2,0,0,0' would mean length squared, i.e. area; '0,0,1,0,-1,0' would mean length divided by time, i.e. velocity; and '0,1,-2,0,0,0' would mean force per unit area. 
+		Creates a new value within this object for subsequent use. The initial value will be 0.0 until modified by a call to IFModuleChapter.setValue. LUSAS will not use this value for any purpose, but will store it in model files, and allow subsequent modification with IFModuleChapter.setValue and/or subsequent access with IFModuleChapter.getValue. The value may have any simple data type - integer, boolean, real or string, or it may be a LUSAS LPI object representing an attribute. Or it may be an array of any of these. Note that arrays cannot mix types - e.g. you can have an array of strings OR an array of booleans, but you cannot have an array that contains both strings and booleans, and similarly for all other types. For numbers, it will often be desirable, but is not compulsory, to attach unit information to the value, such that its value can be fetched or modified in a known system of units. This is done using the six optional integers. The integers represent the indices, or 'power' of each scalar quantity - e.g. 2=squared,3=cubed and so on. Each integer may be positive or negative. E.g. specifying '0,0,1,0,0,0' would mean that the new quantity is a length; '0,0,2,0,0,0' would mean length squared, i.e. area; '0,0,1,0,-1,0' would mean length divided by time, i.e. velocity; and '0,1,-2,0,0,0' would mean force per unit area. 
 		Params:
 			varNname (str): name of the new value
 			energy (int, optional): energy component of the new value (default 0.0)
@@ -22727,7 +22753,7 @@ class IFModuleChapter(IFReportChapter):
 
 	def setValue(self, varName, value, units=None) -> IFModuleChapter:
 		r"""
-		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			value (object): The type given will depend on the value specified
@@ -22740,7 +22766,7 @@ class IFModuleChapter(IFReportChapter):
 
 	def getValue(self, varName, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): 
 			units (IFUnitSet, optional): 
@@ -22905,7 +22931,7 @@ class IFMeshLine(IFMeshAttr):
 		Params:
 			whichEnd (str): 'Start' or 'End' - which end of the line to modify
 			dof (str): degree of freedom: 'u','v','w','thx','thy','thz'
-			releaseType (str): end release type, free, restained, or constrained
+			releaseType (str): end release type, free, restrained, or constrained
 			fixityValue (float, optional): fixity value for partial fixity end release types
 		Returns:
 			IFMeshLine: 
@@ -22915,7 +22941,7 @@ class IFMeshLine(IFMeshAttr):
 
 	def setEndReleasesSameAsStart(self, isSame) -> IFMeshLine:
 		r"""
-		Call to specify that (in the dialog) the 'end' of the line has the same releases as the 'start'. Note that calling this function will have have no effect on prior calls to IFMeshLine.setEndRelease() - it only affects subsequent calls. 
+		Call to specify that (in the dialog) the 'end' of the line has the same releases as the 'start'. Note that calling this function will have no effect on prior calls to IFMeshLine.setEndRelease() - it only affects subsequent calls. 
 		Params:
 			isSame (bool): 
 		Returns:
@@ -22926,7 +22952,7 @@ class IFMeshLine(IFMeshAttr):
 
 	def setEndRigidZoneSameAsStart(self, isSame) -> IFMeshLine:
 		r"""
-		Call to specify that (in the dialog) the 'end' of the line has the same rigid zone data as the 'start'. Note that calling this function will have have no effect on prior calls to IFMeshLine.setRigid() - it only affects subsequent calls. 
+		Call to specify that (in the dialog) the 'end' of the line has the same rigid zone data as the 'start'. Note that calling this function will have no effect on prior calls to IFMeshLine.setRigid() - it only affects subsequent calls. 
 		Params:
 			isSame (bool): 
 		Returns:
@@ -23687,6 +23713,17 @@ class IFVariationField(IFVariationAttr):
 		pass
 
 
+	def setOutOfRangeType(self, type) -> IFVariationField:
+		r"""
+		set the out of range evaluation type 
+		Params:
+			type (str): out of range evaluation type, "zero","error" or "do not tabulate"
+		Returns:
+			IFVariationField: 
+		"""
+		pass
+
+
 class IFVariationLine(IFVariationAttr):
 	"""
 	line variation attribute 
@@ -23744,6 +23781,17 @@ class IFVariationSurface(IFVariationAttr):
 		Sets the function expression. Also unsets all limits. 
 		Params:
 			function (str or float): any expression that evaluates to a number, e.g. 4,"3+4u","v". Note all numbers must be in US English, i.e. "1.2", not the current locale (e.g. Italian/Swedish/French "1,2")
+		Returns:
+			IFVariationSurface: 
+		"""
+		pass
+
+
+	def setOutOfRangeType(self, type) -> IFVariationSurface:
+		r"""
+		set the out of range evaluation type 
+		Params:
+			type (str): out of range evaluation type, "zero","error" or "do not tabulate"
 		Returns:
 			IFVariationSurface: 
 		"""
@@ -23920,7 +23968,7 @@ class IFVariationPriorResults(IFVariationAttr):
 		Params:
 			sType (str): 
 			rXYAngle (float): only useful when type is "XY angle"
-			extraInfo1 (IFLocalCoord or IFReferencePath or str): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
+			extraInfo1 (IFLocalCoord or IFReferencePath or string): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
 			extraInfo2 (int): Will be set to the shell plane  if type is "Local coord" or to a boolean skewed/not skewed if type is "Path", otherwise not used
 		Returns:
 			None: 
@@ -23950,7 +23998,7 @@ class IFProfileVariation(IFVariationAttr):
 		set the out of range evaluation type 
 		Params:
 			before (bool): true for before, false for after
-			type (str): out of range evaluation type
+			type (str): out of range evaluation type, "error","same","extrapolate","zero" or "do not tabulate"
 		Returns:
 			IFProfileVariation: 
 		"""
@@ -23996,22 +24044,22 @@ class IFGeometric(IFAttribute):
 
 class IFGeometricLine(IFGeometric):
 	"""
-	Defines all geometric properties for elements meshed along lines, such as bars and beams. Required properties depend on the elemnt type. 
+	Defines all geometric properties for elements meshed along lines, such as bars and beams. Required properties depend on the element type. 
 	"""
 
 	def setBeam(self, A, Iyy, Izz, Iyz, J, Asz, Asy, ey=None, ez=None, section=None) -> IFGeometricLine:
 		r"""
 		Specifies the defining parameters of this beam, with the values given at the beam axis. This function can be used for attributes which are assigned to lines meshed with all element types except axisymmetric and grillage. 
 		Params:
-			A (IFVariationAttr or float): cross-sectional area
+			A (IFVariationAttr or double): cross-sectional area
 			Iyy (object): {I'yy}<realvariation> second moment of area about local y axis
 			Izz (object): {I'zz}<realvariation> second moment of area about local z axis
 			Iyz (object): {I'yz}<realvariation> product moment of inertia
 			J (object): {J'}<realvariation> torsion constant
-			Asz (IFVariationAttr or float): shear area on local yz plane in z direction
-			Asy (IFVariationAttr or float): shear area on local yz plane in y direction
-			ey (IFVariationAttr or float, optional): eccentricity in y direction
-			ez (IFVariationAttr or float, optional): eccentricity in z direction
+			Asz (IFVariationAttr or double): shear area on local yz plane in z direction
+			Asy (IFVariationAttr or double): shear area on local yz plane in y direction
+			ey (IFVariationAttr or double, optional): eccentricity in y direction
+			ez (IFVariationAttr or double, optional): eccentricity in z direction
 			section (int, optional): Index of section for which the properties are set (e.g. for linear tapered, 0 for first end, 1 for second end); default is 0
 		Returns:
 			IFGeometricLine: 
@@ -24065,7 +24113,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness for axisymmetric membrane/shell 
 		Params:
-			t (IFVariationAttr or float): Thickness
+			t (IFVariationAttr or double): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24076,7 +24124,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness for plane strain beam 
 		Params:
-			t (IFVariationAttr or float): Thickness
+			t (IFVariationAttr or double): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24087,7 +24135,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness specifically for use in the APSC model 
 		Params:
-			t (IFVariationAttr or float): Thickness
+			t (IFVariationAttr or double): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24098,7 +24146,7 @@ class IFGeometricLine(IFGeometric):
 		r"""
 		Sets the thickness for plane stress interface 
 		Params:
-			t (IFVariationAttr or float): Thickness
+			t (IFVariationAttr or double): Thickness
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24130,7 +24178,7 @@ class IFGeometricLine(IFGeometric):
 			NewtonCotes14 (int, optional): number of Newton-Coates integration points in Y direction (default =0)
 			section (int, optional): Index of section to which the quad should be added (e.g. for linear tapered, 0 for first end, 1 for second end); default is 0
 			quadType (str, optional): string describing how this quad was defined
-			isTriangle (bool, optional): true for triangle, false for quadrilaterial
+			isTriangle (bool, optional): true for triangle, false for quadrilateral
 			quadFillType (str, optional): string describing which part of the section this quad defines
 			haveModularRatio (bool, optional): true if modular ratio is known, else false
 			modularRatio (float, optional): modular ratio, only used if "haveModularRatio" is true
@@ -24542,21 +24590,6 @@ class IFGeometricLine(IFGeometric):
 		pass
 
 
-	def setInfillSectionMaterials(self, material1, material2, materialAssigned, reductionFactor, section=None) -> IFGeometricLine:
-		r"""
-		Sets the materials to be used to calculate the properties of an 'infill & encased standard section' 
-		Params:
-			material1 (str): material attribute for steel section
-			material2 (str): material attribute for encasement/infill
-			materialAssigned (int): 1 or 2: material used in analysis
-			reductionFactor (float): stiffness reduction factor applied to encasement/infill material
-			section (int, optional): Index of section for which the properties are set (for compound sections); default is 0
-		Returns:
-			IFGeometricLine: 
-		"""
-		pass
-
-
 	def defineSectionOutline(self, outlineDefn, section=None) -> IFGeometricLine:
 		r"""
 		defines the section outline for general parametric sections 
@@ -24591,7 +24624,7 @@ class IFGeometricLine(IFGeometric):
 
 	def countSubSections(self) -> int:
 		r"""
-		return the number of sub-sections defining this beam section, for example a back-to-back C section is two sub-sections, an infill section may be up to to three sub-sections 
+		return the number of sub-sections defining this beam section, for example a back-to-back C section is two sub-sections, an infill section may be up to three sub-sections 
 		Returns:
 			int: number of sub-sections
 		"""
@@ -24600,7 +24633,7 @@ class IFGeometricLine(IFGeometric):
 
 	def getTrimmingLoopCoordsAlongLine(self, subSectionIndex, line, normalisedCoord, nPointsPerTrimmingLoop, trimmingLoopCoords) -> int:
 		r"""
-		get the cooordinates defining the section trimming loops at a position alog a line to which this attribute is assigned 
+		get the coordinates defining the section trimming loops at a position along a line to which this attribute is assigned 
 		Params:
 			subSectionIndex (int): index of the required sub-section
 			line (IFLine): The name or ID of a line, or a pointer to a IFLine object. geometry line along which section is required
@@ -24615,7 +24648,7 @@ class IFGeometricLine(IFGeometric):
 
 	def getTrimmingLoopCoords(self, subSectionIndex, normalisedCoord, nPointsPerTrimmingLoop, trimmingLoopCoords) -> int:
 		r"""
-		get the cooordinates defining the section trimming loops at the given normalised coordinate along this attribute 
+		get the coordinates defining the section trimming loops at the given normalised coordinate along this attribute 
 		Params:
 			subSectionIndex (int): index of the required sub-section
 			normalisedCoord (float): normalise coordinate along the section, 0 -> 1
@@ -24716,7 +24749,7 @@ class IFGeometricLine(IFGeometric):
 
 	def isReinforcementValid(self, reason) -> bool:
 		r"""
-		Return True if the reinforcement that has been applied to this is valid, False otherwise. This method will assume valid reinforcement and will return True if no reinfocement has been applied to this 
+		Return True if the reinforcement that has been applied to this is valid, False otherwise. This method will assume valid reinforcement and will return True if no reinforcement has been applied to this 
 		Params:
 			reason (str): the reason that the reinforcement is invalid
 		Returns:
@@ -24826,7 +24859,7 @@ class IFGeometricLine(IFGeometric):
 		Params:
 			method (str): method: 'Sum slab and girder' / 'Girder only' / 'Grillage slab' / 'User Defined'
 			girderWarping (str, optional): warping approach for girder, if included: 'None' / 'NCHRP Report 725 Both ends' / 'NCHRP Report 725 One end'
-			paramValue (float, optional): unbraced length if NCHRP seleced / J value if 'User Defined' selected
+			paramValue (float, optional): unbraced length if NCHRP selected / J value if 'User Defined' selected
 		Returns:
 			IFGeometricLine: 
 		"""
@@ -24901,7 +24934,7 @@ class IFGeometricLine(IFGeometric):
 
 	def getTopSlabRowCount(self) -> int:
 		r"""
-		Gets the number of entires defining the slab in a Bridge Deck girder with top slab 
+		Gets the number of entries defining the slab in a Bridge Deck girder with top slab 
 		Returns:
 			int: 
 		"""
@@ -25141,6 +25174,17 @@ class IFGeometricLine(IFGeometric):
 		pass
 
 
+	def useAssignedCompoundMaterial(self, useMaterialAssignment) -> IFGeometricLine:
+		r"""
+		For multi-material Arbitrary Section Property Calculator sections, selects whether to re-evaluate the section properties based on an assigned compound material, or use the precalculated section properties with a single reference material matching the one used when the properties were calculated. 
+		Params:
+			useMaterialAssignment (bool): true to use compound materials, false to use precalculated properties
+		Returns:
+			IFGeometricLine: 
+		"""
+		pass
+
+
 class IFGeometricSurface(IFGeometric):
 	"""
 	Setup surface geometric attribute 
@@ -25150,8 +25194,8 @@ class IFGeometricSurface(IFGeometric):
 		r"""
 		Sets the thickness 
 		Params:
-			t (IFVariationAttr or float): thickness
-			ez (IFVariationAttr or float, optional): eccentricity in Z direction
+			t (IFVariationAttr or double): thickness
+			ez (IFVariationAttr or double, optional): eccentricity in Z direction
 		Returns:
 			IFGeometricSurface: 
 		"""
@@ -25167,9 +25211,9 @@ class IFGeometricJoint(IFGeometric):
 		r"""
 		Sets the eccentricity 
 		Params:
-			ecc (IFVariationAttr or float, optional): eccentricity
-			dy (IFVariationAttr or float, optional): local y parametric distance to shear spring
-			dz (IFVariationAttr or float, optional): local z parametric distance to shear spring
+			ecc (IFVariationAttr or double, optional): eccentricity
+			dy (IFVariationAttr or double, optional): local y parametric distance to shear spring
+			dz (IFVariationAttr or double, optional): local z parametric distance to shear spring
 			useShearDistances (bool, optional): if false ignore the shear distances and do not tabulate
 		Returns:
 			IFGeometricJoint: 
@@ -25197,7 +25241,7 @@ class IFGeometricThermalLink(IFGeometric):
 		r"""
 		Sets the eccentricity 
 		Params:
-			area (IFVariationAttr or float): area for 2d/3d links
+			area (IFVariationAttr or double): area for 2d/3d links
 		Returns:
 			IFGeometricThermalLink: 
 		"""
@@ -25208,7 +25252,7 @@ class IFGeometricThermalLink(IFGeometric):
 		r"""
 		Sets the eccentricity 
 		Params:
-			area (IFVariationAttr or float): thickness for axisymmetric links
+			area (IFVariationAttr or double): thickness for axisymmetric links
 		Returns:
 			IFGeometricThermalLink: 
 		"""
@@ -25217,7 +25261,7 @@ class IFGeometricThermalLink(IFGeometric):
 
 class IFPropertyModifier(IFAttribute):
 	"""
-	When assigned to a line, this attribute will add its modification factors to the values tabulated by the IFGeometricLine assigned to that line, allowing differing values of each porperty depending on either a Stiffness or Mass context. 
+	When assigned to a line, this attribute will add its modification factors to the values tabulated by the IFGeometricLine assigned to that line, allowing differing values of each property depending on either a Stiffness or Mass context. 
 	"""
 
 	def setStiffnessFactor(self, varName, value) -> IFDispatch:
@@ -25344,8 +25388,8 @@ class IFDamping(IFAttribute):
 		r"""
 		Adds a row if it is valid 
 		Params:
-			Mass (IFVariationAttr or float): Mass Rayleigh damping constant.
-			Stiffness (IFVariationAttr or float): Stiffness Rayleigh damping constant.
+			Mass (IFVariationAttr or double): Mass Rayleigh damping constant.
+			Stiffness (IFVariationAttr or double): Stiffness Rayleigh damping constant.
 			frequency (float): reference circular frequency
 		Returns:
 			IFDamping: 
@@ -25534,7 +25578,7 @@ class IFGeomBeamOptimUtil(IFAttribute):
 
 	def setAllGeometricLines(self, array) -> None:
 		r"""
-		Sets all the geometric liness in this utility 
+		Sets all the geometric lines in this utility 
 		Params:
 			array (array of IFGeometricLine): 
 		Returns:
@@ -26004,8 +26048,8 @@ class IFSupportThermal(IFSupport):
 		Sets up spring stiffnesses. 
 		Params:
 			type (str): 'Total', 'Length', or 'Area' - indicates whether given stiffnesses are total values, or are given per unit length or per unit area
-			phiStiff (IFVariationAttr or float): stiffness with respect to temperature (conductivity)
-			presStiff (IFVariationAttr or float, optional): stiffness with respect to capillary pressure
+			phiStiff (IFVariationAttr or double): stiffness with respect to temperature (conductivity)
+			presStiff (IFVariationAttr or double, optional): stiffness with respect to capillary pressure
 		Returns:
 			IFSupportThermal: 
 		"""
@@ -26042,16 +26086,16 @@ class IFSupportStructural(IFSupport):
 		Sets up spring stiffnesses. 
 		Params:
 			type (str): 'Total', 'Length', or 'Area' - indicates whether given stiffness is a total stiffness, or is given per unit length or per unit area
-			ustiff (IFVariationAttr or float): spring stiffness along X axis
-			vstiff (IFVariationAttr or float): spring stiffness along Y axis
-			wstiff (IFVariationAttr or float): spring stiffness along Z axis
-			thxstiff (IFVariationAttr or float): spring stiffness rotationally about X axis
-			thystiff (IFVariationAttr or float): spring stiffness rotationally about Y axis
-			thzstiff (IFVariationAttr or float): spring stiffness rotationally about Z axis
-			loof1stiff (IFVariationAttr or float): spring stiffness rotationally about loof 1 / hinge
-			loof2stiff (IFVariationAttr or float): spring stiffness rotationally about loof 2 / hinge
-			porestiff (IFVariationAttr or float): spring stiffness with respect to pore pressure
-			torsionstiff (IFVariationAttr or float, optional): spring stiffness with respect to torsional warping
+			ustiff (IFVariationAttr or double): spring stiffness along X axis
+			vstiff (IFVariationAttr or double): spring stiffness along Y axis
+			wstiff (IFVariationAttr or double): spring stiffness along Z axis
+			thxstiff (IFVariationAttr or double): spring stiffness rotationally about X axis
+			thystiff (IFVariationAttr or double): spring stiffness rotationally about Y axis
+			thzstiff (IFVariationAttr or double): spring stiffness rotationally about Z axis
+			loof1stiff (IFVariationAttr or double): spring stiffness rotationally about loof 1 / hinge
+			loof2stiff (IFVariationAttr or double): spring stiffness rotationally about loof 2 / hinge
+			porestiff (IFVariationAttr or double): spring stiffness with respect to pore pressure
+			torsionstiff (IFVariationAttr or double, optional): spring stiffness with respect to torsional warping
 		Returns:
 			IFSupportStructural: 
 		"""
@@ -26088,12 +26132,12 @@ class IFSupportStructural(IFSupport):
 		Sets the viscous damping coefficients for non-reflective/absorbing boundary conditions 
 		Params:
 			userSpecified (bool): TRUE: user specified coefficients, FALSE: solver calculates the viscous damping coefficients (density.wavespeed not required)
-			xReduction (IFVariationAttr or float): Relaxation coefficient for X axis
-			yReduction (IFVariationAttr or float): Relaxation coefficient for Y axis
-			zReduction (IFVariationAttr or float): Relaxation coefficient for Z axis
-			xDensityWaveSpeed (IFVariationAttr or float, optional): Material density at the boundary node x pressure/shear wave speed for X axis
-			yDensityWaveSpeed (IFVariationAttr or float, optional): Material density at the boundary node x pressure/shear wave speed for Y axis
-			zDensityWaveSpeed (IFVariationAttr or float, optional): Material density at the boundary node x pressure/shear wave speed for Z axis
+			xReduction (IFVariationAttr or double): Relaxation coefficient for X axis
+			yReduction (IFVariationAttr or double): Relaxation coefficient for Y axis
+			zReduction (IFVariationAttr or double): Relaxation coefficient for Z axis
+			xDensityWaveSpeed (IFVariationAttr or double, optional): Material density at the boundary node x pressure/shear wave speed for X axis
+			yDensityWaveSpeed (IFVariationAttr or double, optional): Material density at the boundary node x pressure/shear wave speed for Y axis
+			zDensityWaveSpeed (IFVariationAttr or double, optional): Material density at the boundary node x pressure/shear wave speed for Z axis
 		Returns:
 			IFSupportStructural: 
 		"""
@@ -26122,9 +26166,9 @@ class IFInspectionPoint(IFAttribute):
 		r"""
 		Add a location within the attribute. 
 		Params:
-			u (float): location in u direction for lines, surfaces and volumns.
-			v (float, optional): location in v direction for surfaces and volumns.
-			w (float, optional): location in w direction for volumns only.
+			u (float): location in u direction for lines, surfaces and volumes.
+			v (float, optional): location in v direction for surfaces and volumes.
+			w (float, optional): location in w direction for volumes only.
 		Returns:
 			None: 
 		"""
@@ -26165,7 +26209,7 @@ class IFInspectionPoint(IFAttribute):
 			feature (IFDatabaseMember): feature to which to attach value (this attribute must be assigned to that feature)
 			locationIndex (int): index of location within this (corresponds to a row in the definition dialog)
 			attrType (object): "Loading", "Support", "Material", etc.
-			varName (str): e.g. "E" or "thickness". The set of available names depends on the attibute assigned
+			varName (str): e.g. "E" or "thickness". The set of available names depends on the attribute assigned
 			loadcase (IFLoadset, optional): 
 			units (IFUnitSet, optional): 
 			errorFlag (bool, optional): If provided, and an error occurs (e.g. attribute not assigned), this flag is set true, and no error is reported
@@ -26269,7 +26313,7 @@ class IFInspectionLine(IFDatabaseMember):
 
 	def setValue(self, varName, value, units=None) -> IFInspectionLine:
 		r"""
-		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Sets the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			value (object): The type given will depend on the value specified
@@ -26282,7 +26326,7 @@ class IFInspectionLine(IFDatabaseMember):
 
 	def getValue(self, varName, units=None) -> object:
 		r"""
-		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the the database's current unit system. 
+		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
 		Params:
 			varName (str): 
 			units (IFUnitSet, optional): 
@@ -26294,7 +26338,7 @@ class IFInspectionLine(IFDatabaseMember):
 
 	def getValueUnits(self, varName, units=None) -> str:
 		r"""
-		Returns the units ("N/mm²", "m/s", etc) of the value that will be returned by IFInspectionLine.getValue for the given named variable. Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
+		Returns the units ("N/mm²", "m/s", etc or "None") of the value that will be returned by IFInspectionLine.getValue for the given named variable. Optionally, an IFUnitSet object (or its name) can be passed to control which system of units (e.g. mm/m/inch) will be used to build the returned string. If not given, the database's current unit system will be used. 
 		Params:
 			varName (str): name of the value (e.g. "E")
 			units (IFUnitSet, optional): unit system to use. If not given, database units will be assumed
@@ -26456,7 +26500,7 @@ class IFInspectionLine(IFDatabaseMember):
 
 	def setDescription(self, description=None) -> None:
 		r"""
-		Sets a helpful description to be used in the utilities tree. If no string is given, the objecy will automatically create a description. Note that most object types do not yet support this functionality, and therefore the automatically generated description would be blank. Alternatively, the description can be passed to this function in which case it overrides any automatic description 
+		Sets a helpful description to be used in the utilities tree. If no string is given, the object will automatically create a description. Note that most object types do not yet support this functionality, and therefore the automatically generated description would be blank. Alternatively, the description can be passed to this function in which case it overrides any automatic description 
 		Params:
 			description (str, optional): description to attach
 		Returns:
@@ -26895,16 +26939,16 @@ class IFLoadingConcentrated(IFLoading):
 		r"""
 		Sets up a concentrated structural loading attribute. 
 		Params:
-			px (IFVariationAttr or float): concentrated load in X
-			py (IFVariationAttr or float): concentrated load in Y
-			pz (IFVariationAttr or float, optional): concentrated load in Z (default = 0.0)
-			mx (IFVariationAttr or float, optional): concentrated moment in X (default = 0.0)
-			my (IFVariationAttr or float, optional): concentrated moment in Y (default = 0.0)
-			mz (IFVariationAttr or float, optional): concentrated moment in Z (default = 0.0)
-			loof1 (IFVariationAttr or float, optional): loof 1 / hinge rotation (default = 0.0)
-			loof2 (IFVariationAttr or float, optional): loof 2 / hinge rotation (default = 0.0)
-			pore (IFVariationAttr or float, optional): pore pressure (default = 0.0)
-			biMoment (IFVariationAttr or float, optional): torsional warping (default = 0.0)
+			px (IFVariationAttr or double): concentrated load in X
+			py (IFVariationAttr or double): concentrated load in Y
+			pz (IFVariationAttr or double, optional): concentrated load in Z (default = 0.0)
+			mx (IFVariationAttr or double, optional): concentrated moment in X (default = 0.0)
+			my (IFVariationAttr or double, optional): concentrated moment in Y (default = 0.0)
+			mz (IFVariationAttr or double, optional): concentrated moment in Z (default = 0.0)
+			loof1 (IFVariationAttr or double, optional): loof 1 / hinge rotation (default = 0.0)
+			loof2 (IFVariationAttr or double, optional): loof 2 / hinge rotation (default = 0.0)
+			pore (IFVariationAttr or double, optional): pore pressure (default = 0.0)
+			biMoment (IFVariationAttr or double, optional): torsional warping (default = 0.0)
 		Returns:
 			IFLoadingConcentrated: 
 		"""
@@ -26920,18 +26964,18 @@ class IFLoadingBody(IFLoading):
 		r"""
 		Sets up a body force loading attribute. 
 		Params:
-			accX (IFVariationAttr or float): linear acceleration in global direction
-			accY (IFVariationAttr or float): linear acceleration in global direction
-			accZ (IFVariationAttr or float, optional): linear acceleration in global direction (default = 0.0)
-			angVelX (IFVariationAttr or float, optional): angular velocity about global axis (default = 0.0)
-			angVelY (IFVariationAttr or float, optional): angular velocity about global axis (default = 0.0)
-			angVelZ (IFVariationAttr or float, optional): angular velocity about global axis (default = 0.0)
-			angAccX (IFVariationAttr or float, optional): angular acceleration about global axis (default = 0.0)
-			angAccY (IFVariationAttr or float, optional): angular acceleration about global axis (default = 0.0)
-			angAccZ (IFVariationAttr or float, optional): angular acceleration about global axis (default = 0.0)
-			fluidAccX (IFVariationAttr or float, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
-			fluidAccY (IFVariationAttr or float, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
-			fluidAccZ (IFVariationAttr or float, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
+			accX (IFVariationAttr or double): linear acceleration in global direction
+			accY (IFVariationAttr or double): linear acceleration in global direction
+			accZ (IFVariationAttr or double, optional): linear acceleration in global direction (default = 0.0)
+			angVelX (IFVariationAttr or double, optional): angular velocity about global axis (default = 0.0)
+			angVelY (IFVariationAttr or double, optional): angular velocity about global axis (default = 0.0)
+			angVelZ (IFVariationAttr or double, optional): angular velocity about global axis (default = 0.0)
+			angAccX (IFVariationAttr or double, optional): angular acceleration about global axis (default = 0.0)
+			angAccY (IFVariationAttr or double, optional): angular acceleration about global axis (default = 0.0)
+			angAccZ (IFVariationAttr or double, optional): angular acceleration about global axis (default = 0.0)
+			fluidAccX (IFVariationAttr or double, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
+			fluidAccY (IFVariationAttr or double, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
+			fluidAccZ (IFVariationAttr or double, optional): linear acceleration in global direction applied to fluid phase (default = 0.0)
 		Returns:
 			IFLoadingBody: 
 		"""
@@ -26956,11 +27000,11 @@ class IFLoadingTemperature(IFLoading):
 		Sets up a temperature loading attribute. 
 		Params:
 			type (str): 'nodal' or 'element'
-			temp (IFVariationAttr or float): temperature
+			temp (IFVariationAttr or double): temperature
 			dTdX (object, optional): {dT/dX}<realvariation> temperature gradient along X (default = 0.0)
 			dTdY (object, optional): {dT/dY}<realvariation> temperature gradient along Y (default = 0.0)
 			dTdZ (object, optional): {dT/dZ}<realvariation> temperature gradient along Z (default = 0.0)
-			T0 (IFVariationAttr or float, optional): initial temperature (default = 0.0)
+			T0 (IFVariationAttr or double, optional): initial temperature (default = 0.0)
 			dT0dX (object, optional): {dT0/dX}<realvariation> initial temperature gradient along X (default = 0.0)
 			dT0dY (object, optional): {dT0/dY}<realvariation> initial temperature gradient along Y (default = 0.0)
 			dT0dZ (object, optional): {dT0/dZ}<realvariation> initial temperature gradient along Z (default = 0.0)
@@ -26999,10 +27043,10 @@ class IFLoadingFace(IFLoading):
 		r"""
 		Sets up a face loading attribute. 
 		Params:
-			px (IFVariationAttr or float): face pressure in local X
-			py (IFVariationAttr or float): face pressure in local Y
-			pz (IFVariationAttr or float, optional): face pressure in local Z (default = 0.0)
-			pwp (IFVariationAttr or float, optional): pore pressure flux
+			px (IFVariationAttr or double): face pressure in local X
+			py (IFVariationAttr or double): face pressure in local Y
+			pz (IFVariationAttr or double, optional): face pressure in local Z (default = 0.0)
+			pwp (IFVariationAttr or double, optional): pore pressure flux
 		Returns:
 			IFLoadingFace: 
 		"""
@@ -27080,9 +27124,9 @@ class IFFieldFaceLoading(IFLoading):
 		r"""
 		Sets up a distributed flux loading attribute. 
 		Params:
-			flux (IFVariationAttr or float): 
+			flux (IFVariationAttr or double): 
 			isHygro (bool, optional): True if hygro-thermal
-			moistureFlux (IFVariationAttr or float, optional): 
+			moistureFlux (IFVariationAttr or double, optional): 
 		Returns:
 			IFFieldFaceLoading: 
 		"""
@@ -27099,16 +27143,16 @@ class IFLoadingGlobalDistributed(IFLoading):
 		Sets up a global distributed loading attribute. 
 		Params:
 			type (str): 'Total','Length', or 'Area'
-			wx (IFVariationAttr or float): global distributed load value in X
-			wy (IFVariationAttr or float): global distributed load value in Y
-			wz (IFVariationAttr or float, optional): global distributed load value in Z (default = 0.0)
-			mx (IFVariationAttr or float, optional): global distributed moment in X (default = 0.0)
-			my (IFVariationAttr or float, optional): global distributed moment in Y (default = 0.0)
-			mz (IFVariationAttr or float, optional): global distributed moment in Z (default = 0.0)
-			loof1 (IFVariationAttr or float, optional): loof 1 / hinge rotation (default = 0.0)
-			loof2 (IFVariationAttr or float, optional): loof 2 / hinge rotation (default = 0.0)
+			wx (IFVariationAttr or double): global distributed load value in X
+			wy (IFVariationAttr or double): global distributed load value in Y
+			wz (IFVariationAttr or double, optional): global distributed load value in Z (default = 0.0)
+			mx (IFVariationAttr or double, optional): global distributed moment in X (default = 0.0)
+			my (IFVariationAttr or double, optional): global distributed moment in Y (default = 0.0)
+			mz (IFVariationAttr or double, optional): global distributed moment in Z (default = 0.0)
+			loof1 (IFVariationAttr or double, optional): loof 1 / hinge rotation (default = 0.0)
+			loof2 (IFVariationAttr or double, optional): loof 2 / hinge rotation (default = 0.0)
 			keepGlobal (bool, optional): if T undo any transformed freedoms to keep loads in the global direction (default false)
-			porePressire (IFVariationAttr or float, optional): pre pressure flux (default = 0.0)
+			porePressire (IFVariationAttr or double, optional): pre pressure flux (default = 0.0)
 		Returns:
 			IFLoadingGlobalDistributed: 
 		"""
@@ -27124,9 +27168,9 @@ class IFLoadingLocalDistributed(IFLoading):
 		r"""
 		Sets up a local distributed loading attribute. 
 		Params:
-			wx (IFVariationAttr or float): uniformly distributed load in X
-			wy (IFVariationAttr or float): uniformly distributed load in Y
-			wz (IFVariationAttr or float, optional): uniformly distributed load in Z (default = 0.0)
+			wx (IFVariationAttr or double): uniformly distributed load in X
+			wy (IFVariationAttr or double): uniformly distributed load in Y
+			wz (IFVariationAttr or double, optional): uniformly distributed load in Z (default = 0.0)
 			type (str, optional): distributed type
 		Returns:
 			IFLoadingLocalDistributed: 
@@ -27144,7 +27188,7 @@ class IFPrescribedDisplacementLoad(IFLoading):
 		set the displacement for a freedom 
 		Params:
 			freedom (str): freedom
-			load (IFVariationAttr or float): displacement
+			load (IFVariationAttr or double): displacement
 		Returns:
 			IFPrescribedDisplacementLoad: 
 		"""
@@ -27161,7 +27205,7 @@ class IFPrescribedVelocityLoad(IFLoading):
 		set the velocity for a freedom 
 		Params:
 			freedom (str): freedom
-			load (IFVariationAttr or float): displacement
+			load (IFVariationAttr or double): displacement
 		Returns:
 			IFPrescribedVelocityLoad: 
 		"""
@@ -27178,7 +27222,7 @@ class IFPrescribedAccelerationLoad(IFLoading):
 		set the acceleration for a freedom 
 		Params:
 			freedom (str): freedom
-			load (IFVariationAttr or float): displacement
+			load (IFVariationAttr or double): displacement
 		Returns:
 			IFPrescribedAccelerationLoad: 
 		"""
@@ -27195,9 +27239,9 @@ class IFLoadingFlux(IFLoading):
 		Sets up a concentrated flux loading attribute. 
 		Params:
 			type (str): 
-			FLUX (IFVariationAttr or float): 
+			FLUX (IFVariationAttr or double): 
 			isHygro (bool, optional): True if hygro-thermal
-			liquidFlux (IFVariationAttr or float, optional): 
+			liquidFlux (IFVariationAttr or double, optional): 
 		Returns:
 			IFLoadingFlux: 
 		"""
@@ -27225,7 +27269,7 @@ class IFPrescribedTemperatureLoad(IFLoading):
 		set the temperature 
 		Params:
 			freedom (str): freedom "PHI"
-			load (IFVariationAttr or float): temperature
+			load (IFVariationAttr or double): temperature
 		Returns:
 			IFPrescribedTemperatureLoad: 
 		"""
@@ -27236,7 +27280,7 @@ class IFPrescribedTemperatureLoad(IFLoading):
 		r"""
 		set the humidity 
 		Params:
-			humidity (IFVariationAttr or float): humidity
+			humidity (IFVariationAttr or double): humidity
 		Returns:
 			IFPrescribedTemperatureLoad: 
 		"""
@@ -27247,7 +27291,7 @@ class IFPrescribedTemperatureLoad(IFLoading):
 		r"""
 		set the saturation 
 		Params:
-			saturation (IFVariationAttr or float): saturation
+			saturation (IFVariationAttr or double): saturation
 		Returns:
 			IFPrescribedTemperatureLoad: 
 		"""
@@ -27266,7 +27310,7 @@ class IFLoadingInitialTemperature(IFLoading):
 			type (str): "Nodal" or "Element"
 			temp (object): temperature <realvariation>
 			dof2Type (str): humidity or saturation
-			value (IFVariationAttr or float): humidity or saturation
+			value (IFVariationAttr or double): humidity or saturation
 			isLiquid (bool, optional): is liquid or set concrete
 		Returns:
 			IFLoadingInitialTemperature: 
@@ -27304,13 +27348,13 @@ class IFLoadingEnvironmental(IFLoading):
 		r"""
 		 
 		Params:
-			Environmental (IFVariationAttr or float): environmental temperature
-			Convective (IFVariationAttr or float): convective coefficient
-			Radiation (IFVariationAttr or float): radiation coefficient
+			Environmental (IFVariationAttr or double): environmental temperature
+			Convective (IFVariationAttr or double): convective coefficient
+			Radiation (IFVariationAttr or double): radiation coefficient
 			temp (float): reference temperature
 			isHygro (bool, optional): true for hygro false for thermal
-			relativeHumidity (IFVariationAttr or float, optional): relative humidity
-			vapourMassTransfer (IFVariationAttr or float, optional): vapour mass transfer coefficient
+			relativeHumidity (IFVariationAttr or double, optional): relative humidity
+			vapourMassTransfer (IFVariationAttr or double, optional): vapour mass transfer coefficient
 			useChiltonColburn (bool, optional): true for Chilton Colburn analogy for vapour mass transfer coefficient
 		Returns:
 			IFLoadingEnvironmental: 
@@ -27336,10 +27380,10 @@ class IFInternalHeatLoading(IFLoading):
 		r"""
 		Adds a row 
 		Params:
-			internalHeat (IFVariationAttr or float): internal heat gen.
+			internalHeat (IFVariationAttr or double): internal heat gen.
 			temp (float, optional): Reference temperature
 			isHygro (bool, optional): true for hygro false for thermal
-			moistureHeat (IFVariationAttr or float, optional): hygro moisture water heat gen.
+			moistureHeat (IFVariationAttr or double, optional): hygro moisture water heat gen.
 		Returns:
 			IFInternalHeatLoading: 
 		"""
@@ -27376,14 +27420,14 @@ class IFLoadingDiscrete(IFLoadingDiscreteBase):
 	Discrete loading attribute 
 	"""
 
-	def addRow(self, coordX, coordY, coordZ, load, load2=None, load3=None) -> IFLoadingDiscretePoint:
+	def addRow(self, coordX, coordY, coordZ, load=None, load2=None, load3=None) -> IFLoadingDiscretePoint:
 		r"""
 		Adds a row 
 		Params:
 			coordX (float): position of load
 			coordY (float): position of load
 			coordZ (float): position of load
-			load (float or str): value of load (may be a number, or a quoted expression that resolves to a number)
+			load (float or str, optional): value of load (only used if the loading is not defined by variations) (may be a number, or a quoted expression that resolves to a number)
 			load2 (float or str, optional): value of load (only used if the direction type is 'XYZ') (may be a number, or a quoted expression that resolves to a number)
 			load3 (float or str, optional): value of load (only used if the direction type is 'XYZ') (may be a number, or a quoted expression that resolves to a number)
 		Returns:
@@ -27421,6 +27465,49 @@ class IFLoadingDiscrete(IFLoadingDiscreteBase):
 		Return the type of discrete load 
 		Returns:
 			str: 
+		"""
+		pass
+
+
+	def countDefnPoints(self, shape, type, numberPoints, numberSets, nLoadsPerSet) -> IFLoadingDiscretePoint:
+		r"""
+		return the number of defining points and loads 
+		Params:
+			shape (int): -1 = point loads, 1 = 4 noded quad, 2 = 8 noded quad, 5 = 2 noded line, 6 = 3 noded curve, 9 = multi quad, 10 = multi line
+			type (int): 0 = structural, 1 = thermal flux
+			numberPoints (int): number of defining points
+			numberSets (int): number of sets of loads per defining point
+			nLoadsPerSet (int): number of loads per set
+		Returns:
+			IFLoadingDiscretePoint: 
+		"""
+		pass
+
+
+	def getDefnPointCoords(self, index, X, Y, Z) -> IFLoadingDiscretePoint:
+		r"""
+		return defining point coordinates 
+		Params:
+			index (int): defining point index
+			X (float): defining point x coordinate
+			Y (float): defining point y coordinate
+			Z (float): defining point z coordinate
+		Returns:
+			IFLoadingDiscretePoint: 
+		"""
+		pass
+
+
+	def getDefnPointLoads(self, pointIndex, setIndex, loadIndex, load) -> IFLoadingDiscretePoint:
+		r"""
+		return defining point load 
+		Params:
+			pointIndex (int): defining point index
+			setIndex (int): load set index
+			loadIndex (int): load within set index
+			load (float): or IFVariationAttr load
+		Returns:
+			IFLoadingDiscretePoint: 
 		"""
 		pass
 
@@ -27620,7 +27707,7 @@ class IFDiscreteCompoundLoading(IFLoadingDiscreteBase):
 
 	def getFactor(self, index) -> float:
 		r"""
-		return teh load factor given the index into the defining loads array 
+		return the load factor given the index into the defining loads array 
 		Params:
 			index (int): load factor
 		Returns:
@@ -27631,7 +27718,7 @@ class IFDiscreteCompoundLoading(IFLoadingDiscreteBase):
 
 	def hasPointGridOrPatch(self) -> bool:
 		r"""
-		Returns true if this compound load contains any point grid or patch load, the function recurses any compound loads defining this compoint load 
+		Returns true if this compound load contains any point grid or patch load, the function recurses any compound loads defining this compound load 
 		Returns:
 			bool: 
 		"""
@@ -27648,7 +27735,7 @@ class IFInitialVelocityLoad(IFLoading):
 		set the velocity for a freedom 
 		Params:
 			freedom (str): freedom
-			load (IFVariationAttr or float): displacement
+			load (IFVariationAttr or double): displacement
 		Returns:
 			IFInitialVelocityLoad: 
 		"""
@@ -27665,7 +27752,7 @@ class IFInitialAccelerationLoad(IFLoading):
 		set the acceleration for a freedom 
 		Params:
 			freedom (str): freedom
-			load (IFVariationAttr or float): displacement
+			load (IFVariationAttr or double): displacement
 		Returns:
 			IFInitialAccelerationLoad: 
 		"""
@@ -27719,7 +27806,7 @@ class IFSurfDistrLoading(IFLoading):
 		Params:
 			numberSubBeams (int): number of sub-beams
 			subBeamAngle (float): sub-beam angle
-			subBeamLoadIntensity (IFVariationAttr or float, optional): sub-beam load intensity
+			subBeamLoadIntensity (IFVariationAttr or double, optional): sub-beam load intensity
 		Returns:
 			IFSurfDistrLoading: 
 		"""
@@ -27730,7 +27817,7 @@ class IFSurfDistrLoading(IFLoading):
 		r"""
 		set the loading 
 		Params:
-			surfLoadIntensity (IFVariationAttr or float): surface load intensity
+			surfLoadIntensity (IFVariationAttr or double): surface load intensity
 			areaLoadFactorExpr (str, optional): Any function of area that evaluates to a number, note all numbers must be in US English, i.e. "1.2", not the current locale (e.g. Italian/Swedish/French "1,2")
 			scalingType (str, optional): load scaling type
 		Returns:
@@ -28053,7 +28140,7 @@ class IFBeamProjectedPressureLoad(IFLoading):
 		r"""
 		set the loading intensity 
 		Params:
-			loadingPressure (IFVariationAttr or float): pressure load intensity
+			loadingPressure (IFVariationAttr or double): pressure load intensity
 		Returns:
 			IFBeamProjectedPressureLoad: 
 		"""
@@ -28082,7 +28169,7 @@ class IFViscousSupportLoad(IFLoading):
 		set the velocity for a freedom 
 		Params:
 			freedom (str): freedom "U", "V", "W"
-			velocity (IFVariationAttr or float): displacement
+			velocity (IFVariationAttr or double): displacement
 		Returns:
 			IFViscousSupportLoad: 
 		"""
@@ -28436,9 +28523,9 @@ class IFAnisotropicMaterial(IFMaterial):
 		r"""
 		 
 		Params:
-			MassDensity (IFVariationAttr or float): Density
-			Angle (IFVariationAttr or float): 
-			Matrix (IFVariationAttr or float): 
+			MassDensity (IFVariationAttr or double): Density
+			Angle (IFVariationAttr or double): 
+			Matrix (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFAnisotropicMaterial: 
@@ -28558,7 +28645,7 @@ class IFPiecewiseLinearJointMaterial(IFMaterial):
 			selected (bool): TRUE for curve input, FALSE for elastic spring
 			Force (array of realvariation, optional): 
 			Displacement (array of realvariation, optional): 
-			r (IFVariationAttr or float, optional): stiffness factor, r (default 1.0)
+			r (IFVariationAttr or double, optional): stiffness factor, r (default 1.0)
 			controlForce (array of realvariation, optional): control forces for materials 43-47
 			points (array of ints, optional): points in each curve for materials 43-47
 		Returns:
@@ -28574,7 +28661,7 @@ class IFPiecewiseLinearJointMaterial(IFMaterial):
 			momentAngle (int): moment Angle index
 			Moment (array of realvariation): 
 			Rotation (array of realvariation): 
-			r (IFVariationAttr or float): stiffness factor, r (default 1.0)
+			r (IFVariationAttr or double): stiffness factor, r (default 1.0)
 			controlForce (array of realvariation): control forces for material 43-47
 			points (array of ints): points in each curve for material 43-47
 		Returns:
@@ -28670,9 +28757,9 @@ class IFPiecewiseLinearJointMaterial(IFMaterial):
 
 	def useCylindrical(self, cylindrical) -> IFPiecewiseLinearJointMaterial:
 		r"""
-		For Piecewise Linear (joint no rotational stiffness) material: use one lateral degree of freedom acting in all directions in the horizontal plain, and one axial (vertical axis) direction, instead of three orthoganal directions. 
+		For Piecewise Linear (joint no rotational stiffness) material: use one lateral degree of freedom acting in all directions in the horizontal plain, and one axial (vertical axis) direction, instead of three orthogonal directions. 
 		Params:
-			cylindrical (bool): TRUE for two cylindrical DOFs, FALSE for three orthoganal directions
+			cylindrical (bool): TRUE for two cylindrical DOFs, FALSE for three orthogonal directions
 		Returns:
 			IFPiecewiseLinearJointMaterial: 
 		"""
@@ -28684,326 +28771,26 @@ class IFPlasticHingeJointMaterial(IFMaterial):
 	 
 	"""
 
-	def setParameterisedCurveData(self, dof, selected, force=None, displacement=None) -> IFPlasticHingeJointMaterial:
+	def setHysteresisType(self, hysteresisType, unloadingRule=None) -> IFPlasticHingeJointMaterial:
 		r"""
-		Defines the parameterised curve for each DoF. The values of the actual tabulated curves will simply be these values multiplied by the computed member capacity and ultimate displacement for each dof. 
+		Sets the hysteresis type for the plastic hinge 
 		Params:
-			dof (int): degree of freedom
-			selected (bool): TRUE for curve input, FALSE for elastic spring
-			force (array of realvariation, optional): 
-			displacement (array of realvariation, optional): 
+			hysteresisType (str): "Parallel reversal loading", "Kinematic-hardening" or "None" to disable
+			unloadingRule (str, optional): "Initial stiffness", "Secant stiffness", "Scaled stiffness", "Emori-Schnobrich", "Drain-2D"
 		Returns:
 			IFPlasticHingeJointMaterial: 
 		"""
 		pass
 
 
-	def getParameterisedCurveData(self, dof, selected, force, displacement) -> IFPlasticHingeJointMaterial:
+	def getHysteresisType(self, hysteresisType, unloadingRule) -> bool:
 		r"""
-		Retrieves the parameterised curve previously set by setParameterisedCurveData 
+		Gets the hysteresis type for the plastic hinge 
 		Params:
-			dof (int): degree of freedom
-			selected (bool): TRUE for curve input, FALSE for elastic spring
-			force (array of realvariation): 
-			displacement (array of realvariation): 
+			hysteresisType (str): Hysteresis type, empty if this function returns false
+			unloadingRule (str): unloading rule, empty if this function returns false
 		Returns:
-			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def setAcceptanceCriteria(self, dof, positive, negative) -> IFPlasticHingeJointMaterial:
-		r"""
-		Defines the parameterised values of the acceptance criteria for each DoF. These values represent factors of the calculated ultimate deformation for each dof 
-		Params:
-			dof (int): degree of freedom
-			positive (array of realvariation): 
-			negative (array of realvariation): 
-		Returns:
-			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def getAcceptanceCriteria(self, dof, positive, negative) -> IFPlasticHingeJointMaterial:
-		r"""
-		Retrieves the parameterised values of the acceptance criteria. 
-		Params:
-			dof (int): degree of freedom
-			positive (array of realvariation): 
-			negative (array of realvariation): 
-		Returns:
-			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def setUltimateStrength(self, continuesFromD) -> IFPlasticHingeJointMaterial:
-		r"""
-		Sets whether the ultimate strength continues from 'point D' or drops to zero 
-		Params:
-			continuesFromD (bool): TRUE for continues, FALSE for drops to zero
-		Returns:
-			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def getUltimateStrength(self) -> bool:
-		r"""
-		Gets whether the ultimate strength setting 
-		Returns:
-			bool: returned ultimate strength setting
-		"""
-		pass
-
-
-	def setMaterialYield(self, _yield) -> IFPlasticHingeJointMaterial:
-		r"""
-		Sets the yield value. This value will be used in calculation of the hinge capacities 
-		Params:
-			_yield (float): 
-		Returns:
-			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def getMaterialYield(self) -> float:
-		r"""
-		Gets the yield value. This value will be used in calculation of the hinge capacities 
-		Returns:
-			float: the returned yield value
-		"""
-		pass
-
-
-	def setHysteresis(self, hysteresis) -> IFPlasticHingeJointMaterial:
-		r"""
-		Sets whether the hysteresis model is used 
-		Params:
-			hysteresis (bool): TRUE for hysterisis
-		Returns:
-			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def getHysteresis(self) -> bool:
-		r"""
-		Gets whether the hysteresis model is used 
-		Returns:
-			bool: returned hysteresis setting
-		"""
-		pass
-
-
-	def setJointStiffnessFactor(self, stiffnessFactor) -> IFPlasticHingeJointMaterial:
-		r"""
-		Sets the joint stiffness factor 
-		Params:
-			stiffnessFactor (float): 
-		Returns:
-			IFPlasticHingeJointMaterial: 
-		"""
-		pass
-
-
-	def getJointStiffnessFactor(self) -> float:
-		r"""
-		Gets the joint stiffness factor 
-		Returns:
-			float: the returned stiffness factor
-		"""
-		pass
-
-
-class IFPlasticHingePMMJointMaterial(IFMaterial):
-	"""
-	 
-	"""
-
-	def getHingeType(self) -> int:
-		r"""
-		Gets the interacting plastic hinge type 
-		Returns:
-			int: 1=Fx-My, 2=Fx-Mz, 3=My-Mz, 4=Fx-My-Mz
-		"""
-		pass
-
-
-	def setMomentAngles(self, momentAngles) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Adds the moment angles to a Piecewise Linear joint material for PMM analysis 
-		Params:
-			momentAngles (array of float): array of moments angles in degrees
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getMomentAngles(self, momentAngles) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Gets the defined moment angles 
-		Params:
-			momentAngles (array of float): array of moments angles in degrees
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def setParameterisedMomentCurveData(self, angle, moment, rotation) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Defines the parameterised curve for each moment direction my and mz. The values of the actual tabulated curves will simply be these values multiplied by the computed member capacity and ultimate displacement in the appropriate direction. 
-		Params:
-			angle (int): moment angle index
-			moment (array of realvariation): 
-			rotation (array of realvariation): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getParameterisedMomentCurveData(self, angle, moment, rotation) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Retrieves the parameterised curve previously set by setParameterisedMomentCurveData 
-		Params:
-			angle (int): moment angle index
-			moment (array of realvariation): 
-			rotation (array of realvariation): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def setAcceptanceCriteria(self, angle, values) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Defines the parameterised values of the acceptance criteria for each moment angle. The acceptance criteria parameters are the same for both moments but the actual values are determined for each moment direction and axial force. 
-		Params:
-			angle (int): moment angle index
-			values (array of realvariation): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getAcceptanceCriteria(self, angle, values) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Retrieves the parameterised values of the acceptance criteria. 
-		Params:
-			angle (int): moment angle index
-			values (array of realvariation): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def setAxialInteraction(self, axial, moment) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Defines the proportions of axial force and their corresponding factor to be applied to the ending capacities 
-		Params:
-			axial (array of realvariation): 
-			moment (array of realvariation): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getAxialInteraction(self, axial, moment) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Retrieves the axial interaction arrays previously set by setAxialInteraction 
-		Params:
-			axial (array of realvariation): 
-			moment (array of realvariation): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def setUltimateStrength(self, continuesFromD) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Sets whether the ultimate strength continues from 'point D' or drops to zero 
-		Params:
-			continuesFromD (bool): TRUE for continues, FALSE for drops to zero
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getUltimateStrength(self) -> bool:
-		r"""
-		Gets whether the ultimate strength setting 
-		Returns:
-			bool: returned ultimate strength setting
-		"""
-		pass
-
-
-	def setMaterialYield(self, _yield) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Sets the yield value. This value will be used in calculation of the hinge capacities 
-		Params:
-			_yield (float): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getMaterialYield(self) -> float:
-		r"""
-		Gets the yield value. This value will be used in calculation of the hinge capacities 
-		Returns:
-			float: the returned yield value
-		"""
-		pass
-
-
-	def setHysteresis(self, hysteresis) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Sets whether the hysteresis model is used 
-		Params:
-			hysteresis (bool): TRUE for hysterisis
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getHysteresis(self) -> bool:
-		r"""
-		Gets whether the hysteresis model is used 
-		Returns:
-			bool: returned hysteresis setting
-		"""
-		pass
-
-
-	def setJointStiffnessFactor(self, stiffnessFactor) -> IFPlasticHingePMMJointMaterial:
-		r"""
-		Sets the joint stiffness factor 
-		Params:
-			stiffnessFactor (float): 
-		Returns:
-			IFPlasticHingePMMJointMaterial: 
-		"""
-		pass
-
-
-	def getJointStiffnessFactor(self) -> float:
-		r"""
-		Gets the joint stiffness factor 
-		Returns:
-			float: the returned stiffness factor
+			bool: True if hysteresis is set, false otherwise
 		"""
 		pass
 
@@ -29019,7 +28806,7 @@ class IFMatrixJointMaterial(IFMaterial):
 		Params:
 			type (str): matrix type
 			bFull (bool): full matrix input option (TRUE for full matrix, FALSE for upper right quadrant)
-			values (IFVariationAttr or float): matrix values
+			values (IFVariationAttr or double): matrix values
 		Returns:
 			IFMatrixJointMaterial: 
 		"""
@@ -29077,9 +28864,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (IFVariationAttr or float): 
-			Param2 (IFVariationAttr or float): 
-			Param3 (IFVariationAttr or float): 
+			Param1 (IFVariationAttr or double): 
+			Param2 (IFVariationAttr or double): 
+			Param3 (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29091,9 +28878,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (IFVariationAttr or float): 
-			Param2 (IFVariationAttr or float): 
-			Param3 (IFVariationAttr or float): 
+			Param1 (IFVariationAttr or double): 
+			Param2 (IFVariationAttr or double): 
+			Param3 (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29105,12 +28892,12 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (IFVariationAttr or float): 
-			Param2 (IFVariationAttr or float): 
-			Param3 (IFVariationAttr or float): 
-			Param4 (IFVariationAttr or float): 
-			Param5 (IFVariationAttr or float): 
-			Param6 (IFVariationAttr or float): 
+			Param1 (IFVariationAttr or double): 
+			Param2 (IFVariationAttr or double): 
+			Param3 (IFVariationAttr or double): 
+			Param4 (IFVariationAttr or double): 
+			Param5 (IFVariationAttr or double): 
+			Param6 (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29122,14 +28909,14 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Param1 (IFVariationAttr or float): 
-			Param2 (IFVariationAttr or float): 
-			Param3 (IFVariationAttr or float): 
-			Param4 (IFVariationAttr or float): 
-			Param5 (IFVariationAttr or float): 
-			Param6 (IFVariationAttr or float): 
-			Param7 (IFVariationAttr or float): 
-			Param8 (IFVariationAttr or float): 
+			Param1 (IFVariationAttr or double): 
+			Param2 (IFVariationAttr or double): 
+			Param3 (IFVariationAttr or double): 
+			Param4 (IFVariationAttr or double): 
+			Param5 (IFVariationAttr or double): 
+			Param6 (IFVariationAttr or double): 
+			Param7 (IFVariationAttr or double): 
+			Param8 (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29141,14 +28928,14 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			StressX (IFVariationAttr or float): 
-			StressY (IFVariationAttr or float): 
-			StressZ (IFVariationAttr or float): 
-			StressXY (IFVariationAttr or float): 
-			StressYZ (IFVariationAttr or float): 
-			StressXZ (IFVariationAttr or float): 
-			initialYield (IFVariationAttr or float, optional): 
-			heatFraction (IFVariationAttr or float, optional): 
+			StressX (IFVariationAttr or double): 
+			StressY (IFVariationAttr or double): 
+			StressZ (IFVariationAttr or double): 
+			StressXY (IFVariationAttr or double): 
+			StressYZ (IFVariationAttr or double): 
+			StressXZ (IFVariationAttr or double): 
+			initialYield (IFVariationAttr or double, optional): 
+			heatFraction (IFVariationAttr or double, optional): 
 			temp (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29169,9 +28956,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Threshold (IFVariationAttr or float): 
-			ParamA (IFVariationAttr or float): 
-			ParamB (IFVariationAttr or float): 
+			Threshold (IFVariationAttr or double): 
+			ParamA (IFVariationAttr or double): 
+			ParamB (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29183,9 +28970,9 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			Threshold (IFVariationAttr or float): 
-			ParamA (IFVariationAttr or float): 
-			DamageRatio (IFVariationAttr or float): 
+			Threshold (IFVariationAttr or double): 
+			ParamA (IFVariationAttr or double): 
+			DamageRatio (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29197,11 +28984,11 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			StrengthXT (IFVariationAttr or float): 
-			StrengthXC (IFVariationAttr or float): 
-			ShearStrength (IFVariationAttr or float): 
-			StrengthYT (IFVariationAttr or float): 
-			StrengthYC (IFVariationAttr or float): 
+			StrengthXT (IFVariationAttr or double): 
+			StrengthXC (IFVariationAttr or double): 
+			ShearStrength (IFVariationAttr or double): 
+			StrengthYT (IFVariationAttr or double): 
+			StrengthYC (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29214,9 +29001,9 @@ class IFMaterialTropicSet(IFMaterial):
 		 
 		Params:
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RH (IFVariationAttr or float): relative humidity
-			H (IFVariationAttr or float): member geometry parameter
-			Fcm (IFVariationAttr or float): mean compressive strength
+			RH (IFVariationAttr or double): relative humidity
+			H (IFVariationAttr or double): member geometry parameter
+			Fcm (IFVariationAttr or double): mean compressive strength
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29229,8 +29016,8 @@ class IFMaterialTropicSet(IFMaterial):
 		 
 		Params:
 			type (str): type of shrinkage curve either "Time" or "DOC"
-			F (IFVariationAttr or float): array of time/degree of cure at each point on curve
-			Vs (IFVariationAttr or float): array of linear shrinkage at time/degree of cure at each point on curve
+			F (IFVariationAttr or double): array of time/degree of cure at each point on curve
+			Vs (IFVariationAttr or double): array of linear shrinkage at time/degree of cure at each point on curve
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29242,8 +29029,8 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		 
 		Params:
-			ShearModulus (IFVariationAttr or float): 
-			DecayConstant (IFVariationAttr or float): 
+			ShearModulus (IFVariationAttr or double): 
+			DecayConstant (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialTropicSet: 
@@ -29255,7 +29042,7 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		set the maximum suction pressure for the Two Phase material component 
 		Params:
-			suction (IFVariationAttr or float): maximum suction pressure
+			suction (IFVariationAttr or double): maximum suction pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29266,7 +29053,7 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		set the maximum cavitation pressure for the Two Phase material component 
 		Params:
-			cavitation (IFVariationAttr or float): maximum cavitation pressure
+			cavitation (IFVariationAttr or double): maximum cavitation pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29277,14 +29064,14 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add an undrained Two Phase material component 
 		Params:
-			BulkModulusSolid (IFVariationAttr or float): Solid bulk modulus
-			BulkModulusFluid (IFVariationAttr or float): Fluid bulk modulus
-			Porosity (IFVariationAttr or float): 
-			UnitWeightFluid (IFVariationAttr or float): 
-			PermeabilityX (IFVariationAttr or float): 
-			PermeabilityY (IFVariationAttr or float): 
-			PermeabilityZ (IFVariationAttr or float): 
-			fluidDensity (IFVariationAttr or float, optional): 
+			BulkModulusSolid (IFVariationAttr or double): Solid bulk modulus
+			BulkModulusFluid (IFVariationAttr or double): Fluid bulk modulus
+			Porosity (IFVariationAttr or double): 
+			UnitWeightFluid (IFVariationAttr or double): 
+			PermeabilityX (IFVariationAttr or double): 
+			PermeabilityY (IFVariationAttr or double): 
+			PermeabilityZ (IFVariationAttr or double): 
+			fluidDensity (IFVariationAttr or double, optional): 
 			temp (float, optional): temperature
 			fluidBulkModulusType (str, optional): "absolute","factor","Poisson"
 			twoPhaseDensityType (str, optional): "Soil grain","Fully saturated"
@@ -29298,16 +29085,16 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add a partially drained Two Phase material component 
 		Params:
-			pBulkModulusSolid (IFVariationAttr or float): 
-			pBulkModulusFluid (IFVariationAttr or float): 
-			pPorosity (IFVariationAttr or float): 
-			pUnitWeightFluid (IFVariationAttr or float): 
-			pPermeabilityX (IFVariationAttr or float): 
-			pPermeabilityY (IFVariationAttr or float): 
-			pPermeabilityZ (IFVariationAttr or float): 
-			fluidDensity (IFVariationAttr or float): 
-			irreducibleSat (IFVariationAttr or float): 
-			satSaturation (IFVariationAttr or float): 
+			pBulkModulusSolid (IFVariationAttr or double): 
+			pBulkModulusFluid (IFVariationAttr or double): 
+			pPorosity (IFVariationAttr or double): 
+			pUnitWeightFluid (IFVariationAttr or double): 
+			pPermeabilityX (IFVariationAttr or double): 
+			pPermeabilityY (IFVariationAttr or double): 
+			pPermeabilityZ (IFVariationAttr or double): 
+			fluidDensity (IFVariationAttr or double): 
+			irreducibleSat (IFVariationAttr or double): 
+			satSaturation (IFVariationAttr or double): 
 			scanningCurveFactor (float): 
 			temp (float, optional): temperature
 			fluidBulkModulusType (str, optional): "absolute","factor","Poisson"
@@ -29322,19 +29109,19 @@ class IFMaterialTropicSet(IFMaterial):
 
 	def addConstantWaterContentTwoPhase(self, pBulkModulusSolid, pBulkModulusFluid, pPorosity, pUnitWeightFluid, pPermeabilityX, pPermeabilityY, pPermeabilityZ, fluidDensity, irreducibleSat, satSaturation, permeabilityFactor, temp=None, fluidBulkModulusType=None, defnType=None, twoPhaseDensityType=None) -> IFMaterialTropicSet:
 		r"""
-		add a constnat water content Two Phase material component 
+		add a constant water content Two Phase material component 
 		Params:
-			pBulkModulusSolid (IFVariationAttr or float): 
-			pBulkModulusFluid (IFVariationAttr or float): 
-			pPorosity (IFVariationAttr or float): 
-			pUnitWeightFluid (IFVariationAttr or float): 
-			pPermeabilityX (IFVariationAttr or float): 
-			pPermeabilityY (IFVariationAttr or float): 
-			pPermeabilityZ (IFVariationAttr or float): 
-			fluidDensity (IFVariationAttr or float): 
-			irreducibleSat (IFVariationAttr or float): 
-			satSaturation (IFVariationAttr or float): 
-			permeabilityFactor (IFVariationAttr or float): 
+			pBulkModulusSolid (IFVariationAttr or double): 
+			pBulkModulusFluid (IFVariationAttr or double): 
+			pPorosity (IFVariationAttr or double): 
+			pUnitWeightFluid (IFVariationAttr or double): 
+			pPermeabilityX (IFVariationAttr or double): 
+			pPermeabilityY (IFVariationAttr or double): 
+			pPermeabilityZ (IFVariationAttr or double): 
+			fluidDensity (IFVariationAttr or double): 
+			irreducibleSat (IFVariationAttr or double): 
+			satSaturation (IFVariationAttr or double): 
+			permeabilityFactor (IFVariationAttr or double): 
 			temp (float, optional): temperature
 			fluidBulkModulusType (str, optional): "absolute","factor","Poisson"
 			defnType (str, optional): "saturation", "water content"
@@ -29350,10 +29137,10 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Valiantzas draining curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			extraction (IFVariationAttr or float): 
-			weightFactor (IFVariationAttr or float): 
-			airEntry (IFVariationAttr or float): 
-			permeability (IFVariationAttr or float): 
+			extraction (IFVariationAttr or double): 
+			weightFactor (IFVariationAttr or double): 
+			airEntry (IFVariationAttr or double): 
+			permeability (IFVariationAttr or double): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29365,10 +29152,10 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Valiantzas filling curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			extraction (IFVariationAttr or float): 
-			weightFactor (IFVariationAttr or float): 
-			airEntry (IFVariationAttr or float): 
-			permeability (IFVariationAttr or float): 
+			extraction (IFVariationAttr or double): 
+			weightFactor (IFVariationAttr or double): 
+			airEntry (IFVariationAttr or double): 
+			permeability (IFVariationAttr or double): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29380,9 +29167,9 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Van Ganuchten-Maulam draining curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			parameterN (IFVariationAttr or float): 
-			parameterAlpha (IFVariationAttr or float): 
-			permeability (IFVariationAttr or float): 
+			parameterN (IFVariationAttr or double): 
+			parameterAlpha (IFVariationAttr or double): 
+			permeability (IFVariationAttr or double): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29394,9 +29181,9 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Van Ganuchten-Maulam filling curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			parameterN (IFVariationAttr or float): 
-			parameterAlpha (IFVariationAttr or float): 
-			permeability (IFVariationAttr or float): 
+			parameterN (IFVariationAttr or double): 
+			parameterAlpha (IFVariationAttr or double): 
+			permeability (IFVariationAttr or double): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29408,8 +29195,8 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Brooks Coley draining curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			poreSizeDistr (IFVariationAttr or float): 
-			airEntry (IFVariationAttr or float): 
+			poreSizeDistr (IFVariationAttr or double): 
+			airEntry (IFVariationAttr or double): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29421,8 +29208,8 @@ class IFMaterialTropicSet(IFMaterial):
 		add the Brooks Coley filling curve to the two phase material component 
 		Params:
 			rowIndex (int): row index
-			poreSizeDistr (IFVariationAttr or float): 
-			airEntry (IFVariationAttr or float): 
+			poreSizeDistr (IFVariationAttr or double): 
+			airEntry (IFVariationAttr or double): 
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29433,16 +29220,16 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add a piecewise Two Phase material component 
 		Params:
-			pBulkModulusSolid (IFVariationAttr or float): 
-			pBulkModulusFluid (IFVariationAttr or float): 
-			pPorosity (IFVariationAttr or float): 
-			pUnitWeightFluid (IFVariationAttr or float): 
-			pPermeabilityX (IFVariationAttr or float): 
-			pPermeabilityY (IFVariationAttr or float): 
-			pPermeabilityZ (IFVariationAttr or float): 
-			fluidDensity (IFVariationAttr or float): 
-			irreducibleSat (IFVariationAttr or float): 
-			satSaturation (IFVariationAttr or float): 
+			pBulkModulusSolid (IFVariationAttr or double): 
+			pBulkModulusFluid (IFVariationAttr or double): 
+			pPorosity (IFVariationAttr or double): 
+			pUnitWeightFluid (IFVariationAttr or double): 
+			pPermeabilityX (IFVariationAttr or double): 
+			pPermeabilityY (IFVariationAttr or double): 
+			pPermeabilityZ (IFVariationAttr or double): 
+			fluidDensity (IFVariationAttr or double): 
+			irreducibleSat (IFVariationAttr or double): 
+			satSaturation (IFVariationAttr or double): 
 			scanningCurveFactor (float): 
 			curveTolerance (float): 
 			temp (float, optional): temperature
@@ -29483,8 +29270,8 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		Ko Initialisation material row for isotropic elastic materials 
 		Params:
-			YoungsModulus (IFVariationAttr or float): Youngs modulus
-			lateralEarthPressure (IFVariationAttr or float): lateral earth pressure
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			lateralEarthPressure (IFVariationAttr or double): lateral earth pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29495,10 +29282,10 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		Ko Initialisation material row for Cam_Clay material 
 		Params:
-			calcInitialVoidRatio (bool): true to calculate initial void raio in Ko material
-			YoungsModulus (IFVariationAttr or float): Youngs modulus
-			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
-			specificVolume (IFVariationAttr or float): Specific volume on NCL
+			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			lateralEarthPressure (IFVariationAttr or double): Lateral earth pressure
+			specificVolume (IFVariationAttr or double): Specific volume on NCL
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29507,14 +29294,14 @@ class IFMaterialTropicSet(IFMaterial):
 
 	def addKoCamClayOcrRow(self, calcInitialVoidRatio, overConsolidationRatio, YoungsModulus, PoissonsRatio, lateralEarthPressure, specificVolume) -> IFMaterialTropicSet:
 		r"""
-		Ko Initialiatsion material row for Cam_Clay OCR standard material 
+		Ko Initialisation material row for Cam_Clay OCR standard material 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			overConsolidationRatio (IFVariationAttr or float): Solid bulk modulus
-			YoungsModulus (IFVariationAttr or float): Youngs modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
-			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
-			specificVolume (IFVariationAttr or float): Specific volume on NCL
+			overConsolidationRatio (IFVariationAttr or double): Solid bulk modulus
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or double): Lateral earth pressure
+			specificVolume (IFVariationAttr or double): Specific volume on NCL
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29523,15 +29310,15 @@ class IFMaterialTropicSet(IFMaterial):
 
 	def addKoCamClayOcrSinRow(self, calcInitialVoidRatio, overConsolidationRatio, YoungsModulus, PoissonsRatio, lateralEarthPressure, specificVolume, sineAngleFriction=None) -> IFMaterialTropicSet:
 		r"""
-		Ko Initialiatsion material row for Cam_Clay OCR SIN material 
+		Ko Initialisation material row for Cam_Clay OCR SIN material 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			overConsolidationRatio (IFVariationAttr or float): Solid bulk modulus
-			YoungsModulus (IFVariationAttr or float): Youngs modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
-			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
-			specificVolume (IFVariationAttr or float): Specific volume on NCL
-			sineAngleFriction (IFVariationAttr or float, optional): Sine of angle of friction
+			overConsolidationRatio (IFVariationAttr or double): Solid bulk modulus
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or double): Lateral earth pressure
+			specificVolume (IFVariationAttr or double): Specific volume on NCL
+			sineAngleFriction (IFVariationAttr or double, optional): Sine of angle of friction
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29540,15 +29327,15 @@ class IFMaterialTropicSet(IFMaterial):
 
 	def addKoCamClayOcrGeneralRow(self, calcInitialVoidRatio, overConsolidationRatio, YoungsModulus, PoissonsRatio, lateralEarthPressure, specificVolume, coeffEarthPressure=None) -> IFMaterialTropicSet:
 		r"""
-		Ko Initialiatsion material row for Cam_Clay OCR general material 
+		Ko Initialisation material row for Cam_Clay OCR general material 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			overConsolidationRatio (IFVariationAttr or float): Solid bulk modulus
-			YoungsModulus (IFVariationAttr or float): Youngs modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
-			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
-			specificVolume (IFVariationAttr or float): Specific volume on NCL
-			coeffEarthPressure (IFVariationAttr or float, optional): Coefficient of earth pressure
+			overConsolidationRatio (IFVariationAttr or double): Solid bulk modulus
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or double): Lateral earth pressure
+			specificVolume (IFVariationAttr or double): Specific volume on NCL
+			coeffEarthPressure (IFVariationAttr or double, optional): Coefficient of earth pressure
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29557,14 +29344,14 @@ class IFMaterialTropicSet(IFMaterial):
 
 	def addKoPreOverburdenPressureRow(self, calcInitialVoidRatio, PreOverburdenPressure, YoungsModulus, PoissonsRatio, lateralEarthPressure, specificVolume) -> IFMaterialTropicSet:
 		r"""
-		pre-overburden pressure Ko Initialiatsion material row 
+		pre-overburden pressure Ko Initialisation material row 
 		Params:
 			calcInitialVoidRatio (bool): true to calculate initial void ratio in Ko material
-			PreOverburdenPressure (IFVariationAttr or float): pre-overburden pressure
-			YoungsModulus (IFVariationAttr or float): Youngs modulus
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio for unloading
-			lateralEarthPressure (IFVariationAttr or float): Lateral earth pressure
-			specificVolume (IFVariationAttr or float): Specific volume on NCL
+			PreOverburdenPressure (IFVariationAttr or double): pre-overburden pressure
+			YoungsModulus (IFVariationAttr or double): Young's modulus
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio for unloading
+			lateralEarthPressure (IFVariationAttr or double): Lateral earth pressure
+			specificVolume (IFVariationAttr or double): Specific volume on NCL
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29575,7 +29362,7 @@ class IFMaterialTropicSet(IFMaterial):
 		r"""
 		add soil structure interface two phase material component 
 		Params:
-			hydraulicConductivity (IFVariationAttr or float): hydraulic conductivity across interface
+			hydraulicConductivity (IFVariationAttr or double): hydraulic conductivity across interface
 		Returns:
 			IFMaterialTropicSet: 
 		"""
@@ -29690,13 +29477,13 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic properties to isotropic material 
 		Params:
-			Young (IFVariationAttr or float): Young's modulus
-			Poisson (IFVariationAttr or float): Poisson's ratio
-			Density (IFVariationAttr or float): Density
+			Young (IFVariationAttr or double): Young's modulus
+			Poisson (IFVariationAttr or double): Poisson's ratio
+			Density (IFVariationAttr or double): Density
 			temperature (float): temperature
 			thermalExp (object, optional): Coefficient of thermal expansion.
-			massDamping (IFVariationAttr or float, optional): Mass Rayleigh damping constant.
-			stiffDamping (IFVariationAttr or float, optional): Stiffness Rayleigh damping constant.
+			massDamping (IFVariationAttr or double, optional): Mass Rayleigh damping constant.
+			stiffDamping (IFVariationAttr or double, optional): Stiffness Rayleigh damping constant.
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -29707,8 +29494,8 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear stress potential von Mises properties to isotropic material attribute 
 		Params:
-			InitialTension (IFVariationAttr or float): Initial tensile yield stress
-			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
+			InitialTension (IFVariationAttr or double): Initial tensile yield stress
+			HeatFraction (IFVariationAttr or double): Heat fraction coefficient
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29720,9 +29507,9 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear stress potential modified von Mises properties to isotropic material attribute 
 		Params:
-			InitialTension (IFVariationAttr or float): Initial tensile yield stress
-			InitialCompression (IFVariationAttr or float): Initial compressive yield stress
-			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
+			InitialTension (IFVariationAttr or double): Initial tensile yield stress
+			InitialCompression (IFVariationAttr or double): Initial compressive yield stress
+			HeatFraction (IFVariationAttr or double): Heat fraction coefficient
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29734,8 +29521,8 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add Tresca properties to isotropic material attribute 
 		Params:
-			StressSlope (IFVariationAttr or float): 
-			PlasticStrain (IFVariationAttr or float): 
+			StressSlope (IFVariationAttr or double): 
+			PlasticStrain (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29743,16 +29530,16 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		pass
 
 
-	def addPlasticMohrCoulomb(self, InitialCohesion, InitialFriction, FinalFraction, DilationAngle, CohesionSlope, PlasticStrain, temperature=None) -> IFMaterialIsotropic:
+	def addPlasticMohrCoulomb(self, InitialCohesion, InitialFriction, FinalFriction, DilationAngle, CohesionSlope, PlasticStrain, temperature=None) -> IFMaterialIsotropic:
 		r"""
-		Add Mohr Colulomb properties to isotropic material attribute 
+		Add Mohr Coulomb properties to isotropic material attribute 
 		Params:
-			InitialCohesion (IFVariationAttr or float): 
-			InitialFriction (IFVariationAttr or float): 
-			FinalFraction (IFVariationAttr or float): 
-			DilationAngle (IFVariationAttr or float): 
-			CohesionSlope (IFVariationAttr or float): 
-			PlasticStrain (IFVariationAttr or float): 
+			InitialCohesion (IFVariationAttr or double): 
+			InitialFriction (IFVariationAttr or double): 
+			FinalFriction (IFVariationAttr or double): 
+			DilationAngle (IFVariationAttr or double): 
+			CohesionSlope (IFVariationAttr or double): 
+			PlasticStrain (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29764,12 +29551,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear Drucker Prager properties to isotropic material attribute (Mdl=64) 
 		Params:
-			InitialCohesion (IFVariationAttr or float): Initial cohesion
-			InitialFriction (IFVariationAttr or float): Initial friction angle
-			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
-			CohesionSlope (IFVariationAttr or float): Slope of cohesion against plastic strain
-			FrictionSlope (IFVariationAttr or float): Slope of friction angle against plastic strain
-			PlasticStrain (IFVariationAttr or float): Limit of hardening curve
+			InitialCohesion (IFVariationAttr or double): Initial cohesion
+			InitialFriction (IFVariationAttr or double): Initial friction angle
+			HeatFraction (IFVariationAttr or double): Heat fraction coefficient
+			CohesionSlope (IFVariationAttr or double): Slope of cohesion against plastic strain
+			FrictionSlope (IFVariationAttr or double): Slope of friction angle against plastic strain
+			PlasticStrain (IFVariationAttr or double): Limit of hardening curve
 			temperature (float, optional): temperature
 			modelNumber (int, optional): model 64 or 74, 74 bt default
 		Returns:
@@ -29782,20 +29569,20 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties to isotropic material attribute (Mdl=94) 
 		Params:
-			CompressiveStrength (IFVariationAttr or float): 
-			TensileStrength (IFVariationAttr or float): 
-			PeakStrain (IFVariationAttr or float): 
-			EffectiveStrain (IFVariationAttr or float): 
-			FractureEnergy (IFVariationAttr or float): 
-			PrincipalRatio (IFVariationAttr or float): 
-			YieldSurface (IFVariationAttr or float): 
-			Dilatancy (IFVariationAttr or float): 
-			InterlockState (IFVariationAttr or float): 
-			ContactMultiplier (IFVariationAttr or float): 
-			FinalMultiplier (IFVariationAttr or float): 
-			ShearIntercept (IFVariationAttr or float): 
-			FrictionSlope (IFVariationAttr or float): 
-			AngularLimit (IFVariationAttr or float): 
+			CompressiveStrength (IFVariationAttr or double): 
+			TensileStrength (IFVariationAttr or double): 
+			PeakStrain (IFVariationAttr or double): 
+			EffectiveStrain (IFVariationAttr or double): 
+			FractureEnergy (IFVariationAttr or double): 
+			PrincipalRatio (IFVariationAttr or double): 
+			YieldSurface (IFVariationAttr or double): 
+			Dilatancy (IFVariationAttr or double): 
+			InterlockState (IFVariationAttr or double): 
+			ContactMultiplier (IFVariationAttr or double): 
+			FinalMultiplier (IFVariationAttr or double): 
+			ShearIntercept (IFVariationAttr or double): 
+			FrictionSlope (IFVariationAttr or double): 
+			AngularLimit (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -29807,27 +29594,27 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 109 to isotropic material attribute 
 		Params:
-			CompressiveStrength (IFVariationAttr or float): 
-			TensileStrength (IFVariationAttr or float): 
-			PeakStrain (IFVariationAttr or float): 
-			EffectiveStrain (IFVariationAttr or float): 
-			FractureEnergy (IFVariationAttr or float): 
-			PrincipalRatio (IFVariationAttr or float): 
-			YieldSurface (IFVariationAttr or float): 
-			Dilatancy (IFVariationAttr or float): 
-			InterlockState (IFVariationAttr or float): 
-			ContactMultiplier (IFVariationAttr or float): 
-			FinalMultiplier (IFVariationAttr or float): 
-			ShearIntercept (IFVariationAttr or float): 
-			limitingFriction (IFVariationAttr or float): 
-			crackFixityStrain (IFVariationAttr or float): 
-			zoneWidth (IFVariationAttr or float): 
-			softeningFactor (IFVariationAttr or float): 
-			materialConstAp (IFVariationAttr or float): 
-			materialConstV (IFVariationAttr or float): 
-			shapenessCoeffZ1 (IFVariationAttr or float): 
-			shapenessCoeffZ2 (IFVariationAttr or float): 
-			shapenessCoeffLM (IFVariationAttr or float): 
+			CompressiveStrength (IFVariationAttr or double): 
+			TensileStrength (IFVariationAttr or double): 
+			PeakStrain (IFVariationAttr or double): 
+			EffectiveStrain (IFVariationAttr or double): 
+			FractureEnergy (IFVariationAttr or double): 
+			PrincipalRatio (IFVariationAttr or double): 
+			YieldSurface (IFVariationAttr or double): 
+			Dilatancy (IFVariationAttr or double): 
+			InterlockState (IFVariationAttr or double): 
+			ContactMultiplier (IFVariationAttr or double): 
+			FinalMultiplier (IFVariationAttr or double): 
+			ShearIntercept (IFVariationAttr or double): 
+			limitingFriction (IFVariationAttr or double): 
+			crackFixityStrain (IFVariationAttr or double): 
+			zoneWidth (IFVariationAttr or double): 
+			softeningFactor (IFVariationAttr or double): 
+			materialConstAp (IFVariationAttr or double): 
+			materialConstV (IFVariationAttr or double): 
+			shapenessCoeffZ1 (IFVariationAttr or double): 
+			shapenessCoeffZ2 (IFVariationAttr or double): 
+			shapenessCoeffLM (IFVariationAttr or double): 
 			numberIterations (int): 
 			maximumIterations (int): 
 			temperature (float, optional): temperature
@@ -29842,29 +29629,29 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 109 with Chinese creep to isotropic material attribute 
 		Params:
-			CompressiveStrength (IFVariationAttr or float): 
-			TensileStrength (IFVariationAttr or float): 
-			PeakStrain (IFVariationAttr or float): 
-			EffectiveStrain (IFVariationAttr or float): 
-			FractureEnergy (IFVariationAttr or float): 
-			PrincipalRatio (IFVariationAttr or float): 
-			YieldSurface (IFVariationAttr or float): 
-			Dilatancy (IFVariationAttr or float): 
-			InterlockState (IFVariationAttr or float): 
-			ContactMultiplier (IFVariationAttr or float): 
-			FinalMultiplier (IFVariationAttr or float): 
-			ShearIntercept (IFVariationAttr or float): 
-			limitingFriction (IFVariationAttr or float): 
-			crackFixityStrain (IFVariationAttr or float): 
-			zoneWidth (IFVariationAttr or float): 
-			softeningFactor (IFVariationAttr or float): 
-			materialConstAp (IFVariationAttr or float): 
-			materialConstV (IFVariationAttr or float): 
-			shapenessCoeffZ1 (IFVariationAttr or float): 
-			shapenessCoeffZ2 (IFVariationAttr or float): 
-			shapenessCoeffLM (IFVariationAttr or float): 
-			vParamA (IFVariationAttr or float): 
-			vParamB (IFVariationAttr or float): 
+			CompressiveStrength (IFVariationAttr or double): 
+			TensileStrength (IFVariationAttr or double): 
+			PeakStrain (IFVariationAttr or double): 
+			EffectiveStrain (IFVariationAttr or double): 
+			FractureEnergy (IFVariationAttr or double): 
+			PrincipalRatio (IFVariationAttr or double): 
+			YieldSurface (IFVariationAttr or double): 
+			Dilatancy (IFVariationAttr or double): 
+			InterlockState (IFVariationAttr or double): 
+			ContactMultiplier (IFVariationAttr or double): 
+			FinalMultiplier (IFVariationAttr or double): 
+			ShearIntercept (IFVariationAttr or double): 
+			limitingFriction (IFVariationAttr or double): 
+			crackFixityStrain (IFVariationAttr or double): 
+			zoneWidth (IFVariationAttr or double): 
+			softeningFactor (IFVariationAttr or double): 
+			materialConstAp (IFVariationAttr or double): 
+			materialConstV (IFVariationAttr or double): 
+			shapenessCoeffZ1 (IFVariationAttr or double): 
+			shapenessCoeffZ2 (IFVariationAttr or double): 
+			shapenessCoeffLM (IFVariationAttr or double): 
+			vParamA (IFVariationAttr or double): 
+			vParamB (IFVariationAttr or double): 
 			numberIterations (int): 
 			maximumIterations (int): 
 			temperature (float, optional): temperature
@@ -29879,39 +29666,39 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 119 to this isotropic material attribute 
 		Params:
-			pCompressiveStrength (IFVariationAttr or float): fc
-			pTensileStrength (IFVariationAttr or float): ft
-			pPeakStrain (IFVariationAttr or float): Ec
-			pEffectiveStrain (IFVariationAttr or float): E0
-			pFractureEnergy (IFVariationAttr or float): Gf
-			pPrincipalRatio (IFVariationAttr or float): Br
-			pYieldSurface (IFVariationAttr or float): Zo
-			pDilatancy (IFVariationAttr or float): E
-			pInterlockState (IFVariationAttr or float): mg
-			pContactMultiplier (IFVariationAttr or float): mhi
-			pFinalMultiplier (IFVariationAttr or float): mful
-			pShearIntercept (IFVariationAttr or float): ro
-			pLimitingFriction (IFVariationAttr or float): p
-			pCrackFixityStrain (IFVariationAttr or float): mcf
-			pZoneWidth (IFVariationAttr or float): fpz
-			pSofteningFactor (IFVariationAttr or float): Rs
-			pMaterialConstAp (IFVariationAttr or float): Ap
-			pMaterialConstV (IFVariationAttr or float): An
-			pShapenessCoeffZ1 (IFVariationAttr or float): Cz1
-			pShapenessCoeffZ2 (IFVariationAttr or float): Cz2
-			pShapenessCoeffLM (IFVariationAttr or float): Clm
-			pFibreYoungsModulus (IFVariationAttr or float): Ef
-			pFibreVolumeFraction (IFVariationAttr or float): Vf
-			pFibreLength (IFVariationAttr or float): Lf
-			pFibreDiameter (IFVariationAttr or float): df
-			pFibreMatrixParameter (IFVariationAttr or float): Beta
-			pFibreMatrixRatio (IFVariationAttr or float): Betarf
-			pFibreSlidingStress (IFVariationAttr or float): Tau0
-			pFibreSnubbingParameter (IFVariationAttr or float): fsn
-			pFibreSurParametere1 (IFVariationAttr or float): alphapf
-			pFibreSurParametere2 (IFVariationAttr or float): alphanf
-			pEffectivePullOut (IFVariationAttr or float): rpl
-			pLimitCrackOpening (IFVariationAttr or float): rdb
+			pCompressiveStrength (IFVariationAttr or double): fc
+			pTensileStrength (IFVariationAttr or double): ft
+			pPeakStrain (IFVariationAttr or double): Ec
+			pEffectiveStrain (IFVariationAttr or double): E0
+			pFractureEnergy (IFVariationAttr or double): Gf
+			pPrincipalRatio (IFVariationAttr or double): Br
+			pYieldSurface (IFVariationAttr or double): Zo
+			pDilatancy (IFVariationAttr or double): E
+			pInterlockState (IFVariationAttr or double): mg
+			pContactMultiplier (IFVariationAttr or double): mhi
+			pFinalMultiplier (IFVariationAttr or double): mful
+			pShearIntercept (IFVariationAttr or double): ro
+			pLimitingFriction (IFVariationAttr or double): p
+			pCrackFixityStrain (IFVariationAttr or double): mcf
+			pZoneWidth (IFVariationAttr or double): fpz
+			pSofteningFactor (IFVariationAttr or double): Rs
+			pMaterialConstAp (IFVariationAttr or double): Ap
+			pMaterialConstV (IFVariationAttr or double): An
+			pShapenessCoeffZ1 (IFVariationAttr or double): Cz1
+			pShapenessCoeffZ2 (IFVariationAttr or double): Cz2
+			pShapenessCoeffLM (IFVariationAttr or double): Clm
+			pFibreYoungsModulus (IFVariationAttr or double): Ef
+			pFibreVolumeFraction (IFVariationAttr or double): Vf
+			pFibreLength (IFVariationAttr or double): Lf
+			pFibreDiameter (IFVariationAttr or double): df
+			pFibreMatrixParameter (IFVariationAttr or double): Beta
+			pFibreMatrixRatio (IFVariationAttr or double): Betarf
+			pFibreSlidingStress (IFVariationAttr or double): Tau0
+			pFibreSnubbingParameter (IFVariationAttr or double): fsn
+			pFibreSurParametere1 (IFVariationAttr or double): alphapf
+			pFibreSurParametere2 (IFVariationAttr or double): alphanf
+			pEffectivePullOut (IFVariationAttr or double): rpl
+			pLimitCrackOpening (IFVariationAttr or double): rdb
 			numberIterations (int): ifcf
 			maximumIterations (int): itmx
 			temperature (float, optional): temperature
@@ -29924,43 +29711,43 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 
 	def addChinesePlasticConcrete119(self, pCompressiveStrength, pTensileStrength, pPeakStrain, pEffectiveStrain, pFractureEnergy, pPrincipalRatio, pYieldSurface, pDilatancy, pInterlockState, pContactMultiplier, pFinalMultiplier, pShearIntercept, pLimitingFriction, pCrackFixityStrain, pZoneWidth, pSofteningFactor, pMaterialConstAp, pMaterialConstV, pShapenessCoeffZ1, pShapenessCoeffZ2, pShapenessCoeffLM, pFibreYoungsModulus, pFibreVolumeFraction, pFibreLength, pFibreDiameter, pFibreMatrixParameter, pFibreMatrixRatio, pFibreSlidingStress, pFibreSnubbingParameter, pFibreSurParametere1, pFibreSurParametere2, pEffectivePullOut, pLimitCrackOpening, vParamA, vParamB, numberIterations, maximumIterations, temperature=None, defnType=None) -> IFMaterialIsotropic:
 		r"""
-		Add nonlinear concrete properties 119 with Chinese creep to thieisotropic material attribute 
+		Add nonlinear concrete properties 119 with Chinese creep to the isotropic material attribute 
 		Params:
-			pCompressiveStrength (IFVariationAttr or float): fc
-			pTensileStrength (IFVariationAttr or float): ft
-			pPeakStrain (IFVariationAttr or float): Ec
-			pEffectiveStrain (IFVariationAttr or float): E0
-			pFractureEnergy (IFVariationAttr or float): Gf
-			pPrincipalRatio (IFVariationAttr or float): Br
-			pYieldSurface (IFVariationAttr or float): Zo
-			pDilatancy (IFVariationAttr or float): E
-			pInterlockState (IFVariationAttr or float): mg
-			pContactMultiplier (IFVariationAttr or float): mhi
-			pFinalMultiplier (IFVariationAttr or float): mful
-			pShearIntercept (IFVariationAttr or float): ro
-			pLimitingFriction (IFVariationAttr or float): p
-			pCrackFixityStrain (IFVariationAttr or float): mcf
-			pZoneWidth (IFVariationAttr or float): fpz
-			pSofteningFactor (IFVariationAttr or float): Rs
-			pMaterialConstAp (IFVariationAttr or float): Ap
-			pMaterialConstV (IFVariationAttr or float): An
-			pShapenessCoeffZ1 (IFVariationAttr or float): Cz1
-			pShapenessCoeffZ2 (IFVariationAttr or float): Cz2
-			pShapenessCoeffLM (IFVariationAttr or float): Clm
-			pFibreYoungsModulus (IFVariationAttr or float): Ef
-			pFibreVolumeFraction (IFVariationAttr or float): Vf
-			pFibreLength (IFVariationAttr or float): Lf
-			pFibreDiameter (IFVariationAttr or float): df
-			pFibreMatrixParameter (IFVariationAttr or float): Beta
-			pFibreMatrixRatio (IFVariationAttr or float): Betarf
-			pFibreSlidingStress (IFVariationAttr or float): Tau0
-			pFibreSnubbingParameter (IFVariationAttr or float): fsn
-			pFibreSurParametere1 (IFVariationAttr or float): alphapf
-			pFibreSurParametere2 (IFVariationAttr or float): alphanf
-			pEffectivePullOut (IFVariationAttr or float): rpl
-			pLimitCrackOpening (IFVariationAttr or float): rdb
-			vParamA (IFVariationAttr or float): A
-			vParamB (IFVariationAttr or float): B
+			pCompressiveStrength (IFVariationAttr or double): fc
+			pTensileStrength (IFVariationAttr or double): ft
+			pPeakStrain (IFVariationAttr or double): Ec
+			pEffectiveStrain (IFVariationAttr or double): E0
+			pFractureEnergy (IFVariationAttr or double): Gf
+			pPrincipalRatio (IFVariationAttr or double): Br
+			pYieldSurface (IFVariationAttr or double): Zo
+			pDilatancy (IFVariationAttr or double): E
+			pInterlockState (IFVariationAttr or double): mg
+			pContactMultiplier (IFVariationAttr or double): mhi
+			pFinalMultiplier (IFVariationAttr or double): mful
+			pShearIntercept (IFVariationAttr or double): ro
+			pLimitingFriction (IFVariationAttr or double): p
+			pCrackFixityStrain (IFVariationAttr or double): mcf
+			pZoneWidth (IFVariationAttr or double): fpz
+			pSofteningFactor (IFVariationAttr or double): Rs
+			pMaterialConstAp (IFVariationAttr or double): Ap
+			pMaterialConstV (IFVariationAttr or double): An
+			pShapenessCoeffZ1 (IFVariationAttr or double): Cz1
+			pShapenessCoeffZ2 (IFVariationAttr or double): Cz2
+			pShapenessCoeffLM (IFVariationAttr or double): Clm
+			pFibreYoungsModulus (IFVariationAttr or double): Ef
+			pFibreVolumeFraction (IFVariationAttr or double): Vf
+			pFibreLength (IFVariationAttr or double): Lf
+			pFibreDiameter (IFVariationAttr or double): df
+			pFibreMatrixParameter (IFVariationAttr or double): Beta
+			pFibreMatrixRatio (IFVariationAttr or double): Betarf
+			pFibreSlidingStress (IFVariationAttr or double): Tau0
+			pFibreSnubbingParameter (IFVariationAttr or double): fsn
+			pFibreSurParametere1 (IFVariationAttr or double): alphapf
+			pFibreSurParametere2 (IFVariationAttr or double): alphanf
+			pEffectivePullOut (IFVariationAttr or double): rpl
+			pLimitCrackOpening (IFVariationAttr or double): rdb
+			vParamA (IFVariationAttr or double): A
+			vParamB (IFVariationAttr or double): B
 			numberIterations (int): ifcf
 			maximumIterations (int): itmx
 			temperature (float, optional): temperature
@@ -29975,59 +29762,59 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear concrete properties 105 to isotropic material attribute 
 		Params:
-			CompressiveStrength (IFVariationAttr or float): 
-			TensileStrength (IFVariationAttr or float): 
-			PeakStrain (IFVariationAttr or float): 
-			EffectiveStrain (IFVariationAttr or float): 
-			FractureEnergy (IFVariationAttr or float): 
-			PrincipalRatio (IFVariationAttr or float): 
-			YieldSurface (IFVariationAttr or float): 
-			Dilatancy (IFVariationAttr or float): 
-			InterlockState (IFVariationAttr or float): 
-			ContactMultiplier (IFVariationAttr or float): 
-			FinalMultiplier (IFVariationAttr or float): 
-			ShearIntercept (IFVariationAttr or float): 
-			limitingFriction (IFVariationAttr or float): 
-			crackFixityStrain (IFVariationAttr or float): 
-			zoneWidth (IFVariationAttr or float): 
-			softeningFactor (IFVariationAttr or float): 
-			materialConstAp (IFVariationAttr or float): 
-			materialConstV (IFVariationAttr or float): 
-			shapenessCoeffZ1 (IFVariationAttr or float): 
-			shapenessCoeffZ2 (IFVariationAttr or float): 
-			shapenessCoeffLM (IFVariationAttr or float): 
-			ultimateHydration (IFVariationAttr or float): 
-			dryingShrinkage (IFVariationAttr or float): 
-			chemicalShrinkage (IFVariationAttr or float): 
-			scalingConstant (IFVariationAttr or float): 
-			creep28factor (IFVariationAttr or float): 
-			relaxationMultiplier (IFVariationAttr or float): 
-			creepMultiplier (IFVariationAttr or float): 
-			picketpMultiplier (IFVariationAttr or float): 
-			degreePercolation (IFVariationAttr or float): 
-			degreeFirstCure (IFVariationAttr or float): 
-			moisturePickett (IFVariationAttr or float): 
-			saturationPickett (IFVariationAttr or float): 
-			ageCreepStarts (IFVariationAttr or float): 
-			shortRelaxtion (IFVariationAttr or float): 
-			firstLongRelax (IFVariationAttr or float): 
-			secondLongRelax (IFVariationAttr or float): 
-			shortTermViscous (IFVariationAttr or float): 
-			longTermElastic (IFVariationAttr or float): 
+			CompressiveStrength (IFVariationAttr or double): 
+			TensileStrength (IFVariationAttr or double): 
+			PeakStrain (IFVariationAttr or double): 
+			EffectiveStrain (IFVariationAttr or double): 
+			FractureEnergy (IFVariationAttr or double): 
+			PrincipalRatio (IFVariationAttr or double): 
+			YieldSurface (IFVariationAttr or double): 
+			Dilatancy (IFVariationAttr or double): 
+			InterlockState (IFVariationAttr or double): 
+			ContactMultiplier (IFVariationAttr or double): 
+			FinalMultiplier (IFVariationAttr or double): 
+			ShearIntercept (IFVariationAttr or double): 
+			limitingFriction (IFVariationAttr or double): 
+			crackFixityStrain (IFVariationAttr or double): 
+			zoneWidth (IFVariationAttr or double): 
+			softeningFactor (IFVariationAttr or double): 
+			materialConstAp (IFVariationAttr or double): 
+			materialConstV (IFVariationAttr or double): 
+			shapenessCoeffZ1 (IFVariationAttr or double): 
+			shapenessCoeffZ2 (IFVariationAttr or double): 
+			shapenessCoeffLM (IFVariationAttr or double): 
+			ultimateHydration (IFVariationAttr or double): 
+			dryingShrinkage (IFVariationAttr or double): 
+			chemicalShrinkage (IFVariationAttr or double): 
+			scalingConstant (IFVariationAttr or double): 
+			creep28factor (IFVariationAttr or double): 
+			relaxationMultiplier (IFVariationAttr or double): 
+			creepMultiplier (IFVariationAttr or double): 
+			picketpMultiplier (IFVariationAttr or double): 
+			degreePercolation (IFVariationAttr or double): 
+			degreeFirstCure (IFVariationAttr or double): 
+			moisturePickett (IFVariationAttr or double): 
+			saturationPickett (IFVariationAttr or double): 
+			ageCreepStarts (IFVariationAttr or double): 
+			shortRelaxtion (IFVariationAttr or double): 
+			firstLongRelax (IFVariationAttr or double): 
+			secondLongRelax (IFVariationAttr or double): 
+			shortTermViscous (IFVariationAttr or double): 
+			longTermElastic (IFVariationAttr or double): 
 			numberIterations (int): 
 			maximumIterations (int): 
 			creepFactorType (int): 
 			temperature (float, optional): temperature
 			ageStartType (int, optional): age when nonlinear creep starts type
 			vEvolvutionType (int, optional): evolution of properties
-			vLogisticCoeff_E (IFVariationAttr or float, optional): 
-			vPowerCoeff_FC (IFVariationAttr or float, optional): 
-			vPowerCoeff_FT (IFVariationAttr or float, optional): 
-			vTempDegStarts (IFVariationAttr or float, optional): 
-			vTempDegFinish (IFVariationAttr or float, optional): 
-			vDegraCoeff_E (IFVariationAttr or float, optional): 
-			vDegraCoeff_FC (IFVariationAttr or float, optional): 
-			vDegraCoeff_FT (IFVariationAttr or float, optional): 
+			vLogisticCoeff_E (IFVariationAttr or double, optional): 
+			vPowerCoeff_FC (IFVariationAttr or double, optional): 
+			vPowerCoeff_FT (IFVariationAttr or double, optional): 
+			vTempDegStarts (IFVariationAttr or double, optional): 
+			vTempDegFinish (IFVariationAttr or double, optional): 
+			vDegraCoeff_E (IFVariationAttr or double, optional): 
+			vDegraCoeff_FC (IFVariationAttr or double, optional): 
+			vDegraCoeff_FT (IFVariationAttr or double, optional): 
 			vUseDefaultCreepData (bool, optional): 
 			defnType (str, optional): "fracture" or "strain"
 		Returns:
@@ -30041,7 +29828,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		Add nonlinear stress resultant properties to isotropic material attribute (Mdl=29) 
 		Params:
 			sectionShape (str): 
-			YieldStress (IFVariationAttr or float): 
+			YieldStress (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30053,11 +29840,11 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear optimised von Mises properties to isotropic material attribute (Mdl=75) 
 		Params:
-			YieldStress (IFVariationAttr or float): 
-			HeatFraction (IFVariationAttr or float): Heat fraction coefficient
-			TensionIsotropic (IFVariationAttr or float): 
-			TensionKinematic (IFVariationAttr or float): 
-			TensionPlastic (IFVariationAttr or float): 
+			YieldStress (IFVariationAttr or double): 
+			HeatFraction (IFVariationAttr or double): Heat fraction coefficient
+			TensionIsotropic (IFVariationAttr or double): 
+			TensionKinematic (IFVariationAttr or double): 
+			TensionPlastic (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30080,11 +29867,11 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Thermal conductivity
-			C (IFVariationAttr or float): Volumetric heat coefficient if density not specified or specific heat capacity if density specified
-			H (IFVariationAttr or float): Enthalpy
+			K (IFVariationAttr or double): Thermal conductivity
+			C (IFVariationAttr or double): Volumetric heat coefficient if density not specified or specific heat capacity if density specified
+			H (IFVariationAttr or double): Enthalpy
 			temp (float): Reference temperature
-			rho (IFVariationAttr or float, optional): density
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30095,17 +29882,17 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Thermal conductivity
+			K (IFVariationAttr or double): Thermal conductivity
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Specific heat capacity
-			rho (IFVariationAttr or float): Density
-			H (IFVariationAttr or float): Enthalpy
-			P1 (IFVariationAttr or float): Porosity
-			P2 (IFVariationAttr or float): Permeability
-			T (IFVariationAttr or float): Tortuosity
-			gravityX (IFVariationAttr or float, optional): x direction component of gravity
-			gravityY (IFVariationAttr or float, optional): y direction component of gravity
-			gravityZ (IFVariationAttr or float, optional): z direction component of gravity
+			C (IFVariationAttr or double): Specific heat capacity
+			rho (IFVariationAttr or double): Density
+			H (IFVariationAttr or double): Enthalpy
+			P1 (IFVariationAttr or double): Porosity
+			P2 (IFVariationAttr or double): Permeability
+			T (IFVariationAttr or double): Tortuosity
+			gravityX (IFVariationAttr or double, optional): x direction component of gravity
+			gravityY (IFVariationAttr or double, optional): y direction component of gravity
+			gravityZ (IFVariationAttr or double, optional): z direction component of gravity
 			gravityType (str, optional): gravity type
 		Returns:
 			IFMaterialIsotropic: 
@@ -30117,23 +29904,23 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Thermal conductivity
+			K (IFVariationAttr or double): Thermal conductivity
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): 
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			A3 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
-			E3 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): 
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			A3 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
+			E3 (IFVariationAttr or double): 
 			R (float): 
-			B1 (IFVariationAttr or float): 
-			B2 (IFVariationAttr or float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			B1 (IFVariationAttr or double): 
+			B2 (IFVariationAttr or double): 
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30144,20 +29931,20 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Thermal conductivity
+			K (IFVariationAttr or double): Thermal conductivity
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			n2 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			n2 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30168,32 +29955,32 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Thermal conductivity
+			K (IFVariationAttr or double): Thermal conductivity
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			G (IFVariationAttr or float): 
-			p1 (IFVariationAttr or float): 
-			q1 (IFVariationAttr or float): 
-			r1 (IFVariationAttr or float): 
-			p2 (IFVariationAttr or float): 
-			r2 (IFVariationAttr or float): 
-			Cr (IFVariationAttr or float): 
-			S (IFVariationAttr or float): 
-			Z (IFVariationAttr or float): 
-			Tmx (IFVariationAttr or float): 
-			Tc (IFVariationAttr or float): 
-			FE (IFVariationAttr or float): 
-			D (IFVariationAttr or float): 
-			Q (IFVariationAttr or float): 
-			G0 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			G (IFVariationAttr or double): 
+			p1 (IFVariationAttr or double): 
+			q1 (IFVariationAttr or double): 
+			r1 (IFVariationAttr or double): 
+			p2 (IFVariationAttr or double): 
+			r2 (IFVariationAttr or double): 
+			Cr (IFVariationAttr or double): 
+			S (IFVariationAttr or double): 
+			Z (IFVariationAttr or double): 
+			Tmx (IFVariationAttr or double): 
+			Tc (IFVariationAttr or double): 
+			FE (IFVariationAttr or double): 
+			D (IFVariationAttr or double): 
+			Q (IFVariationAttr or double): 
+			G0 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30204,12 +29991,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Thermal conductivity
+			K (IFVariationAttr or double): Thermal conductivity
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30234,18 +30021,18 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Conductivity in x
+			K (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			Tr (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			Tr (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -30261,26 +30048,26 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Conductivity in x
+			K (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			Tr (IFVariationAttr or float): 
-			C3S (IFVariationAttr or float): 
-			C2S (IFVariationAttr or float): 
-			C3A (IFVariationAttr or float): 
-			C4AF (IFVariationAttr or float): 
-			FreeCao (IFVariationAttr or float): 
-			SO3 (IFVariationAttr or float): 
-			MgO (IFVariationAttr or float): 
-			Blaine (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			Tr (IFVariationAttr or double): 
+			C3S (IFVariationAttr or double): 
+			C2S (IFVariationAttr or double): 
+			C3A (IFVariationAttr or double): 
+			C4AF (IFVariationAttr or double): 
+			FreeCao (IFVariationAttr or double): 
+			SO3 (IFVariationAttr or double): 
+			MgO (IFVariationAttr or double): 
+			Blaine (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -30297,10 +30084,10 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add Modified Mohr Coulomb model 
 		Params:
 			type (str): material type
-			frictionAngleDegs (IFVariationAttr or float): friction angle degrees
-			dilationAngleDegs (IFVariationAttr or float): dilation angle degrees
+			frictionAngleDegs (IFVariationAttr or double): friction angle degrees
+			dilationAngleDegs (IFVariationAttr or double): dilation angle degrees
 			temp (float): temperature
-			dampingFactor (IFVariationAttr or float, optional): damping factor (default 0.0)
+			dampingFactor (IFVariationAttr or double, optional): damping factor (default 0.0)
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30312,7 +30099,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		set the cohesion value for Modified Mohr Coulomb model for the give row index 
 		Params:
 			rowIndex (int): 
-			cohesion (IFVariationAttr or float): cohesion
+			cohesion (IFVariationAttr or double): cohesion
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30321,10 +30108,10 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 
 	def addModifiedMohrCoulombTensile(self, rowIndex, tensile) -> IFMaterialIsotropic:
 		r"""
-		set the tensiloe stress value for Modified Mohr Coulomb model for the give row index 
+		set the tensile stress value for Modified Mohr Coulomb model for the give row index 
 		Params:
 			rowIndex (int): 
-			tensile (IFVariationAttr or float): tensiloe stress
+			tensile (IFVariationAttr or double): tensile stress
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30336,7 +30123,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		set the compressive stress value for Modified Mohr Coulomb model for the give row index 
 		Params:
 			rowIndex (int): 
-			compressive (IFVariationAttr or float): compressive stress
+			compressive (IFVariationAttr or double): compressive stress
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30383,30 +30170,30 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Initial conductivity in x
+			K (IFVariationAttr or double): Initial conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Initial specific heat capacity
-			rho (IFVariationAttr or float): Initial density
-			H (IFVariationAttr or float): Enthalpy
-			P1 (IFVariationAttr or float): Initial porosity
-			P2 (IFVariationAttr or float): Permeability
-			T (IFVariationAttr or float): Tortuosity
-			K1 (IFVariationAttr or float): factored K
-			C1 (IFVariationAttr or float): factored specific heat capacity
-			rho1 (IFVariationAttr or float): factored density
-			entrappedAir (IFVariationAttr or float): entrapped are volume ratio
-			W (IFVariationAttr or float): water saturation
-			UH (IFVariationAttr or float): ultimate hydration
+			C (IFVariationAttr or double): Initial specific heat capacity
+			rho (IFVariationAttr or double): Initial density
+			H (IFVariationAttr or double): Enthalpy
+			P1 (IFVariationAttr or double): Initial porosity
+			P2 (IFVariationAttr or double): Permeability
+			T (IFVariationAttr or double): Tortuosity
+			K1 (IFVariationAttr or double): factored K
+			C1 (IFVariationAttr or double): factored specific heat capacity
+			rho1 (IFVariationAttr or double): factored density
+			entrappedAir (IFVariationAttr or double): entrapped are volume ratio
+			W (IFVariationAttr or double): water saturation
+			UH (IFVariationAttr or double): ultimate hydration
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			admix (IFVariationAttr or float): 
-			gravityX (IFVariationAttr or float, optional): x direction component of gravity
-			gravityY (IFVariationAttr or float, optional): y direction component of gravity
-			gravityZ (IFVariationAttr or float, optional): z direction component of gravity
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			admix (IFVariationAttr or double): 
+			gravityX (IFVariationAttr or double, optional): x direction component of gravity
+			gravityY (IFVariationAttr or double, optional): y direction component of gravity
+			gravityZ (IFVariationAttr or double, optional): z direction component of gravity
 			gravityType (str, optional): gravity type
 			densityType (str, optional): density type, "kiln" or "ambient"
 			conductivityType (str, optional): conductivity type, "dependent" or "constant"
@@ -30426,38 +30213,38 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to isotropic material attribute 
 		Params:
-			K (IFVariationAttr or float): Conductivity in x
+			K (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Initial specific heat capacity
-			rho (IFVariationAttr or float): Initial density
-			H (IFVariationAttr or float): Enthalpy
-			P1 (IFVariationAttr or float): initial porosity
-			P2 (IFVariationAttr or float): initial permeability
-			T (IFVariationAttr or float): tortuosity
-			K1 (IFVariationAttr or float): factored K
-			C1 (IFVariationAttr or float): factored specific heat capacity
-			rho1 (IFVariationAttr or float): factored density
-			entrappedAir (IFVariationAttr or float): entrapped are volume ratio
-			W (IFVariationAttr or float): water sat
-			UH (IFVariationAttr or float): ultimate hydr
+			C (IFVariationAttr or double): Initial specific heat capacity
+			rho (IFVariationAttr or double): Initial density
+			H (IFVariationAttr or double): Enthalpy
+			P1 (IFVariationAttr or double): initial porosity
+			P2 (IFVariationAttr or double): initial permeability
+			T (IFVariationAttr or double): tortuosity
+			K1 (IFVariationAttr or double): factored K
+			C1 (IFVariationAttr or double): factored specific heat capacity
+			rho1 (IFVariationAttr or double): factored density
+			entrappedAir (IFVariationAttr or double): entrapped are volume ratio
+			W (IFVariationAttr or double): water sat
+			UH (IFVariationAttr or double): ultimate hydr
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			admix (IFVariationAttr or float): 
-			C3S (IFVariationAttr or float): 
-			C2S (IFVariationAttr or float): 
-			C3A (IFVariationAttr or float): 
-			C4AF (IFVariationAttr or float): 
-			FreeCao (IFVariationAttr or float): 
-			SO3 (IFVariationAttr or float): 
-			MgO (IFVariationAttr or float): 
-			Blaine (IFVariationAttr or float): 
-			gravityX (IFVariationAttr or float, optional): x direction component of gravity
-			gravityY (IFVariationAttr or float, optional): y direction component of gravity
-			gravityZ (IFVariationAttr or float, optional): z direction component of gravity
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			admix (IFVariationAttr or double): 
+			C3S (IFVariationAttr or double): 
+			C2S (IFVariationAttr or double): 
+			C3A (IFVariationAttr or double): 
+			C4AF (IFVariationAttr or double): 
+			FreeCao (IFVariationAttr or double): 
+			SO3 (IFVariationAttr or double): 
+			MgO (IFVariationAttr or double): 
+			Blaine (IFVariationAttr or double): 
+			gravityX (IFVariationAttr or double, optional): x direction component of gravity
+			gravityY (IFVariationAttr or double, optional): y direction component of gravity
+			gravityZ (IFVariationAttr or double, optional): z direction component of gravity
 			gravityType (str, optional): gravity type
 			densityType (str, optional): density type, "kiln" or "ambient"
 			conductivityType (str, optional): conductivity type, "dependent" or "constant"
@@ -30477,12 +30264,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for CEB-FIP 
 		Params:
-			MeanConcreteCompStrength (IFVariationAttr or float): 
+			MeanConcreteCompStrength (IFVariationAttr or double): 
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (IFVariationAttr or float): 
-			NominalThickness (IFVariationAttr or float): 
+			RelativeHumidity (IFVariationAttr or double): 
+			NominalThickness (IFVariationAttr or double): 
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			Temperature (float): temperature
 			adjustForTemperature (bool, optional): if T adjust for temperature during life cycle
@@ -30497,12 +30284,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for Eurocode2 
 		Params:
-			MeanConcreteCompStrength (IFVariationAttr or float): compressive strength
+			MeanConcreteCompStrength (IFVariationAttr or double): compressive strength
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (IFVariationAttr or float): relative humidity
-			NominalThickness (IFVariationAttr or float): nominal thickness
+			RelativeHumidity (IFVariationAttr or double): relative humidity
+			NominalThickness (IFVariationAttr or double): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			SilicaFumeType (int): silica fume type
 			Temperature (float): temperature
@@ -30516,12 +30303,12 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for India IRC:112-2011 
 		Params:
-			MeanConcreteCompStrength (IFVariationAttr or float): compressive strength
+			MeanConcreteCompStrength (IFVariationAttr or double): compressive strength
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (IFVariationAttr or float): relative humidity
-			NominalThickness (IFVariationAttr or float): nominal thickness
+			RelativeHumidity (IFVariationAttr or double): relative humidity
+			NominalThickness (IFVariationAttr or double): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			temperature (float): temperature
 		Returns:
@@ -30534,14 +30321,14 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for JTG3362 2018 
 		Params:
-			MeanConcreteCompStrength (IFVariationAttr or float): compressive strength
+			MeanConcreteCompStrength (IFVariationAttr or double): compressive strength
 			CementType (str): "Slow hardening", "Normal or Rapid Hardening", or "Rapid Hardening High Strength"
-			RelativeHumidity (IFVariationAttr or float): relative humidity
-			NominalThickness (IFVariationAttr or float): nominal thickness
+			RelativeHumidity (IFVariationAttr or double): relative humidity
+			NominalThickness (IFVariationAttr or double): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
-			FlyAshPer (IFVariationAttr or float): fly ash percentage
+			FlyAshPer (IFVariationAttr or double): fly ash percentage
 			Temperature (float): temperature
 			AdjustForTemperature (bool, optional): if T adjust for temperature during life cycle
 		Returns:
@@ -30554,17 +30341,17 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add codified creep for fib 2010 
 		Params:
-			UniaxialConcreteCompStrength (IFVariationAttr or float): uniaxial compressive strength
+			UniaxialConcreteCompStrength (IFVariationAttr or double): uniaxial compressive strength
 			CementType (str): "32.5 N", "32.5 R, 42.5 N", or "42.5 R, 52.5 N, 52.5 R"
-			RelativeHumidity (IFVariationAttr or float): relative humidity
-			NominalThickness (IFVariationAttr or float): nominal thickness
+			RelativeHumidity (IFVariationAttr or double): relative humidity
+			NominalThickness (IFVariationAttr or double): nominal thickness
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			AggregateType (str): "Normal", "Lightweight low strength","Lightweight high strength"
 			AdjustTemperature (bool): adjust for temperature during service life
-			Moisture (IFVariationAttr or float): moisture content for cryogenic conditions (by % mass)
-			OverDryDensity (IFVariationAttr or float): over dry density
+			Moisture (IFVariationAttr or double): moisture content for cryogenic conditions (by % mass)
+			OverDryDensity (IFVariationAttr or double): over dry density
 			PermanentLoadsDominate (bool): permanent loads dominate
 			PrevailingTemperature (float): temperature
 		Returns:
@@ -30577,7 +30364,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 CEBFIP code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
+			heatFraction (IFVariationAttr or double): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30589,7 +30376,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 Euro code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
+			heatFraction (IFVariationAttr or double): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30601,7 +30388,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 JTG3362 2018 code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
+			heatFraction (IFVariationAttr or double): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30613,7 +30400,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 fib 2010 code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
+			heatFraction (IFVariationAttr or double): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30625,7 +30412,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 IRC code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
+			heatFraction (IFVariationAttr or double): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30637,7 +30424,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 AASHTO code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
+			heatFraction (IFVariationAttr or double): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30649,9 +30436,9 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 Chinese code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
-			vParamA (IFVariationAttr or float): parameter A
-			vParamB (IFVariationAttr or float): parameter A
+			heatFraction (IFVariationAttr or double): heat fraction
+			vParamA (IFVariationAttr or double): parameter A
+			vParamB (IFVariationAttr or double): parameter A
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30663,7 +30450,19 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add plastic component for material model 86 AS5100 code 
 		Params:
-			heatFraction (IFVariationAttr or float): heat fraction
+			heatFraction (IFVariationAttr or double): heat fraction
+			temperature (float): temperature
+		Returns:
+			IFMaterialIsotropic: 
+		"""
+		pass
+
+
+	def addNZS3101PlasticMaterial86(self, heatFraction, temperature) -> IFMaterialIsotropic:
+		r"""
+		add plastic component for material model 86 NZS3101-1:2006 
+		Params:
+			heatFraction (IFVariationAttr or double): heat fraction
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30675,16 +30474,16 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		r"""
 		add Chinese creep component 
 		Params:
-			vF1 (IFVariationAttr or float): parameter F1
-			vG1 (IFVariationAttr or float): parameter G1
-			vP1 (IFVariationAttr or float): parameter P1
-			vR1 (IFVariationAttr or float): parameter R1
-			vF2 (IFVariationAttr or float): parameter F2
-			vG2 (IFVariationAttr or float): parameter G2
-			vP2 (IFVariationAttr or float): parameter P2
-			vR2 (IFVariationAttr or float): parameter R2
-			vF3 (IFVariationAttr or float): parameter F3
-			vR3 (IFVariationAttr or float): parameter R3
+			vF1 (IFVariationAttr or double): parameter F1
+			vG1 (IFVariationAttr or double): parameter G1
+			vP1 (IFVariationAttr or double): parameter P1
+			vR1 (IFVariationAttr or double): parameter R1
+			vF2 (IFVariationAttr or double): parameter F2
+			vG2 (IFVariationAttr or double): parameter G2
+			vP2 (IFVariationAttr or double): parameter P2
+			vR2 (IFVariationAttr or double): parameter R2
+			vF3 (IFVariationAttr or double): parameter F3
+			vR3 (IFVariationAttr or double): parameter R3
 			temperature (float): temperature
 		Returns:
 			IFMaterialIsotropic: 
@@ -30697,11 +30496,31 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add codified creep for AS5100.5 
 		Params:
 			environmentalFactorType (str): defining the environmental factor type, "Arid","Interior","Temperate","Tropical","Custom"
-			EnvironmentalFactor (IFVariationAttr or float): environmental Factor rk4, only use if the environmental factor type = "Custom", else ignored
-			MeanConcreteCompStrength (IFVariationAttr or float): mean compressive strength fr
-			NominalThickness (IFVariationAttr or float): nominal;l thickness Hr
+			EnvironmentalFactor (IFVariationAttr or double): environmental Factor rk4, only use if the environmental factor type = "Custom", else ignored
+			MeanConcreteCompStrength (IFVariationAttr or double): mean compressive strength fr
+			NominalThickness (IFVariationAttr or double): nominal thickness Hr
 			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
-			InteriorPerimFactor (IFVariationAttr or float): if using section perimeter this is the factor on the holes
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
+			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
+			Temperature (float): temperature
+		Returns:
+			IFMaterialIsotropic: 
+		"""
+		pass
+
+
+	def addNZS3101ConcreteCreep(self, aggregateType, MeanConcreteCompStrength, factorK6, relativeHumidity, factorK4, NominalThickness, UseNominalThickness, InteriorPerimFactor, UseFullPerimeter, Temperature) -> IFMaterialIsotropic:
+		r"""
+		add codified creep for NZS3101-1 
+		Params:
+			aggregateType (str): defining factor rk6
+			MeanConcreteCompStrength (IFVariationAttr or double): mean compressive strength fr
+			factorK6 (IFVariationAttr or double): factor rk6
+			relativeHumidity (str): relative humidity RH
+			factorK4 (IFVariationAttr or double): factor rk4
+			NominalThickness (IFVariationAttr or double): nominal thickness Hr
+			UseNominalThickness (bool): if true use the specified nominal thickness, if false use section perimeter
+			InteriorPerimFactor (IFVariationAttr or double): if using section perimeter this is the factor on the holes
 			UseFullPerimeter (bool): if using section perimeter this sets the interior factor to 1
 			Temperature (float): temperature
 		Returns:
@@ -30715,8 +30534,8 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add AASHTO creep component 
 		Params:
 			rowIndex (int): 
-			vMeanConcreteCompStrength (IFVariationAttr or float): compressive strength
-			vRelativeHumidity (IFVariationAttr or float): relative humidity
+			vMeanConcreteCompStrength (IFVariationAttr or double): compressive strength
+			vRelativeHumidity (IFVariationAttr or double): relative humidity
 			temperature (float): temperature
 			whichEdition (str, optional): AASHTO edition
 		Returns:
@@ -30745,7 +30564,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 			rowIndex (int): row index
 			useNotionalThickness (bool): using nominal thickness
 			UseFullPerimeter (bool): use the full perimeter
-			value (IFVariationAttr or float): nominal thickness or interior perimeter factor
+			value (IFVariationAttr or double): nominal thickness or interior perimeter factor
 			whichEdition (str, optional): AASHTO edition
 		Returns:
 			IFMaterialIsotropic: 
@@ -30772,7 +30591,7 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		set AASHTO weight class 
 		Params:
 			rowIndex (int): row index
-			K1 (IFVariationAttr or float): aggregate correction
+			K1 (IFVariationAttr or double): aggregate correction
 			weightClass (str): weight class
 			whichEdition (str, optional): AASHTO edition
 		Returns:
@@ -30859,8 +30678,21 @@ class IFMaterialIsotropic(IFMaterialTropicSet):
 		add AS5100.5 shrinkage component 
 		Params:
 			aggregateSourceType (str): defining the aggregate source for the shrinkage strain, "Sydney","Melbourne","Elsewhere","Custom"
-			ecsdb (IFVariationAttr or float): final drying basic shrinkage strain, only use if the aggregate source type = "Custom", else ignored
-			rhos (IFVariationAttr or float): percentage of reinforcement
+			ecsdb (IFVariationAttr or double): final drying basic shrinkage strain, only use if the aggregate source type = "Custom", else ignored
+			rhos (IFVariationAttr or double): percentage of reinforcement
+		Returns:
+			IFMaterialIsotropic: 
+		"""
+		pass
+
+
+	def addNZS3101ConcreteShrinkage(self, aggregateSourceType, ecsdb, rhos) -> IFMaterialIsotropic:
+		r"""
+		add NZS3101-1:2006 shrinkage component 
+		Params:
+			aggregateSourceType (str): defining the aggregate source for the shrinkage strain
+			ecsdb (IFVariationAttr or double): final drying basic shrinkage strain, only use if the aggregate source type = "Custom", else ignored
+			rhos (IFVariationAttr or double): percentage of reinforcement
 		Returns:
 			IFMaterialIsotropic: 
 		"""
@@ -30876,12 +30708,12 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic plane stress properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			ShearXY (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			ShearXY (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float): temperature
 			defnPageType (str, optional): "Plane stress", "Axisymmetric shell"
 		Returns:
@@ -30894,15 +30726,15 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic plane strain properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			YoungZ (IFVariationAttr or float): Young's modulus in Z
-			ShearXY (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			YoungZ (IFVariationAttr or double): Young's modulus in Z
+			ShearXY (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or double): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or double): Poisson's ratio in XZ
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float): 
 		Returns:
 			IFMaterialOrthotropic: 
@@ -30914,11 +30746,11 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic sheet properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float): 
 		Returns:
 			IFMaterialOrthotropic: 
@@ -30930,14 +30762,14 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic thick shell properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			ShearXY (IFVariationAttr or float): 
-			ShearYZ (IFVariationAttr or float): 
-			ShearXZ (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			ShearXY (IFVariationAttr or double): 
+			ShearYZ (IFVariationAttr or double): 
+			ShearXZ (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float): 
 		Returns:
 			IFMaterialOrthotropic: 
@@ -30949,15 +30781,15 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic axisymmetric solid properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			YoungZ (IFVariationAttr or float): Young's modulus in Z
-			ShearXY (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
-			Angle (IFVariationAttr or float): 
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			YoungZ (IFVariationAttr or double): Young's modulus in Z
+			ShearXY (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or double): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or double): Poisson's ratio in XZ
+			Angle (IFVariationAttr or double): 
+			Density (IFVariationAttr or double): Density
 			temperature (float): 
 		Returns:
 			IFMaterialOrthotropic: 
@@ -30969,16 +30801,16 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add elastic solid properties to orthotropic material attribute 
 		Params:
-			YoungX (IFVariationAttr or float): Young's modulus in X
-			YoungY (IFVariationAttr or float): Young's modulus in Y
-			YoungZ (IFVariationAttr or float): Young's modulus in Z
-			ShearXY (IFVariationAttr or float): 
-			ShearYZ (IFVariationAttr or float): 
-			ShearXZ (IFVariationAttr or float): 
-			PoissonXY (IFVariationAttr or float): Poisson's ratio in XY
-			PoissonYZ (IFVariationAttr or float): Poisson's ratio in YZ
-			PoissonXZ (IFVariationAttr or float): Poisson's ratio in XZ
-			Density (IFVariationAttr or float): Density
+			YoungX (IFVariationAttr or double): Young's modulus in X
+			YoungY (IFVariationAttr or double): Young's modulus in Y
+			YoungZ (IFVariationAttr or double): Young's modulus in Z
+			ShearXY (IFVariationAttr or double): 
+			ShearYZ (IFVariationAttr or double): 
+			ShearXZ (IFVariationAttr or double): 
+			PoissonXY (IFVariationAttr or double): Poisson's ratio in XY
+			PoissonYZ (IFVariationAttr or double): Poisson's ratio in YZ
+			PoissonXZ (IFVariationAttr or double): Poisson's ratio in XZ
+			Density (IFVariationAttr or double): Density
 			temperature (float): 
 		Returns:
 			IFMaterialOrthotropic: 
@@ -30990,12 +30822,12 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear plastic stress potential properties for Hill criteria to orthotropic material attribute 
 		Params:
-			StressX (IFVariationAttr or float): 
-			StressY (IFVariationAttr or float): 
-			StressZ (IFVariationAttr or float): 
-			StressXY (IFVariationAttr or float): 
-			StressYZ (IFVariationAttr or float): 
-			StressXZ (IFVariationAttr or float): 
+			StressX (IFVariationAttr or double): 
+			StressY (IFVariationAttr or double): 
+			StressZ (IFVariationAttr or double): 
+			StressXY (IFVariationAttr or double): 
+			StressYZ (IFVariationAttr or double): 
+			StressXZ (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -31007,15 +30839,15 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add nonlinear plastic stress potential properties for Hoffman criteria to orthotropic material attribute 
 		Params:
-			StressXTension (IFVariationAttr or float): 
-			StressXCompression (IFVariationAttr or float): 
-			StressYTension (IFVariationAttr or float): 
-			StressYCompression (IFVariationAttr or float): 
-			StressZTension (IFVariationAttr or float): 
-			StressZCompression (IFVariationAttr or float): 
-			StressXY (IFVariationAttr or float): 
-			StressYZ (IFVariationAttr or float): 
-			StressXZ (IFVariationAttr or float): 
+			StressXTension (IFVariationAttr or double): 
+			StressXCompression (IFVariationAttr or double): 
+			StressYTension (IFVariationAttr or double): 
+			StressYCompression (IFVariationAttr or double): 
+			StressZTension (IFVariationAttr or double): 
+			StressZCompression (IFVariationAttr or double): 
+			StressXY (IFVariationAttr or double): 
+			StressYZ (IFVariationAttr or double): 
+			StressXZ (IFVariationAttr or double): 
 			temperature (float, optional): temperature
 		Returns:
 			IFMaterialOrthotropic: 
@@ -31038,13 +30870,13 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31055,13 +30887,13 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31072,25 +30904,25 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field generic resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			A3 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
-			E3 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			A3 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
+			E3 (IFVariationAttr or double): 
 			R (float): 
-			B1 (IFVariationAttr or float): 
-			B2 (IFVariationAttr or float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			B1 (IFVariationAttr or double): 
+			B2 (IFVariationAttr or double): 
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31101,25 +30933,25 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field generic resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			A3 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
-			E3 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			A3 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
+			E3 (IFVariationAttr or double): 
 			R (float): 
-			B1 (IFVariationAttr or float): 
-			B2 (IFVariationAttr or float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			B1 (IFVariationAttr or double): 
+			B2 (IFVariationAttr or double): 
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31130,22 +30962,22 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			n2 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			n2 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31156,22 +30988,22 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			n2 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			n2 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31182,34 +31014,34 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			G (IFVariationAttr or float): 
-			p1 (IFVariationAttr or float): 
-			q1 (IFVariationAttr or float): 
-			r1 (IFVariationAttr or float): 
-			p2 (IFVariationAttr or float): 
-			r2 (IFVariationAttr or float): 
-			Cr (IFVariationAttr or float): 
-			S (IFVariationAttr or float): 
-			Z (IFVariationAttr or float): 
-			Tmx (IFVariationAttr or float): 
-			Tc (IFVariationAttr or float): 
-			FE (IFVariationAttr or float): 
-			D (IFVariationAttr or float): 
-			Q (IFVariationAttr or float): 
-			G0 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			G (IFVariationAttr or double): 
+			p1 (IFVariationAttr or double): 
+			q1 (IFVariationAttr or double): 
+			r1 (IFVariationAttr or double): 
+			p2 (IFVariationAttr or double): 
+			r2 (IFVariationAttr or double): 
+			Cr (IFVariationAttr or double): 
+			S (IFVariationAttr or double): 
+			Z (IFVariationAttr or double): 
+			Tmx (IFVariationAttr or double): 
+			Tc (IFVariationAttr or double): 
+			FE (IFVariationAttr or double): 
+			D (IFVariationAttr or double): 
+			Q (IFVariationAttr or double): 
+			G0 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31220,34 +31052,34 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			G (IFVariationAttr or float): 
-			p1 (IFVariationAttr or float): 
-			q1 (IFVariationAttr or float): 
-			r1 (IFVariationAttr or float): 
-			p2 (IFVariationAttr or float): 
-			r2 (IFVariationAttr or float): 
-			Cr (IFVariationAttr or float): 
-			S (IFVariationAttr or float): 
-			Z (IFVariationAttr or float): 
-			Tmx (IFVariationAttr or float): 
-			Tc (IFVariationAttr or float): 
-			FE (IFVariationAttr or float): 
-			D (IFVariationAttr or float): 
-			Q (IFVariationAttr or float): 
-			G0 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			G (IFVariationAttr or double): 
+			p1 (IFVariationAttr or double): 
+			q1 (IFVariationAttr or double): 
+			r1 (IFVariationAttr or double): 
+			p2 (IFVariationAttr or double): 
+			r2 (IFVariationAttr or double): 
+			Cr (IFVariationAttr or double): 
+			S (IFVariationAttr or double): 
+			Z (IFVariationAttr or double): 
+			Tmx (IFVariationAttr or double): 
+			Tc (IFVariationAttr or double): 
+			FE (IFVariationAttr or double): 
+			D (IFVariationAttr or double): 
+			Q (IFVariationAttr or double): 
+			G0 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31258,14 +31090,14 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31276,14 +31108,14 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31308,20 +31140,20 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			Tr (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			Tr (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31337,20 +31169,20 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			Tr (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			Tr (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31366,28 +31198,28 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			Tr (IFVariationAttr or float): 
-			C3S (IFVariationAttr or float): 
-			C2S (IFVariationAttr or float): 
-			C3A (IFVariationAttr or float): 
-			C4AF (IFVariationAttr or float): 
-			FreeCao (IFVariationAttr or float): 
-			SO3 (IFVariationAttr or float): 
-			MgO (IFVariationAttr or float): 
-			Blaine (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			Tr (IFVariationAttr or double): 
+			C3S (IFVariationAttr or double): 
+			C2S (IFVariationAttr or double): 
+			C3A (IFVariationAttr or double): 
+			C4AF (IFVariationAttr or double): 
+			FreeCao (IFVariationAttr or double): 
+			SO3 (IFVariationAttr or double): 
+			MgO (IFVariationAttr or double): 
+			Blaine (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31403,28 +31235,28 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thermal properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
 			CementType (str): 
-			wcem (IFVariationAttr or float): 
-			wcra (IFVariationAttr or float): 
-			wslg (IFVariationAttr or float): 
-			wpfa (IFVariationAttr or float): 
-			pfacao (IFVariationAttr or float): 
-			Tr (IFVariationAttr or float): 
-			C3S (IFVariationAttr or float): 
-			C2S (IFVariationAttr or float): 
-			C3A (IFVariationAttr or float): 
-			C4AF (IFVariationAttr or float): 
-			FreeCao (IFVariationAttr or float): 
-			SO3 (IFVariationAttr or float): 
-			MgO (IFVariationAttr or float): 
-			Blaine (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			wcem (IFVariationAttr or double): 
+			wcra (IFVariationAttr or double): 
+			wslg (IFVariationAttr or double): 
+			wpfa (IFVariationAttr or double): 
+			pfacao (IFVariationAttr or double): 
+			Tr (IFVariationAttr or double): 
+			C3S (IFVariationAttr or double): 
+			C2S (IFVariationAttr or double): 
+			C3A (IFVariationAttr or double): 
+			C4AF (IFVariationAttr or double): 
+			FreeCao (IFVariationAttr or double): 
+			SO3 (IFVariationAttr or double): 
+			MgO (IFVariationAttr or double): 
+			Blaine (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 			rdh (float, optional): Ultimate Degree of Hydration correction factor (default 1.0)
 			rhh (float, optional): Heat of hydration correction factor (default 1.0)
 			rht (float, optional): Hydration time correction factor (default 1.0)
@@ -31440,20 +31272,20 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add plane stress masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (IFVariationAttr or float): tensile strength in x direction
-			Fcxx (IFVariationAttr or float): compressive strength in x direction
-			Ftyy (IFVariationAttr or float): tensile strength in y direction
-			Fcyy (IFVariationAttr or float): compressive strength in y direction
-			Ftxy (IFVariationAttr or float): tensile shear strength xy
-			Fcxy (IFVariationAttr or float): compressive shear strength xy
-			ht (IFVariationAttr or float): tensile hardening/softerning parameter
-			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
-			alphap (IFVariationAttr or float): dilancy angle parameter
-			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
-			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
-			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
-			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
-			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
+			Ftxx (IFVariationAttr or double): tensile strength in x direction
+			Fcxx (IFVariationAttr or double): compressive strength in x direction
+			Ftyy (IFVariationAttr or double): tensile strength in y direction
+			Fcyy (IFVariationAttr or double): compressive strength in y direction
+			Ftxy (IFVariationAttr or double): tensile shear strength xy
+			Fcxy (IFVariationAttr or double): compressive shear strength xy
+			ht (IFVariationAttr or double): tensile hardening/softening parameter
+			alphaf (IFVariationAttr or double): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or double): dilancy angle parameter
+			gammad (IFVariationAttr or double): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or double): tensile fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or double): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or double): tensile fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or double): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31467,22 +31299,22 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add plane strain masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (IFVariationAttr or float): tensile strength in x direction
-			Fcxx (IFVariationAttr or float): compressive strength in x direction
-			Ftyy (IFVariationAttr or float): tensile strength in y direction
-			Fcyy (IFVariationAttr or float): compressive strength in y direction
-			Ftzz (IFVariationAttr or float): tensile strength in z direction
-			Fczz (IFVariationAttr or float): compressive strength in z direction
-			Ftxy (IFVariationAttr or float): tensile shear strength xy
-			Fcxy (IFVariationAttr or float): compressive shear strength xy
-			ht (IFVariationAttr or float): tensile hardening/softerning parameter
-			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
-			alphap (IFVariationAttr or float): dilancy angle parameter
-			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
-			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
-			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
-			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
-			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
+			Ftxx (IFVariationAttr or double): tensile strength in x direction
+			Fcxx (IFVariationAttr or double): compressive strength in x direction
+			Ftyy (IFVariationAttr or double): tensile strength in y direction
+			Fcyy (IFVariationAttr or double): compressive strength in y direction
+			Ftzz (IFVariationAttr or double): tensile strength in z direction
+			Fczz (IFVariationAttr or double): compressive strength in z direction
+			Ftxy (IFVariationAttr or double): tensile shear strength xy
+			Fcxy (IFVariationAttr or double): compressive shear strength xy
+			ht (IFVariationAttr or double): tensile hardening/softening parameter
+			alphaf (IFVariationAttr or double): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or double): dilancy angle parameter
+			gammad (IFVariationAttr or double): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or double): tensile fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or double): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or double): tensile fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or double): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31496,24 +31328,24 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add thick shell masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (IFVariationAttr or float): tensile strength in x direction
-			Fcxx (IFVariationAttr or float): compressive strength in x direction
-			Ftyy (IFVariationAttr or float): tensile strength in y direction
-			Fcyy (IFVariationAttr or float): compressive strength in y direction
-			Ftxy (IFVariationAttr or float): tensile shear strength xy
-			Fcxy (IFVariationAttr or float): compressive shear strength xy
-			Ftxz (IFVariationAttr or float): tensile shear strength xz
-			Fcxz (IFVariationAttr or float): compressive shear strength xz
-			Ftyz (IFVariationAttr or float): tensile shear strength yz
-			Fcyz (IFVariationAttr or float): compressive shear strength yz
-			ht (IFVariationAttr or float): tensile hardening/softerning parameter
-			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
-			alphap (IFVariationAttr or float): dilancy angle parameter
-			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
-			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
-			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
-			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
-			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
+			Ftxx (IFVariationAttr or double): tensile strength in x direction
+			Fcxx (IFVariationAttr or double): compressive strength in x direction
+			Ftyy (IFVariationAttr or double): tensile strength in y direction
+			Fcyy (IFVariationAttr or double): compressive strength in y direction
+			Ftxy (IFVariationAttr or double): tensile shear strength xy
+			Fcxy (IFVariationAttr or double): compressive shear strength xy
+			Ftxz (IFVariationAttr or double): tensile shear strength xz
+			Fcxz (IFVariationAttr or double): compressive shear strength xz
+			Ftyz (IFVariationAttr or double): tensile shear strength yz
+			Fcyz (IFVariationAttr or double): compressive shear strength yz
+			ht (IFVariationAttr or double): tensile hardening/softening parameter
+			alphaf (IFVariationAttr or double): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or double): dilancy angle parameter
+			gammad (IFVariationAttr or double): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or double): tensile fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or double): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or double): tensile fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or double): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31527,26 +31359,26 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		r"""
 		Add solid masonry material properties to this orthotropic material attribute 
 		Params:
-			Ftxx (IFVariationAttr or float): tensile strength in x direction
-			Fcxx (IFVariationAttr or float): compressive strength in x direction
-			Ftyy (IFVariationAttr or float): tensile strength in y direction
-			Fcyy (IFVariationAttr or float): compressive strength in y direction
-			Ftzz (IFVariationAttr or float): tensile strength in z direction
-			Fczz (IFVariationAttr or float): compressive strength in z direction
-			Ftxy (IFVariationAttr or float): tensile shear strength xy
-			Fcxy (IFVariationAttr or float): compressive shear strength xy
-			Ftyz (IFVariationAttr or float): tensile shear strength yz
-			Fcyz (IFVariationAttr or float): compressive shear strength yz
-			Ftxz (IFVariationAttr or float): tensile shear strength xz
-			Fcxz (IFVariationAttr or float): compressive shear strength xz
-			ht (IFVariationAttr or float): tensile hardening/softerning parameter
-			alphaf (IFVariationAttr or float): friction angle or bi/uniaxial compressive strength
-			alphap (IFVariationAttr or float): dilancy angle parameter
-			gammad (IFVariationAttr or float): initial compressive damage threshold parameter
-			Gftx (IFVariationAttr or float): tenside fracture energy per unit area in x direction
-			Gfcx (IFVariationAttr or float): compressive fracture energy per unit area in x direction
-			Gfty (IFVariationAttr or float): tenside fracture energy per unit area in y direction
-			Gfcy (IFVariationAttr or float): compressive fracture energy per unit area in y direction
+			Ftxx (IFVariationAttr or double): tensile strength in x direction
+			Fcxx (IFVariationAttr or double): compressive strength in x direction
+			Ftyy (IFVariationAttr or double): tensile strength in y direction
+			Fcyy (IFVariationAttr or double): compressive strength in y direction
+			Ftzz (IFVariationAttr or double): tensile strength in z direction
+			Fczz (IFVariationAttr or double): compressive strength in z direction
+			Ftxy (IFVariationAttr or double): tensile shear strength xy
+			Fcxy (IFVariationAttr or double): compressive shear strength xy
+			Ftyz (IFVariationAttr or double): tensile shear strength yz
+			Fcyz (IFVariationAttr or double): compressive shear strength yz
+			Ftxz (IFVariationAttr or double): tensile shear strength xz
+			Fcxz (IFVariationAttr or double): compressive shear strength xz
+			ht (IFVariationAttr or double): tensile hardening/softening parameter
+			alphaf (IFVariationAttr or double): friction angle or bi/uniaxial compressive strength
+			alphap (IFVariationAttr or double): dilancy angle parameter
+			gammad (IFVariationAttr or double): initial compressive damage threshold parameter
+			Gftx (IFVariationAttr or double): tensile fracture energy per unit area in x direction
+			Gfcx (IFVariationAttr or double): compressive fracture energy per unit area in x direction
+			Gfty (IFVariationAttr or double): tensile fracture energy per unit area in y direction
+			Gfcy (IFVariationAttr or double): compressive fracture energy per unit area in y direction
 			idp (str): damage-plasticity coupling
 			nIter (int): number of iterations
 			temperature (float): temperature
@@ -31572,8 +31404,8 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		define the hardening/softening curve parameters for the masonry material properties to this orthotropic material attribute 
 		Params:
 			rowIndex (int): zero base index of the row to which to add data
-			Kpc (IFVariationAttr or float): plastic hardening parameter for compressive strength
-			hc (IFVariationAttr or float): compressive hardening/softening parameter
+			Kpc (IFVariationAttr or double): plastic hardening parameter for compressive strength
+			hc (IFVariationAttr or double): compressive hardening/softening parameter
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31586,7 +31418,7 @@ class IFMaterialOrthotropic(IFMaterialTropicSet):
 		Params:
 			rowIndex (int): zero base index of the row to which to add data
 			Kpi (float): hardening parameter of hardening/softening curve
-			fci (float): conpressive uniaxial yield stress of hardening/softening curve
+			fci (float): compressive uniaxial yield stress of hardening/softening curve
 		Returns:
 			IFMaterialOrthotropic: 
 		"""
@@ -31613,13 +31445,13 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31630,13 +31462,13 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field properties to orthotropic material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31647,25 +31479,25 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field generic resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			A3 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
-			E3 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			A3 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
+			E3 (IFVariationAttr or double): 
 			R (float): 
-			B1 (IFVariationAttr or float): 
-			B2 (IFVariationAttr or float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			B1 (IFVariationAttr or double): 
+			B2 (IFVariationAttr or double): 
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31676,25 +31508,25 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field generic resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			A3 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
-			E3 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			A3 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
+			E3 (IFVariationAttr or double): 
 			R (float): 
-			B1 (IFVariationAttr or float): 
-			B2 (IFVariationAttr or float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			B1 (IFVariationAttr or double): 
+			B2 (IFVariationAttr or double): 
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31705,22 +31537,22 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			n2 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			n2 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31731,22 +31563,22 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field Nth resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			m1 (IFVariationAttr or float): 
-			n1 (IFVariationAttr or float): 
-			n2 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			m1 (IFVariationAttr or double): 
+			n1 (IFVariationAttr or double): 
+			n2 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31757,34 +31589,34 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			G (IFVariationAttr or float): 
-			p1 (IFVariationAttr or float): 
-			q1 (IFVariationAttr or float): 
-			r1 (IFVariationAttr or float): 
-			p2 (IFVariationAttr or float): 
-			r2 (IFVariationAttr or float): 
-			Cr (IFVariationAttr or float): 
-			S (IFVariationAttr or float): 
-			Z (IFVariationAttr or float): 
-			Tmx (IFVariationAttr or float): 
-			Tc (IFVariationAttr or float): 
-			FE (IFVariationAttr or float): 
-			D (IFVariationAttr or float): 
-			Q (IFVariationAttr or float): 
-			G0 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			G (IFVariationAttr or double): 
+			p1 (IFVariationAttr or double): 
+			q1 (IFVariationAttr or double): 
+			r1 (IFVariationAttr or double): 
+			p2 (IFVariationAttr or double): 
+			r2 (IFVariationAttr or double): 
+			Cr (IFVariationAttr or double): 
+			S (IFVariationAttr or double): 
+			Z (IFVariationAttr or double): 
+			Tmx (IFVariationAttr or double): 
+			Tc (IFVariationAttr or double): 
+			FE (IFVariationAttr or double): 
+			D (IFVariationAttr or double): 
+			Q (IFVariationAttr or double): 
+			G0 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31795,34 +31627,34 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field ECM resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			A1 (IFVariationAttr or float): 
-			A2 (IFVariationAttr or float): 
-			E1 (IFVariationAttr or float): 
-			E2 (IFVariationAttr or float): 
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			A1 (IFVariationAttr or double): 
+			A2 (IFVariationAttr or double): 
+			E1 (IFVariationAttr or double): 
+			E2 (IFVariationAttr or double): 
 			R (float): 
-			G (IFVariationAttr or float): 
-			p1 (IFVariationAttr or float): 
-			q1 (IFVariationAttr or float): 
-			r1 (IFVariationAttr or float): 
-			p2 (IFVariationAttr or float): 
-			r2 (IFVariationAttr or float): 
-			Cr (IFVariationAttr or float): 
-			S (IFVariationAttr or float): 
-			Z (IFVariationAttr or float): 
-			Tmx (IFVariationAttr or float): 
-			Tc (IFVariationAttr or float): 
-			FE (IFVariationAttr or float): 
-			D (IFVariationAttr or float): 
-			Q (IFVariationAttr or float): 
-			G0 (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			G (IFVariationAttr or double): 
+			p1 (IFVariationAttr or double): 
+			q1 (IFVariationAttr or double): 
+			r1 (IFVariationAttr or double): 
+			p2 (IFVariationAttr or double): 
+			r2 (IFVariationAttr or double): 
+			Cr (IFVariationAttr or double): 
+			S (IFVariationAttr or double): 
+			Z (IFVariationAttr or double): 
+			Tmx (IFVariationAttr or double): 
+			Tc (IFVariationAttr or double): 
+			FE (IFVariationAttr or double): 
+			D (IFVariationAttr or double): 
+			Q (IFVariationAttr or double): 
+			G0 (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31833,14 +31665,14 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 2D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			THETA (IFVariationAttr or float): Angle of orthotropy (anticlockwise +ve)
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			THETA (IFVariationAttr or double): Angle of orthotropy (anticlockwise +ve)
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31851,14 +31683,14 @@ class IFCoupledWovenMaterial(IFMaterialTropicSet):
 		r"""
 		Add 3D thermal/field MFK resin properties material attribute 
 		Params:
-			KX (IFVariationAttr or float): Conductivity in x
-			KY (IFVariationAttr or float): Conductivity in x
-			KZ (IFVariationAttr or float): Conductivity in x
+			KX (IFVariationAttr or double): Conductivity in x
+			KY (IFVariationAttr or double): Conductivity in x
+			KZ (IFVariationAttr or double): Conductivity in x
 			temp (float): Reference temperature
-			C (IFVariationAttr or float): Volumetric heat coefficient (specific heat capacity * density)
-			H (IFVariationAttr or float): Enthalpy
-			V (IFVariationAttr or float): 
-			rho (IFVariationAttr or float, optional): density
+			C (IFVariationAttr or double): Volumetric heat coefficient (specific heat capacity * density)
+			H (IFVariationAttr or double): Enthalpy
+			V (IFVariationAttr or double): 
+			rho (IFVariationAttr or double, optional): density
 		Returns:
 			IFCoupledWovenMaterial: 
 		"""
@@ -31888,9 +31720,9 @@ class IFMaterialNonlinearUser(IFMaterialTropicSet):
 		r"""
 		Add elastic properties to user material attribute 
 		Params:
-			Young (IFVariationAttr or float): Young's modulus
-			Poisson (IFVariationAttr or float): Poisson's ratio
-			Density (IFVariationAttr or float): Density
+			Young (IFVariationAttr or double): Young's modulus
+			Poisson (IFVariationAttr or double): Poisson's ratio
+			Density (IFVariationAttr or double): Density
 			temperature (float): 
 		Returns:
 			IFMaterialNonlinearUser: 
@@ -31907,9 +31739,9 @@ class IFMaterialResultantUser(IFMaterialTropicSet):
 		r"""
 		Add elastic properties to user resultant attribute 
 		Params:
-			Young (IFVariationAttr or float): Young's modulus
-			Poisson (IFVariationAttr or float): Poisson's ratio
-			Density (IFVariationAttr or float): Density
+			Young (IFVariationAttr or double): Young's modulus
+			Poisson (IFVariationAttr or double): Poisson's ratio
+			Density (IFVariationAttr or double): Density
 			temperature (float): 
 		Returns:
 			IFMaterialResultantUser: 
@@ -31933,8 +31765,8 @@ class IFMaterialResultantUser(IFMaterialTropicSet):
 		r"""
 		 
 		Params:
-			Moment (IFVariationAttr or float): 
-			Curvature (IFVariationAttr or float): 
+			Moment (IFVariationAttr or double): 
+			Curvature (IFVariationAttr or double): 
 			axialForce (float): 
 			row (int): 
 		Returns:
@@ -32412,7 +32244,7 @@ class IFInfluenceEnvelope(IFAttribute):
 		Params:
 			sType (str): 
 			rXYAngle (float): only useful when type is "XY angle"
-			extraInfo1 (IFLocalCoord or IFReferencePath or str): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
+			extraInfo1 (IFLocalCoord or IFReferencePath or string): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
 			extraInfo2 (int): Will be set to the shell plane  if type is "Local coord" or to a boolean skewed/not skewed if type is "Path", otherwise not used
 		Returns:
 			None: 
@@ -32525,7 +32357,7 @@ class IFDirectMethodInfluence(IFAttribute):
 		Params:
 			sType (str): 
 			rXYAngle (float): only useful when type is "XY angle"
-			extraInfo1 (IFLocalCoord or IFReferencePath or str): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
+			extraInfo1 (IFLocalCoord or IFReferencePath or string): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
 			extraInfo2 (int): Will be set to the shell plane  if type is "Local coord" or to a boolean skewed/not skewed if type is "Path", otherwise not used
 		Returns:
 			None: 
@@ -32841,7 +32673,7 @@ class IFVLOVehicle(IFAttribute):
 
 	def init(self) -> IFVLOVehicle:
 		r"""
-		Remove the the xml strings that define this vehicle (traffic load) 
+		Remove the xml strings that define this vehicle (traffic load) 
 		Returns:
 			IFVLOVehicle: 
 		"""
@@ -32922,158 +32754,6 @@ class IFDesignAttribute(IFAttribute):
 			IFDesignAttribute: 
 		"""
 		pass
-
-
-class IFShearTorsionAdvPropsDefinition(IFAttribute):
-	"""
-	Advanced shear and torsion properties definition utility. 
-	"""
-
-	pass
-
-
-class IFMBWDefinition(IFAttribute):
-	"""
-	MBW Tank definition utility. 
-	"""
-
-	pass
-
-
-class IFTankDefinition(IFAttribute):
-	"""
-	LNG Tank definition utility. 
-	"""
-
-	pass
-
-
-class IFKogasTankDefinition(IFAttribute):
-	"""
-	Kogas Tank definition utility. 
-	"""
-
-	pass
-
-
-class IFTankReinforcementDefinition(IFAttribute):
-	"""
-	LNG Tank reinforcement definition utility. 
-	"""
-
-	pass
-
-
-class IFBridgeWizardDefinition(IFAttribute):
-	"""
-	Base class for Bridge Wizard definition utilities 
-	"""
-
-	pass
-
-
-class IFBridgeWizardBridgeDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Bridge definition utility. 
-	"""
-
-	pass
-
-
-class IFBridgeWizardSupportDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Support definition utility. 
-	"""
-
-	pass
-
-
-class IFBridgeWizardStiffenerDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Stiffener definition utility. 
-	"""
-
-	pass
-
-
-class IFBridgeWizardSpanDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Span definition utility 
-	"""
-
-	pass
-
-
-class IFBridgeWizardSectionDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Composite Plate Girer definition utility 
-	"""
-
-	pass
-
-
-class IFBridgeWizardTubSectionDefinition(IFBridgeWizardDefinition):
-	"""
-	Not implemented 
-	"""
-
-	pass
-
-
-class IFBridgeWizardGirderDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Girder definition utility 
-	"""
-
-	pass
-
-
-class IFBridgeWizardBracingDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Bracing Assembly definition utility 
-	"""
-
-	pass
-
-
-class IFBridgeWizardBracingRunDefinition(IFBridgeWizardDefinition):
-	"""
-	Bridge Wizard Bracing Run definition utility 
-	"""
-
-	pass
-
-
-class IFBridgeDesignDefinition(IFAttribute):
-	"""
-	Base class for all bridge design utility classes 
-	"""
-
-	pass
-
-
-class IFBridgeDesignGirderMaterial(IFBridgeDesignDefinition):
-	"""
-	Composite bridge material definition used for design 
-	"""
-
-	pass
-
-
-class IFBridgeDesignTransverseStiffener(IFBridgeDesignDefinition):
-	"""
-	Transverse stiffener definition used in design 
-	"""
-
-	pass
-
-
-class IFBridgeDesignLongitudinalStiffener(IFBridgeDesignDefinition):
-	"""
-	Longitudinal stiffener definition used in design 
-	"""
-
-	pass
 
 
 class IFRailTrackAnalysisUtilities(IFAttribute):
@@ -33168,41 +32848,6 @@ class IFRailTrackAnalysisZlrRlrRegions(IFRailTrackAnalysisUtilities):
 		pass
 
 
-class IFPushoverCurve(IFAttribute):
-	"""
-	 
-	"""
-
-	pass
-
-
-class IFBuildingLoading(IFAttribute):
-	"""
-	 
-	"""
-
-	def assignToModel(self, data) -> IFBuildingLoading:
-		r"""
-		assigns this attribute to the model as a whole 
-		Params:
-			data (IFAssignment): 
-		Returns:
-			IFBuildingLoading: 
-		"""
-		pass
-
-
-	def deassignFromModel(self, data) -> IFBuildingLoading:
-		r"""
-		de-assigns this attribute from the model 
-		Params:
-			data (IFAssignment): 
-		Returns:
-			IFBuildingLoading: 
-		"""
-		pass
-
-
 class IFBeamStressRecovery(IFAttribute):
 	"""
 	 
@@ -33231,7 +32876,7 @@ class IFNonlinearUserThermal(IFMaterial):
 		r"""
 		 
 		Params:
-			pProps (IFVariationAttr or float): 
+			pProps (IFVariationAttr or double): 
 			pTemp (float, optional): optional temperature
 		Returns:
 			IFNonlinearUserThermal: 
@@ -33248,16 +32893,16 @@ class IFCamClayMaterialSet(IFMaterialTropicSet):
 		r"""
 		
 		Params:
-			pInitialVoidRatio (IFVariationAttr or float): 
-			pSwellingIndex (IFVariationAttr or float): 
-			pCompressionIndex (IFVariationAttr or float): 
-			pGradientCriticalStateLine (IFVariationAttr or float): 
-			pPreConsolidationPressure (IFVariationAttr or float): 
-			pPoissonsRatio (IFVariationAttr or float): 
-			pCoeffThermalExpansion (IFVariationAttr or float): 
-			pMassDensity (IFVariationAttr or float): 
-			pMassRayleighDampingConst (IFVariationAttr or float): 
-			pStiffRayleighDampingConst (IFVariationAttr or float): 
+			pInitialVoidRatio (IFVariationAttr or double): 
+			pSwellingIndex (IFVariationAttr or double): 
+			pCompressionIndex (IFVariationAttr or double): 
+			pGradientCriticalStateLine (IFVariationAttr or double): 
+			pPreConsolidationPressure (IFVariationAttr or double): 
+			pPoissonsRatio (IFVariationAttr or double): 
+			pCoeffThermalExpansion (IFVariationAttr or double): 
+			pMassDensity (IFVariationAttr or double): 
+			pMassRayleighDampingConst (IFVariationAttr or double): 
+			pStiffRayleighDampingConst (IFVariationAttr or double): 
 			temp (float): reference temperature
 		Returns:
 			IFCamClayMaterialSet: 
@@ -33296,13 +32941,13 @@ class IFSoilStructureMaterialSet(IFMaterialTropicSet):
 		r"""
 		add properties to a normal type soil structure interface material 
 		Params:
-			pNormalStiffFactor (IFVariationAttr or float): normal stiffness
-			pTangentStiffFactor (IFVariationAttr or float): tangential stiffness
-			pConstCohesion (IFVariationAttr or float): cohesion if constant not a graph
-			pConstAngleFriction (IFVariationAttr or float): angle of friction if constant not a graph
-			pConstDilatancy (IFVariationAttr or float): dilatancy if constant not a graph
-			pVirtualThick (IFVariationAttr or float): virtual thickness if strain type graphs
-			pTensionLimit (IFVariationAttr or float): cut off tension limit
+			pNormalStiffFactor (IFVariationAttr or double): normal stiffness
+			pTangentStiffFactor (IFVariationAttr or double): tangential stiffness
+			pConstCohesion (IFVariationAttr or double): cohesion if constant not a graph
+			pConstAngleFriction (IFVariationAttr or double): angle of friction if constant not a graph
+			pConstDilatancy (IFVariationAttr or double): dilatancy if constant not a graph
+			pVirtualThick (IFVariationAttr or double): virtual thickness if strain type graphs
+			pTensionLimit (IFVariationAttr or double): cut off tension limit
 			temp (float): reference temperature
 		Returns:
 			IFSoilStructureMaterialSet: 
@@ -33314,12 +32959,12 @@ class IFSoilStructureMaterialSet(IFMaterialTropicSet):
 		r"""
 		add properties to a displacement type soil structure interface material 
 		Params:
-			pNormalStiffFactor (IFVariationAttr or float): normal stiffness
-			pNormalPressure (IFVariationAttr or float): normal compressive pressure
-			pConstCohesion (IFVariationAttr or float): cohesion if constant not a graph
-			pConstDilatancy (IFVariationAttr or float): dilatancy if constant not a graph
-			pVirtualThick (IFVariationAttr or float): virtual thickness if strain type graphs
-			pTensionLimit (IFVariationAttr or float): cut off tension limit
+			pNormalStiffFactor (IFVariationAttr or double): normal stiffness
+			pNormalPressure (IFVariationAttr or double): normal compressive pressure
+			pConstCohesion (IFVariationAttr or double): cohesion if constant not a graph
+			pConstDilatancy (IFVariationAttr or double): dilatancy if constant not a graph
+			pVirtualThick (IFVariationAttr or double): virtual thickness if strain type graphs
+			pTensionLimit (IFVariationAttr or double): cut off tension limit
 			temp (float): reference temperature
 		Returns:
 			IFSoilStructureMaterialSet: 
@@ -33445,7 +33090,7 @@ class IFPiecewiseLinearBarMaterial(IFMaterial):
 		Params:
 			minYoungsMod (float): minimum value of Young's modulus
 			curveTolerance (float): curve tolerance parameter
-			density (IFVariationAttr or float): Density
+			density (IFVariationAttr or double): Density
 			thermalExpansion (object): Coefficient of thermal expansion.
 			massRayleigh (object): Mass Rayleigh damping constant.
 			stiffRayleigh (object): Stiffness Rayleigh damping constant.
@@ -33478,12 +33123,12 @@ class IFThermalLinkMaterial(IFMaterial):
 		r"""
 		add a row of data to this linear thermal link material 
 		Params:
-			gapConductance (IFVariationAttr or float): gap conductance at origin
-			convectiveCoeff (IFVariationAttr or float): convective heat transfer at origin
-			radiativeCoeff (IFVariationAttr or float): radiative heat transfer at origin
-			gapConductanceDeriv (IFVariationAttr or float): variation of gap conductance with opening distance
-			convectiveCoeffDeriv (IFVariationAttr or float): variation of convective heat transfe with opening distance
-			radiativeCoeffDeriv (IFVariationAttr or float): variation of radiative heat transfe with opening distance
+			gapConductance (IFVariationAttr or double): gap conductance at origin
+			convectiveCoeff (IFVariationAttr or double): convective heat transfer at origin
+			radiativeCoeff (IFVariationAttr or double): radiative heat transfer at origin
+			gapConductanceDeriv (IFVariationAttr or double): variation of gap conductance with opening distance
+			convectiveCoeffDeriv (IFVariationAttr or double): variation of convective heat transfer with opening distance
+			radiativeCoeffDeriv (IFVariationAttr or double): variation of radiative heat transfer with opening distance
 			temperature (float, optional): temperature, default 0.0
 		Returns:
 			IFThermalLinkMaterial: 
@@ -33495,9 +33140,9 @@ class IFThermalLinkMaterial(IFMaterial):
 		r"""
 		add a row of data to this nonlinear thermal link material 
 		Params:
-			gapConductance (IFVariationAttr or float): gap conductance for point on graph
-			convectiveCoeff (IFVariationAttr or float): convective heat transfer for point on graph
-			radiativeCoeff (IFVariationAttr or float): radiative heat transfer for point on graph
+			gapConductance (IFVariationAttr or double): gap conductance for point on graph
+			convectiveCoeff (IFVariationAttr or double): convective heat transfer for point on graph
+			radiativeCoeff (IFVariationAttr or double): radiative heat transfer for point on graph
 			distance (float): total distance for point on graph
 			temperature (float, optional): temperature, default 0.0
 		Returns:
@@ -33513,7 +33158,7 @@ class IFDuncanChangMaterialSet(IFMaterialTropicSet):
 
 	def setDuncanChangPressure(self, usePressure) -> IFDuncanChangMaterialSet:
 		r"""
-		set the pressute option for this Duncan-Chang soil material 
+		set the pressure option for this Duncan-Chang soil material 
 		Params:
 			usePressure (bool): true to use pressure option, false not to
 		Returns:
@@ -33526,25 +33171,25 @@ class IFDuncanChangMaterialSet(IFMaterialTropicSet):
 		r"""
 		add constant Poisson's ratio data to this Duncan-Chang soil material 
 		Params:
-			cohesion (IFVariationAttr or float): cohesion
-			angleFriction (IFVariationAttr or float): angle of friction
-			changeOfAngleFriction (IFVariationAttr or float): change of angle of friction with pressure
-			failureRatio (IFVariationAttr or float): failure ratio
-			density (IFVariationAttr or float): density
-			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
-			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
-			initYoungsModNumber (IFVariationAttr or float): initial Young's modulus number
-			YoungsModulusNumber (IFVariationAttr or float): Young's modulus number for loading/unloading
-			initYoungsModExponent (IFVariationAttr or float): initial Young's modulus exponent
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
-			YoungsModulusAtFail (IFVariationAttr or float): Young's modulus when soil fails in shear
-			PoissonsRatioAtFail (IFVariationAttr or float): Poisson's ratio when soil fails
-			RayleighMassDamping (IFVariationAttr or float): Raleigh mass damping constant
-			RayleighStiffnessDamping (IFVariationAttr or float): Raleigh stiffness damping constant
+			cohesion (IFVariationAttr or double): cohesion
+			angleFriction (IFVariationAttr or double): angle of friction
+			changeOfAngleFriction (IFVariationAttr or double): change of angle of friction with pressure
+			failureRatio (IFVariationAttr or double): failure ratio
+			density (IFVariationAttr or double): density
+			coeffThermalExpansion (IFVariationAttr or double): coefficient of thermal expansion
+			atmosphericPressure (IFVariationAttr or double): atmospheric pressure
+			initYoungsModNumber (IFVariationAttr or double): initial Young's modulus number
+			YoungsModulusNumber (IFVariationAttr or double): Young's modulus number for loading/unloading
+			initYoungsModExponent (IFVariationAttr or double): initial Young's modulus exponent
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio
+			YoungsModulusAtFail (IFVariationAttr or double): Young's modulus when soil fails in shear
+			PoissonsRatioAtFail (IFVariationAttr or double): Poisson's ratio when soil fails
+			RayleighMassDamping (IFVariationAttr or double): Raleigh mass damping constant
+			RayleighStiffnessDamping (IFVariationAttr or double): Raleigh stiffness damping constant
 			temperature (float, optional): temperature, default 0.0
-			minStressSoilStiff (IFVariationAttr or float, optional): minimum stress used to calculate soild stiffness
-			accuracyControl (IFVariationAttr or float, optional): accuracy control
-			maxStressInTension (IFVariationAttr or float, optional): maximum stress in tension
+			minStressSoilStiff (IFVariationAttr or double, optional): minimum stress used to calculate solid stiffness
+			accuracyControl (IFVariationAttr or double, optional): accuracy control
+			maxStressInTension (IFVariationAttr or double, optional): maximum stress in tension
 		Returns:
 			IFDuncanChangMaterialSet: 
 		"""
@@ -33555,27 +33200,27 @@ class IFDuncanChangMaterialSet(IFMaterialTropicSet):
 		r"""
 		add direct variation Poisson's ratio data to this Duncan-Chang soil material 
 		Params:
-			cohesion (IFVariationAttr or float): cohesion
-			angleFriction (IFVariationAttr or float): angle of friction
-			changeOfAngleFriction (IFVariationAttr or float): change of angle of friction with pressure
-			failureRatio (IFVariationAttr or float): failure ratio
-			density (IFVariationAttr or float): density
-			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
-			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
-			initYoungsModNumber (IFVariationAttr or float): initial Young's modulus number
-			YoungsModulusNumber (IFVariationAttr or float): Young's modulus number for loading/unloading
-			initYoungsModExponent (IFVariationAttr or float): initial Young's modulus exponent
-			PoissonsRatioTangent (IFVariationAttr or float): parameter used in calculation of Poisson's ratio tangent
-			cellPressureFactor (IFVariationAttr or float): factor applied to cell pressure moderation component
-			PoissonsRatioAtAtmos (IFVariationAttr or float): Poisson's ratio at atmospheric cell pressure
-			YoungsModulusAtFail (IFVariationAttr or float): Young's modulus when soil fails in shear
-			PoissonsRatioAtFail (IFVariationAttr or float): Poisson's ratio when soil fails
-			RayleighMassDamping (IFVariationAttr or float): Raleigh mass damping constant
-			RayleighStiffnessDamping (IFVariationAttr or float): Raleigh stiffness damping constant
+			cohesion (IFVariationAttr or double): cohesion
+			angleFriction (IFVariationAttr or double): angle of friction
+			changeOfAngleFriction (IFVariationAttr or double): change of angle of friction with pressure
+			failureRatio (IFVariationAttr or double): failure ratio
+			density (IFVariationAttr or double): density
+			coeffThermalExpansion (IFVariationAttr or double): coefficient of thermal expansion
+			atmosphericPressure (IFVariationAttr or double): atmospheric pressure
+			initYoungsModNumber (IFVariationAttr or double): initial Young's modulus number
+			YoungsModulusNumber (IFVariationAttr or double): Young's modulus number for loading/unloading
+			initYoungsModExponent (IFVariationAttr or double): initial Young's modulus exponent
+			PoissonsRatioTangent (IFVariationAttr or double): parameter used in calculation of Poisson's ratio tangent
+			cellPressureFactor (IFVariationAttr or double): factor applied to cell pressure moderation component
+			PoissonsRatioAtAtmos (IFVariationAttr or double): Poisson's ratio at atmospheric cell pressure
+			YoungsModulusAtFail (IFVariationAttr or double): Young's modulus when soil fails in shear
+			PoissonsRatioAtFail (IFVariationAttr or double): Poisson's ratio when soil fails
+			RayleighMassDamping (IFVariationAttr or double): Raleigh mass damping constant
+			RayleighStiffnessDamping (IFVariationAttr or double): Raleigh stiffness damping constant
 			temperature (float, optional): temperature, default 0.0
-			minStressSoilStiff (IFVariationAttr or float, optional): minimum stress used to calculate soild stiffness
-			accuracyControl (IFVariationAttr or float, optional): accuracy control
-			maxStressInTension (IFVariationAttr or float, optional): maximum stress in tension
+			minStressSoilStiff (IFVariationAttr or double, optional): minimum stress used to calculate solid stiffness
+			accuracyControl (IFVariationAttr or double, optional): accuracy control
+			maxStressInTension (IFVariationAttr or double, optional): maximum stress in tension
 		Returns:
 			IFDuncanChangMaterialSet: 
 		"""
@@ -33586,26 +33231,26 @@ class IFDuncanChangMaterialSet(IFMaterialTropicSet):
 		r"""
 		add indirect variation from bulk modulus Poisson's ratio data to this Duncan-Chang soil material 
 		Params:
-			cohesion (IFVariationAttr or float): cohesion
-			angleFriction (IFVariationAttr or float): angle of friction
-			changeOfAngleFriction (IFVariationAttr or float): change of angle of friction with pressure
-			failureRatio (IFVariationAttr or float): failure ratio
-			density (IFVariationAttr or float): density
-			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
-			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
-			initYoungsModNumber (IFVariationAttr or float): initial Young's modulus number
-			YoungsModulusNumber (IFVariationAttr or float): Young's modulus number for loading/unloading
-			initYoungsModExponent (IFVariationAttr or float): initial Young's modulus exponent
-			bulkModulusNumber (IFVariationAttr or float): bulk modulus number
-			bulkModulusExponent (IFVariationAttr or float): bulk modulus exponent
-			YoungsModulusAtFail (IFVariationAttr or float): Young's modulus when soil fails in shear
-			PoissonsRatioAtFail (IFVariationAttr or float): Poisson's ratio when soil fails
-			RayleighMassDamping (IFVariationAttr or float): Raleigh mass damping constant
-			RayleighStiffnessDamping (IFVariationAttr or float): Raleigh stiffness damping constant
+			cohesion (IFVariationAttr or double): cohesion
+			angleFriction (IFVariationAttr or double): angle of friction
+			changeOfAngleFriction (IFVariationAttr or double): change of angle of friction with pressure
+			failureRatio (IFVariationAttr or double): failure ratio
+			density (IFVariationAttr or double): density
+			coeffThermalExpansion (IFVariationAttr or double): coefficient of thermal expansion
+			atmosphericPressure (IFVariationAttr or double): atmospheric pressure
+			initYoungsModNumber (IFVariationAttr or double): initial Young's modulus number
+			YoungsModulusNumber (IFVariationAttr or double): Young's modulus number for loading/unloading
+			initYoungsModExponent (IFVariationAttr or double): initial Young's modulus exponent
+			bulkModulusNumber (IFVariationAttr or double): bulk modulus number
+			bulkModulusExponent (IFVariationAttr or double): bulk modulus exponent
+			YoungsModulusAtFail (IFVariationAttr or double): Young's modulus when soil fails in shear
+			PoissonsRatioAtFail (IFVariationAttr or double): Poisson's ratio when soil fails
+			RayleighMassDamping (IFVariationAttr or double): Raleigh mass damping constant
+			RayleighStiffnessDamping (IFVariationAttr or double): Raleigh stiffness damping constant
 			temperature (float, optional): temperature, default 0.0
-			minStressSoilStiff (IFVariationAttr or float, optional): minimum stress used to calculate soild stiffness
-			accuracyControl (IFVariationAttr or float, optional): accuracy control
-			maxStressInTension (IFVariationAttr or float, optional): maximum stress in tension
+			minStressSoilStiff (IFVariationAttr or double, optional): minimum stress used to calculate solid stiffness
+			accuracyControl (IFVariationAttr or double, optional): accuracy control
+			maxStressInTension (IFVariationAttr or double, optional): maximum stress in tension
 		Returns:
 			IFDuncanChangMaterialSet: 
 		"""
@@ -33621,18 +33266,18 @@ class IFElastoPlasticInterfaceSet(IFMaterialTropicSet):
 		r"""
 		add 2D elasto plastic interface to the material set 
 		Params:
-			YoungsModulusInPlane (IFVariationAttr or float): Inplane Young's Modulus
-			YoungsModulusOutPlane (IFVariationAttr or float): Out of plane Young's Modulus
-			ShearModulus (IFVariationAttr or float): 
-			PoissonsRatio (IFVariationAttr or float): Poisson's ratio
-			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
-			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			Cohesion (IFVariationAttr or float): Cohesion
-			FrictionAngle (IFVariationAttr or float): Friction angle
-			UniaxialYieldStress (IFVariationAttr or float): Uniaxial yield stress
+			YoungsModulusInPlane (IFVariationAttr or double): Inplane Young's Modulus
+			YoungsModulusOutPlane (IFVariationAttr or double): Out of plane Young's Modulus
+			ShearModulus (IFVariationAttr or double): 
+			PoissonsRatio (IFVariationAttr or double): Poisson's ratio
+			MassDensity (IFVariationAttr or double): Density
+			CoeffThermalExpansion (IFVariationAttr or double): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or double): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or double): Stiffness Rayleigh damping constant.
+			HeatFractionCoeff (IFVariationAttr or double): Heat fraction coefficient
+			Cohesion (IFVariationAttr or double): Cohesion
+			FrictionAngle (IFVariationAttr or double): Friction angle
+			UniaxialYieldStress (IFVariationAttr or double): Uniaxial yield stress
 			temperature (float): temperature
 		Returns:
 			IFElastoPlasticInterfaceSet: 
@@ -33644,23 +33289,202 @@ class IFElastoPlasticInterfaceSet(IFMaterialTropicSet):
 		r"""
 		add 3D elasto plastic interface to the material set 
 		Params:
-			YoungsModulusInPlane (IFVariationAttr or float): Inplane  Young's Modulus
-			YoungsModulusOutPlane (IFVariationAttr or float): Out of plane  Young's Modulus
-			ShearModulusInPlane (IFVariationAttr or float): Inplane shear modulus
-			ShearModulusOutPlane (IFVariationAttr or float): Out of plane shear modulus
-			PoissonsRatioInPlane (IFVariationAttr or float): Inplane Poisson's Ratio
-			PoissonsRatioOutPlane (IFVariationAttr or float): Out of plane Poisson's Ratio
-			MassDensity (IFVariationAttr or float): Density
-			CoeffThermalExpansion (IFVariationAttr or float): Coefficient of thermal expansion.
-			MassRaleighDampingConst (IFVariationAttr or float): Mass Rayleigh damping constant.
-			StiffRaleighDampingConst (IFVariationAttr or float): Stiffness Rayleigh damping constant.
-			HeatFractionCoeff (IFVariationAttr or float): Heat fraction coefficient
-			Cohesion (IFVariationAttr or float): Cohesion
-			FrictionAngle (IFVariationAttr or float): Friction angle
-			UniaxialYieldStress (IFVariationAttr or float): Uniaxial yield stress
+			YoungsModulusInPlane (IFVariationAttr or double): Inplane  Young's Modulus
+			YoungsModulusOutPlane (IFVariationAttr or double): Out of plane  Young's Modulus
+			ShearModulusInPlane (IFVariationAttr or double): Inplane shear modulus
+			ShearModulusOutPlane (IFVariationAttr or double): Out of plane shear modulus
+			PoissonsRatioInPlane (IFVariationAttr or double): Inplane Poisson's Ratio
+			PoissonsRatioOutPlane (IFVariationAttr or double): Out of plane Poisson's Ratio
+			MassDensity (IFVariationAttr or double): Density
+			CoeffThermalExpansion (IFVariationAttr or double): Coefficient of thermal expansion.
+			MassRaleighDampingConst (IFVariationAttr or double): Mass Rayleigh damping constant.
+			StiffRaleighDampingConst (IFVariationAttr or double): Stiffness Rayleigh damping constant.
+			HeatFractionCoeff (IFVariationAttr or double): Heat fraction coefficient
+			Cohesion (IFVariationAttr or double): Cohesion
+			FrictionAngle (IFVariationAttr or double): Friction angle
+			UniaxialYieldStress (IFVariationAttr or double): Uniaxial yield stress
 			temperature (float): temperature
 		Returns:
 			IFElastoPlasticInterfaceSet: 
+		"""
+		pass
+
+
+class IFHSSMaterialSet(IFMaterialTropicSet):
+	"""
+	The hardening soil material set with small strain stiffness interface 
+	"""
+
+	def addHSSMaterialComponent(self) -> IFHSSMaterialSet:
+		r"""
+		Add the HSS material component 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def addProperties(self, stressDependency, referenceStress, poissonsRatio, density, coeffThermalExpansion, rayleighMassDamping, rayleighStiffnessDamping, cohesion, frictionAngle, failureRatio, minimumPressure, soilStiffnessTension, referenceTemperature) -> IFHSSMaterialSet:
+		r"""
+		Add the hardening soil material data 
+		Params:
+			stressDependency (IFVariationAttr or double): 
+			referenceStress (IFVariationAttr or double): 
+			poissonsRatio (IFVariationAttr or double): 
+			density (IFVariationAttr or double): 
+			coeffThermalExpansion (IFVariationAttr or double): 
+			rayleighMassDamping (IFVariationAttr or double): 
+			rayleighStiffnessDamping (IFVariationAttr or double): 
+			cohesion (IFVariationAttr or double): 
+			frictionAngle (IFVariationAttr or double): 
+			failureRatio (IFVariationAttr or double): 
+			minimumPressure (IFVariationAttr or double): 
+			soilStiffnessTension (IFVariationAttr or double): 
+			referenceTemperature (float): ref temperature
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setHardeningSoilStiffness(self, rowIndex, referenceUnloadReloadModulus, secantReferenceModulus, dilatancyAngle) -> IFHSSMaterialSet:
+		r"""
+		Sets hardening soil stiffness type and adds the relevant data 
+		Params:
+			rowIndex (int): row index
+			referenceUnloadReloadModulus (IFVariationAttr or double): 
+			secantReferenceModulus (IFVariationAttr or double): 
+			dilatancyAngle (IFVariationAttr or double): 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setDuncanChangStiffness(self, rowIndex, DuncanChangUnloadReloadModulus, DuncanChangInitialModulus) -> IFHSSMaterialSet:
+		r"""
+		Sets Duncan-Chang stiffness type and adds the relevant data 
+		Params:
+			rowIndex (int): row index
+			DuncanChangUnloadReloadModulus (IFVariationAttr or double): 
+			DuncanChangInitialModulus (IFVariationAttr or double): 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setCapOff(self) -> IFHSSMaterialSet:
+		r"""
+		Sets cap off 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setPressureDependentHardening(self, rowIndex, coeffLateralPressure, preConsolidationPressure, oedometerStiffness) -> IFHSSMaterialSet:
+		r"""
+		Sets cap on and selects pressure dependent hardening with the relevant inputs 
+		Params:
+			rowIndex (int): row index
+			coeffLateralPressure (IFVariationAttr or double): 
+			preConsolidationPressure (IFVariationAttr or double): 
+			oedometerStiffness (IFVariationAttr or double): 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def addHardeningStressStrain(self, rowIndex, coeffLateralPressure, preConsolidationPressure, strains, stresses) -> IFHSSMaterialSet:
+		r"""
+		Sets cap on and selects strain hardening with the relevant inputs 
+		Params:
+			rowIndex (int): row index
+			coeffLateralPressure (IFVariationAttr or double): 
+			preConsolidationPressure (IFVariationAttr or double): 
+			strains (array of floats): 
+			stresses (array of floats): 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setSmallStrainHardeningOff(self) -> IFHSSMaterialSet:
+		r"""
+		Sets small strain hardening off 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setSmallStrainHardeningOn(self, mode, rowIndex, refShearModulus, thresholdShearStrain) -> IFHSSMaterialSet:
+		r"""
+		Sets small strain hardening on with the relevant inputs 
+		Params:
+			mode (str): could be one of "None", "Hysteresis", "No return", "Hysteresis and no return" options
+			rowIndex (int): row index
+			refShearModulus (IFVariationAttr or double): 
+			thresholdShearStrain (IFVariationAttr or double): 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setSolutionOptions(self, mode) -> IFHSSMaterialSet:
+		r"""
+		Sets solution options 
+		Params:
+			mode (str): could be one of "Tangent modulus", "Elastic modulus", "Elastic on first iter. of step half", "Elastic on step half", "Elastic on first iteration" or "Constant modulus" options
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setTensionLimitOff(self) -> IFHSSMaterialSet:
+		r"""
+		Sets tension limit off 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setTensionLimit(self, rowIndex, tensionLimit) -> IFHSSMaterialSet:
+		r"""
+		Sets small strain hardening on with the relevant inputs 
+		Params:
+			rowIndex (int): row index
+			tensionLimit (IFVariationAttr or double): 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setDilationOff(self) -> IFHSSMaterialSet:
+		r"""
+		Sets dilation off 
+		Returns:
+			IFHSSMaterialSet: 
+		"""
+		pass
+
+
+	def setDilation(self, rowIndex, initVoidRatio, critVoidRatio) -> IFHSSMaterialSet:
+		r"""
+		Sets small strain hardening on with the relevant inputs 
+		Params:
+			rowIndex (int): row index
+			initVoidRatio (IFVariationAttr or double): 
+			critVoidRatio (IFVariationAttr or double): 
+		Returns:
+			IFHSSMaterialSet: 
 		"""
 		pass
 
@@ -33683,24 +33507,24 @@ class IFHoekBrownMaterialSet(IFMaterialTropicSet):
 		r"""
 		Add the Hoek-Brown material data 
 		Params:
-			youngModulus (IFVariationAttr or float): 
-			youngModulusFailure (IFVariationAttr or float): 
-			poissonsRatio (IFVariationAttr or float): 
-			density (IFVariationAttr or float): 
-			uniaxialCompressiveStrength (IFVariationAttr or float): 
-			empiricalStrengthParameterMb (IFVariationAttr or float): 
-			empiricalStrengthParameterMi (IFVariationAttr or float): 
-			empiricalStrengthParameterS (IFVariationAttr or float): 
-			empiricalStrengthParameterAlpha (IFVariationAttr or float): 
-			geologicalStrengthIndex (IFVariationAttr or float): 
-			damageCoefficient (IFVariationAttr or float): 
-			dilatancyAngle (IFVariationAttr or float): 
-			dilatancyTransitionStress (IFVariationAttr or float): 
-			dilatancyTransitionRate (IFVariationAttr or float): 
-			stressTolerance (IFVariationAttr or float): 
-			coeffThermalExpansion (IFVariationAttr or float): 
-			rayleighMassDamping (IFVariationAttr or float): 
-			rayleighStiffnessDamping (IFVariationAttr or float): 
+			youngModulus (IFVariationAttr or double): 
+			youngModulusFailure (IFVariationAttr or double): 
+			poissonsRatio (IFVariationAttr or double): 
+			density (IFVariationAttr or double): 
+			uniaxialCompressiveStrength (IFVariationAttr or double): 
+			empiricalStrengthParameterMb (IFVariationAttr or double): 
+			empiricalStrengthParameterMi (IFVariationAttr or double): 
+			empiricalStrengthParameterS (IFVariationAttr or double): 
+			empiricalStrengthParameterAlpha (IFVariationAttr or double): 
+			geologicalStrengthIndex (IFVariationAttr or double): 
+			damageCoefficient (IFVariationAttr or double): 
+			dilatancyAngle (IFVariationAttr or double): 
+			dilatancyTransitionStress (IFVariationAttr or double): 
+			dilatancyTransitionRate (IFVariationAttr or double): 
+			stressTolerance (IFVariationAttr or double): 
+			coeffThermalExpansion (IFVariationAttr or double): 
+			rayleighMassDamping (IFVariationAttr or double): 
+			rayleighStiffnessDamping (IFVariationAttr or double): 
 			maxNumberStressIter (int): 
 			strengthParameter (str): 
 			flowRule (str): 
@@ -33720,21 +33544,21 @@ class IFBarcelonaBasicMaterialSet(IFMaterialTropicSet):
 		r"""
 		Add the Barcelona Basic material data 
 		Params:
-			compressionIndexFullySaturated (IFVariationAttr or float): compression index at fully saturated state
-			swellingIndex (IFVariationAttr or float): swelling index
-			poissonsRatio (IFVariationAttr or float): poisson’s ratio
-			gradientCriticalStateLine (IFVariationAttr or float): gradient of critical state line
-			infiniteSuctionStiffControl (IFVariationAttr or float): stiffness at infinite suction control
-			stiffIncreaseWithSuctionControl (IFVariationAttr or float): increase in stiffness with suction control
-			referencePressure (IFVariationAttr or float): reference pressure
-			elasticStiffSuctionChanges (IFVariationAttr or float): elastic stiffness for changes in suction
-			atmosphericPressure (IFVariationAttr or float): atmospheric pressure
-			preConsolidationPressure (IFVariationAttr or float): pre-consolidation pressure
-			initialVoidRatio (IFVariationAttr or float): initial void ratio
-			coeffThermalExpansion (IFVariationAttr or float): coefficient of thermal expansion
-			massDensity (IFVariationAttr or float): density
-			massRayleighDampingConst (IFVariationAttr or float): mass Rayleigh damping constant
-			stiffRayleighDampingConst (IFVariationAttr or float): stiffness Rayleigh damping constant
+			compressionIndexFullySaturated (IFVariationAttr or double): compression index at fully saturated state
+			swellingIndex (IFVariationAttr or double): swelling index
+			poissonsRatio (IFVariationAttr or double): poisson’s ratio
+			gradientCriticalStateLine (IFVariationAttr or double): gradient of critical state line
+			infiniteSuctionStiffControl (IFVariationAttr or double): stiffness at infinite suction control
+			stiffIncreaseWithSuctionControl (IFVariationAttr or double): increase in stiffness with suction control
+			referencePressure (IFVariationAttr or double): reference pressure
+			elasticStiffSuctionChanges (IFVariationAttr or double): elastic stiffness for changes in suction
+			atmosphericPressure (IFVariationAttr or double): atmospheric pressure
+			preConsolidationPressure (IFVariationAttr or double): pre-consolidation pressure
+			initialVoidRatio (IFVariationAttr or double): initial void ratio
+			coeffThermalExpansion (IFVariationAttr or double): coefficient of thermal expansion
+			massDensity (IFVariationAttr or double): density
+			massRayleighDampingConst (IFVariationAttr or double): mass Rayleigh damping constant
+			stiffRayleighDampingConst (IFVariationAttr or double): stiffness Rayleigh damping constant
 			referenceTemperature (float): reference temperature
 		Returns:
 			IFBarcelonaBasicMaterialSet: 
@@ -33815,28 +33639,34 @@ class IFCompoundMaterial(IFMaterial):
 		pass
 
 
-	def setReinforcedConcrete(self) -> IFCompoundMaterial:
+	def setCompoundUsage(self, usage) -> IFCompoundMaterial:
 		r"""
-		set the type to reinforced concrete 
+		Set the compound material usage type, e.g. 'reinforced concrete' 
+		Params:
+			usage (str): compound material usage
 		Returns:
 			IFCompoundMaterial: 
 		"""
 		pass
 
 
-class IFBridgeDeckMaterial(IFCompoundMaterial):
-	"""
-	Interface for the bridge material attribute 
-	"""
+	def getCompoundUsage(self) -> str:
+		r"""
+		Get the compound material usage type, e.g. 'reinforced concrete' 
+		Returns:
+			str: compound material usage
+		"""
+		pass
 
-	def setUsingStiffness(self, refIndex, useStiffness) -> IFBridgeDeckMaterial:
+
+	def setUsingStiffness(self, refIndex, useStiffness) -> IFCompoundMaterial:
 		r"""
 		Sets whether the material contributes stiffness during analysis 
 		Params:
 			refIndex (object): index(integer) or name(string) ["Slab"/"Girder"]
 			useStiffness (bool): True/False whether using stiffness during analysis
 		Returns:
-			IFBridgeDeckMaterial: 
+			IFCompoundMaterial: 
 		"""
 		pass
 
@@ -33852,14 +33682,14 @@ class IFBridgeDeckMaterial(IFCompoundMaterial):
 		pass
 
 
-	def setUsingMass(self, refIndex, useWeight) -> IFBridgeDeckMaterial:
+	def setUsingMass(self, refIndex, useWeight) -> IFCompoundMaterial:
 		r"""
 		Sets whether the material contributes mass during analysis 
 		Params:
 			refIndex (object): index(integer) or name(string) ["Slab"/"Girder"]
 			useWeight (bool): True/False whether using mass during analysis
 		Returns:
-			IFBridgeDeckMaterial: 
+			IFCompoundMaterial: 
 		"""
 		pass
 
@@ -33873,6 +33703,14 @@ class IFBridgeDeckMaterial(IFCompoundMaterial):
 			bool: True/False whether using mass during analysis
 		"""
 		pass
+
+
+class IFBridgeDeckMaterial(IFCompoundMaterial):
+	"""
+	Interface for the bridge material attribute 
+	"""
+
+	pass
 
 
 class IFPYCurve(IFAttribute):
@@ -34036,7 +33874,7 @@ class IFPileMaterialLayup(IFMaterial):
 		pass
 
 
-	def getCurveGraph(self, joint, dof, pXs, pYs) -> None:
+	def getCurveGraph(self, joint, dof, pXs, pYs, loadset=None) -> None:
 		r"""
 		curve graph for one click report given internal point and element 
 		Params:
@@ -34044,6 +33882,7 @@ class IFPileMaterialLayup(IFMaterial):
 			dof (int): Degree of freedom
 			pXs (array of floats): Array of X values
 			pYs (array of floats): Array of Y values
+			loadset (IFLoadset, optional): The name or ID of a loadset, or a pointer to a IFLoadset object. , optionally loadcase, default currenltly active loadcase
 		Returns:
 			None: 
 		"""
@@ -34159,7 +33998,7 @@ class IFFourierControl(IFControl):
 
 class IFTransientControl(IFControl):
 	"""
-	A Transient Control is used to specify that the loadcase is part of a nonlinear or time-dependant analysis It should be attached to the first loadcase in an analysis but may also be attacehd to subsequent loadcases to further control the analysis. 
+	A Transient Control is used to specify that the loadcase is part of a nonlinear or time-dependant analysis It should be attached to the first loadcase in an analysis but may also be attached to subsequent loadcases to further control the analysis. 
 	"""
 
 	def setNonlinearManual(self) -> IFTransientControl:
@@ -34202,7 +34041,7 @@ class IFTransientControl(IFControl):
 
 	def setTimeDomainConsolidation(self, initialTimeStep) -> IFTransientControl:
 		r"""
-		Enables and sets the time domain to "Two Phase". The min/max time step and total responce parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
+		Enables and sets the time domain to "Two Phase". The min/max time step and total response parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
 		Params:
 			initialTimeStep (float): initial time step in model units seconds
 		Returns:
@@ -34213,7 +34052,7 @@ class IFTransientControl(IFControl):
 
 	def setTimeDomainDynamics(self, initialTimeStep, IsExplicit=None) -> IFTransientControl:
 		r"""
-		Enables and sets the time domain to "Implicit Dynamics" or "Explicit Dynamics". The min/max time step and total responce parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
+		Enables and sets the time domain to "Implicit Dynamics" or "Explicit Dynamics". The min/max time step and total response parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
 		Params:
 			initialTimeStep (float): initial time step in model units seconds
 			IsExplicit (bool, optional): true for explicit, false for implicit
@@ -34225,7 +34064,7 @@ class IFTransientControl(IFControl):
 
 	def setTimeDomainThermal(self, initialTimeStep) -> IFTransientControl:
 		r"""
-		Enables and sets the time domain to "Thermal". The min/max time step and total responce parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
+		Enables and sets the time domain to "Thermal". The min/max time step and total response parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
 		Params:
 			initialTimeStep (float): 
 		Returns:
@@ -34236,7 +34075,7 @@ class IFTransientControl(IFControl):
 
 	def setTimeDomainViscous(self, initialTimeStep) -> IFTransientControl:
 		r"""
-		Enables and sets the time domain to "Viscous". The min/max time step and total responce parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
+		Enables and sets the time domain to "Viscous". The min/max time step and total response parameters can be set through the following control values: MinTimeStepFactor, MaxTimeStepFactor, TotalResponseTime 
 		Params:
 			initialTimeStep (float): initial time step in model units seconds
 		Returns:
@@ -34538,7 +34377,7 @@ class IFLoadcase(IFPreLoadset):
 
 	def setFourierControl(self, harmonicComponents, first, last, diff) -> IFLoadcase:
 		r"""
-		Create or modify the fourier control attached to this loadcase 
+		Create or modify the Fourier control attached to this loadcase 
 		Params:
 			harmonicComponents (str): 
 			first (array of ints): 
@@ -34552,7 +34391,7 @@ class IFLoadcase(IFPreLoadset):
 
 	def removeFourierControl(self) -> IFLoadcase:
 		r"""
-		Remove any fourier control attached 
+		Remove any Fourier control attached 
 		Returns:
 			IFLoadcase: 
 		"""
@@ -34561,7 +34400,7 @@ class IFLoadcase(IFPreLoadset):
 
 	def getFourierControl(self) -> IFFourierControl:
 		r"""
-		Return the fourier control attached to this loadcase It is an error to call this function if no fourier control is attached 
+		Return the Fourier control attached to this loadcase It is an error to call this function if no Fourier control is attached 
 		Returns:
 			IFFourierControl: 
 		"""
@@ -34570,7 +34409,7 @@ class IFLoadcase(IFPreLoadset):
 
 	def hasFourierControl(self) -> bool:
 		r"""
-		Return true if this loadcase has a fourier control attached 
+		Return true if this loadcase has a Fourier control attached 
 		Returns:
 			bool: 
 		"""
@@ -35249,7 +35088,7 @@ class IFSmartCombination(IFLoadset):
 
 	def getAssocLoadset(self) -> IFSmartCombination:
 		r"""
-		If this object represents the maximum, it will return the minumum representation. Similarly, if this object represents the minumum, it will return the maximum representation. 
+		If this object represents the maximum, it will return the minimum representation. Similarly, if this object represents the minimum, it will return the maximum representation. 
 		Returns:
 			IFSmartCombination: 
 		"""
@@ -35400,7 +35239,7 @@ class IFEnvelope(IFLoadset):
 
 	def getAssocLoadset(self) -> IFEnvelope:
 		r"""
-		If this object represents the maximum, it will return the minumum representation. Similarly, if this object represents the minumum, it will return the maximum representation. 
+		If this object represents the maximum, it will return the minimum representation. Similarly, if this object represents the minimum, it will return the maximum representation. 
 		Returns:
 			IFEnvelope: 
 		"""
@@ -35946,7 +35785,7 @@ class IFIMD(IFLoadset):
 
 class IFLoadsetResultsContainer(IFLoadset):
 	"""
-	An object which appears in the "postprocessing" section of the analysis treeview like a combination or envelope but has no ability to calculate its own results - it relies on a customisation module to call setScriptedResults on nodes and/or elements. This object then simply remembers those results and (when set active) can show them in contours and similar User interface (dialogs and context menus) must also be added by a customisation module 
+	An object which appears in the "post processing" section of the analysis treeview like a combination or envelope but has no ability to calculate its own results - it relies on a customisation module to call setScriptedResults on nodes and/or elements. This object then simply remembers those results and (when set active) can show them in contours and similar User interface (dialogs and context menus) must also be added by a customisation module 
 	"""
 
 	def addResult(self, entity, component, packedDim=None, unitSet=None, denominatatorUnitSet=None, hasSeparator=None) -> IFPrimaryScriptedResultsComponentSet:
@@ -35958,7 +35797,7 @@ class IFLoadsetResultsContainer(IFLoadset):
 			packedDim (int, optional): Dimensionality of the component
 			unitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for this result - default is database units
 			denominatatorUnitSet (IFUnitSet, optional): The name or ID of a Unitset, or a pointer to a IFUnitSet object. Customised (e.g. codified) unit set for the optional extra 'per length/area' denominator - default is database units
-			hasSeparator (bool, optional): has a separator after the component name in the components droplits
+			hasSeparator (bool, optional): has a separator after the component name in the components droplist
 		Returns:
 			IFPrimaryScriptedResultsComponentSet: object which will hold results
 		"""
@@ -37049,7 +36888,7 @@ class IFGraphWizard(IFGraphBase):
 
 	def showSymbols(self, show) -> None:
 		r"""
-		shows or hides the dot symbol from the grah curves 
+		shows or hides the dot symbol from the graph curves 
 		Params:
 			show (bool): 
 		Returns:
@@ -37310,7 +37149,7 @@ class IFGraph(IFGraphBase):
 		Params:
 			sType (str): 
 			rXYAngle (float): only useful when type is "XY angle"
-			extraInfo1 (IFLocalCoord or IFReferencePath or str): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
+			extraInfo1 (IFLocalCoord or IFReferencePath or string): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
 			extraInfo2 (int): Will be set to the shell plane  if type is "Local coord" or to a boolean skewed/not skewed if type is "Path", otherwise not used
 		Returns:
 			None: 
@@ -37369,6 +37208,28 @@ class IFPrintResultsWizard(IFAttribute):
 	def showResults(self, once=None) -> IFGridWindow:
 		r"""
 		Displays the results in Modeller's GUI If 'once' is set to TRUE then the attribute will be temporary and will be deleted as soon as the user closes the result tables 
+		Params:
+			once (bool, optional): 
+		Returns:
+			IFGridWindow: 
+		"""
+		pass
+
+
+	def saveToFile(self, filename=None) -> IFPrintResultsWizard:
+		r"""
+		Saves the results in the xlsx file with the filename given or with the one set by IFPrintResultsWizard.setFilename If neither a filename is given nor a filename has been set by IFPrintResultsWizard.setFilename it outputs error 
+		Params:
+			filename (str, optional): optional name of the file to save to
+		Returns:
+			IFPrintResultsWizard: 
+		"""
+		pass
+
+
+	def showResultsAndSaveToFile(self, once=None) -> IFGridWindow:
+		r"""
+		Displays the results in Modeller's GUI and saves the results in the xlsx file set by IFPrintResultsWizard.setFilename. If 'once' is set to TRUE then the attribute will be temporary and will be deleted as soon as the user closes the result tables 
 		Params:
 			once (bool, optional): 
 		Returns:
@@ -37677,6 +37538,28 @@ class IFPrintResultsWizard(IFAttribute):
 		Sets "display now" option for the wizard interface. 
 		Params:
 			displayNow (bool): 
+		Returns:
+			IFPrintResultsWizard: 
+		"""
+		pass
+
+
+	def setSaveToFile(self, saveToFile) -> IFPrintResultsWizard:
+		r"""
+		Sets "Save to file" option for the wizard interface. 
+		Params:
+			saveToFile (bool): 
+		Returns:
+			IFPrintResultsWizard: 
+		"""
+		pass
+
+
+	def setFilename(self, filename) -> IFPrintResultsWizard:
+		r"""
+		Sets the filename of the xlsx file to export results to 
+		Params:
+			filename (str): name of the file
 		Returns:
 			IFPrintResultsWizard: 
 		"""
@@ -38004,7 +37887,18 @@ class IFArbitrarySection(IFAttribute):
 		r"""
 		Returns an array on property value names The return value is an array of strings 
 		Returns:
-			array of strs: Returned array of properties; eg A,Ixx,Iyy etc
+			array of strs: Returned array of properties; e.g. A,Ixx,Iyy etc
+		"""
+		pass
+
+
+	def storeMixedMaterialMesh(self, fileName) -> IFArbitrarySection:
+		r"""
+		Stores the polygon mesh used to calculate section properties when a mixed material section is used with a compound material 
+		Params:
+			fileName (str): binary file containing polygon mesh
+		Returns:
+			IFArbitrarySection: 
 		"""
 		pass
 
@@ -38080,7 +37974,7 @@ class IFParametricSection(IFAttribute):
 		r"""
 		Returns an array on property value names The return value is an array of strings 
 		Returns:
-			array of strs: Returned array of properties; eg A,Ixx,Iyy etc
+			array of strs: Returned array of properties; e.g. A,Ixx,Iyy etc
 		"""
 		pass
 
@@ -40460,7 +40354,7 @@ class IFView(IFResultsContext):
 
 	def setGlobalLightSource(self, castShadow, ambientOcclusion, fixToFrame, customDir, globalIntensity, ambientIntensity, x, y, z, r, g, b) -> None:
 		r"""
-		Specifies the details of the global light source. The global light source mimics the effect of the sun - it is considered to be an infinite distance away, therefore light rays are parallel (not dispursive), lighting every surface from the same apparent angle. Global light is not diminished with distance from the source. 
+		Specifies the details of the global light source. The global light source mimics the effect of the sun - it is considered to be an infinite distance away, therefore light rays are parallel (not dispersive), lighting every surface from the same apparent angle. Global light is not diminished with distance from the source. 
 		Params:
 			castShadow (bool): Specify whether light source casts a shadow
 			ambientOcclusion (bool): Specify whether ambient occlusion is computed wrt this light source
@@ -40491,7 +40385,7 @@ class IFView(IFResultsContext):
 
 	def addLocalLightSource(self, active, castShadow, drawBulb, intensity, x, y, z, r, g, b) -> None:
 		r"""
-		Adds a local light source A view can have any number of local light sources, although some graphics cards may not display them all. The light rays from a local dispurse outwards from the source position, and their intensity reduces with distance from it. 
+		Adds a local light source A view can have any number of local light sources, although some graphics cards may not display them all. The light rays from a local disperse outwards from the source position, and their intensity reduces with distance from it. 
 		Params:
 			active (bool): Specify whether light source is active (true) or off (false)
 			castShadow (bool): Specify whether light source casts a shadow
@@ -40641,7 +40535,7 @@ class IFWireframeLayer(IFLayer):
 
 	def showSolid(self, isSolid) -> None:
 		r"""
-		Indicates whether the solid (facetted) parts of each object should be drawn or not 
+		Indicates whether the solid (faceted) parts of each object should be drawn or not 
 		Params:
 			isSolid (bool): 
 		Returns:
@@ -41027,9 +40921,9 @@ class IFMeshLayer(IFWireframeLayer):
 
 	def setExplodedPercentage(self, explodedPercentage) -> None:
 		r"""
-		Sets mesh display to view as explode elements by reducing each elements size specified amonut 
+		Sets mesh display to view as explode elements by reducing each elements size specified amount 
 		Params:
-			explodedPercentage (float): %element remaining
+			explodedPercentage (float): % element remaining
 		Returns:
 			None: 
 		"""
@@ -41542,11 +41436,87 @@ class IFAttributesLayer(IFVisualiseLayer):
 		pass
 
 
-	def drawPatchByDefinition(self, patchDefn) -> None:
+	def setLoadingVisualisationType(self, visTypeStr) -> None:
 		r"""
-		Sets the behaviour of the visualisation of point and patch loading 
+		Sets the visualisation type for loading attributes 
 		Params:
-			patchDefn (bool): If true, a visualisation is show which ignores search areas, moving load options etc. If false, the visualisation includes such effects.
+			visTypeStr (str): "definition", "model" or "mesh",  draw by definition, on the model, for on the mesh
+		Returns:
+			None: 
+		"""
+		pass
+
+
+	def setLoadingLineBlocks(self, drawBlockType, size=None) -> None:
+		r"""
+		draw loading visualisation blocks on lines 
+		Params:
+			drawBlockType (str): "none", "block", "intensity"
+			size (float, optional): size of blocks
+		Returns:
+			None: 
+		"""
+		pass
+
+
+	def setLoadingSurfaceBlocks(self, drawBlockType, size=None) -> None:
+		r"""
+		draw loading visualisation blocks on surfaces 
+		Params:
+			drawBlockType (str): "none", "block", "intensity"
+			size (float, optional): size of blocks
+		Returns:
+			None: 
+		"""
+		pass
+
+
+	def setLoadingArrowSizes(self, maxLength=None, minLength=None, headSize=None) -> None:
+		r"""
+		set loading arrow sizes 
+		Params:
+			maxLength (float, optional): max arrow size in mm
+			minLength (float, optional): min arrow size in mm
+			headSize (float, optional): arrow head size in mm
+		Returns:
+			None: 
+		"""
+		pass
+
+
+	def showLoadingV22(self, drawAsV22) -> None:
+		r"""
+		Draw loading in the same style as V22, without all the fancy new options 
+		Params:
+			drawAsV22 (bool): if true visualise loading as V22
+		Returns:
+			None: 
+		"""
+		pass
+
+
+	def showLoadingArrowLabels(self, arrowLabelType, doVanish=None, vanishingPriority=None, drawSubPatchLabels=None, drawSubPatchArrows=None) -> None:
+		r"""
+		label loading arrows 
+		Params:
+			arrowLabelType (str): "show", "none"
+			doVanish (bool, optional): if true labels vanish on zoom in
+			vanishingPriority (float, optional): label vanishing priority
+			drawSubPatchLabels (bool, optional): if T and visualisation type = "model" draw labels on discrete sub=-patches
+			drawSubPatchArrows (bool, optional): if T and visualisation type = "model" draw arrows on discrete sub=-patches
+		Returns:
+			None: 
+		"""
+		pass
+
+
+	def setLineLoadDrawResultants(self, visTypeStr, doDrawLineResultants, doConnectLineLoads) -> None:
+		r"""
+		draw load on line options 
+		Params:
+			visTypeStr (str): "definition" or "model"
+			doDrawLineResultants (bool): if true draw load resultants on lines, if false load components
+			doConnectLineLoads (bool): if true draw line loads connected, if false draw unconnected
 		Returns:
 			None: 
 		"""
@@ -41842,13 +41812,14 @@ class IFUtilitiesLayer(IFVisualiseLayer):
 		pass
 
 
-	def setCompositeDesignOptions(self, isAxes, isSlice, isLabel) -> None:
+	def setCompositeDesignOptions(self, isAxes, isSlice, isLabel, inPlane=None) -> None:
 		r"""
 		Sets whether or not to show different kinds of visualisation for composite design 
 		Params:
 			isAxes (bool): true to display an arrow set at each slice location, showing local x/y/z of the slice plane
 			isSlice (bool): true to display a rectangle at each slice location, showing the local yz plane
 			isLabel (bool): true to display a label at each slice location, showing the name of the location
+			inPlane (bool, optional): true to draw labels in the plane of the slice (false draws the label in the plane of the screen)
 		Returns:
 			None: 
 		"""
@@ -42008,7 +41979,7 @@ class IFResultsLayer(IFLayer):
 		Params:
 			sType (str): 
 			rXYAngle (float): only useful when type is "XY angle"
-			extraInfo1 (IFLocalCoord or IFReferencePath or str): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
+			extraInfo1 (IFLocalCoord or IFReferencePath or string): Will be set to a local coord if type is "Local coord" or to a path if type is "Path", or to a string if type is "Attribute type", otherwise not used
 			extraInfo2 (int): Will be set to the shell plane  if type is "Local coord" or to a boolean skewed/not skewed if type is "Path", otherwise not used
 		Returns:
 			None: 
@@ -43050,7 +43021,7 @@ class IFStoreyGroup(IFGroup):
 			my (float): } mass in the axes
 			mz (float): }
 			mmix (float): }
-			mmiy (float): } max moment of iniertia about the axes
+			mmiy (float): } max moment of inertia about the axes
 			mmiz (float): }
 		Returns:
 			IFStoreyGroup: 
@@ -43398,7 +43369,7 @@ class IFStoreyGroup(IFGroup):
 
 class IFRailTrackDefinition(IFDatabaseMember):
 	"""
-	Used for railway loading, formed by two rails; Defined by a path representing the centrline and a width, which specifies how far apart the two rails are 
+	Used for railway loading, formed by two rails; Defined by a path representing the centreline and a width, which specifies how far apart the two rails are 
 	"""
 
 	def getCentrelinePath(self) -> IFReferencePath:
@@ -43476,7 +43447,7 @@ class IFRailTrackDefinition(IFDatabaseMember):
 
 	def setVisible(self, isVisible) -> None:
 		r"""
-		Shows or hides the rail track definition. Applies to curent view only 
+		Shows or hides the rail track definition. Applies to current view only 
 		Params:
 			isVisible (bool): True for visible
 		Returns:
@@ -43543,7 +43514,7 @@ class IFRailTrackLayout(IFDatabaseMember):
 
 	def setVisible(self, isVisible) -> None:
 		r"""
-		Shows or hides the rail track layout. Applies to curent view only 
+		Shows or hides the rail track layout. Applies to current view only 
 		Params:
 			isVisible (bool): True for visible
 		Returns:
@@ -45078,18 +45049,9 @@ class IFAnalysis(IFAnalysisBaseClass):
 		pass
 
 
-	def getLoadcases(self) -> list[IFLoadcase]:
-		r"""
-		Gets the list of loadcases belonging directly to the analysis. Branches, loadcurves and loadsets other than loadcases are ignored. 
-		Returns:
-			array of IFLoadcase: the returned array
-		"""
-		pass
-
-
 class IFTLOEnvelopeRun(IFTLORunBase):
 	"""
-	TLO (Trafic Loading Optimization) envelope run interface 
+	TLO (Traffic Loading Optimization) envelope run interface 
 	"""
 
 	def addInfluenceToAnalyse(self, infEnvelopeAttr) -> None:
@@ -45277,7 +45239,7 @@ class IFVLORun(IFTLORunBase):
 			loadNegative (bool): false if positive area should be loaded by TLO
 			includeAditionalPatterns (bool): AASHTO codes only
 			determinantLength (float): determinant length (dimension of length)
-			influencefactor (float): influence factor (unitless)
+			influencefactor (float): influence factor (unit less)
 		Returns:
 			None: 
 		"""
@@ -46053,6 +46015,268 @@ class IFReinforcementSection(IFAttribute):
 		pass
 
 
+class IFSurfaceReinforcementLayout(IFAttribute):
+	"""
+	Representation of one layout of the surface reinforcement 
+	"""
+
+	def setReinforcementValue(self, type, index, varName, value) -> IFSurfaceReinforcementLayout:
+		r"""
+		Sets the value of a named variable within this object The types correspond directly to the dialog tabs. The named variables correspond directly to the dialog inputs on that tab. For type = "face", the following variables are available: "actualCover", "nominalCover". For type = "rebar", the following variables are available: "faceIndex", "layerIndex", "direction", "gap", "barsDiameter", "altBarsDiameter", "spacing". 
+		Params:
+			type (str): "face", "rebar"
+			index (int): row index (in dialog)
+			varName (str): name of the value (e.g. "actualCover")
+			value (object): The type given will depend on the value specified
+		Returns:
+			IFSurfaceReinforcementLayout: 
+		"""
+		pass
+
+
+	def getReinforcementValue(self, type, index, varName, units=None) -> object:
+		r"""
+		Returns the value of a named variable within this object If an IFUnitSet object (or its name) is given, the value will be returned in those units. Otherwise it will be returned in the database's current unit system. 
+		Params:
+			type (str): "face", "rebar"
+			index (int): row index
+			varName (str): name of the value (e.g. "actualCover")
+			units (IFUnitSet, optional): 
+		Returns:
+			object: The type returned will depend on the value requested
+		"""
+		pass
+
+
+	def getActualCoverTop(self) -> float:
+		r"""
+		Returns the actual cover of top face, i.e the distance from the top face to the outer fibre of the maximum diameter bar of the first layer 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getActualCoverBottom(self) -> float:
+		r"""
+		Returns the actual cover of bottom face, i.e the distance from the bottom face to the outer fibre of the maximum diameter bar of the first layer 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getNominalCoverTop(self) -> float:
+		r"""
+		Returns the nominal cover of top face as defined by the user 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getNominalCoverBottom(self) -> float:
+		r"""
+		Returns the nominal cover of bottom face as defined by the user 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getRebarSkewAngle(self) -> float:
+		r"""
+		Returns the angle between x and y reinforcement bars as defined in the projection plane of zones (not the actual rebars angle) 
+		Returns:
+			float: 
+		"""
+		pass
+
+
+	def getNoLayersTop(self) -> int:
+		r"""
+		Returns the number of layers declared by the user as top 
+		Returns:
+			int: 
+		"""
+		pass
+
+
+	def getNoLayersBottom(self) -> int:
+		r"""
+		Returns the number of layers declared by the user as bottom 
+		Returns:
+			int: 
+		"""
+		pass
+
+
+	def getTopReinforcement(self) -> list:
+		r"""
+		Returns array of layers of reinforcement (IFSurfaceReinforcementLayoutLayer) declared as top by the user 
+		Returns:
+			array: of IFSurfaceReinforcementLayoutLayer objects
+		"""
+		pass
+
+
+	def getBottomReinforcement(self) -> list:
+		r"""
+		Returns array of layers of reinforcement (IFSurfaceReinforcementLayoutLayer) declared as bottom by the user 
+		Returns:
+			array: of IFSurfaceReinforcementLayoutLayer objects
+		"""
+		pass
+
+
+class IFSurfaceReinforcement(IFAttribute):
+	"""
+	Representation of the reinforcement of a surface, being (essentially) an array of IFSurfaceReinforcementLayout objects, spaced along a surface in a cartesian grid or in a radial way. Multiple zones should be defined only when this attribute is to be assigned to planar or ruled surfaces 
+	"""
+
+	def setCartesianGrid(self, bCartesian) -> IFSurfaceReinforcement:
+		r"""
+		If true sets the way different zones of reinforcement in a surface are defined to be on cartesian grid. Else sets it to be radial 
+		Params:
+			bCartesian (bool): VARIANT_TRUE for cartesian VARIANT_FALSE for RADIAL
+		Returns:
+			IFSurfaceReinforcement: 
+		"""
+		pass
+
+
+	def isCartesian(self) -> bool:
+		r"""
+		Returns true if the zones are defined in a cartesian grid. Returns false if zones are defined in a radial way 
+		Returns:
+			bool: 
+		"""
+		pass
+
+
+	def addDivision(self, vType) -> IFSurfaceReinforcement:
+		r"""
+		Creates a new division in x or y direction of the grid (if cartesian) and its related zone(s) and appends it to the end of the grid. If a radial zones definition scheme is set than type can be only "Divisions X" and each new division created with this method will create exactly one more zone of reinforcement You should have only one division for each direction if this attribute is to be assigned to a surface that is not planar or ruled. 
+		Params:
+			vType (object): 0 = "Divisions X", 1 = "Divisions Y"
+		Returns:
+			IFSurfaceReinforcement: 
+		"""
+		pass
+
+
+	def setDivisionValue(self, vType, index, varName, value) -> IFSurfaceReinforcement:
+		r"""
+		Sets the named value for the given index division. Available names are "length" (real), "stretch" (boolean) 
+		Params:
+			vType (object): 0 = "Divisions X", 1 = "Divisions Y"
+			index (int): division's index starting from 0
+			varName (str): name of the value (e.g. "length")
+			value (object): The type given will depend on the value specified
+		Returns:
+			IFSurfaceReinforcement: 
+		"""
+		pass
+
+
+	def getDivisionValue(self, type, index, varName, units=None) -> object:
+		r"""
+		Gets the value for the given index division 
+		Params:
+			type (object): 0 = "Divisions X", 1 = "Divisions Y"
+			index (int): division's index starting from 0
+			varName (str): name of the value (e.g. "length")
+			units (IFUnitSet, optional): 
+		Returns:
+			object: The type given will depend on the value specified
+		"""
+		pass
+
+
+	def getDivisionCount(self, type) -> int:
+		r"""
+		Returns the number of reinforcement divisions 
+		Params:
+			type (object): 0 = "Divisions X", 1 = "Divisions Y"
+		Returns:
+			int: 
+		"""
+		pass
+
+
+	def setSurfaceReinforcementLayout(self, attribute, index1, index2) -> IFSurfaceReinforcement:
+		r"""
+		Sets the surface reinforcement layout (IFSurfaceReinforcementLayout) of the zone with the zero-based indices provided as input 
+		Params:
+			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. reinforcement member line attribute
+			index1 (int): index 1 refers to x direction in a cartesian grid. Starting from 0 (left to right)
+			index2 (int): index 2 refers to y direction in a cartesian grid. Starting from 0 (top to bottom). Not used in radial
+		Returns:
+			IFSurfaceReinforcement: 
+		"""
+		pass
+
+
+	def getSurfaceReinforcementLayout(self, index1, index2) -> IFSurfaceReinforcementLayout:
+		r"""
+		Returns the surface reinforcement layout (IFSurfaceReinforcementLayout) of the zone with the indices provided as input 
+		Params:
+			index1 (int): index 1 refers to x direction in a cartesian grid
+			index2 (int): index 2 refers to y direction in a cartesian grid. Not used in radial
+		Returns:
+			IFSurfaceReinforcementLayout: 
+		"""
+		pass
+
+
+	def getElementReinforcement(self, element, node, pResetter, pSurfLayoutAttr, pSurfLayoutProps, pValidationCode, loadcase=None) -> int:
+		r"""
+		get the surface reinforcement layout definition at the given node of the given surface element 
+		Params:
+			element (name, element, IFElement): Location of interest
+			node (name, node, IFNode): Location of interest
+			pResetter (IFSurfReinfInfoResetter): Resets cached reinforcement info
+			pSurfLayoutAttr (IFSurfaceReinforcementLayout): Surface reinforcement layout definition which applies at that location
+			pSurfLayoutProps (IFSurfaceReinforcementLayoutProps): Surface reinforcement layout properties definition which applies at that location
+			pValidationCode (int): Validation code. 0 = success
+			loadcase (IFLoadcase, optional): Location of interest. If not given, the active loadcase from the current view is assumed
+		Returns:
+			int: Return code, 0 = success
+		"""
+		pass
+
+
+	def getInspectionReinforcement(self, surface, inspection, index, pResetter, pSurfLayoutAttr, pSurfLayoutProps, pValidationCode, loadcase=None) -> int:
+		r"""
+		get the surface reinforcement layout definition at the given inspection location (which must be on a surface) 
+		Params:
+			surface (name, surface, IFSurface): Location of interest
+			inspection (name, inspection, IFInspectionPoint): Location of interest
+			index (int): Index to specific location of interest within the inspection location attribute
+			pResetter (IFSurfReinfInfoResetter): Resets cached reinforcement info
+			pSurfLayoutAttr (IFSurfaceReinforcementLayout): surface reinforcement layout definition which applies at that location
+			pSurfLayoutProps (IFSurfaceReinforcementLayoutProps): surface reinforcement layout properties definition which applies at that location
+			pValidationCode (int): Validation code. 0 = success
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. Location of interest. If not given, the active loadcase from the current view is assumed
+		Returns:
+			int: Return code, 0 = success
+		"""
+		pass
+
+
+	def isRefPathAssignedSmooth(self, surface, pMsg, loadcase=None) -> object:
+		r"""
+		checks a reference path selected at assignment and if it is smooth 
+		Params:
+			surface (name, surface, IFSurface): geometry surface
+			pMsg (str): warning message if a non smoothed reference path is selected at assignment
+			loadcase (IFLoadcase, optional): The name or ID of a loadcase, or a pointer to a IFLoadcase object. if not given assumes the active loadcase from the current view
+		Returns:
+			int: return error code
+		"""
+		pass
+
+
 class IFReinforcementLine(IFAttribute):
 	"""
 	Representation of the reinforcement of a line, being (essentially) an array of IFReinforcementSection objects, spaced along a line 
@@ -46098,7 +46322,7 @@ class IFReinforcementLine(IFAttribute):
 
 	def setAdvShearTorsionProps(self, attribute) -> IFReinforcementLine:
 		r"""
-		Set the attribute that describes the advanced shear and torsion properites of this attribute 
+		Set the attribute that describes the advanced shear and torsion properties of this attribute 
 		Params:
 			attribute (IFAttribute): The name or ID of a attribute, or a pointer to a IFAttribute object. advanced shear and torsion properties of this attribute
 		Returns:
@@ -46109,7 +46333,7 @@ class IFReinforcementLine(IFAttribute):
 
 	def getAdvShearTorsionProps(self) -> IFShearTorsionAdvPropsDefinition:
 		r"""
-		Get the attribute that describes the advanced shear and torsion properites of this attribute 
+		Get the attribute that describes the advanced shear and torsion properties of this attribute 
 		Returns:
 			IFShearTorsionAdvPropsDefinition: 
 		"""
@@ -46579,22 +46803,33 @@ All other objects in the LPI are accessed through these global variables and fun
 		pass
 
 
-	def getSystemString(self, stringName) -> str:
+	def getSystemString(self, valueName) -> str:
 		r"""
-		Returns the value of the named token, reports an error if not found. To modify system strings, use IFProject.overrideSystemString or IFModeller.setSystemString. 
+		Returns the value of the named token, reports an error if not found (or not a string). To modify system strings, use IFProject.overrideSystemString or IFModeller.setSystemString. 
 		Params:
-			stringName (str): 
+			valueName (str): 
 		Returns:
 			str: 
 		"""
 		pass
 
 
-	def setSystemString(self, stringName, value) -> None:
+	def getSystemInteger(self, valueName) -> int:
+		r"""
+		Returns the value of the named token, reports an error if not found (or not an integer). To modify system integers, use IFModeller.setSystemInteger. 
+		Params:
+			valueName (str): 
+		Returns:
+			int: 
+		"""
+		pass
+
+
+	def setSystemString(self, valueName, value) -> None:
 		r"""
 		Allows you to override a standard LUSAS system string for all models. The values of system strings should never be changed without instruction from LUSAS technical support. To obtain the current value of a system string, use IFModeller.getSystemString. To override a standard LUSAS system string for only the current model, use IFProject.overrideSystemString 
 		Params:
-			stringName (str): 
+			valueName (str): 
 			value (str): 
 		Returns:
 			None: 
@@ -46602,22 +46837,34 @@ All other objects in the LPI are accessed through these global variables and fun
 		pass
 
 
-	def getUserString(self, stringName) -> str:
+	def setSystemInteger(self, valueName, value) -> None:
+		r"""
+		Allows you to override a standard LUSAS system integer for all models. The values of system integers should never be changed without instruction from LUSAS technical support. To obtain the current value of a system integer, use IFModeller.getSystemInteger. 
+		Params:
+			valueName (str): 
+			value (int): 
+		Returns:
+			None: 
+		"""
+		pass
+
+
+	def getUserString(self, valueName) -> str:
 		r"""
 		Return the value of the named token, or an empty string if not found. Used to store settings that may be overridden by the end user, such as the locations of libraries. The values of user strings may be modified at any time using IFModeller.setUserString 
 		Params:
-			stringName (str): 
+			valueName (str): 
 		Returns:
 			str: 
 		"""
 		pass
 
 
-	def setUserString(self, stringName, value) -> None:
+	def setUserString(self, valueName, value) -> None:
 		r"""
 		Create/modify a string for later return using IFModeller.getUserString 
 		Params:
-			stringName (str): 
+			valueName (str): 
 			value (str): 
 		Returns:
 			None: 
@@ -47381,11 +47628,11 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def openConvertDatabase(self, filename, dbVersion=None, textoutput=None, facetPostConversion=None) -> IFDatabase:
 		r"""
-		Opens an existing V13->V21.1 model file from disk without saving changes in the previous model. (If you wish to save changes, use IFModeller.project.IFProject.save first.) The file is immediately converted to the given format. In normal use, omit the optional arguments, they are for future use, and/or backwards compatibilty. In the 32bit exe, the optional "textoutput" argument is ignored. In the 64bit exe, you may pass in the name of a file which will be filled with the contents of the text output window from the 32 bit modeller used to do the conversion. 
+		Opens an existing V13->V21.1 model file from disk without saving changes in the previous model. (If you wish to save changes, use IFModeller.project.IFProject.save first.) The file is immediately converted to the given format. In normal use, omit the optional arguments, they are for future use, and/or backwards compatibility. In the 32bit exe, the optional "textoutput" argument is ignored. In the 64bit exe, you may pass in the name of a file which will be filled with the contents of the text output window from the 32 bit modeller used to do the conversion. 
 		Params:
 			filename (str): Name and location of model file to open
 			dbVersion (int, optional): The only permitted value is 3, meaning 64bit mdl files. Other formats may be supported in future
-			textoutput (str, optional): name of a file (which must not exist) to recieve the contents of the 32bit text output window
+			textoutput (str, optional): name of a file (which must not exist) to receive the contents of the 32bit text output window
 			facetPostConversion (bool, optional): if true facet the geometry objects post conversion
 		Returns:
 			IFDatabase: The open model
@@ -47398,7 +47645,7 @@ All other objects in the LPI are accessed through these global variables and fun
 		return true if we can convert V13->V20 model file to the given format 
 		Params:
 			dbVersion (int): Permitted values: 2 = V19.1 64bit smdl files. Other formats may be supported in future
-			filename (str, optional): name of a particulare file, empty string means any file
+			filename (str, optional): name of a particular file, empty string means any file
 		Returns:
 			bool: T if can convert, F if not
 		"""
@@ -47826,7 +48073,7 @@ All other objects in the LPI are accessed through these global variables and fun
 			output (float): The output numeric value (if the function succeeds)
 			showErrors (bool, optional): If true, LUSAS Modeller will generate pop-up dialogs to inform the user why the string could not be evaluated into a number
 			error (str, optional): If given, this string will be filled in with the reason why the string could not be evaluated into a number
-			locale (str, optional): If given, the locale in which to make the conversion, examples are similar to those shown in the Windows international settings dialog: "English", "English_United Kingdom", "French", "French_Monaco" etc. The special value of "C" may be used to represent standard US English number formating If not given, the Windows locale at the time Modeller was launched will be used
+			locale (str, optional): If given, the locale in which to make the conversion, examples are similar to those shown in the Windows international settings dialog: "English", "English_United Kingdom", "French", "French_Monaco" etc. The special value of "C" may be used to represent standard US English number formatting If not given, the Windows locale at the time Modeller was launched will be used
 			variablesIn (2d array, optional): If given, an array of variables and values that may appear in the expression. For example, if the array contains just one pair of items, the string "x" and the value 4, then x may be used in the expression, and will be assumed to have the value 4. If the array has two pairs of items "x", 3 and "y","x*2", x and y may both be used in the expression. x will have the value 3 and y the value 6.
 			variablesNeeded (array of strs, optional): If the return code is 2, this argument will be set to be array of the names of the variables that were needed
 			dimensionality (int, optional): Defines the dimensionality of the input string.
@@ -47843,7 +48090,7 @@ All other objects in the LPI are accessed through these global variables and fun
 		Params:
 			input (float or int): The input number
 			showAllDigits (bool, optional): If true (the default), show all available precision. If false, round to the significant figures set using IFModeller.setDisplaySigFig, or to the decimal places set using IFModeller.setDisplayDecimalPlaces
-			locale (str, optional): If given the locale in which to make the conversion, examples are similar to those shown in the Windows international settings dialog: "English", "English_United Kingdom", "French", "French_Monaco" etc. The special value of "C" may be used to represent standard US English number formating If not given, the Windows locale at the time Modeller was launched will be used
+			locale (str, optional): If given the locale in which to make the conversion, examples are similar to those shown in the Windows international settings dialog: "English", "English_United Kingdom", "French", "French_Monaco" etc. The special value of "C" may be used to represent standard US English number formatting If not given, the Windows locale at the time Modeller was launched will be used
 			dimensionality (int, optional): Defines the dimensionality of the input string. Need only when feet-inches format should be taken into account and the input is length.
 			unitSet (str, optional): The unit set should be given if feet-inches format needs to be taken into account.
 			zero (float, optional): This function returns 0.0 for any number whose absolute value is smaller than the given value
@@ -47966,7 +48213,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def clockEnd(self, label, filename=None) -> int:
 		r"""
-		Marks the end of a timing step in "clock ticks". Clock ticks measure only CPU time and ignore time taken by other processes, interaction with disk, etc. The number of clock ticks taken by an opeartion should be relatively consistent between runs, regardless of what else the PC is doing. However, since it ignores interaction with the disk, it can be misleading. Conversely "wall clock time" counts minutes and seconds as seen by a clock on the wall, and times will be slower if the PC has many other tasks running. Unfortunately, Windows does not provide a mechanism to measure how long an application took, including disk access but excluding other applications. Can be called repeatedly (in other words, calling clockEnd() resets the start time). If “filename” parameter is not given: times are written only to the text output window and log file. If “filename” parameter is given:     a tmg file is created (unless exists) and is opened for writing. 
+		Marks the end of a timing step in "clock ticks". Clock ticks measure only CPU time and ignore time taken by other processes, interaction with disk, etc. The number of clock ticks taken by an operation should be relatively consistent between runs, regardless of what else the PC is doing. However, since it ignores interaction with the disk, it can be misleading. Conversely "wall clock time" counts minutes and seconds as seen by a clock on the wall, and times will be slower if the PC has many other tasks running. Unfortunately, Windows does not provide a mechanism to measure how long an application took, including disk access but excluding other applications. Can be called repeatedly (in other words, calling clockEnd() resets the start time). If “filename” parameter is not given: times are written only to the text output window and log file. If “filename” parameter is given:     a tmg file is created (unless exists) and is opened for writing. 
 		Params:
 			label (str): label to identify the task
 			filename (str, optional): filename of tmg file.
@@ -48067,7 +48314,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def isWarningRemoved(self, text) -> bool:
 		r"""
-		Asks whether a particualr 'removeable warning' message has been removed by the user using "Don't show this message again" 
+		Asks whether a particular 'removeable warning' message has been removed by the user using "Don't show this message again" 
 		Params:
 			text (str or int): Text to be displayed.
 		Returns:
@@ -48078,7 +48325,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def reinstateWarning(self, text) -> None:
 		r"""
-		Resets the status of a particualr 'removeable warning' message so that it will be seen next time the problem occurs 
+		Resets the status of a particular 'removeable warning' message so that it will be seen next time the problem occurs 
 		Params:
 			text (str or int): Text to be displayed.
 		Returns:
@@ -48089,7 +48336,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def removeWarning(self, text) -> None:
 		r"""
-		Resets the status of a particualr 'removeable warning' message so that it will be seen next time the problem occurs 
+		Resets the status of a particular 'removeable warning' message so that it will be seen next time the problem occurs 
 		Params:
 			text (str or int): Text to be displayed.
 		Returns:
@@ -48113,7 +48360,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def enableTrees(self, isEnable) -> None:
 		r"""
-		Switches on/off the auto-update of all trees within Modeller This is useful when creating large numbers of attributes, loadcases or groups, which would otherwise be very slow. Modeller automatically calls enableTrees(0) just before running a command script, and enableTrees(1) just after it has finished. This function is therefore only needed in scriptable dialogs which create large numbers of objects. Each call to enableTrees(0) must be matched with a call to enableTrees(1) to reenable it, otherwise if enableTrees(0) is called twice and enableTrees(1) only once, the auto-update of the trees will stay switched off. 
+		Switches on/off the auto-update of all trees within Modeller This is useful when creating large numbers of attributes, loadcases or groups, which would otherwise be very slow. Modeller automatically calls enableTrees(0) just before running a command script, and enableTrees(1) just after it has finished. This function is therefore only needed in scriptable dialogs which create large numbers of objects. Each call to enableTrees(0) must be matched with a call to enableTrees(1) to re enable it, otherwise if enableTrees(0) is called twice and enableTrees(1) only once, the auto-update of the trees will stay switched off. 
 		Params:
 			isEnable (bool): 1 to enable, 0 to disable
 		Returns:
@@ -48146,7 +48393,7 @@ All other objects in the LPI are accessed through these global variables and fun
 		r"""
 		Returns the current state, modifiable via IFModeller.enableTrees 
 		Returns:
-			bool: TRUE if enabled, FALSE if disabled
+			bool: TRUE if all Trees are enabled, FALSE if any of the trees is disabled
 		"""
 		pass
 
@@ -48269,7 +48516,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def createTemperatureUnit(self, longName, shortName, factor, offset) -> IFUnit:
 		r"""
-		Creates or modifies a unit of length. The factor describes the number of the new units in 1 degree Celcius, and the offset describes the relative position of 0. For example, Farenheit = 9/5 +32 
+		Creates or modifies a unit of length. The factor describes the number of the new units in 1 degree Celsius, and the offset describes the relative position of 0. For example, Fahrenheit = 9/5 +32 
 		Params:
 			longName (str): Long name for unit
 			shortName (str): Short name for unit
@@ -48283,7 +48530,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def createUnitSet(self, setName, length, mass, time, temperature) -> IFUnitSet:
 		r"""
-		Creates or modifies a set of named units and (if not already present) add them to the list of available units. Also returns the created or modified set for use in the script Note that neither force nor energy are required, as these can be found from the other factors, assuming that energy = force * distance and force = mass * acceleration. It is an error to attempt to create a set of units for which matching energy and force have not previously been defined 
+		Creates or modifies a set of named units and (if not already present) add them to the list of available units. Also returns the created or modified set for use in the script. Note that neither force nor energy are required, as these can be found from the other factors, assuming that energy = force * distance and force = mass * acceleration. It is an error to attempt to create a set of units for which matching energy and force have not previously been defined 
 		Params:
 			setName (str): Name for this set of units
 			length (IFUnit): Length unit
@@ -48298,7 +48545,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def getUnitSet(self, name) -> IFUnitSet:
 		r"""
-		Returns a set of units previously created using IFModeller.createUnitSet A search is carried out to find a set of units with the given name. To get all defined unitSets use IFModeller.getUnitSets. Note that model units should be got using IFDatabase.getModelUnits. 
+		Returns a set of units previously created using IFModeller.createUnitSet. A search is carried out to find a set of units with the given name. To get all defined unitSets use IFModeller.getUnitSets. Note that model units should be got using IFDatabase.getModelUnits. 
 		Params:
 			name (str): name of unit set to search for
 		Returns:
@@ -48327,7 +48574,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def getTimescaleFrequencies(self) -> list[str]:
 		r"""
-		Returns an array of the timescale frequnecies that are supported by Modeller ("/Second", "/Minute", "/Hour", etc) 
+		Returns an array of the timescale frequencies that are supported by Modeller ("/Second", "/Minute", "/Hour", etc) 
 		Returns:
 			array of strs: The returned array of timescales
 		"""
@@ -48451,7 +48698,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def insertAttributeContextMenuItem(self, attributeType, beforeItem, itemText, command, helpString=None, sessionFile=None) -> None:
 		r"""
-		Inserts a new menu item before the specified item in the context (right click) menu for all attributes of the given type. Note that that attribute type can be either "all", or a whole type (e.g. "Geometric") or a sub type (e.g. "Line Geometric") The specified item can be represented as either text or ID and could refer to either a sub menu or a menu item 
+		Inserts a new menu item before the specified item in the context (right click) menu for all attributes of the given type. Note that attribute type can be either "all", or a whole type (e.g. "Geometric") or a sub type (e.g. "Line Geometric") The specified item can be represented as either text or ID and could refer to either a sub menu or a menu item 
 		Params:
 			attributeType (str): "Loading", "Support", "Material", etc.
 			beforeItem (str or int): menu item before which new item is to be placed
@@ -48589,7 +48836,7 @@ All other objects in the LPI are accessed through these global variables and fun
 			shapeCode (int): Shape code of section
 			dimArray (array): array of section dimensions
 			confirmOverwrite (bool): first confirm whether or not it is OK to overwrite existing section details
-			sectionPropertiesInLine (str, optional): section properties in line eg "Iyy=1.23, Izz=2.34" using y,z axes.
+			sectionPropertiesInLine (str, optional): section properties in line e.g. "Iyy=1.23, Izz=2.34" using y,z axes.
 		Returns:
 			bool: true if written, false if cancelled
 		"""
@@ -48664,7 +48911,7 @@ All other objects in the LPI are accessed through these global variables and fun
 
 	def createGridWindow(self, nID) -> IFGridWindow:
 		r"""
-		Create and return a new IFGridWindow object The window ID allows subsequent retrieval using IFModeller.getGridWindowByID An unused gid window ID can be aquired with IFModeller.nextGridWindowID 
+		Create and return a new IFGridWindow object The window ID allows subsequent retrieval using IFModeller.getGridWindowByID An unused grid window ID can be acquired with IFModeller.nextGridWindowID 
 		Params:
 			nID (int): grid window ID
 		Returns:
@@ -48764,7 +49011,7 @@ All other objects in the LPI are accessed through these global variables and fun
 		r"""
 		Returns an array on available section types from the specified library. The return value is an array of strings 
 		Params:
-			libraryName (str): name of library eg 'UK Sections'
+			libraryName (str): name of library e.g. 'UK Sections'
 			shapeFilter (int or array of ints, optional): Section shape code to filter for; -1 (the default) to return all types
 		Returns:
 			array of strs: Returned array of names
@@ -48776,8 +49023,8 @@ All other objects in the LPI are accessed through these global variables and fun
 		r"""
 		Returns an array on available sections from the specified library. The return value is an array of strings 
 		Params:
-			libraryName (str): name of library eg 'UK Sections'
-			libraryType (str): name of section type in library eg 'Universal Beams (BS4)'
+			libraryName (str): name of library e.g. 'UK Sections'
+			libraryType (str): name of section type in library e.g. 'Universal Beams (BS4)'
 			shapeFilter (int or array of ints, optional): Section shape code to filter for; -1 (the default) to return all types
 		Returns:
 			array of strs: Returned array of names
@@ -48789,8 +49036,8 @@ All other objects in the LPI are accessed through these global variables and fun
 		r"""
 		Returns an array on property values from the specified section. The return value is an array of real values 
 		Params:
-			libraryName (str): name of library eg 'UK Sections'
-			libraryType (str): name of section type in library eg 'Universal Beams (BS4)'
+			libraryName (str): name of library e.g. 'UK Sections'
+			libraryType (str): name of section type in library e.g. 'Universal Beams (BS4)'
 			sectionName (str): name of section
 		Returns:
 			array of float: Returned array of properties
@@ -48802,11 +49049,11 @@ All other objects in the LPI are accessed through these global variables and fun
 		r"""
 		Returns an array on property value names from the specified section. The return value is an array of strings 
 		Params:
-			libraryName (str): name of library eg 'UK Sections'
-			libraryType (str): name of section type in library eg 'Universal Beams (BS4)'
+			libraryName (str): name of library e.g. 'UK Sections'
+			libraryType (str): name of section type in library e.g. 'Universal Beams (BS4)'
 			sectionName (str): name of section
 		Returns:
-			array of strs: Returned array of properties; eg A,Ixx,Iyy etc
+			array of strs: Returned array of properties; e.g. A,Ixx,Iyy etc
 		"""
 		pass
 
@@ -48880,9 +49127,11 @@ All other objects in the LPI are accessed through these global variables and fun
 		pass
 
 
-	def createPrestressSolver(self) -> IFPrestressSolver:
+	def createPrestressSolver(self, loadFromPrf=None) -> IFPrestressSolver:
 		r"""
-		Create the prestress solver. This object can create the discrete loads required for tendon 
+		Create the prestress solver. This object can create the discrete loads required for tendon MCC TODO: Rules of COM automation say this has to be a VARIANT, not a VARIANTBOOL (or any other type) 
+		Params:
+			loadFromPrf (bool, optional): Whether or not the user wants to load the data form an existing prf file
 		Returns:
 			IFPrestressSolver: 
 		"""
@@ -48997,6 +49246,16 @@ All other objects in the LPI are accessed through these global variables and fun
 
 
 
-def get_lusas_modeller() -> IFModeller:
+def get_lusas_modeller(showApp = True) -> IFModeller:
+	r"""Connects to a running instance of Lusas Modeller if available or attempts to launch one if not.
+		Params:
+			showApp (bool, optional): Makes Lusas Modeller visible
+		Returns:
+			IFModeller : Reference to the running app if successful, None if could not connect
+			"""
 	import win32com.client as win32
-	return win32.dynamic.Dispatch('Lusas.Modeller.22.0')
+	app = win32.dynamic.Dispatch('Lusas.Modeller.23.0')
+	if(app is not None):
+		app.enableUI(showApp)
+		app.setVisible(showApp)
+	return app
