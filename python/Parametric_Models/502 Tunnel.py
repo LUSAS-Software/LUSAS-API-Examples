@@ -6,7 +6,7 @@
 # Description:  Generates the geometry, assign all attributes, runs LUSAS, and plots the deformed mesh.
 #               Users can edit geometry inputs.
 #               The MC model is adopted for soil behaviour.
-#               joints are not included.
+#               joints are included.
 #               Three construction stages are considered: initial, lining installation and tunnel excavation.
 #               Inputs data are not checked for validity.
 #######################################################################
