@@ -84,6 +84,8 @@ cd LUSAS-API-Examples/python/
 python create_beam_model.py
 ```
 
+For more information on running Python scripts internally similarly to *VBScripts*, see this [report](https://www.lusas.com/user_area/documentation/1037_Using_Python_with_LUSAS_Modeller.pdf).
+
 ## ▶️ Script Shortcuts in LUSAS (toolbar button, menu item)
 
 You can add your scripts in LUSAS toolbar or menu through the following steps.
@@ -185,3 +187,4 @@ call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell""
 
 - [Python Official Site](https://www.python.org/)
 - [pywin32 Github](https://github.com/mhammond/pywin32)
+- [Using Python with LUSAS Modeller](https://www.lusas.com/user_area/documentation/1037_Using_Python_with_LUSAS_Modeller.pdf)
