@@ -15,4 +15,8 @@ This directory includes examples that create parametric structures.
 |     | <img src="../_img/python_502.png" alt="drawing" width="300"/> |
 |     | 502 Tunnel.py                      |
 |     | 2D Tunnel section model with adjustable geometry and MC model for the soil behaviour |
-|     |                                                   |
+|     |
+| 503 | **Slope**                           |
+|     | <img src=> |
+|     | 503 Slope.py                      |
+|     | 2D Slope section model with adjustable geometry and MC model for the soil behaviour |                                                   |
