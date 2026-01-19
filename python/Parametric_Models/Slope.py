@@ -10,6 +10,12 @@
     # The MC model is adopted for soil behaviour.
 #######################################################################
 
+# Add parent directory to sys.path so that we can load libraries from the parent directory
+import os
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+import sys
+sys.path.append(parent_dir)
+
 # Libraries:
 # LUSAS LPI module (easier connection and autocomplete)
 from shared.LPI import *
@@ -31,7 +37,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 #######################################################################
 
 numberOfSlopes = 1   # Number of slopes, number of benches is numberOfSlopes-1
-total_height = 15
+
 ###################
 
 slopes = []          # Slopes in degree
@@ -46,20 +52,25 @@ for i in range(numberOfSlopes):
     value = float(input(f"Enter slope {i + 1} angle (degrees): "))
     slopes.append(value)
 
-print()
 for i in range(numberOfSlopes):
     value = float(input(f"Enter height {i + 1} (meters): "))
     heights.append(value)
 
-print()
 for i in range(numberOfSlopes - 1):
     value = float(input(f"Enter width of bench {i + 1} (meters): "))
     benches.append(value)
 
-print()
 # Additional dimensions
 crest = float(input("Enter crest width (meters): "))
 toe = float(input("Enter toe width (meters): "))
+
+# Read/Validate total height against slopes
+min_total_height = sum(heights)
+while True:
+    total_height = float(input("Enter total height (meters): "))
+    if total_height > min_total_height:
+        break
+    print(f"Total height must be at least {min_total_height:.2f} m. Please re-enter.")
 
 #######################################################################
 # CALCULATE GEOMETRY
@@ -72,6 +83,8 @@ for h, s in zip(heights, slopes):
     widths.append(w)
 
 total_width = crest + sum(widths) + sum(benches) + toe
+
+meshSize = min([min(heights), min(widths), crest, toe])
 
 print("\n" + "=" * 60)
 print("CALCULATED GEOMETRY")
@@ -187,9 +200,9 @@ print(f"\nMain soil surface {surface1.getID()} created successfully!")
 print("Creating surface mesh...")
 # Create Surface (shell) mesh
 surfMeshAttr = database.createMeshSurface("Shell Mesh")
-surfMeshAttr.setIrregular("QPN8", 1)
+surfMeshAttr.setIrregular("QPN8", meshSize)
 # Assign the mesh to the surface on loadcase 1
-surfMeshAttr.assignTo([surface1], 1)
+surfMeshAttr.assignTo(surface1, 1)
 
 # Update the mesh to apply the changes
 print("Updating mesh...")
@@ -204,15 +217,15 @@ fix_xy_support_attr = database.createSupportStructural("FixXY").setStructural("R
 fix_x_support_attr = database.createSupportStructural("FixX").setStructural("R", "F", "F", "F", "F", "F", "F", "F", "C", "F")
 
 # Assign support attributes
-surfLines1 = lusas.newObjectSet().add(surface1).addLOF("Lines").getObjects("Line")
+surfLines1 : "list[IFLine]" = lusas.newObjectSet().add(surface1).addLOF("Lines").getObjects("Line")
 for i, line in enumerate(surfLines1):
-    if line.getStartPoint().getY() == 0.0 and line.getEndPoint().getY()== 0.0:
-        fix_xy_support_attr.assignTo (line,1) 
-    elif line.getStartPoint().getX() == 0.0 and line.getEndPoint().getX()== 0.0:
-        fix_x_support_attr.assignTo(line,1)
-    elif line.getStartPoint().getX() >= total_width and line.getEndPoint().getX()>= total_width:
-        fix_x_support_attr.assignTo(line,1) 
-# End of supports ############################        
+    if line.getStartPoint().getY() == 0.0 and line.getEndPoint().getY() == 0.0:
+        fix_xy_support_attr.assignTo (line, 1)
+    elif line.getStartPoint().getX() == 0.0 and line.getEndPoint().getX() == 0.0:
+        fix_x_support_attr.assignTo(line, 1)
+    elif line.getStartPoint().getX() >= total_width and line.getEndPoint().getX() >= total_width:
+        fix_x_support_attr.assignTo(line, 1)
+# End of supports ############################
 
 # Materials ##################################
 print("Creating soil material...")
