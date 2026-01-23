@@ -1,12 +1,12 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      505 Output Monitoring.py
+# Example:      102 Solver Output Monitoring.py
 # Author:       Finite Element Analysis Ltd
-# Description: Convert a log file into a graphical visualisation
-    # Users are required to specify the log file location.
-    # Additional related parameters may be modified as required.
-    # This file can be executed prior to or following execution of LUSAS Modeller.
+# Description:  Convert a log file into a graphical visualisation.
+#               Users are required to specify the log file location.
+#               Additional related parameters may be modified as required.
+#               This file can be executed prior to or following execution of LUSAS Modeller.
 #######################################################################
 
 # Libraries:
@@ -16,14 +16,15 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 from pathlib import Path
 
-# ============= CONFIGURATION =============
+#######################################################################
+# CONFIGURATION
 LOG_FILE = r'path to log file' # User needs to provide log file path.
 
 UPDATE_INTERVAL = 2000  # milliseconds
 AUTO_DELETE_OLD_LOG = False
 MONITOR_NEW_ONLY = False
-# =========================================
 
+#######################################################################
 # Delete old log file if requested
 if AUTO_DELETE_OLD_LOG and Path(LOG_FILE).exists():
     try:
