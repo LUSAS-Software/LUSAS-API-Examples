@@ -1,7 +1,7 @@
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
-# Example:      Monitor.py
+# Example:      505 Output Monitoring.py
 # Author:       Finite Element Analysis Ltd
 # Description: Convert a log file into a graphical visualisation
     # Users are required to specify the log file location.
