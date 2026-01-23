@@ -10,7 +10,8 @@
 
 import math
 from shared.LPI import *
-
+#from win32com.client import CastTo
+import win32com.client as win32
 def initialise(modeller:'IFModeller'):
     global lusas
     lusas = modeller
@@ -123,26 +124,45 @@ def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -
     surf : IFSurface = lusas.db().createSurface(geometry_data).getObjects("Surface")[0]
     return surf
 
-def create_surface_from_lines(lines: list[IFLine]) -> IFSurface:
-    """Helper function to create a surface from a list of lines
+
+
+def create_surface_from_lines(lines:'list[IFLine]') -> 'IFSurface':
+    """Helper function to create a surface from a list of more than two line objects.
 
     Args:
-        lines (list[IFLine]): List of IFLine objects that define the boundary of the surface
+        lines (List[IFLine]): List of lines defining the surface. The order of the lines determines the orientation of the surface axes. The lines buts be connected
 
     Returns:
-        IFSurface: Surface in the IFDatabase
-    """
-    # Object contains all the settings to perform a geometry creation
-    geometry_data = lusas.newGeometryData()
-    # Set the options for creating a planar surface
-    geometry_data.setCreateMethod("planar")
-    # Specify that the geometry is defined using lines
-    geometry_data.setLowerOrderGeometryType("lines")
-    # Create an object set and add the input lines to it
-    linesObj = lusas.newObjectSet().add(lines)
-    # Create the surface using the defined geometry and return the surface object
-    surf : IFSurface = linesObj.createSurface(geometry_data).getObjects("Surface")[0]
-    return surf
+        IFSurface: Flat surface from the boundary lines
+    """    
+    # geometryData object contains all the settings to perform a geometry creation
+    geom_data = lusas.geometryData().setAllDefaults()         
+    # set the options for creating surfaces from lines
+    geom_data.setLowerOrderGeometryType("lines")        
+    # Create an object set to contain the lines and use this set to create the surface
+    obs = lusas.newObjectSet().add(lines)                 
+    # Create the surface, get the surface object from the returned object set
+    
+    return win32.CastTo(obs.createSurface(geom_data).getObject("Surface"), "IFSurface")
+
+def create_surface_from_points(points:'list[IFPoint]') -> 'IFSurface':
+    """Helper function to create a surface from a list of more than two point objects.
+
+    Args:
+        points (List[IFPoint]): List of points defining the surface. The order of the points determines the orientation of the surface axes
+
+    Returns:
+        IFSurface: Flat surface connecting the points
+    """    
+    # geometryData object contains all the settings to perform a geometry creation
+    geom_data = lusas.geometryData().setAllDefaults()         
+    # set the options for creating surfaces from points
+    geom_data.setLowerOrderGeometryType("points")        
+    # Create an object set to contain the points and use this set to create the surface
+    obs = lusas.newObjectSet().add(points)                 
+    # Create the surface, get the surface object from the returned object set
+    return win32.CastTo(obs.createSurface(geom_data).getObject("Surface"), "IFSurface")
+
 
 def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     """Helper function to create a volume from surfaces
@@ -163,6 +183,19 @@ def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     # Create the volume using the surfaces
     vlm : IFVolume = surfsObj.createVolume(geometry_data).getObjects("Volume")[0]
     return vlm
+
+def get_loadcase(id:int) -> IFLoadcase:
+    """Gets a loadcase with the given ID. 
+       This function provides a type hint for a loadcase, since the underlying LPI function returns an IFLoadset
+    Args:
+        id (int): ID of the loadcase
+
+    Returns:
+        IFLoadcase: Loadcase object
+    """    
+    loadset = lusas.db().getLoadset(id)
+    # Cast the return type from IFLoadset to IFLoadcase so loadcase functions can be called.
+    return win32.CastTo(loadset, "IFLoadcase")
 
 def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
     """
@@ -378,7 +411,7 @@ def delete_all_database_contents(db:'IFDatabase'):
 
 def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
     """
-    Get all loadcases of an analysis. In v22+, this can be acquired directly from the analysis object as analysis.getLoadcases().
+    Get all loadcases of an analysis. In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
 
     Args:
         analysis (IFAnalysis): Analysis object
