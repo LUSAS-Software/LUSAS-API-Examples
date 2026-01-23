@@ -3,29 +3,38 @@
 #
 # Example:      504 Excavation.py
 # Author:       Finite Element Analysis Ltd
-# Description: Generates the geometry, assigns all attributes, and creates construction stages.
-    # Users can edit geometry inputs.
-    # The MC model is adopted for soil behaviour.
-    # Interfaces are taken into consideration.
+# Description:  Generates the geometry, assigns all attributes, and creates construction stages.
+#               Users can edit geometry inputs.
+#               The MC model is adopted for soil behaviour.
+#               Interfaces are taken into consideration.
 #######################################################################
 
+# Add parent directory to sys.path so that we can load libraries from the parent directory
 import os
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+import sys
+sys.path.append(parent_dir)
+
+
+# Libraries:
+import math
+from win32com.client import CastTo
+# LUSAS LPI module (easier connection and autocomplete)
 from shared.LPI import *
+# Helpers module (easier geometry creation)
 import shared.Helpers as Helpers
-import time
+
 import numpy as np
 import pandas as pd
-import math
-import sys; sys.path.append('../') # Reference modules in parent directory
-from win32com.client import CastTo
 
 # Clear console for clean output
 os.system('cls' if os.name == 'nt' else 'clear')
 print("Starting model creation...")
 
-# =============================================================================
+#######################################################################
 # INITIALIZE MODEL
-# =============================================================================
+#######################################################################
+
 # Get LUSAS modeller instance
 lusas = get_lusas_modeller()
 
@@ -46,12 +55,12 @@ database.setModelUnits(lusas.getUnitSet("kN,m,t,s,C"))
 database.setTimescaleUnits("Days")
 Helpers.initialise(lusas)
 
-''' Inputs '''
-soil_layers = [3,12,5]
+# Inputs
+soil_layers = [3, 12, 5]
 wall_depth = 15
 water_level = 3
 
-excavation_depths = [3,4,3]
+excavation_depths = [3, 4, 3]
 width_excavation = 10
 width_retained   = 30
 
@@ -59,7 +68,7 @@ spacing_of_anchors = 3 # Anchor stiffness will be reduced to reflect this spacin
 
 # (index, angle from vert, length, grout length, load)
 # Anchors are indexed from the excavation levels
-anchors=[(0, 56, 11, 3.5, 120), (2, 45, 6, 4, 200)]
+anchors : 'list[tuple[int, float, float, float, float]]' = [(0, 56, 11, 3.5, 120), (2, 45, 6, 4, 200)]
 
 bar_area = 7.07e-4
 grout_area = 0.28
@@ -237,9 +246,9 @@ debug_offset = 0 # Use this to create interface lines with a gap so they can be 
 # Prevent the features merging together
 database.options().setBoolean("newFeaturesMergeable", False)
 # Create the points
-wall_points      = [CastTo(Helpers.create_point(width_excavation, y, 0), "IFPoint") for y in wall_coords]
-retained_points  = [CastTo(Helpers.create_point(width_excavation+debug_offset, y, 0), "IFPoint") for y in wall_coords]
-excavated_points = [CastTo(Helpers.create_point(width_excavation-debug_offset, y, 0), "IFPoint") for y in wall_coords]
+wall_points      = [Helpers.create_point(width_excavation, y, 0) for y in wall_coords]
+retained_points  = [Helpers.create_point(width_excavation+debug_offset, y, 0) for y in wall_coords]
+excavated_points = [Helpers.create_point(width_excavation-debug_offset, y, 0) for y in wall_coords]
 # Join the points to form lines
 wall_lines      = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(wall_points, wall_points[1:]) ]
 retained_lines  = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(retained_points, retained_points[1:]) ]
@@ -288,14 +297,14 @@ for i in range(len(exc_hor_lines)-1):
     retained_surfaces.append(Helpers.create_surface_from_lines([ret_hor_lines[i], rhs_lines[i], ret_hor_lines[i+1], retained_lines_all[i]]))
 
 # Anchorages
-anchor_lines = []
+anchor_lines : 'list[tuple[IFLine, IFLine]]' = []
 for i, angle, rod_length, grout_length, force in anchors:
     full_length = rod_length+grout_length
     theta = math.radians(angle)
     p1 = Helpers.create_point(width_excavation + rod_length  * math.sin(theta), wall_points[i+1].getY() - rod_length  * math.cos(theta), 0 )
     p2 = Helpers.create_point(width_excavation + full_length * math.sin(theta), wall_points[i+1].getY() - full_length * math.cos(theta), 0 )
-    rod = CastTo(Helpers.create_line_from_points(wall_points[i+1], p1), "IFLine")
-    grout = CastTo(Helpers.create_line_from_points(p1, p2), "IFLine")
+    rod = Helpers.create_line_from_points(wall_points[i+1], p1)
+    grout = Helpers.create_line_from_points(p1, p2)
     anchor_lines.append((rod, grout))
 
 anchor_surfaces = []
@@ -555,7 +564,7 @@ if len(excavation_loadcases) > 1:
     assign = lusas.assignment().setAllDefaults().setLoadsetSpecified(excavation_loadcases[0])
     for lc in excavation_loadcases[1:]:
         assign.addLoadsetSpecified(lc)
-    dummy_load_attr.assignTo(CastTo(rhs_lines[0], "IFLine").getStartPoint(), assign)
+    dummy_load_attr.assignTo(rhs_lines[0].getStartPoint(), assign)
 
 print("\n" + "="*50)
 print("Model building completed successfully!")
