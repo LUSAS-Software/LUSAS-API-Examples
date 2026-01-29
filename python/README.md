@@ -49,7 +49,7 @@ To **install Python** on your system, follow these steps:
 
 1. **Install Python**:
    
-   - Download a Python installer from [python.org](https://python.org), preferably v3.13.*
+   - Download a Python installer from [python.org](https://python.org)
    
    - During installation, make sure to **check "Add Python to PATH"**
    
@@ -62,7 +62,7 @@ To **install Python** on your system, follow these steps:
    - To install **pywin32**, run:
      
      ```bash
-     pip install pywin32==308
+     pip install pywin32
      ```
    
    - Optionally, additional Python libraries used across the repository examples can be installed running:
@@ -71,7 +71,10 @@ To **install Python** on your system, follow these steps:
      pip install pandas openpyxl matplotlib
      ```
 
+   Examples are tested using `Python 3.13.*` and `pywin32 308`.
+
 If you are using *Visual Studio Code* as your (IDE), it is recommended that you also install the `Python` and `Pylance` plugin (released by *Microsoft*).
+
 
 ## 🚀 How to Run
 
