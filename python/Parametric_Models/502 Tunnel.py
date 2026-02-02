@@ -3,7 +3,8 @@
 #
 # Example:      502 Tunnel.py
 # Author:       Finite Element Analysis Ltd
-# Description:  Generates the geometry, assign all attributes, runs LUSAS, and plots the deformed mesh.
+# Description:  2D Tunnel section model.
+#               Generates the geometry, assign all attributes, runs LUSAS, and plots the deformed mesh.
 #               Users can edit geometry inputs.
 #               The MC model is adopted for soil behaviour.
 #               joints are included.
