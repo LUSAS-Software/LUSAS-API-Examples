@@ -22,5 +22,6 @@ This directory includes examples that create parametric structures.
 |     | 2D Slope section model with adjustable geometry and MC model for the soil behaviour |
 |     |                                                   |
 | 504 | **Excavation**                                    |
+|     | <img src="../_img/python_504.png" alt="drawing" width="300"> |
 |     | 504 Excavation.py                                 |
-|     | Excavation model with adjustable geometry         |
+|     | 2D Excavation model with adjustable geometry      |
