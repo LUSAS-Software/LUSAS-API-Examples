@@ -3,7 +3,8 @@
 #
 # Example:      501 Bridge abutment.py
 # Author:       Finite Element Analysis Ltd
-# Description:  Generates the geometry, assign all attributes, runs LUSAS, and plots the deformed mesh.
+# Description:  2D Bridge Abutment model.
+#               Generates the geometry, assign all attributes, runs LUSAS, and plots the deformed mesh.
 #               Users can edit geometry inputs.
 #               The MC model is adopted for soil behaviour.
 #               Interfaces and joints are not included.

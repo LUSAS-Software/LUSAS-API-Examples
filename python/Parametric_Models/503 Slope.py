@@ -3,11 +3,12 @@
 #
 # Example:      503 Slope.py
 # Author:       Finite Element Analysis Ltd
-# Description: Generates the geometry, assign all attributes.
-    # Users can modify the number of slopes and the total height of the model (this will affect the other inputs)
-    # Users are required to input the model geometry, including slope angles, heights of individual slopes, bench widths, crest width, and toe width.
-    # The provided inputs have not been checked for validity.
-    # The MC model is adopted for soil behaviour.
+# Description:  2D Slope section model.
+#               Generates the geometry, assign all attributes.
+#               Users can modify the number of slopes and the total height of the model (this will affect the other inputs)
+#               Users are required to input the model geometry, including slope angles, heights of individual slopes, bench widths, crest width, and toe width.
+#               The provided inputs have not been checked for validity.
+#               The MC model is adopted for soil behaviour.
 #######################################################################
 
 # Add parent directory to sys.path so that we can load libraries from the parent directory
