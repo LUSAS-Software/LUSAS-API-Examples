@@ -3,82 +3,61 @@
 #
 # Example:      504 Excavation.py
 # Author:       Finite Element Analysis Ltd
-# Description:  Generates the geometry, assigns all attributes, and creates construction stages.
+# Description:  2D Excavation model.
+#               Generates the geometry, assigns all attributes, and creates construction stages.
 #               Users can edit geometry inputs.
 #               The MC model is adopted for soil behaviour.
 #               Interfaces are taken into consideration.
 #######################################################################
 
-# Add parent directory to sys.path so that we can load libraries from the parent directory
-import os
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-import sys
-sys.path.append(parent_dir)
-
-
 # Libraries:
 import math
+import numpy as np
+import pandas as pd
+import os
+import sys
+
+# Add parent directory to sys.path so that we can load libraries from the parent directory
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(parent_dir)
+
 from win32com.client import CastTo
 # LUSAS LPI module (easier connection and autocomplete)
 from shared.LPI import *
 # Helpers module (easier geometry creation)
 import shared.Helpers as Helpers
 
-import numpy as np
-import pandas as pd
 
-# Clear console for clean output
-os.system('cls' if os.name == 'nt' else 'clear')
-print("Starting model creation...")
-
-#######################################################################
-# INITIALIZE MODEL
-#######################################################################
-
-# Get LUSAS modeller instance
-lusas = get_lusas_modeller()
-
-# Safety check: prevent overwriting unsaved work
-if lusas.existsDatabase() and lusas.db().isModified():
-    raise Exception("Please save or close the current model before running.")
-
-# Create new project and get database reference
-lusas.newProject("Structural", "Excavation.mdl")
-database = lusas.getDatabase()
-lusas.setVisible(True)
-lusas.enableUI(True)
-
-# Set global analysis parameters
-database.setAnalysisCategory("2D Inplane")
-database.setVerticalDir("Y")
-database.setModelUnits(lusas.getUnitSet("kN,m,t,s,C"))
-database.setTimescaleUnits("Days")
-Helpers.initialise(lusas)
-
+##############################
 # Inputs
-soil_layers = [3, 12, 5]
-wall_depth = 15
-water_level = 3
+soil_layers = [3, 12, 5]    # Thickness of each layer (t_s1, t_s2 ...) (m)
+wall_depth = 15             # Total retaining wall height, d_wall (soil surface to bottom of the wall) (m)
+water_level = 3             # Water level (soil surface to water level) (m)
 
-excavation_depths = [3, 4, 3]
-width_excavation = 10
-width_retained   = 30
+excavation_depths = [3, 4, 3]   # Thickness of each excavation layer (d_ex1, d_ex2 ...) (m)
+width_excavation = 10           # Modelled width of the excavation area, w_ex (m)
+width_retained = 30             # Modelled width of the retained area, w_r (m)
 
-spacing_of_anchors = 3 # Anchor stiffness will be reduced to reflect this spacing (m)
+anchors: 'list[tuple[int, float, float, float, float]]' = [
+    (2, 56, 11, 3.5, 120), # (anchored wall point, angle from vert φ_a, length l_a, grout length l_g, load)
+    (4, 45, 6, 4, 200)
+    ]
+spacing_of_anchors = 3 # Transverse anchors spacing (Anchor stiffness will be reduced to reflect this) (m)
 
-# (index, angle from vert, length, grout length, load)
-# Anchors are indexed from the excavation levels
-anchors : 'list[tuple[int, float, float, float, float]]' = [(0, 56, 11, 3.5, 120), (2, 45, 6, 4, 200)]
+bar_area = 7.07e-4      # Anchor bar cross sectional area
+grout_area = 0.28       # Anchor grout cross sectional area
+wall_thickness = 0.35   # Retaining wall thickness
 
-bar_area = 7.07e-4
-grout_area = 0.28
-wall_thickness = 0.35
+mesh_size = 1.0 # Element length
 
-mesh_size = 1.0
+surcharge_offset = 2  # l_o, back from wall (m)
+surcharge_length = 5  # l_s (m)
+surcharge_intensity = 10  # kpa
 
-surcharge_offset = 2 # back from wall (m)
-surcharge_length = 5 # meter
-surcharge_intensity = 10 #kpa
+# Path of the spreadsheet with the soil layers material properties
+material_properties_spreadsheet_path = "504 Excavation_Soil_Inputs.xlsx"
+
+debug_offset = 0  # Use this to create interface lines with a gap so they can be checked
 
 # Checking parameters
 assert wall_depth > sum(excavation_depths),       "The wall depth should be larger than the excavation"
@@ -88,6 +67,30 @@ assert water_level == excavation_depths[0],       "The first excavation is assum
 
 embed_length = wall_depth - sum(excavation_depths)
 soil_depth = sum(soil_layers)
+
+##############################
+# INITIALIZE MODEL
+
+# Get LUSAS modeller instance
+lusas = get_lusas_modeller(True)
+
+# Safety check: prevent overwriting unsaved work
+if lusas.existsDatabase() and lusas.db().isModified():
+    raise Exception("Please save or close the current model before running.")
+
+# Create new project and get database reference
+lusas.newProject("Structural", "Excavation.mdl")
+database = lusas.getDatabase()
+
+# Set global analysis parameters
+database.setAnalysisCategory("2D Inplane")
+database.setVerticalDir("Y")
+database.setModelUnits(lusas.getUnitSet("kN,m,t,s,C"))
+database.setTimescaleUnits("Days")
+Helpers.initialise(lusas)
+
+##############################
+# Attributes
 
 # Mesh
 # Two-phase plane strain quadrilateral elements are used for the soil
@@ -111,7 +114,7 @@ anchor_grout_geom_attr = database.createGeometricLine("Anchor Grout").setElement
 # Material
 soil_material_attrs:list[IFAttribute] = []
 # Read the soil material definitions from the corresponding spreadsheet
-df_soils = pd.read_excel("510 Soil_Inputs.xlsx", header=1)
+df_soils = pd.read_excel(material_properties_spreadsheet_path, header=1)
 # First 3 columns define properties, remaining are soil material definitions
 if len(df_soils.columns) > 3:
     for i in range(3, len(df_soils.columns)):
@@ -138,8 +141,8 @@ assert len(soil_material_attrs) >= len(soil_layers), " The number of defined soi
 
 # Elastic materials for the wall and anchors. Note anchors are reduced to account for horizontal spacing
 wall_material_attr          = database.createIsotropicMaterial("Wall", 35e6, 0.15, 2.4)
-anchor_bar_material_attr    = database.createIsotropicMaterial("Anchor rod", 200e6/spacing_of_anchors, 0.3, 0.0)
-anchor_grout_material_attr  = database.createIsotropicMaterial("Anchor Grout", 250e6/spacing_of_anchors, 0.1, 0.0)
+anchor_bar_material_attr    = database.createIsotropicMaterial("Anchor rod", 200e6 / spacing_of_anchors, 0.3, 0.0)
+anchor_grout_material_attr  = database.createIsotropicMaterial("Anchor Grout", 250e6 / spacing_of_anchors, 0.1, 0.0)
 
 # Create an interface material for each of the soil materials
 soil_interfaces:list[IFSoilStructureMaterialSet] = list()
@@ -159,7 +162,7 @@ for i in range(1, len(excavation_depths)):
     phreatic_mesh_attrs.append(database.createMeshPhreatic(f"De-watering {i}"))
 
 # Water pressure distribution loads defined from the phreatic surfaces
-water_pressure_attrs:list[IFWaterPressureDistrLoad] = []
+water_pressure_attrs: list[IFWaterPressureDistrLoad] = []
 # Always have a ground water pressure
 attr = database.createLoadingWaterPressureDistr("Groundwater pwp")
 attr.setDensity(1.0).setOnlyPoreWaterPressure(True).setPhreatic(phreatic_mesh_attrs[0], "faces")
@@ -183,12 +186,12 @@ load_variation_attr = database.createVariationLine("Surcharge Limits")
 load_variation_attr.setFunction("Actual")
 load_variation_attr.addRowUnequal(0.0, 0.0)
 load_variation_attr.addRowUnequal(surcharge_offset, 0.0)
-load_variation_attr.addRowUnequal(surcharge_offset*1.001, 1.0)
-load_variation_attr.addRowUnequal(surcharge_offset+surcharge_length, 1.0)
-load_variation_attr.addRowUnequal(surcharge_offset+surcharge_length, 0.0)
+load_variation_attr.addRowUnequal(surcharge_offset * 1.001, 1.0)
+load_variation_attr.addRowUnequal(surcharge_offset + surcharge_length, 1.0)
+load_variation_attr.addRowUnequal(surcharge_offset + surcharge_length, 0.0)
 
 # Surcharge loading is a face loading with intensity defined by the variation
-surchage_load_attr = database.createLoadingFace(f"Surchage load {surcharge_intensity}kPa").setFace(0.0, f"{surcharge_intensity}*{load_variation_attr.getName()}", 0.0, 0.0)
+surcharge_load_attr = database.createLoadingFace(f"Surcharge load {surcharge_intensity}kPa").setFace(0.0, f"{surcharge_intensity}*{load_variation_attr.getName()}", 0.0, 0.0)
 
 # Dewatering is modelled by moving a phreactic surface using a prescribed displacement
 dewater_load_attrs:list[IFAttribute] = []
@@ -199,7 +202,8 @@ for i, d in enumerate(excavation_depths[1:]):
 # Anchorage loads are modelled using target stress-strains
 anchor_load_attrs:list[IFAttribute] = []
 for i, anchor in enumerate(anchors):
-    anchor_load_attrs.append(database.createLoadingStressStrain(f"Anchor {i+1}={anchor[4]}kN").setStressStrain("Target", [anchor[4], "N/A"], "Line", "Bar", 2))
+    l_load = anchor[4]
+    anchor_load_attrs.append(database.createLoadingStressStrain(f"Anchor {i+1}={l_load}kN").setStressStrain("Target", [l_load, "N/A"], "Line", "Bar", 2))
 
 # Automatic loading is used to reduce the residual forces of the excavated soil. 
 # A dummy load is used to replace the prescribed displacement in the automatic loading.
@@ -220,6 +224,10 @@ for i in range(len(excavation_depths)):
     attr.setCustomType("activeMesh").setForceDistribution("distribute over stage")
     excavation_deactivate_attrs.append(attr)
 
+
+##############################
+# Geometry
+
 # Vertical coordinates defined by soil layers
 soil_coords = [soil_depth]+[soil_depth-float(y) for y in np.add.accumulate(soil_layers) ]
 print("Soil coords : ", soil_coords)
@@ -231,7 +239,6 @@ vertical_coords = list(set(soil_coords + excv_coords + [wall_depth, 0]))
 vertical_coords.sort(reverse=True)
 print("Vertical coords : ", vertical_coords)
 
-
 # Coordinates of the wall
 wall_coords     = [y for y in vertical_coords if y >= soil_depth-wall_depth]
 print("Wall coords : ", wall_coords)
@@ -239,29 +246,29 @@ print("Wall coords : ", wall_coords)
 sub_wall_coords = [y for y in vertical_coords if y < soil_depth-wall_depth]
 print("Subwall coords : ", sub_wall_coords)
 
-debug_offset = 0 # Use this to create interface lines with a gap so they can be checked
-
-# Create the 3 overlapping lines, 1 for the wall and 1 for the soil interface eitherside. The wall will be connected to the soil with the interface elements
+# Create the 3 overlapping lines, 1 for the wall and 1 for the soil interface either side. The wall will be connected to the soil with the interface elements
 # wall_coords = [soil_depth]+[soil_depth-float(y) for y in np.add.accumulate( excavation_depths + [embed_length]) ]
 # Prevent the features merging together
 database.options().setBoolean("newFeaturesMergeable", False)
 # Create the points
-wall_points      = [Helpers.create_point(width_excavation, y, 0) for y in wall_coords]
-retained_points  = [Helpers.create_point(width_excavation+debug_offset, y, 0) for y in wall_coords]
-excavated_points = [Helpers.create_point(width_excavation-debug_offset, y, 0) for y in wall_coords]
+wall_points: "list[IFPoint]" = [CastTo(Helpers.create_point(width_excavation, y, 0), "IFPoint") for y in wall_coords]
+retained_points  = [CastTo(Helpers.create_point(width_excavation+debug_offset, y, 0), "IFPoint") for y in wall_coords]
+excavated_points = [CastTo(Helpers.create_point(width_excavation-debug_offset, y, 0), "IFPoint") for y in wall_coords]
 # Join the points to form lines
 wall_lines      = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(wall_points, wall_points[1:]) ]
 retained_lines  = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(retained_points, retained_points[1:]) ]
 excavated_lines = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(excavated_points, excavated_points[1:]) ]
 database.options().setBoolean("newFeaturesMergeable", True)
 
+database.createGroup("Wall").add(wall_lines)
+
 if debug_offset > 0:
-    lusas.newObjectSet().add(retained_points[-1]).modify(lusas.geometryData().setAllDefaults().modifyPosition(width_excavation, retained_points[-1].getY(), 0))
-    lusas.newObjectSet().add(excavated_points[-1]).modify(lusas.geometryData().setAllDefaults().modifyPosition(width_excavation, excavated_points[-1].getY(), 0))
+    lusas.newObjectSet().add(retained_points[-1]).modify(lusas.newGeometryData().modifyPosition(width_excavation, retained_points[-1].getY(), 0))
+    lusas.newObjectSet().add(excavated_points[-1]).modify(lusas.newGeometryData().modifyPosition(width_excavation, excavated_points[-1].getY(), 0))
 
 # Merge the points at the bottom of the wall
 objs = lusas.newObjectSet().add(wall_points[-1]).add(retained_points[-1]).add(excavated_points[-1])
-objs.makeMergeable(lusas.geometryData().setAllDefaults().setLowerOrderGeometryType("points"))
+objs.makeMergeable(lusas.newGeometryData().setLowerOrderGeometryType("points"))
 p = objs.getObject("Point")
 # Cast to IFPoint to access getY() method
 p = CastTo(p, "IFPoint")
@@ -271,7 +278,7 @@ retained_points[-1] = p
 excavated_points[-1] = p
 
 # points and lines beneath the wall
-sub_wall_points = [Helpers.create_point(width_excavation, y, 0) for y in sub_wall_coords]
+sub_wall_points: "list[IFPoint]" = [Helpers.create_point(width_excavation, y, 0) for y in sub_wall_coords]
 sub_wall_lines = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip([wall_points[-1]]+sub_wall_points, sub_wall_points) ]
 
 # Points at the boundaries of the problem
@@ -286,37 +293,42 @@ ret_hor_lines = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(retai
 
 # Surfaces on the excavated side
 excavated_lines_all = excavated_lines + sub_wall_lines
-excavated_surfaces:list[IFSurface] = []
+excavated_surfaces: list[IFSurface] = []
 for i in range(len(exc_hor_lines)-1):
-    excavated_surfaces.append(Helpers.create_surface_from_lines([exc_hor_lines[i], excavated_lines_all[i], exc_hor_lines[i+1], lhs_lines[i]]))
+    l_surf = Helpers.create_surface_from_lines([exc_hor_lines[i], excavated_lines_all[i], exc_hor_lines[i+1], lhs_lines[i]])
+    excavated_surfaces.append(l_surf)
 
 # Surfaces on the retained side
 retained_lines_all = retained_lines + sub_wall_lines
-retained_surfaces:list[IFSurface] = []
+retained_surfaces: list[IFSurface] = []
 for i in range(len(exc_hor_lines)-1):
-    retained_surfaces.append(Helpers.create_surface_from_lines([ret_hor_lines[i], rhs_lines[i], ret_hor_lines[i+1], retained_lines_all[i]]))
+    l_surf = Helpers.create_surface_from_lines([ret_hor_lines[i], rhs_lines[i], ret_hor_lines[i+1], retained_lines_all[i]])
+    retained_surfaces.append(l_surf)
 
 # Anchorages
-anchor_lines : 'list[tuple[IFLine, IFLine]]' = []
+anchor_group = database.createGroup("Anchorages")
+anchor_lines: 'list[tuple[IFLine, IFLine]]' = []
 for i, angle, rod_length, grout_length, force in anchors:
-    full_length = rod_length+grout_length
+    l_wall_point = wall_points[i - 1]
+    full_length = rod_length + grout_length
     theta = math.radians(angle)
-    p1 = Helpers.create_point(width_excavation + rod_length  * math.sin(theta), wall_points[i+1].getY() - rod_length  * math.cos(theta), 0 )
-    p2 = Helpers.create_point(width_excavation + full_length * math.sin(theta), wall_points[i+1].getY() - full_length * math.cos(theta), 0 )
-    rod = Helpers.create_line_from_points(wall_points[i+1], p1)
-    grout = Helpers.create_line_from_points(p1, p2)
+    p1 = Helpers.create_point(width_excavation + rod_length  * math.sin(theta), l_wall_point.getY() - rod_length  * math.cos(theta), 0 )
+    p2 = Helpers.create_point(width_excavation + full_length * math.sin(theta), l_wall_point.getY() - full_length * math.cos(theta), 0 )
+    rod = CastTo(Helpers.create_line_from_points(l_wall_point, p1), "IFLine")
+    grout = CastTo(Helpers.create_line_from_points(p1, p2), "IFLine")
     anchor_lines.append((rod, grout))
+    anchor_group.add(rod).add(grout)
 
 anchor_surfaces = []
 if len(anchor_lines) > 0:
     for i in range(len(anchor_lines)-1):
-        anchor_surfaces.append(Helpers.create_surface_from_points([
+        l_surf = Helpers.create_surface_from_points([
             anchor_lines[i][1].getStartPoint(), 
             anchor_lines[i][1].getEndPoint(),
             anchor_lines[i+1][1].getEndPoint(), 
             anchor_lines[i+1][1].getStartPoint()
-        ]))
-
+        ])
+        anchor_surfaces.append(l_surf)
 
 # Lines representing the phreatic surfaces
 x = width_excavation + width_retained
@@ -325,9 +337,13 @@ line_ground_water = Helpers.create_line_by_coordinates(x+1, soil_depth-water_lev
 line_water_levels = [line_ground_water]
 depth = soil_depth
 for excavation in excavation_depths[:-1]:
-    depth-=excavation
+    depth -= excavation
     line = Helpers.create_line_by_coordinates(-3, depth, 0, -1, depth, 0)
     line_water_levels.append(line)
+
+
+##############################
+# Assignments
 
 # Soil Mesh
 soil_mesh_attr.assignTo(excavated_surfaces)
@@ -362,7 +378,7 @@ anchor_grout_material_attr.assignTo([l[1] for l in anchor_lines])
 y = soil_depth
 prev_i = 0
 for i, depth in enumerate(soil_layers):
-    y-=depth
+    y -= depth
     iy = vertical_coords.index(y)
     soil_material_attrs[i].assignTo(excavated_surfaces[prev_i:iy])
     soil_material_attrs[i].assignTo(retained_surfaces[prev_i:iy])
@@ -377,6 +393,8 @@ fix_x_support_attr.assignTo(rhs_lines)
 fix_xy_support_attr.assignTo(exc_hor_lines[-1])
 fix_xy_support_attr.assignTo(ret_hor_lines[-1])
 
+# Split lines
+# (create and assign temporary attributes to identify lines after split)
 retained_surf_attr = database.createDesignAttribute("Retained", "Retained", "Retained", "surfaces")
 retained_surf_attr.assignTo(retained_surfaces)
 
@@ -386,20 +404,19 @@ anchor_surf_attr.assignTo(anchor_surfaces)
 horiz_line_attr = database.createDesignAttribute("HorizLine", "HorizLine", "HorizLine", "lines")
 horiz_line_attr.assignTo(ret_hor_lines)
 
-anchor_line_attrs:list[IFDesignAttribute] = []
+anchor_line_attrs: list[IFDesignAttribute] = []
 for i, lines in enumerate(anchor_lines):
     attr = database.createDesignAttribute(f"Anchor Line {i+1}", "Anchor", "Anchor", "lines")
     attr.assignTo(lines[1])
     anchor_line_attrs.append(attr)
 
-geom_data = lusas.geometryData().setAllDefaults().useInDependents(True)
-
+geom_data = lusas.newGeometryData().useInDependents(True)
 did_split = True
 while did_split:
     for line in database.getObjects(horiz_line_attr):
         for anchor_surface in database.getObjects(anchor_surf_attr):    
             objs = lusas.newObjectSet().add(anchor_surface).add(line).splitSurface(geom_data)
-            did_split = len(objs.getObjects("Surface"))> 0
+            did_split = len(objs.getObjects("Surface")) > 0
             if did_split: break
 
 did_split = True
@@ -407,15 +424,17 @@ while did_split:
     for surface in database.getObjects(anchor_surf_attr):
 
         for retained_surface in database.getObjects(retained_surf_attr):
-            geom_data = lusas.geometryData().setAllDefaults()
+            geom_data = lusas.newGeometryData()
             geom_data.setBooleanSimplify(False)
             geom_data.setBooleanDeletePrimary(False)
-            # geom_data.setBooleanDeleteSecondary(False)
             geom_data.setBooleanReverseOrderOfSubtraction(True)
             objs = lusas.newObjectSet().add(surface).add(retained_surface)
             returned_objs = objs.booleanSubtraction(geom_data)
-            did_split = len(returned_objs.getObjects("Surface"))> 0
+            did_split = len(returned_objs.getObjects("Surface")) > 0
             if did_split: break
+
+for i, attr in enumerate(anchor_line_attrs):
+    anchor_group.add(attr)
 
 # Helper function to get the soil material from the soil depth
 def get_soil_index_from_depth(y:float) -> int:
@@ -438,15 +457,15 @@ for i, attr in enumerate(anchor_line_attrs):
     anchor_lines[i] = newlines # replace with list of all anchor lines
 
 # Delete the temporary attributes
-todelete = [retained_surf_attr, anchor_surf_attr, horiz_line_attr] + anchor_line_attrs
-for attr in todelete:
+toDelete = [retained_surf_attr, anchor_surf_attr, horiz_line_attr] + anchor_line_attrs
+for attr in toDelete:
     attr.deassignFrom("all")
     database.deleteAttribute(attr)
 del retained_surf_attr
 del anchor_surf_attr
 del horiz_line_attr
 del anchor_line_attrs
-del todelete
+del toDelete
 
 # Generate the mesh
 database.resetMesh()
@@ -463,12 +482,12 @@ initial_loadcase.addGravity(True)
 # The initial loadcase must specify the nonlinear controls. Here we have a basic nonlinear analysis with a manual load increment, i.e 1 increment
 initial_loadcase.setTransientControl(0)
 initial_loadcase.getTransientControl().setNonlinearManual().setOutput().setConstants()
-initial_loadcase.getTransientControl().setValue("dlnorm", 1.0).setValue("dtnrml", 1.0) # Displacment norms
+initial_loadcase.getTransientControl().setValue("dlnorm", 1.0).setValue("dtnrml", 1.0) # Displacement norms
 initial_loadcase.getTransientControl().setValue("iterStrategyType", "Minimise including residuals")
 # 2nd Stage. Activate the wall elements to represent the installation
 install_wall_loadcase = database.createLoadcase("Install wall")
 install_wall_loadcase.addGravity(True)
-wall_activate_attr.assignTo(wall_lines, lusas.assignment().setAllDefaults().setLoadset(install_wall_loadcase))
+wall_activate_attr.assignTo(wall_lines, lusas.newAssignment().setLoadset(install_wall_loadcase))
 # Consider any surcharge loading present before excavation starts
 surcharge_loadcase = database.createLoadcase("Surcharge")
 surcharge_loadcase.addGravity(True)
@@ -483,13 +502,12 @@ excavation_loadcases = []
 y = soil_depth
 prev_i = 0
 for i, depth in enumerate(excavation_depths):
-    y-=depth
+    y -= depth
     iy = vertical_coords.index(y)
-    print(i, depth, y, iy)
     # Loadcase/stage for the excavation
     lc = database.createLoadcase(f"Excavation {i+1}")
     # Assignment to this loadcase
-    assign = lusas.assignment().setAllDefaults().setLoadset(lc)    
+    assign = lusas.newAssignment().setLoadset(lc)    
     # Deactivate the excavated soil elements in this stage
     excavation_deactivate_attrs[i].assignTo(excavated_surfaces[prev_i:iy], assign)
     # Deactivate the excavated interface elements in this stage
@@ -509,7 +527,7 @@ for i, depth in enumerate(excavation_depths):
         # Loadcase/stage for anchor installation
         lc = database.createLoadcase(f"Install Anchor {i+1}")
         # Assignment to this loadcase
-        assign = lusas.assignment().setAllDefaults().setLoadset(lc)
+        assign = lusas.newAssignment().setLoadset(lc)
         # Activate the anchor elements
         anchor_activation_attrs[i].assignTo(anchor_lines[i], assign)
         # Assign the anchor load to the bar element only
@@ -525,7 +543,7 @@ for i, depth in enumerate(excavation_depths):
         lc = database.createLoadcase(f"Set water level for excavation {i+2}")
         lc.addGravity(True)
         # Assignment to this loadcase
-        assign = lusas.assignment().setAllDefaults().setLoadset(lc)
+        assign = lusas.newAssignment().setLoadset(lc)
         # Assign the water pressure attribute to the bottom of the next excavated surface
         iy2 = vertical_coords.index(y-excavation_depths[i+1])
         water_pressure_attrs[i+1].assignTo(exc_hor_lines[iy2], assign)
@@ -535,7 +553,7 @@ for i, depth in enumerate(excavation_depths):
         # Dewatering is achieved by moving the phreatic surface by a prescribed displacement.
         lc = database.createLoadcase(f"Dewatering {i+1}")
         # Assignment to this loadcase
-        assign = lusas.assignment().setAllDefaults().setLoadset(lc)
+        assign = lusas.newAssignment().setLoadset(lc)
         dewater_load_attrs[i].assignTo(line_water_levels[i+1], assign)
         # Apply draining incrementally
         lc.setTransientControl(20)
@@ -546,7 +564,7 @@ for i, depth in enumerate(excavation_depths):
 
 # Assign the loading to the manual load steps
 # Ground water loads
-assign = lusas.assignment().setAllDefaults().setLoadsetSpecified(initial_loadcase)
+assign = lusas.newAssignment().setLoadsetSpecified(initial_loadcase)
 assign.addLoadsetSpecified(install_wall_loadcase)
 assign.addLoadsetSpecified(surcharge_loadcase)
 for lc in manual_loadcases:
@@ -554,19 +572,16 @@ for lc in manual_loadcases:
 water_pressure_attrs[0].assignTo(rhs_lines, assign)
 
 # Surcharge load.
-assign = lusas.assignment().setAllDefaults().setLoadsetSpecified(surcharge_loadcase)
+assign = lusas.newAssignment().setLoadsetSpecified(surcharge_loadcase)
 for lc in manual_loadcases:
     assign.addLoadsetSpecified(lc)
-surchage_load_attr.assignTo(ret_hor_lines[0], assign)
+surcharge_load_attr.assignTo(ret_hor_lines[0], assign)
 
 # Dummy load for excavation
 if len(excavation_loadcases) > 1:
-    assign = lusas.assignment().setAllDefaults().setLoadsetSpecified(excavation_loadcases[0])
+    assign = lusas.newAssignment().setLoadsetSpecified(excavation_loadcases[0])
     for lc in excavation_loadcases[1:]:
         assign.addLoadsetSpecified(lc)
-    dummy_load_attr.assignTo(rhs_lines[0].getStartPoint(), assign)
+    dummy_load_attr.assignTo(CastTo(rhs_lines[0], "IFLine").getStartPoint(), assign)
 
-print("\n" + "="*50)
 print("Model building completed successfully!")
-print("="*50)
-# Users run the model from LUSAS
