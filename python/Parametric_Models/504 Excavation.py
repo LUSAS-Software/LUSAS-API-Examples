@@ -89,6 +89,10 @@ database.setModelUnits(lusas.getUnitSet("kN,m,t,s,C"))
 database.setTimescaleUnits("Days")
 Helpers.initialise(lusas)
 
+# Remove attributes layer to avoid fleshing-mesh warnings
+lusas.view().removeAttributesLayer()
+
+
 ##############################
 # Attributes
 
@@ -410,28 +414,21 @@ for i, lines in enumerate(anchor_lines):
     attr.assignTo(lines[1])
     anchor_line_attrs.append(attr)
 
+# Loop and split the surfaces between the anchorage grouts at all horizontal splits
 geom_data = lusas.newGeometryData().useInDependents(True)
-did_split = True
-while did_split:
-    for line in database.getObjects(horiz_line_attr):
-        for anchor_surface in database.getObjects(anchor_surf_attr):    
-            objs = lusas.newObjectSet().add(anchor_surface).add(line).splitSurface(geom_data)
-            did_split = len(objs.getObjects("Surface")) > 0
-            if did_split: break
+for line in database.getObjects(horiz_line_attr):
+    for anchor_surface in database.getObjects(anchor_surf_attr):
+        objs = lusas.newObjectSet().add(anchor_surface).add(line).splitSurface(geom_data)
 
-did_split = True
-while did_split:
-    for surface in database.getObjects(anchor_surf_attr):
-
-        for retained_surface in database.getObjects(retained_surf_attr):
-            geom_data = lusas.newGeometryData()
-            geom_data.setBooleanSimplify(False)
-            geom_data.setBooleanDeletePrimary(False)
-            geom_data.setBooleanReverseOrderOfSubtraction(True)
-            objs = lusas.newObjectSet().add(surface).add(retained_surface)
-            returned_objs = objs.booleanSubtraction(geom_data)
-            did_split = len(returned_objs.getObjects("Surface")) > 0
-            if did_split: break
+# Loop and subtract the surfaces between the anchorage grouts from all soil surfaces
+for surface in database.getObjects(anchor_surf_attr):
+    for retained_surface in database.getObjects(retained_surf_attr):
+        geom_data = lusas.newGeometryData()
+        geom_data.setBooleanSimplify(False)
+        geom_data.setBooleanDeletePrimary(False)
+        geom_data.setBooleanReverseOrderOfSubtraction(True)
+        objs = lusas.newObjectSet().add(surface).add(retained_surface)
+        returned_objs = objs.booleanSubtraction(geom_data)
 
 for i, attr in enumerate(anchor_line_attrs):
     anchor_group.add(attr)
@@ -516,8 +513,11 @@ for i, depth in enumerate(excavation_depths):
     # The deactivation will be applied in multiple increments, with a max of 20 increments 
     # starting at 0.1 to load factor of 1
     lc.setTransientControl(20)
-    lc.getTransientControl().setNonlinearAutomatic(0.1) # Output and constants will follow initial case
-    lc.getTransientControl().setValue("MaxChangeInLoadFactor", 1.0).setValue("MaxLoadFactor", 1.0)
+    transControl = lc.getTransientControl()
+    transControl.setNonlinearAutomatic(0.1) # Output and constants will follow initial case
+    transControl.setValue("MaxChangeInLoadFactor", 1.0).setValue("MaxLoadFactor", 1.0)
+    transControl.setValue("StiffnessParameter", 0.0).setValue("TerminateOnLimit", False)
+
     if i > 0:
         # Assign dummy load
         excavation_loadcases.append(lc)
@@ -536,8 +536,10 @@ for i, depth in enumerate(excavation_depths):
         # The anchor load is applied in increments so set the nonlinear automatic control.
         # Note that this will automatically include all previous manual loads
         lc.setTransientControl(20)
-        lc.getTransientControl().setNonlinearAutomatic(0.1) # Output and constants will follow initial case
-        lc.getTransientControl().setValue("MaxChangeInLoadFactor", 1.0).setValue("MaxLoadFactor", 1.0)
+        transControl = lc.getTransientControl()
+        transControl.setNonlinearAutomatic(0.1) # Output and constants will follow initial case
+        transControl.setValue("MaxChangeInLoadFactor", 1.0).setValue("MaxLoadFactor", 1.0)
+        transControl.setValue("StiffnessParameter", 0.0).setValue("TerminateOnLimit", False)
 
         # Before the next excavation, set the water level to represent the base of the excavation
         lc = database.createLoadcase(f"Set water level for excavation {i+2}")
@@ -557,8 +559,10 @@ for i, depth in enumerate(excavation_depths):
         dewater_load_attrs[i].assignTo(line_water_levels[i+1], assign)
         # Apply draining incrementally
         lc.setTransientControl(20)
-        lc.getTransientControl().setNonlinearAutomatic(0.1) # Output and constants will follow initial case
-        lc.getTransientControl().setValue("MaxChangeInLoadFactor", 1.0).setValue("MaxLoadFactor", 1.0)
+        transControl = lc.getTransientControl()
+        transControl.setNonlinearAutomatic(0.1) # Output and constants will follow initial case
+        transControl.setValue("MaxChangeInLoadFactor", 1.0).setValue("MaxLoadFactor", 1.0)
+        transControl.setValue("StiffnessParameter", 0.0).setValue("TerminateOnLimit", False)
     
     prev_i = iy
 
@@ -583,5 +587,9 @@ if len(excavation_loadcases) > 1:
     for lc in excavation_loadcases[1:]:
         assign.addLoadsetSpecified(lc)
     dummy_load_attr.assignTo(CastTo(rhs_lines[0], "IFLine").getStartPoint(), assign)
+
+
+# Insert attributes layer
+lusas.view().insertAttributesLayer()
 
 print("Model building completed successfully!")
