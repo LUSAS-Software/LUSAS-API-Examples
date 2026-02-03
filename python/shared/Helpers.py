@@ -10,8 +10,8 @@
 
 import math
 from shared.LPI import *
-#from win32com.client import CastTo
 import win32com.client as win32
+
 def initialise(modeller:'IFModeller'):
     global lusas
     lusas = modeller
@@ -35,7 +35,7 @@ def create_point(x:float, y:float, z:float) -> 'IFPoint':
     geom_data.addCoords(x, y, z)
     # Create the point and return it. 
     # Note that createPoint returns and IFObjectSet from which we can get the point.
-    return lusas.database().createPoint(geom_data).getObject("Point")
+    return win32.CastTo(lusas.database().createPoint(geom_data).getObject("Point"), 'IFPoint')
 
 def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float, z2:float,) -> 'IFLine':
     """Helper function to create a line from coordinates
@@ -57,8 +57,7 @@ def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float,
     geometry_data.setCreateMethod("straight")
     geometry_data.addCoords(x1, y1, z1)
     geometry_data.addCoords(x2, y2, z2)
-    newLine:IFLine = lusas.database().createLine(geometry_data).getObjects("Line")[0]
-    return newLine
+    return win32.CastTo(lusas.database().createLine(geometry_data).getObject("Line"), 'IFLine')
 
 def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     """Helper function to create a line from two point objects.
@@ -79,7 +78,7 @@ def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     obs.add(p1)
     obs.add(p2)
     # Create the line, get the line object array from the returned object set
-    return obs.createLine(geom_data).getObject("Line")
+    return win32.CastTo(obs.createLine(geom_data).getObject("Line"), 'IFLine')
 
 def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     """Helper function to create a straight line from two point coordinates defined 
@@ -103,7 +102,7 @@ def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     geom_data.addCoords(p2[0], p2[1], p2[2])    # Set the coordinates of the second point X,Y,Z
 
     # Create the line, get the line objects from the returned object set
-    return lusas.database().createLine(geom_data).getObject("Line")
+    return win32.CastTo(lusas.database().createLine(geom_data).getObject("Line"), 'IFLine')
 
 def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -> IFSurface:
     """Helper function to create a surface from coordinates
@@ -121,19 +120,17 @@ def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -
     geometry_data.setLowerOrderGeometryType("coordinates")
     for i in range(len(x)):
         geometry_data.addCoords(x[i], y[i], z[i])
-    surf : IFSurface = lusas.db().createSurface(geometry_data).getObjects("Surface")[0]
-    return surf
-
-
+    
+    return win32.CastTo(lusas.db().createSurface(geometry_data).getObject("Surface"), 'IFSurface')
 
 def create_surface_from_lines(lines:'list[IFLine]') -> 'IFSurface':
     """Helper function to create a surface from a list of more than two line objects.
 
     Args:
-        lines (List[IFLine]): List of lines defining the surface. The order of the lines determines the orientation of the surface axes. The lines buts be connected
+        lines (List[IFLine]): List of lines defining the surface. The order of the lines determines the orientation of the surface axes. The lines must be connected
 
     Returns:
-        IFSurface: Flat surface from the boundary lines
+        IFSurface: Surface in the IFDatabase
     """    
     # geometryData object contains all the settings to perform a geometry creation
     geom_data = lusas.geometryData().setAllDefaults()         
@@ -143,7 +140,7 @@ def create_surface_from_lines(lines:'list[IFLine]') -> 'IFSurface':
     obs = lusas.newObjectSet().add(lines)                 
     # Create the surface, get the surface object from the returned object set
     
-    return win32.CastTo(obs.createSurface(geom_data).getObject("Surface"), "IFSurface")
+    return win32.CastTo(obs.createSurface(geom_data).getObject("Surface"), 'IFSurface')
 
 def create_surface_from_points(points:'list[IFPoint]') -> 'IFSurface':
     """Helper function to create a surface from a list of more than two point objects.
@@ -161,8 +158,7 @@ def create_surface_from_points(points:'list[IFPoint]') -> 'IFSurface':
     # Create an object set to contain the points and use this set to create the surface
     obs = lusas.newObjectSet().add(points)                 
     # Create the surface, get the surface object from the returned object set
-    return win32.CastTo(obs.createSurface(geom_data).getObject("Surface"), "IFSurface")
-
+    return win32.CastTo(obs.createSurface(geom_data).getObject("Surface"), 'IFSurface')
 
 def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     """Helper function to create a volume from surfaces
@@ -181,8 +177,7 @@ def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     # create an object set to contain the surfaces and use this set to create the volume
     surfsObj = lusas.newObjectSet().add(surfaces)
     # Create the volume using the surfaces
-    vlm : IFVolume = surfsObj.createVolume(geometry_data).getObjects("Volume")[0]
-    return vlm
+    return win32.CastTo(surfsObj.createVolume(geometry_data).getObject("Volume"), 'IFVolume')
 
 def get_loadcase(id:int) -> IFLoadcase:
     """Gets a loadcase with the given ID. 
@@ -210,11 +205,11 @@ def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
     """
     try:
         myObj = lusas.newObjectSet().add(pnts)
-        lines : list[IFLine] = sweep_Ext(myObj, vector, "Line").getObjects("Lines")
+        lines = sweep_Ext(myObj, vector, "Line").getObjects("Lines")
     except Exception as e:
         print(f"Error sweeping points: {str(e)}")
         return []
-    return lines
+    return [win32.CastTo(line, 'IFLine') for line in lines]
 
 def sweep_lines(lines:list[IFLine], vector: list[float]) -> list[IFSurface]:
     """
@@ -229,11 +224,11 @@ def sweep_lines(lines:list[IFLine], vector: list[float]) -> list[IFSurface]:
     """
     try:
         myObj = lusas.newObjectSet().add(lines)
-        surfs : list[IFSurface] = sweep_Ext(myObj, vector, "Surface").getObjects("Surfaces")
+        surfs = sweep_Ext(myObj, vector, "Surface").getObjects("Surfaces")
     except Exception as e:
         print(f"Error sweeping lines: {str(e)}")
         return []
-    return surfs
+    return [win32.CastTo(surf, 'IFSurface') for surf in surfs]
 
 def sweep_surfaces(surfs:list[IFSurface], vector: list[float]) -> list[IFVolume]:
     """
@@ -248,11 +243,11 @@ def sweep_surfaces(surfs:list[IFSurface], vector: list[float]) -> list[IFVolume]
     """
     try:
         myObj = lusas.newObjectSet().add(surfs)
-        vlms : list[IFVolume] = sweep_Ext(myObj, vector, "Volume").getObjects("Volumes")
+        vlms = sweep_Ext(myObj, vector, "Volume").getObjects("Volumes")
     except Exception as e:
         print(f"Error sweeping surfaces: {str(e)}")
         return []
-    return vlms
+    return [win32.CastTo(vlm, 'IFVolume') for vlm in vlms]
 
 def sweep_Ext(trgtObjSet:IFObjectSet, vector: list[float], hofType:str):
     """
@@ -298,11 +293,11 @@ def sweep_points_rotationally(pnts:list[IFPoint], degrees : float, origin: list[
     """
     try:
         myObj = lusas.newObjectSet().add(pnts)
-        lines : list[IFLine] = sweep_rotationally_Ext(myObj, origin, "Line", degrees, aboutAxis).getObjects("Lines")
+        lines = sweep_rotationally_Ext(myObj, origin, "Line", degrees, aboutAxis).getObjects("Lines")
     except Exception as e:
         print(f"Error sweeping points: {str(e)}")
         return []
-    return lines
+    return [win32.CastTo(line, 'IFLine') for line in lines]
 
 def sweep_lines_rotationally(lines:list[IFLine], degrees : float, origin: list[float] = [0, 0, 0], aboutAxis : str = "z") -> list[IFSurface]:
     """
@@ -319,11 +314,11 @@ def sweep_lines_rotationally(lines:list[IFLine], degrees : float, origin: list[f
     """
     try:
         myObj = lusas.newObjectSet().add(lines)
-        surfs : list[IFSurface] = sweep_rotationally_Ext(myObj, origin, "Surface", degrees, aboutAxis).getObjects("Surfaces")
+        surfs = sweep_rotationally_Ext(myObj, origin, "Surface", degrees, aboutAxis).getObjects("Surfaces")
     except Exception as e:
         print(f"Error sweeping lines: {str(e)}")
         return []
-    return surfs
+    return [win32.CastTo(surf, 'IFSurface') for surf in surfs]
 
 def sweep_surfaces_rotationally(surfs:list[IFSurface], degrees : float, origin: list[float] = [0, 0, 0], aboutAxis : str = "z") -> list[IFVolume]:
     """
@@ -340,11 +335,11 @@ def sweep_surfaces_rotationally(surfs:list[IFSurface], degrees : float, origin: 
     """
     try:
         myObj = lusas.newObjectSet().add(surfs)
-        vlms : list[IFVolume] = sweep_rotationally_Ext(myObj, origin, "Volume", degrees, aboutAxis).getObjects("Volumes")
+        vlms = sweep_rotationally_Ext(myObj, origin, "Volume", degrees, aboutAxis).getObjects("Volumes")
     except Exception as e:
         print(f"Error sweeping surfaces: {str(e)}")
         return []
-    return vlms
+    return [win32.CastTo(vlm, 'IFVolume') for vlm in vlms]
 
 def sweep_rotationally_Ext(trgtObjSet:IFObjectSet, origin:list, hofType:str, degree:float, aboutAxis:str=None):
     """
@@ -387,7 +382,6 @@ def sweep_rotationally_Ext(trgtObjSet:IFObjectSet, origin:list, hofType:str, deg
 
     return objSet
 
-
 def delete_all_database_contents(db:'IFDatabase'):
     """Delete all contents of the database
 
@@ -420,8 +414,8 @@ def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
         list[IFLoadcase]: List of loadcases in the analysis
     """
     analysisName = analysis.getName()
-    allLoadcases : list['IFLoadcase'] = lusas.db().getLoadsets("Loadcase")
-    loadcases : list['IFLoadcase'] = list(filter(lambda lc: lc.getAnalysis().getName() == analysisName, allLoadcases))
+    allLoadcases: list['IFLoadcase'] = [win32.CastTo(lc, 'IFLoadcase') for lc in lusas.db().getLoadsets("Loadcase")]
+    loadcases = list(filter(lambda lc: lc.getAnalysis().getName() == analysisName, allLoadcases))
     # or
     # loadcases : list['IFLoadcase'] = lusas.db().getLoadsets("loadcase", "all", analysisName)
     return loadcases
@@ -448,8 +442,6 @@ def create_reinforcing_bar_attributes(db:'IFDatabase', diameters:list) -> list:
         names.append(name)
     return names
 
-
-
 def create_circular_section(db:'IFDatabase', name:str, dia:float) -> 'IFGeometricLine':
     """Creates a geometric attribute based on a parametric circular definition
 
@@ -463,7 +455,6 @@ def create_circular_section(db:'IFDatabase', name:str, dia:float) -> 'IFGeometri
     """    
     util = db.createParametricSection(name).setType("Circular Solid").setDimensions(['D'], [dia])
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
-
 
 def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:float) -> 'IFGeometricLine':
     """Creates a geometric attribute based on a parametric rectangular definition
@@ -481,6 +472,23 @@ def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:f
     util.setDimensions(['B', 'D'], [breadth, depth])
 
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
+
+def get_line_between_points(p1:IFPoint, p2:IFPoint) -> IFLine:
+    """Gets the line between two points
+    
+    Args:
+        p1 (IFPoint): First point
+        p2 (IFPoint): Second point
+
+    Returns:
+        IFLine: Line connecting the two points, or None if unconnected
+    """
+    for hof in p1.getHOFs():
+        if hof.getTypeCode() == 2:
+            line: IFLine = win32.CastTo(hof, 'IFLine')
+            if line.getStartPoint() == p2 or line.getEndPoint() == p2:
+                return line
+    return None
 
 def isNan(value: float) -> bool:
     """Check if a value is NaN (Not a Number) accounting for LUSAS Modeller NA value equal to 2.2250738585072014e-308.
