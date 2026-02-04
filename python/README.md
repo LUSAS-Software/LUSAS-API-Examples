@@ -136,9 +136,10 @@ call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell""
 2. **Python error `AttributeError: module 'win32com.gen_py.XXXXXXXXXXXXXXXX' has not attribute 'CLSIDToClassMap'`** (How to delete pyWin32 cache)
 
    First, ensure that you are using the `LPI.py` or `LPI_22_0.py` library and that the object at the error line has the called method.
-   Python is case sensitive which may sometimes cause issues with pywin32. These issues are usually fixed by deleting the pywin32 cache. To do so, follow these steps:
+   Python is case sensitive which may sometimes cause issues with pywin32. These issues are usually fixed by deleting the pywin32 cache and using late binding. To do so, follow these steps:
    - Navigate to `%TEMP%/gen_py` and open the python version folder (e.g. 3.13)
    - Delete the folder that matches the error message `XXXXXXXXXXXXXXXX`
+   - Delete any manual castings with `win32com.client.CastTo()` from your code (this will ensure late binding, read more in the `Advanced Users` section below)
    - Run the script again.
 
 3. **Invisible LUSAS Modeller instances**
@@ -156,18 +157,22 @@ call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell""
 1. **Early and Late binding**
 
    There are 3 ways to connect on COM applications using pyWin32 which will affect the type of the returned objects:
-   - `win32com.client.Dispatch("Application")` returns a COM object or a win32com.gen_py object if the object is already cached.
-   - `win32com.client.gencache.EnsureDispatch.Dispatch("Application")` (early binding) returns a win32com.gen_py object.
-   - `win32com.client.dynamic.Dispatch("Application")` (late binding) returns a COM object.
+   - `win32com.client.Dispatch("Application")` returns a `COM` object or a `win32com.gen_py` object if the object is already cached.
+   - `win32com.client.gencache.EnsureDispatch.Dispatch("Application")` (early binding) returns a `win32com.gen_py` object.
+   - `win32com.client.dynamic.Dispatch("Application")` (late binding) returns a `COM` object.
 
    The `get_lusas_modeller()` command used in the provided examples connects on LUSAS using the `win32com.client.dynamic.Dispatch()`.
    This is preferred as object casting is not required and requested methods are handled directly by the connected application as opposed to the generated Python cache.
+   
+   Note that if `pyWin32` cache has been generated, `pyWin32` will utilise it resulting in an early binding behaviour. This can happen if early binding is used once, or if the `win32com.client.CastTo()` command is used for casting. To delete the cache, follow the step described in item #2 of the `Troubleshooting` section above.
 
-2. **pyWin32 Casting** (when early binding is used)
+2. **pyWin32 Casting**
 
    Some LPI commands will return the general object types.
-   When late binding is used, casting is not required to access methods available in sub classes (e.g. for IFLoadcase but not for IFLoadset).
-   When early binding is used, casting is required to avoid errors raised by the generated classes in the win32com cache. As an example, getting a loadcase object can be done through the `getLoadsetByName()` command which will return an `IFLoadset` object. If you are sure that this object is a loadcase, you can cast it as an `IFLoadcase` object using the command `win32com.client.CastTo(myLoadset, "IFLoadcase")`. This is also commonly done when accessing attributes through the `getAttribute()` LPI command, for example when acquiring a Print Results Wizard it would need to be cast from an IFAttribute to an `IFPrintResultsWizard`.
+   
+   When early binding is used, casting is required to avoid errors raised by the generated classes in the win32com cache. As an example, getting a loadcase object can be done through the `getLoadsetByName()` command which will return the general `IFLoadset` object that can be an `IFLoadcase`, an `IFEnvelope` etc. In this case, an error will be thrown when trying to access `IFLoadcase` methods since the object is of type `IFLoadset`. This can be avoided by casting the object to an `IFLoadcase` using the command `win32com.client.CastTo(myLoadset, "IFLoadcase")`. This would commonly be done when accessing attributes through the `getAttribute()` LPI command, for example when getting a Print Results Wizard which would need to be cast from an `IFAttribute` to an `IFPrintResultsWizard`.
+   
+   When late binding is used, casting is not required and each objects methods are identified on runtime. This is easier to work with and usually preferred. In python scripts, IntelliSense can be enabled without casting by manually specifying the object type next to the assigned variable (e.g. `myLoadset: 'IFLoadcase' = lusas.getLoadsetByName('Loadcase 1')`).
 
 3. **Architecture of COM launched LUSAS Modeller instance (32/64bit)**
 
