@@ -21,7 +21,6 @@ import sys
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
 
-from win32com.client import CastTo
 # LUSAS LPI module (easier connection and autocomplete)
 from shared.LPI import *
 # Helpers module (easier geometry creation)
@@ -255,9 +254,9 @@ print("Subwall coords : ", sub_wall_coords)
 # Prevent the features merging together
 database.options().setBoolean("newFeaturesMergeable", False)
 # Create the points
-wall_points: "list[IFPoint]" = [CastTo(Helpers.create_point(width_excavation, y, 0), "IFPoint") for y in wall_coords]
-retained_points  = [CastTo(Helpers.create_point(width_excavation+debug_offset, y, 0), "IFPoint") for y in wall_coords]
-excavated_points = [CastTo(Helpers.create_point(width_excavation-debug_offset, y, 0), "IFPoint") for y in wall_coords]
+wall_points: "list[IFPoint]" = [Helpers.create_point(width_excavation, y, 0) for y in wall_coords]
+retained_points  = [Helpers.create_point(width_excavation+debug_offset, y, 0) for y in wall_coords]
+excavated_points = [Helpers.create_point(width_excavation-debug_offset, y, 0) for y in wall_coords]
 # Join the points to form lines
 wall_lines      = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(wall_points, wall_points[1:]) ]
 retained_lines  = [Helpers.create_line_from_points(p1, p2) for p1, p2 in zip(retained_points, retained_points[1:]) ]
@@ -273,9 +272,7 @@ if debug_offset > 0:
 # Merge the points at the bottom of the wall
 objs = lusas.newObjectSet().add(wall_points[-1]).add(retained_points[-1]).add(excavated_points[-1])
 objs.makeMergeable(lusas.newGeometryData().setLowerOrderGeometryType("points"))
-p = objs.getObject("Point")
-# Cast to IFPoint to access getY() method
-p = CastTo(p, "IFPoint")
+p: 'IFPoint' = objs.getObject("Point")
 # Merging points deletes them so we have to update our point references to the new point
 wall_points[-1] = p
 retained_points[-1] = p
@@ -318,8 +315,8 @@ for i, angle, rod_length, grout_length, force in anchors:
     theta = math.radians(angle)
     p1 = Helpers.create_point(width_excavation + rod_length  * math.sin(theta), l_wall_point.getY() - rod_length  * math.cos(theta), 0 )
     p2 = Helpers.create_point(width_excavation + full_length * math.sin(theta), l_wall_point.getY() - full_length * math.cos(theta), 0 )
-    rod = CastTo(Helpers.create_line_from_points(l_wall_point, p1), "IFLine")
-    grout = CastTo(Helpers.create_line_from_points(p1, p2), "IFLine")
+    rod = Helpers.create_line_from_points(l_wall_point, p1)
+    grout = Helpers.create_line_from_points(p1, p2)
     anchor_lines.append((rod, grout))
     anchor_group.add(rod).add(grout)
 
@@ -449,7 +446,7 @@ for surface in anchor_surfaces:
 for i, attr in enumerate(anchor_line_attrs):
     newlines = [anchor_lines[i][0]] # Add the rod
     for assign in attr.getAssignments():
-        line = CastTo(assign.getDatabaseObject(), "IFLine")
+        line: IFLine = assign.getDatabaseObject()
         newlines.append(line)
     anchor_lines[i] = newlines # replace with list of all anchor lines
 
@@ -586,7 +583,8 @@ if len(excavation_loadcases) > 1:
     assign = lusas.newAssignment().setLoadsetSpecified(excavation_loadcases[0])
     for lc in excavation_loadcases[1:]:
         assign.addLoadsetSpecified(lc)
-    dummy_load_attr.assignTo(CastTo(rhs_lines[0], "IFLine").getStartPoint(), assign)
+
+    dummy_load_attr.assignTo(rhs_lines[0].getStartPoint(), assign)
 
 
 # Insert attributes layer
