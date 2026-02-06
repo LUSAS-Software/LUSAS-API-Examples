@@ -151,6 +151,14 @@ call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell""
 4. **ModuleNotFoundError**
 
    The `ModuleNotFoundError: No module named 'shared'` error means Python can’t find the `LPI.py` file and the `shared` folder. To fix it, copy the `shared` folder into the same folder where your Python script is located.
+   
+5. **Toolbar button not responding**
+
+   If the toolbar button is not working, the session language may be set incorrectly. To fix this:
+	* Open **LUSAS Configuration Settings**.
+	* Navigate to **Modeller Settings**.
+	* Under the option for **"Language for session files and LPI command bar"**, select **'Python'**.
+	* Click **OK** and restart LUSAS Modeller for the change to take effect.
 
 ## 🔍 Tips for Advanced Users
 
