@@ -78,6 +78,8 @@ You can add your scripts in LUSAS toolbar or menu through the following steps.
 3. Go back to the `Commands` tab and select `User` from the Categories list, and Drag & Drop one of the user buttons in one of the existing toolbars, then close the window.
 4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `<lusas_installation_path>\Programs\Config\userToolbar.bmp`.
 
+The above commands assume that the Modeller's command bar language is set to VBScript (default).
+
 **Menu item**:
 1. Navigate to `%userprofile%\Documents\Lusas220\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
 2. This script should modify the LUSAS menu and the code should look like the following example:

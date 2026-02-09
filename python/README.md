@@ -105,6 +105,8 @@ CreateObject("WScript.Shell").Run "py C:\\path_to_my_script\myScript.py", 0, tru
 3. Go back to the `Commands` tab and select `User` from the Categories list, and Drag & Drop one of the user buttons in one of the existing toolbars, then close the window.
 4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `C:\\Path_to_my_lusas_installation\Programs\Config\userToolbar.bmp`.
 
+The above commands assume that the Modeller's command bar language is set to VBScript (default).
+
 **Menu item**:
 1. Navigate to `%userprofile%\Documents\Lusas220\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
 2. This script should modify the LUSAS menu and the code should look like the following example:
@@ -151,14 +153,6 @@ call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell""
 4. **ModuleNotFoundError**
 
    The `ModuleNotFoundError: No module named 'shared'` error means Python can’t find the `LPI.py` file and the `shared` folder. To fix it, copy the `shared` folder into the same folder where your Python script is located.
-   
-5. **Toolbar button not responding**
-
-   If the toolbar button is not working, the session language may be set incorrectly. To fix this:
-	* Open **LUSAS Configuration Settings**.
-	* Navigate to **Modeller Settings**.
-	* Under the option for **"Language for session files and LPI command bar"**, select **'Python'**.
-	* Click **OK** and restart LUSAS Modeller for the change to take effect.
 
 ## 🔍 Tips for Advanced Users
 
@@ -198,6 +192,14 @@ call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell""
       ```REG ADD HKEY_CLASSES_ROOT\AppID\{AC0CF860-2200-11CF-91D8-0020AFC19F64} /t REG_DWORD /v PreferredServerBitness /d 00000003 /f```
 
    Alternatively, manually launch LUSAS so that COM connects on that specific running instance.
+  
+4. **Change LUSAS Modeller command bar language**
+
+   The default language of Modeller's session files, command bar and LPI Commands logs can be changed between `VBScript` (recommended) and `Python` through these steps:
+	* Open LUSAS **Configuration Utility** (it is installed along LUSAS).
+	* Navigate to **Modeller Settings**.
+	* Under the option for **"Language for session files and LPI command bar"**, select **'Python'**.
+	* Click **OK** and restart LUSAS Modeller for the change to take effect.
 
 ## 🔗 Links
 
