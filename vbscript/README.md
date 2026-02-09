@@ -76,11 +76,11 @@ You can add your scripts in LUSAS toolbar or menu through the following steps.
 1. Within LUSAS, navigate to the menu View > Toolbars.
 2. Under the `User` tab, you can define up to 9 commands as single line *VBScript* (e.g. `msgbox "Hello world!"`) or call a script file (e.g. `fileopen "C:\LUSAS Scripts\MyScript.vbs"`)
 3. Go back to the `Commands` tab and select `User` from the Categories list, and Drag & Drop one of the user buttons in one of the existing toolbars, then close the window.
-4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `<lusas_installation_path>\Programs\Config\userToolbar.bmp`.
+4. You can edit the button icon by right clicking the toolbar button and selecting Button Appearance. Alternatively, you can modify the default user button icons by editing the following image `C:\\Path_to_my_lusas_installation\Programs\Config\userToolbar.bmp`.
 
 **Menu item**:
-1. Navigate to `%userprofile%\Documents\Lusas220\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
-2. This script should modify the LUSAS menu and the code should look like the following example:
+1. Navigate to `%userprofile%\Documents\Lusas230\UserScripts` and edit the `UserMenu.vbs` or create a new if it does not exist.
+2. This script will modify the LUSAS menu and the code should look like the following example:
 ```VBScript
 $ENGINE=VBSCRIPT
 
