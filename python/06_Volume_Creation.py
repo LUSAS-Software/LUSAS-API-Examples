@@ -48,7 +48,7 @@ surfsObj = lusas.newObjectSet()
 surfsObj.add(surfaces)
 
 # Create the volume using the surfaces
-vlm : IFVolume = database.createVolume(geom_data).getObjects("Volume")[0]
+vlm : IFVolume = database.createVolume(geom_data).getObject("Volume")
 print(f"Volume {vlm.getID()} created by surfaces.")
 
 

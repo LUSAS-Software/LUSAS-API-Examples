@@ -132,7 +132,7 @@ obs.add(point1) # Add first point (using point Object)
 obs.add("point", 4) # Add second point (using point ID, assumes point with ID 4 exists)
 
 # Create the line, get the line objects array from the returned object set and return the 1 and only line
-new_line : IFLine = obs.createLine(geometry_data).getObjects("Line")[0]
+new_line : IFLine = obs.createLine(geometry_data).getObject("Line")
 print(f"Line {new_line.getID()} created from points.")
 
 

@@ -37,7 +37,7 @@ geometry_data.addCoords(1, 0, 0)
 geometry_data.addCoords(1, 1, 0)
 geometry_data.addCoords(0, 1, 0)
 
-surface1 : IFSurface = database.createSurface(geometry_data).getObjects("Surface")[0]
+surface1 : IFSurface = database.createSurface(geometry_data).getObject("Surface")
 print(f"Surface {surface1.getID()} created by coordinates.")
 
 ######################################################
@@ -69,7 +69,7 @@ geometry_data.setCreateMethod("coons")
 geometry_data.setLowerOrderGeometryType("lines")
 
 # Create the surface using the lines
-new_surface : IFSurface = linesObj.createSurface(geometry_data).getObjects("Surface")[0]
+new_surface : IFSurface = linesObj.createSurface(geometry_data).getObject("Surface")
 print(f"Surface {new_surface.getID()} created by lines.")
 
 

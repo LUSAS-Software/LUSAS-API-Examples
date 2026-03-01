@@ -29,7 +29,7 @@ Call geometry_data.addCoords(1, 0, 0)
 Call geometry_data.addCoords(1, 1, 0)
 Call geometry_data.addCoords(0, 1, 0)
 
-Set surface1 = database.createSurface(geometry_data).getObjects("Surface")(0)
+Set surface1 = database.createSurface(geometry_data).getObject("Surface")
 Call getTextWindow().writeLine("Surface " & surface1.getID() & " created by coordinates.")
 
 
@@ -64,7 +64,7 @@ Call geometry_data.setLowerOrderGeometryType("lines")
 Set linesObj = newObjectSet().add(newLines)
 
 ' Create the surface using the lines
-Set new_surface = linesObj.createSurface(geometry_data).getObjects("Surface")(0)
+Set new_surface = linesObj.createSurface(geometry_data).getObject("Surface")
 Call getTextWindow().writeLine("Surface " & new_surface.getID() & " created by lines.")
 
 

@@ -76,7 +76,7 @@ for n in targetNodes:
     total_fz += fz
 
 # Print total reactions (model units)
-print(f"Total reactions of selected nodes : {fx:.2f}, {fy:.2f}, {fz:.2f}")
+print(f"Total reactions of selected nodes : {total_fx:.2f}, {total_fy:.2f}, {total_fz:.2f}")
 print(f"Execution time for reaction results: {time.time() - start} seconds")
 
 # NOTE:

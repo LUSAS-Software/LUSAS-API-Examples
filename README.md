@@ -9,6 +9,8 @@ These examples are tailored for **LUSAS v23.0** (see repository branches for oth
 The full LPI documentation can be found inside the LUSAS installation folder at:
 `C:\Program Files (x86)\LUSAS220\Programs (x86)\LPIHelp\lpi.html`
 
+The full LPI documentation can be found inside the LUSAS installation folder at: `C:\Program Files (x86)\LUSAS230\Programs (x86)\LPIHelp\lpi.html`
+
 ## What is LUSAS?
 
 [LUSAS](https://www.lusas.com/) is a powerful finite element analysis software used for structural, bridge, geotechnical, and general engineering simulation. The **LUSAS Programming Interface (LPI)** allows automation of model generation, material assignment, loading, solving, and result extraction (read more about it [on the website](https://www.lusas.com/products/information/lusas_programmable_interface.html)).
@@ -24,6 +26,8 @@ The full LPI documentation can be found inside the LUSAS installation folder at:
   Browse each directory to read more about each interaction method.
 
   Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and has the ability to combine `python` code, text, and visualizations in a single document.
+
+    Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and have ability to combine `python` code, text, and visualizations in a single document.
 
 ## Prerequisites
 

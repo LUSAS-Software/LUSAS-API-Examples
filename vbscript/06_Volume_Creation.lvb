@@ -42,7 +42,7 @@ Set surfsObj = newObjectSet()
 Call surfsObj.add(surfaces)
 
 ' Create the volume using the surfaces
-Set vlm = database.createVolume(geom_data).getObjects("Volume")(0)
+Set vlm = database.createVolume(geom_data).getObject("Volume")
 
 
 '######################################################
