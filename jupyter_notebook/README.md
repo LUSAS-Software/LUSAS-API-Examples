@@ -24,6 +24,8 @@ Additional examples are included in the [`Tools`](./Tools/) and [`Parametric_Mod
 
 Some more examples can be found in [this repository](https://github.com/CadairIdris/LusasNoteBooks/tree/master) by @CadairIdris.
 
+Some more examples can be found in [this repository](https://github.com/CadairIdris/LusasNoteBooks/tree/master) by @CadairIdris.
+
 ## ⚙️Setting up Python on Windows
 
 You can first check if Python is already installed on your system through one of the following methods:

@@ -56,7 +56,7 @@ def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float,
     geometry_data.setCreateMethod("straight")
     geometry_data.addCoords(x1, y1, z1)
     geometry_data.addCoords(x2, y2, z2)
-    newLine:IFLine = lusas.database().createLine(geometry_data).getObjects("Line")[0]
+    newLine:IFLine = lusas.database().createLine(geometry_data).getObject("Line")
     return newLine
 
 def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
@@ -120,7 +120,7 @@ def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -
     geometry_data.setLowerOrderGeometryType("coordinates")
     for i in range(len(x)):
         geometry_data.addCoords(x[i], y[i], z[i])
-    surf : IFSurface = lusas.db().createSurface(geometry_data).getObjects("Surface")[0]
+    surf : IFSurface = lusas.db().createSurface(geometry_data).getObject("Surface")
     return surf
 
 def create_surface_from_lines(lines: list[IFLine]) -> IFSurface:
@@ -161,7 +161,7 @@ def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     # create an object set to contain the surfaces and use this set to create the volume
     surfsObj = lusas.newObjectSet().add(surfaces)
     # Create the volume using the surfaces
-    vlm : IFVolume = surfsObj.createVolume(geometry_data).getObjects("Volume")[0]
+    vlm : IFVolume = surfsObj.createVolume(geometry_data).getObject("Volume")
     return vlm
 
 def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
@@ -378,7 +378,7 @@ def delete_all_database_contents(db:'IFDatabase'):
 
 def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
     """
-    Get all loadcases of an analysis. In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
+    Get all loadcases of an analysis. In v22+, this can be acquired directly from the analysis object as analysis.getLoadcases().
 
     Args:
         analysis (IFAnalysis): Analysis object
