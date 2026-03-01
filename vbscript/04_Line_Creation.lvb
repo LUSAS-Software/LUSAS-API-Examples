@@ -123,7 +123,7 @@ Call obs.add(point1) ' Add first point (using point Object)
 Call obs.add("point", 4) ' Add second point (using point ID, assumes point with ID 4 exists, created from the arc)
 
 ' Create the line, get the line objects array from the returned object set and return the 1 and only line
-set new_line = obs.createLine(geometryData).getObjects("Line")(0)
+set new_line = obs.createLine(geometryData).getObject("Line")
 Call getTextWindow().writeLine("Line " & new_line.getID() & " from points.")
 
 

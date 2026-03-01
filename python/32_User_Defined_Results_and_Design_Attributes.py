@@ -101,11 +101,11 @@ mpa_units_object = lusas.getUnitSet("N,mm,t,s,C") # MPa units = N/mm²
 model_units_object = database.getModelUnits()
 
 # Create fctm design attributes for each concrete type
+attr_type = "Concrete Cracking" # The attribute will be created under the "Concrete Design" tree view category
+attr_scope = "concrete_cracking" # This is used to access the design attribute values in the UDR expressions
+assign_type = "Lines" # Can be assigned on Lines
+
 for concrete_type, fctm in fctm_dict.items():
-    # Create a design attribute for the concrete type
-    attr_type = "Concrete Cracking" # The attribute will be created under the "Concrete Design" tree view category
-    attr_scope = "concrete_cracking" # This is used to access the design attribute values in the UDR expressions
-    assign_type = "Lines" # Can be assigned on Lines
     fctm_attr = database.createDesignAttribute(f"fctm {fctm} MPa", attr_type, attr_scope, assign_type)
     # Set the concrete type as the description of the design attribute, this will be shown in the UI next to the design attribute name
     fctm_attr.setDescription(concrete_type)

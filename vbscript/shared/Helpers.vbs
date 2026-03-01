@@ -15,7 +15,7 @@ End Function
 ' This function creates a point from coordinates.
 Function create_line_by_coordinates(x1, y1, z1, x2, y2, z2)
     Set geometry_data = newGeometryData().setLowerOrderGeometryType("coordinates").setCreateMethod("straight").addCoords(x1, y1, z1).addCoords(x2, y2, z2)
-    Set create_line_by_coordinates = database.createLine(geometry_data).getObjects("Line")(0)
+    Set create_line_by_coordinates = database.createLine(geometry_data).getObject("Line")
 End Function
 
 ' This function creates a line from two points.
@@ -30,13 +30,13 @@ Function create_surface_by_coordinates(x, y, z)
     For i = 0 To UBound(x)
         geometry_data.addCoords x(i), y(i), z(i)
     Next
-    Set create_surface_by_coordinates = database.createSurface(geometry_data).getObjects("Surface")(0)
+    Set create_surface_by_coordinates = database.createSurface(geometry_data).getObject("Surface")
 End Function
 
 ' This function creates a surface from coordinates.
 Function create_volume_by_surfaces(surfaces)
     Set geometry_data = newGeometryData().setCreateMethod("solidVolume").setExtractAllVolumes()
-    Set create_volume_by_surfaces = newObjectSet().add(surfaces).createVolume(geometry_data).getObjects("Volume")(0)
+    Set create_volume_by_surfaces = newObjectSet().add(surfaces).createVolume(geometry_data).getObject("Volume")
 End Function
 
 
