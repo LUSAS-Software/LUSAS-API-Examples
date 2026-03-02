@@ -31,6 +31,16 @@ This directory includes examples that create parametric structures.
 |     | 310 Composite Steel Girders - Staged Construction.ipynb |
 |     | Models a two-span composite steel girder bridge with concrete deck slab poured in stages. Buckling analyses are performed for each intermediate construction stage |
 |     |                                                   |
+| 311 | **Double Composite Steel Girders** |
+|     | <img src="../_img/jupyter_notebook_311.png" alt="drawing" width="300"/> |
+|     | 311 Double Composite Steel Girders.ipynb |
+|     | Models a Multi-span composite steel girder bridge with concrete deck slab and concrete slab at the bottom flange level for internal supports. Section dimension and span lengths are defined in the accompanying spreadsheet |
+|     |                                                   |
+| 312 | **Composite Tub** |
+|     | <img src="../_img/jupyter_notebook_312.png" alt="drawing" width="300"/> |
+|     | 312 Composite Tub.ipynb |
+|     | Models a Multi-span composite steel girder box/tub bridge with concrete deck slab. Section dimension and span lengths are defined in the accompanying spreadsheet |
+|     |                                                   |
 | 400 | **Precast Super T Beam Bridge Deck**              |
 |     | <img src="../_img/jupyter_notebook_400.png" alt="drawing" width="300"/> |
 |     | 400 Precast Super T Beam Bridge Deck.ipynb        |
@@ -46,10 +56,20 @@ This directory includes examples that create parametric structures.
 |     | 402 Concrete Culvert.ipynb                        |
 |     | Creates a basic 3D box culvert on spring foundations |
 |     |                                                   |
+| 403 | **Precast Multi-Span**                              |
+|     | <img src="../_img/jupyter_notebook_403.png" alt="drawing" width="300"/> |
+|     | 403 Precast Multi-Span.ipynb                        |
+|     | Creates multi-span precast beam and slab deck model |
+|     |                                                   |
 | 410 | **Concrete Slab Bridge**                          |
 |     | <img src="../_img/jupyter_notebook_410.png" alt="drawing" width="300"/> |
 |     | 410 Concrete Slab Bridge.ipynb                    |
 |     | Deck slab modelled in shell elements and piers modelled with beam elements. 3 options for creating influence analysis are demonstrated ready for traffic load optimisation |
+|     |                                                   |
+| 411 | **Post-Tensioned Tee Beam Slab Bridge**                          |
+|     | <img src="../_img/jupyter_notebook_411.png" alt="drawing" width="300"/> |
+|     | 411 Post-Tensioned Tee Beam Slab Bridge.ipynb                    |
+|     | Creates a beam and slab bridge model with post-tension tendons. Tendon profiles are defined in the accompanying spreadsheet |
 |     |                                                   |
 | 450 | **Concrete Cracking**                             |
 |     | <img src="../_img/jupyter_notebook_450.png" alt="drawing" width="300"/> |

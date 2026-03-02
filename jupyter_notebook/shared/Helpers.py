@@ -15,6 +15,7 @@ def initialise(modeller:'IFModeller'):
     global lusas
     lusas = modeller
 
+
 def create_point(x:float, y:float, z:float) -> 'IFPoint':
     """Helper function to create a point from coordinates
 
@@ -35,6 +36,7 @@ def create_point(x:float, y:float, z:float) -> 'IFPoint':
     # Create the point and return it. 
     # Note that createPoint returns and IFObjectSet from which we can get the point.
     return lusas.database().createPoint(geom_data).getObject("Point")
+
 
 def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float, z2:float,) -> 'IFLine':
     """Helper function to create a line from coordinates
@@ -59,6 +61,7 @@ def create_line_by_coordinates(x1:float, y1:float, z1:float, x2:float, y2:float,
     newLine:IFLine = lusas.database().createLine(geometry_data).getObject("Line")
     return newLine
 
+
 def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     """Helper function to create a line from two point objects.
 
@@ -79,6 +82,7 @@ def create_line_from_points(p1:'IFPoint', p2:'IFPoint') -> 'IFLine':
     obs.add(p2)
     # Create the line, get the line object array from the returned object set
     return obs.createLine(geom_data).getObject("Line")
+
 
 def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     """Helper function to create a straight line from two point coordinates defined 
@@ -104,6 +108,7 @@ def create_line(p1:list[float], p2:list[float]) -> 'IFLine':
     # Create the line, get the line objects from the returned object set
     return lusas.database().createLine(geom_data).getObject("Line")
 
+
 def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -> IFSurface:
     """Helper function to create a surface from coordinates
 
@@ -123,6 +128,7 @@ def create_surface_by_coordinates(x:list[float], y:list[float], z:list[float]) -
     surf : IFSurface = lusas.db().createSurface(geometry_data).getObject("Surface")
     return surf
 
+
 def create_surface_from_lines(lines: list[IFLine]) -> IFSurface:
     """Helper function to create a surface from a list of lines
 
@@ -141,8 +147,28 @@ def create_surface_from_lines(lines: list[IFLine]) -> IFSurface:
     # Create an object set and add the input lines to it
     linesObj = lusas.newObjectSet().add(lines)
     # Create the surface using the defined geometry and return the surface object
-    surf : IFSurface = linesObj.createSurface(geometry_data).getObjects("Surface")[0]
+    surf : IFSurface = linesObj.createSurface(geometry_data).getObject("Surface")
     return surf
+
+
+def create_surface_from_points(points:'list[IFPoint]') -> 'IFSurface':
+    """Helper function to create a surface from a list of more than two point objects.
+
+    Args:
+        points (List[IFPoint]): List of points defining the surface. The order of the points determines the orientation of the surface axes
+
+    Returns:
+        IFSurface: Flat surface connecting the points
+    """    
+    # geometryData object contains all the settings to perform a geometry creation
+    geom_data = lusas.geometryData().setAllDefaults()         
+    # set the options for creating surfaces from points
+    geom_data.setLowerOrderGeometryType("points")        
+    # Create an object set to contain the points and use this set to create the surface
+    obs = lusas.newObjectSet().add(points)                 
+    # Create the surface, get the surface object from the returned object set
+    return obs.createSurface(geom_data).getObject("Surface")
+
 
 def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     """Helper function to create a volume from surfaces
@@ -164,6 +190,7 @@ def create_volume_by_surfaces(surfaces:list[IFSurface]) -> IFVolume:
     vlm : IFVolume = surfsObj.createVolume(geometry_data).getObject("Volume")
     return vlm
 
+
 def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
     """
     Sweeps the given points in the specified direction to create lines.
@@ -182,6 +209,7 @@ def sweep_points(pnts:list[IFPoint], vector: list[float]) -> list[IFLine]:
         print(f"Error sweeping points: {str(e)}")
         return []
     return lines
+
 
 def sweep_lines(lines:list[IFLine], vector: list[float]) -> list[IFSurface]:
     """
@@ -202,6 +230,7 @@ def sweep_lines(lines:list[IFLine], vector: list[float]) -> list[IFSurface]:
         return []
     return surfs
 
+
 def sweep_surfaces(surfs:list[IFSurface], vector: list[float]) -> list[IFVolume]:
     """
     Sweeps the given surfaces in the specified direction to create volumes.
@@ -220,6 +249,7 @@ def sweep_surfaces(surfs:list[IFSurface], vector: list[float]) -> list[IFVolume]
         print(f"Error sweeping surfaces: {str(e)}")
         return []
     return vlms
+
 
 def sweep_Ext(trgtObjSet:IFObjectSet, vector: list[float], hofType:str):
     """
@@ -250,6 +280,7 @@ def sweep_Ext(trgtObjSet:IFObjectSet, vector: list[float], hofType:str):
 
     return objSet
 
+
 def sweep_points_rotationally(pnts:list[IFPoint], degrees : float, origin: list[float] = [0, 0, 0], aboutAxis : str = "z") -> list[IFLine]:
     """
     Sweeps the given points in the specified degrees to create lines.
@@ -270,6 +301,7 @@ def sweep_points_rotationally(pnts:list[IFPoint], degrees : float, origin: list[
         print(f"Error sweeping points: {str(e)}")
         return []
     return lines
+
 
 def sweep_lines_rotationally(lines:list[IFLine], degrees : float, origin: list[float] = [0, 0, 0], aboutAxis : str = "z") -> list[IFSurface]:
     """
@@ -292,6 +324,7 @@ def sweep_lines_rotationally(lines:list[IFLine], degrees : float, origin: list[f
         return []
     return surfs
 
+
 def sweep_surfaces_rotationally(surfs:list[IFSurface], degrees : float, origin: list[float] = [0, 0, 0], aboutAxis : str = "z") -> list[IFVolume]:
     """
     Sweeps the given surfaces in the specified degrees to create volumes.
@@ -312,6 +345,7 @@ def sweep_surfaces_rotationally(surfs:list[IFSurface], degrees : float, origin: 
         print(f"Error sweeping surfaces: {str(e)}")
         return []
     return vlms
+
 
 def sweep_rotationally_Ext(trgtObjSet:IFObjectSet, origin:list, hofType:str, degree:float, aboutAxis:str=None):
     """
@@ -376,6 +410,7 @@ def delete_all_database_contents(db:'IFDatabase'):
 
     db.createAnalysisStructural("Analysis 1")
 
+
 def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
     """
     Get all loadcases of an analysis. In v22.0, this can be acquired directly from the analysis object as analysis.getLoadcases().
@@ -392,6 +427,7 @@ def get_Analysis_Loadcases(analysis : IFAnalysis) -> list[IFLoadcase]:
     # or
     # loadcases : list['IFLoadcase'] = lusas.db().getLoadsets("loadcase", "all", analysisName)
     return loadcases
+
 
 def create_reinforcing_bar_attributes(db:'IFDatabase', diameters:list) -> list:
     """Create geometric attributes representing individual bars in the LUSAS Database
@@ -414,7 +450,6 @@ def create_reinforcing_bar_attributes(db:'IFDatabase', diameters:list) -> list:
         attr.setFromLibrary("Utilities", "", name, 0, 0, 0)
         names.append(name)
     return names
-
 
 
 def create_circular_section(db:'IFDatabase', name:str, dia:float) -> 'IFGeometricLine':
@@ -449,6 +484,7 @@ def create_rectangular_section(db:'IFDatabase', name:str, breadth:float, depth:f
 
     return db.createGeometricLine(name).setFromLibrary("Utilities", "", name, 0, 0, 0)
 
+
 def isNan(value: float) -> bool:
     """Check if a value is NaN (Not a Number) accounting for LUSAS Modeller NA value equal to 2.2250738585072014e-308.
 
@@ -459,3 +495,19 @@ def isNan(value: float) -> bool:
         bool: True if the value is NaN, False otherwise
     """
     return math.isnan(value) or value == 2.2250738585072014e-308
+
+
+def get_line_between_points(p1:IFPoint, p2:IFPoint) -> IFLine:
+    """Gets the line between two points
+    
+    Args:
+        p1 (IFPoint): First point
+        p2 (IFPoint): Second point
+
+    Returns:
+        IFLine: Line connecting the two points, or None if unconnected
+    """
+    for hof in p1.getHOFs():
+        if hof.getTypeCode() == 2:
+            if hof.getStartPoint() == p2 or hof.getEndPoint() == p2:
+                return hof
