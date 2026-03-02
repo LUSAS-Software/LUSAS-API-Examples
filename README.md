@@ -7,9 +7,8 @@ This repository provides practical and minimal examples of using the LUSAS Progr
 These examples are tailored for **LUSAS v23.0** (see repository branches for other versions).
 
 The full LPI documentation can be found inside the LUSAS installation folder at:
-`C:\Program Files (x86)\LUSAS220\Programs (x86)\LPIHelp\lpi.html`
+`C:\Program Files (x86)\LUSAS230\Programs (x86)\LPIHelp\lpi.html`
 
-The full LPI documentation can be found inside the LUSAS installation folder at: `C:\Program Files (x86)\LUSAS230\Programs (x86)\LPIHelp\lpi.html`
 
 ## What is LUSAS?
 
@@ -25,9 +24,8 @@ The full LPI documentation can be found inside the LUSAS installation folder at:
 
   Browse each directory to read more about each interaction method.
 
-  Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and has the ability to combine `python` code, text, and visualizations in a single document.
+Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and has the ability to combine `python` code, text, and visualizations in a single document.
 
-    Beginners are recommended to start with `jupyter_notebook` since its interactive nature allows for step-by-step code execution, immediate result display and have ability to combine `python` code, text, and visualizations in a single document.
 
 ## Prerequisites
 
