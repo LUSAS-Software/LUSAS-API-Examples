@@ -6,6 +6,11 @@ This directory includes examples that create parametric structures.
 
 | #   | Name / Preview / File / Description               |
 | --- | ------------------------------------------------- |
+| 412 | **Free Cantilever Method model**                            |
+|     | <img src="../_img/python_412.png" alt="drawing" width="300"/> |
+|     | Free Cantilever Method model.py                            |
+|     | Spline model of a bridge using the LUSAS free cantilever method (FCM) wizard |
+|     |                                                   |
 | 501 | **2D Bridge Abutment**                            |
 |     | <img src="../_img/python_501.png" alt="drawing" width="300"/> |
 |     | 501 Bridge Abutment.py                            |
