@@ -107,10 +107,10 @@ CreateObject("WScript.Shell").Run "py ""C:\\path_to_my_script\myScript.py"" ", 0
 
 The above commands assume that the Modeller's command bar language is set to VBScript (default). If that has been changed to Python (not recommended) the following command can be used instead:
 ```Python
-' With command prompt shown only during execution
-import subprocess; subprocess.run(["cmd", "/c", "py C:\\path_to_my_script\\myScript.py"], creationflags=subprocess.CREATE_NEW_CONSOLE)
-' Or with command prompt pausing after execution
-import subprocess; subprocess.run(["cmd", "/c", "py C:\\path_to_my_script\\myScript.py & pause"], creationflags=subprocess.CREATE_NEW_CONSOLE)
+' With command prompt shown
+import subprocess; subprocess.Popen(["cmd", "/k", "py", r"C:\path_to_my_script\myScript.py"], creationflags=subprocess.CREATE_NEW_CONSOLE)
+' Or with command prompt hidden
+import subprocess; subprocess.Popen(["py", r"C:\path_to_my_script\myScript.py"], creationflags=subprocess.CREATE_NO_WINDOW)
 ```
 
 **Menu item**:
@@ -125,6 +125,10 @@ set myMenu = menu.appendMenu("User Menu")
 call myMenu.appendItem("My script (cmd shown)", "CreateObject(""WScript.Shell"").Run ""py """"C:\\path_to_my_script\myScript.py"""" "" " )
 call myMenu.appendItem("My script (keep cmd open)", "CreateObject(""WScript.Shell"").Run ""cmd /k py """"C:\\path_to_my_script\myScript.py"""" "" " )
 call myMenu.appendItem("My script (cmd hidden)", "CreateObject(""WScript.Shell"").Run ""py """"C:\\path_to_my_script\myScript.py"""" "", 0, true" )
+
+' Or if Modeller's command bar language is set to VBScript (default), uncomment and use the following commands:
+'call myMenu.appendItem("My script (python, cmd shown)", "import subprocess; subprocess.Popen(['cmd', '/k', 'py', r'C:\\path_to_my_script\\myScript.py'], creationflags=subprocess.CREATE_NEW_CONSOLE)")
+'call myMenu.appendItem("My script (python, cmd hidden)", "import subprocess; subprocess.Popen(['py', r'C:\\path_to_my_script\\myScript.py'], creationflags=subprocess.CREATE_NO_WINDOW)")
 ```
 
 ## 🔍🐛 Troubleshooting
