@@ -70,7 +70,7 @@ distrLoadAttr = database.createLoadingGlobalDistributed("GlbD2")
 distrLoadAttr.setGlobalDistributed(distrType, wx, wy, wz)
 
 # Assign on slab for loadcase 1
-pointLoadAttr.assignTo(surfPoints, 1)
+distrLoadAttr.assignTo(surfPoints, 1)
 
 
 ######################################################
