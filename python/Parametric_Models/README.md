@@ -30,3 +30,9 @@ This directory includes examples that create parametric structures.
 |     | <img src="../_img/python_504.png" alt="drawing" width="300"> |
 |     | 504 Excavation.py                                 |
 |     | 2D Excavation model with adjustable geometry      |
+
+## ⚙️ Setting up
+
+These examples require that Python is installed and the whole repository is downloaded so that the `shared` folder present in the parent folder.
+
+For details on installing python follow the instructions of the [python/README.md](../README.md#%EF%B8%8F-setting-up-python-on-windows).
