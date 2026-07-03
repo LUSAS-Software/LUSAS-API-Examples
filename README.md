@@ -16,7 +16,8 @@ The full LPI documentation can be found inside the LUSAS installation folder at:
 
 ## 📁 Repository Structure
 
-- [`python/`](./python/) – Python examples
+- [`python/`](./python/) – Python examples (executed outside LUSAS)
+- [`lpython/`](./lpython/) – LPython examples (Python executed inside LUSAS)
 - [`jupyter_notebook/`](./jupyter_notebook/) – Python code blocks notebooks
 - [`vbscript/`](./vbscript/) – Legacy examples in VBScript (default LUSAS command bar language)
 - [`dotnet/`](./dotnet/) – .NET interop examples (C# & VB.NET)

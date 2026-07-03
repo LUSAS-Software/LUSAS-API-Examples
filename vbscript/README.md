@@ -29,7 +29,7 @@ Visual Basic Script (*VBScript*) code (files with *.vb or *.lvb extensions) can 
 | Results    | Create User Defined Results and Design Attributes | 32_User_Defined_Results_and_Design_Attributes.lvb |
 | Results    | Prints results along a 2D slice and calculates the total resultant and total moment. | 33_Getting_Results_2D_Slice.lvb |
 
-More examples can be found in your LUSAS installation folder at `<lusas_installation_path>\LUSAS220\Programs\scripts\LPIExamples`.
+More examples can be found in your LUSAS installation folder at `<lusas_installation_path>\Programs\scripts\LPIExamples`.
 
 ## 📄 Code
 
@@ -113,8 +113,8 @@ To associate the lvb extension with *VBScript*, follow these steps:
 2. Select `VB / VBS` from the Language list
 3. Add `lvb` in the `User Ext.:` input
 4. Click `Save & Close`
-5. Restart Notepad++
+5. Restart Notepad++ (already open scripts may need to be closed)
 
 ## 🔗 Relevant Links
 
-- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V22_0/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI & VBS)
+- [LUSAS LPI Customisation and Automation Guide](https://www.lusas.com/user_area/documentation/V23_0/LPI%20Customisation%20and%20Automation%20Guide.pdf) (LPI & VBS)
