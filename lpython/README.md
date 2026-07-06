@@ -32,6 +32,25 @@ The script relative path will be based on the open model parent folder.
 
 Mind that Python `print()` command does not write on LUSAS's text window, instead use `getTextWindow().writeLine("My text")`.
 
+## Using Python Packages in LPython scripts
+
+LUSAS v23+ ships with an integrated Python installation located at `C:\ProgramData\Lusas230\x64\Python\` (the 32bit version is under `x86` folder). If you want to use additional libraries in LPython scripts, you need to install them into that Python environment.
+
+First, install `pip` from a terminal (this is only required once):
+
+```bat
+cd C:\ProgramData\Lusas230\x64\Python\
+python.exe get-pip.py
+```
+
+Then install the wishes library, i.e. `pandas`:
+
+```bat
+C:\ProgramData\Lusas230\x64\Python\python.exe -m pip install pandas
+```
+
+Mind that these Python environments changes for each LUSAS installation, between 32/64 bit versions and are removed upon uninstall. That's why it is recommended that Python scripts are executed externally (see [Python section](../python/)) where the system's Python version is used.
+
 ## ▶️ Script Shortcuts in LUSAS (toolbar button, menu item)
 
 You can add your scripts in LUSAS toolbar or menu through the following steps.
