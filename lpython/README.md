@@ -1,11 +1,13 @@
 # LPython Examples
 
-LUSAS Python Script (*LPython*) code (files with *.lpy extensions) can be executed within LUSAS through the Main Menu shortcut "Run Script" (red folder icon). These scripts are Python scripts that are executed inside LUSAS as opposed to normal Python script that are executed externally (see [python section](../python/README.md)).
+LUSAS Python Script (*LPython*) code (files with *.lpy extensions) can be executed within LUSAS (v23+) through the Main Menu shortcut "Run Script" (red folder icon). These scripts are Python scripts that are executed inside LUSAS as opposed to normal Python script that are executed externally (see [python section](../python/README.md)).
 
 ## 📚 Examples Included
 
 | Category   | Description                           | File                     |
 | ---------- | ------------------------------------- | ------------------------ |
+| General    | Create new model                      | 02_Create_New_Model.py |
+| Geometry   | Creates points                        | 03_Point_Creation.py   |
 | Tools      | FCM Replace Multiple Varying with Tapered Sections | FCM Replace Multiple Varying with Tapered Sections.lpy |
 
 ## 📄 Code
@@ -24,7 +26,7 @@ Scripts should always start with the `$ENGINE=LPython` command. Since LPython is
 
 - `geometryData()` and `newGeometryData()`
 
-- `getTextWindow().writeLine("Hello world!")`
+- `getTextWindow().writeLine("Hello world!")` or `textWin().writeLine("Hello world!")`
 
 The script relative path will be based on the open model parent folder.
 

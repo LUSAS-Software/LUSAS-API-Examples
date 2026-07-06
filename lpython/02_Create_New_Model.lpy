@@ -1,0 +1,26 @@
+$ENGINE=LPython
+# LUSAS API (LPI) EXAMPLES
+# (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+#
+# Example:      02_Create_New_Model.py
+# Description:  Create a new LUSAS model
+# Author:       Finite Element Analysis Ltd
+# 
+
+
+# Create a new model
+filename = "my_new_model.mdl"
+newProject("Structural", filename)
+
+# Get a reference to the model database
+db = getDatabase()
+
+# Set the analysis category & vertical axis
+db.setAnalysisCategory("3D")
+db.setVerticalDir("Z")
+
+# Set the unit system
+db.setModelUnits(getUnitSet("kN,m,t,s,C"))
+
+# Done!
+getTextWindow().writeLine(f"New model created: {filename}")
