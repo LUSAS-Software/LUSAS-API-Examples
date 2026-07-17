@@ -32,6 +32,15 @@ The script relative path will be based on the open model parent folder.
 
 Mind that Python `print()` command does not write on LUSAS's text window, instead use `getTextWindow().writeLine("My text")`.
 
+You can easily convert `Python` to `LPython` scripts by changing the extension from `*.py` to `*.lpy` and the following code line:
+```python
+lusas = get_lusas_instance()
+```
+to
+```python
+lusas = app
+```
+
 ## Using Python Packages in LPython scripts
 
 LUSAS v23+ ships with an integrated Python installation located at `C:\ProgramData\Lusas230\x64\Python\` (the 32bit version is under `x86` folder). If you want to use additional libraries in LPython scripts, you need to install them into that Python environment.
