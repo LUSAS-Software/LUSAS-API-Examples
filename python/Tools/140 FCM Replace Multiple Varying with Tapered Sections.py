@@ -29,7 +29,6 @@ db = lusas.database()
 ######################################################
 ### CONFIGURATION
 ASSIGN_LOADCASE = 1 # change if your geometric assignments are not on loadcase 1
-CAMBER_BOX_SECTION_SINGLE_CELL_DIMENSIONS = ("n", "Wt", "Wb", "H", "Wc", "Tc1", "Tc2", "Hm", "Tt", "Tb", "nt", "nb", "nc", "ni", "ne", "OP1", "HP1", "OP2", "HP2", "Ot1", "Ht1", "Ob1", "Hb1", "Oc1", "Hc1")
 
 # Eccentricity
 yType = "Centroid"
@@ -38,9 +37,19 @@ yFibre = ""
 zFibre = "B1"
 
 ######################################################
-### Helper functions
+### Helper constants/functions
 
-def create_line_end_section(line: IFLine, localCrds: float) -> IFParametricSection:
+section_types = {
+  28: "Complex Box (Camber, Single Cell)",
+  32: "Simple Box (Single Cell)"
+}
+
+section_dimensions = {
+  28: ("n", "Wt", "Wb", "H", "Wc", "Tc1", "Tc2", "Hm", "Tt", "Tb", "nt", "nb", "nc", "ni", "ne", "OP1", "HP1", "OP2", "HP2", "Ot1", "Ht1", "Ob1", "Hb1", "Oc1", "Hc1"),
+  32: ("n", "Wt", "Wb", "H", "Wc", "Tc1", "Tc2", "Tt", "Tb", "Tw")
+}
+
+def create_line_end_section(line: IFLine, localCrds: float, sectionType: int) -> IFParametricSection:
     """
     Creates a new "Complex Box (Camber, Single Cell)" parametric section based on the dimensions of the element at the given local coordinates along the line.
     Parameters:
@@ -52,19 +61,19 @@ def create_line_end_section(line: IFLine, localCrds: float) -> IFParametricSecti
     name = "L{}_{}".format(line.getID(), localCrds)
 
     # Create a new parametric section attribute
-    attr = db.createParametricSection(name)
+    attr = db().createParametricSection(name)
     # Set the type to "Complex Box (Camber, Single Cell)"
-    attr.setType("Complex Box (Camber, Single Cell)")
+    attr.setType(section_types[sectionType])
     
     # Get element at requested line end
     elm: IFElement
     nrmCoordOnElement: float
     elm, nrmCoordOnElement = line.getElementAtNormalisedPosition(localCrds)
     # Get section dimensions from element end
-    values = [elm.getAttributeValueAtU(nrmCoordOnElement, "Geometric", key) for key in CAMBER_BOX_SECTION_SINGLE_CELL_DIMENSIONS]
+    values = [elm.getAttributeValueAtU(nrmCoordOnElement, "Geometric", key) for key in section_dimensions[sectionType]]
     
     # Update dimensions in created section
-    attr.setDimensions(CAMBER_BOX_SECTION_SINGLE_CELL_DIMENSIONS, values)
+    attr.setDimensions(section_dimensions[sectionType], values)
     
     return attr
 
@@ -76,7 +85,7 @@ if not lusas.existsDatabase():
     raise Exception("No model is open. Please open a FCM model before running this code.")
 
 # Get all Multiple Varying Geometric attributes
-mvg_attrs = db.getAttributes("Multiple Varying Geometric")
+mvg_attrs = db().getAttributes("Multiple Varying Geometric")
 
 if len(mvg_attrs) == 0:
     raise Exception("Model has no Multiple Varying Geometric attributes.")
@@ -85,7 +94,7 @@ try:
     # Hide modeller to speed up the process
     lusas.enableUI(False)
     db.beginCommandBatch("Converting Multiple Varying Geometric Attributes to Tapered Sections")
-    
+
     # Start a progress bar to show per attribute progress
     lusas.initStatusBarProgressCtrl("Converting Geometric Attributes", len(mvg_attrs))
 
@@ -95,17 +104,19 @@ try:
         # Get attribute assigned lines
         lines = lusas.newObjectSet().add(mvg_attr, assgnmnt).getObjects("Line")
         
-        # Check if this is a CamberBoxSectionSingleCellE (= 28)
-        if mvg_attr.getValue("Type") != 28:
+        # Check section type is supported
+        sectionType = mvg_attr.getValue("Type")
+        if sectionType not in section_types:
+            print(f"Skipping section '{mvg_attr.getName()}' of type {sectionType}, not supported...", 54)
             continue
         
-        print("Replacing '{}' in {} lines...".format(mvg_attr.getName(), len(lines)))
+        print(f"Replacing '{mvg_attr.getName()}' in {len(lines)} lines...", 54)
         
         # Loop lines and replace
         for line in lines:
             # Create new attribute
             new_name = "{} (L{}_TAPER)".format(mvg_attr.getName(), line.getID())
-            new_attr = db.createGeometricLine(new_name)
+            new_attr = db().createGeometricLine(new_name)
             new_attr.setNumberOfSections(2)
             
             # Copy values from the Multiple Varying Section attribute to the new tapered section attribute
@@ -113,9 +124,9 @@ try:
             new_attr.setValue("interpMethod", mvg_attr.getValue("interpMethod"))
             
             # Create parametric sections based on line end section dimensions
-            start_section = create_line_end_section(line, 0)
-            end_section = create_line_end_section(line, 1)
-
+            start_section = create_line_end_section(line, 0, sectionType)
+            end_section = create_line_end_section(line, 1, sectionType)
+            
             # Set sections in the new tapered section attribute
             new_attr.setFromLibrary("Utilities", "", start_section.getName(), 0, 0, 0) # Section 1
             new_attr.setFromLibrary("Utilities", "", end_section.getName(), 0, 0, 1) # Section 2
@@ -146,4 +157,3 @@ finally:
 
     # Ensure modeller is visible at the end of the process
     lusas.enableUI(True)
-    
