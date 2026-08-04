@@ -1,0 +1,97 @@
+# LUSAS API (LPI) EXAMPLES
+# (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+#
+# Example:      05_Surface_Creation.py
+# Description:  Creates surfaces in the running LUSAS model
+# Author:       Finite Element Analysis Ltd
+# 
+$ENGINE=LPython
+
+
+######################################################
+#### Create a Surface by coordinates
+
+# Create a geometryData object to contain all the settings for the geometry creation
+geometry_data = newGeometryData()
+# set the options for creating geometries from coordinates
+geometry_data.setCreateMethod("coons")
+geometry_data.setLowerOrderGeometryType("coordinates")
+
+# Specify surface coordinates
+geometry_data.addCoords(0, 0, 0)
+geometry_data.addCoords(1, 0, 0)
+geometry_data.addCoords(1, 1, 0)
+geometry_data.addCoords(0, 1, 0)
+
+surface1 : IFSurface = database().createSurface(geometry_data).getObject("Surface")
+getTextWindow().writeLine(f"Surface {surface1.getID()} created by coordinates.")
+
+######################################################
+#### Create a Surface by Lines (copy lines from previously created surface)
+
+
+# Get the perimeter lines of the created surface
+# (add surface in ObjectSet, add Lower Order Line Features in the set, then keep only lines in the set)
+objSet = newObjectSet().add(surface1).addLOF("Line").keep("Line")
+
+## Copy the lines by 1m in Z direction
+vector = [0, 0, 1]
+# Create a translation attribute
+transform = database().createTranslationTransAttr("Trn1", vector)
+# Create a geometryData object to contain all the settings for the copy
+geometry_data = newGeometryData()
+geometry_data.setAllDefaults()
+geometry_data.setTransformation(transform)
+# Copy the lines
+linesObj = objSet.copy(geometry_data).keep("Line")
+# Delete the translation attribute
+database().deleteAttribute(transform)
+
+## Create a surface from the lines
+# Reset the geometryData object that will contain all the settings for the geometry creation
+geometry_data.setAllDefaults()
+# set the options for creating geometries from lines
+geometry_data.setCreateMethod("coons")
+geometry_data.setLowerOrderGeometryType("lines")
+
+# Create the surface using the lines
+new_surface : IFSurface = linesObj.createSurface(geometry_data).getObject("Surface")
+getTextWindow().writeLine(f"Surface {new_surface.getID()} created by lines.")
+
+
+######################################################
+#### Surface from Line translational sweep
+
+# Create a point
+line1 = database().getObject("line", 1) #assumes line with ID 1 exists
+
+# sweep vector X, Y, Z
+vector = [0, 0, 1] # 1m at Z direction
+
+# Create a translation attribute
+attr = database().createTranslationTransAttr("Temp_SweepTranslation", vector)
+attr.setSweepType("straight")
+attr.setHofType("Surface") # Set target geometry
+
+geomData = newGeometryData()
+geomData.setMaximumDimension(2) # Target geometries (0: Points, 1: Lines, 2: Surfaces)
+geomData.setTransformation(attr)
+geomData.sweptArcType("straight")
+
+# Create an object set to contain the points and be swept
+obs = newObjectSet().add(line1)
+
+# Perform the sweep, the returned object set will contain the created surfaces
+objSet = obs.sweep(geomData)
+
+# Delete the translation attribute
+database().deleteAttribute(attr)
+
+# Print new line IDs
+newSurfaces : list[IFSurface] = objSet.getObjects("Surface")
+for surface in newSurfaces:
+    getTextWindow().writeLine(f"Surface {surface.getID()} created from sweep.")
+
+# Set isometric view (top side view) and fit view
+view().setIsometric()
+view().setScaledToFit(True)

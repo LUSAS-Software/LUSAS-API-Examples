@@ -1,0 +1,206 @@
+# LUSAS API (LPI) EXAMPLES
+# (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+#
+# Example:      16_Extract_attribute_values.lpy
+# Description:  This example asks the user for an attribute name or type and extracts all 
+#               attributes' properties in a CSV or a LUSAS data grid.
+# Author:       Finite Element Analysis Ltd
+# 
+$ENGINE=LPython
+# Libraries:
+import csv, datetime, subprocess
+
+
+# Change this to False to display in a LUSAS grid instead
+show_in_csv = True
+csv_file_name = "attributeValues"
+
+
+def get_attributes_by_type_or_name(attr_type_or_name: str):
+    """
+    Get attributes by type or name.
+    """
+
+    try:
+        # Try to get attributes assuming a type was supplied
+        return db().getAttributes(attr_type_or_name)
+
+    except Exception:
+        # Search attributes by name
+        attribute_name_lc = attr_type_or_name.lower()
+        attributes = []
+
+        for attr in db().getAttributes("All"):
+            if attr.getName().lower() == attribute_name_lc:
+                attributes.append(attr)
+
+        return attributes
+
+
+def get_attribute_properties(attr: IFAttribute):
+    """
+    Extract all attribute properties.
+
+    Returns:
+        [
+            [Property name, Type, Value, Units],
+            ...
+        ]
+    """
+
+    properties_array = []
+    value_names = attr.getValueNames()
+
+    if value_names:
+        for value_name in value_names:
+            value_type = attr.getValueType(value_name)
+            value_units = attr.getValueUnits(value_name)
+
+            # Skip dispatch values
+            if value_type == "Dispatch":
+                continue
+
+            rows_count = attr.countRows(value_name)
+
+            if rows_count > 0:
+                for i in range(rows_count):
+                    str_values = get_value_as_str_array(attr.getValue(value_name, i))
+                    for value in str_values:
+                        properties_array.append([value_name, value_type, value, value_units])
+            else:
+                str_values = get_value_as_str_array(attr.getValue(value_name))
+                for value in str_values:
+                    properties_array.append([value_name, value_type, value, value_units])
+    else:
+        # Handle case where no values exist
+        properties_array.append(["N/A", "N/A", "N/A", "N/A"])
+
+    return properties_array
+
+
+def get_value_as_str_array(value):
+    """
+    Convert an attribute value into a list of strings.
+    """
+    try:
+        if hasattr(value, "getName"):
+            # Store object name
+            return [value.getName()]
+
+        elif isinstance(value, (list, tuple)):
+            output = []
+
+            for item in value:
+                items = get_value_as_str_array(item)
+
+                if len(items) == 0:
+                    output.append(" ")
+                elif len(items) == 1:
+                    output.append(items[0])
+                else:
+                    output.append(f"{items[0]}, {items[1]}, ...")
+            return output
+
+        else:
+            return [str(value)]
+
+    except Exception:
+        return ["N/A (error)"]
+
+
+def write_csv(attributes):
+    # Filename with timestamp (YYYYMMDD_HHMMSS)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    csv_file = (f"{csv_file_name}_{timestamp}.csv")
+
+    with open(csv_file, "w", newline="") as file:
+        writer = csv.writer(file)
+
+        # Write header
+        writer.writerow(
+            [
+                "Attribute Type",
+                "Attribute Name",
+                "Value Name",
+                "Value Type",
+                "Value",
+                "Units"
+            ]
+        )
+
+        # Write attributes
+        for attr in attributes:
+            data = get_attribute_properties(attr)
+
+            attribute_type = attr.getAttributeType()
+            attribute_name = attr.getName()
+
+            for row in data:
+
+                writer.writerow(
+                    [
+                        attribute_type,
+                        attribute_name,
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3]
+                    ]
+                )
+
+    # Open CSV file in default application
+    subprocess.Popen([csv_file], shell=True)
+
+
+def display_grid(attributes):
+    # Extract properties into a LUSAS grid window
+    grid = createGridWindow(nextGridWindowID())
+
+    # Multiple grid tabs: one per attribute
+    for attr in attributes:
+        data = get_attribute_properties(attr)
+
+        title = (
+            f"{attr.getName()} "
+            f"({attr.getAttributeType()})"
+        )
+
+        grid.createTab(title, title)
+        grid.setColHeaders(title, ["Property", "Type", "Value", "Units"])
+        grid.setData(title, data, False, False, False)
+
+
+# ---------------------------------------------------------
+# Prompt user for typeName and attributeName
+# ---------------------------------------------------------
+
+# Parameters is a 2D list of column and row values, populate with default
+parameters: list[list[str]] = [["all"]]
+
+ok_pressed, parameters = createSimpleDialog("Extract Attribute Values", ["Attribute type and/or name (e.g. material or material/iso1 or iso1)"], ["Column"], parameters)
+input_string = parameters[0][0].strip()
+
+# Stop execution if Cancel/empty input is entered
+if ok_pressed and len(input_string) > 0:
+    split_input = input_string.split("/")
+    attr_type_or_name = split_input[0]
+
+    # Check if an attribute name was provided
+    if len(split_input) > 1:
+        attribute_type = split_input[0]
+        attribute_name = split_input[1]
+        attributes = [db().getAttribute(attribute_type, attribute_name)]
+    else:
+        attributes = get_attributes_by_type_or_name(attr_type_or_name)
+
+    if len(attributes) == 0:
+        textWin().writeLine("No attributes found with type or name." + attr_type_or_name, 54)
+
+    else:
+        if show_in_csv:
+            write_csv(attributes)
+        else:
+            display_grid(attributes)
+else:
+    textWin().writeLine("Dialog cancelled.", 54)

@@ -8,6 +8,17 @@ LUSAS Python Script (*LPython*) code (files with *.lpy extensions) can be execut
 | ---------- | ------------------------------------- | ------------------------ |
 | General    | Create new model                      | 02_Create_New_Model.lpy |
 | Geometry   | Creates points                        | 03_Point_Creation.lpy   |
+| Geometry   | Creates lines                         | 04_Line_Creation.lpy    |
+| Geometry   | Creates surfaces                      | 05_Surface_Creation.lpy |
+| Attributes | Extracts all attributes' properties in a data grid or CSV for the user given attribute names (UI input) | 16_Extract_attribute_values.lpy |
+| Attributes | Prints the attribute type(s) for the user given attribute names (UI input) | 17_Get_attribute_type_by_name.lpy |
+| Attributes | Extract geometric properties of lines (beams) and surfaces | 18_Extract_Geometric_Properties.lpy |
+| Analyses   | Create/solve analyses and loadcases  | 20_Create_and_Run_Analyses_and_Loadcases.lpy |
+| Analyses   | Create Combinations and Envelopes    | 21_Create_Combinations_and_Envelopes.lpy |
+| Analyses   | Create Coupled Structural-Thermal Analysis        | 22_Coupled_Structural_Thermal_Analysis.lpy |
+| Results    | Get results from Elements/Nodes                   | 30_Getting_Results.lpy     |
+| Results    | Get results with Print Results Wizard             | 31_Getting_Results_PRW.lpy |
+| Results    | Prints results along a 2D slice and calculates the total resultant and total moment. | 33_Getting_Results_2D_Slice.lpy |
 | Tools      | FCM Replace Multiple Varying with Tapered Sections | 140 FCM Replace Multiple Varying with Tapered Sections.lpy |
 
 ## 📄 Code

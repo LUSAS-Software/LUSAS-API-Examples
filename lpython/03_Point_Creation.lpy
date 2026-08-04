@@ -1,4 +1,3 @@
-$ENGINE=LPython
 # LUSAS API (LPI) EXAMPLES
 # (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
 #
@@ -6,6 +5,7 @@ $ENGINE=LPython
 # Description:  Creates points in the running LUSAS model
 # Author:       Finite Element Analysis Ltd
 # 
+$ENGINE=LPython
 
 # Save database in variable
 database = database()
@@ -23,7 +23,7 @@ geometry_data.addCoords(1.0, 1.0, 0.0)
 geometry_data.addCoords(2.0, 2.0, 0.0)
 
 # Now we instruct the database to the create the points. It will return an IFObject set containing the newly created points
-object_set = database.createPoint(geometry_data)
+object_set = database().createPoint(geometry_data)
 
 # Get all points from the returned object set
 points:list['IFPoint'] = object_set.getObjects("Point")

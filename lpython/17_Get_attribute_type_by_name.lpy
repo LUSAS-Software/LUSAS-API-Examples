@@ -1,0 +1,92 @@
+# LUSAS API (LPI) EXAMPLES
+# (https://github.com/LUSAS-Software/LUSAS-API-Examples/)
+#
+# Example:      17_Get_attribute_type_by_name.lpy
+# Description:  This example asks the user for an attribute name and prints the attribute type(s) in the log window.
+# Author:       Finite Element Analysis Ltd
+#
+$ENGINE=LPython
+
+def get_attribute_types(attribute_name: str):
+    """
+    Retrieves and prints attribute types based on the given attribute name.
+    """
+
+    # Trim whitespace from the input and convert to lowercase
+    attribute_name = attribute_name.strip()
+    attribute_name_lc = attribute_name.lower()
+
+    if attribute_name != "":
+
+        # Create a set to store unique attribute types
+        attribute_types = set()
+
+        # Find and collect attribute types
+        no_attributes_found = True
+        all_attributes = db().getAttributes("All")
+
+        for attr in all_attributes:
+            if (
+                attr.getName().lower() == attribute_name_lc
+                or attribute_name_lc == "all"
+            ):
+                attr_type = attr.getAttributeType()
+                attribute_types.add(attr_type)
+                no_attributes_found = False
+
+
+        # If no exact matches are found, search for names starting with input
+        is_starting_name = not no_attributes_found
+
+        if no_attributes_found:
+            length = len(attribute_name_lc)
+            for attr in all_attributes:
+                if attr.getName().lower()[:length] == attribute_name_lc:
+                    attr_type = attr.getAttributeType()
+                    attribute_types.add(attr_type)
+                    no_attributes_found = False
+
+
+        # If attributes were found by partial match, append "..."
+        if is_starting_name and not no_attributes_found:
+            attribute_name = attribute_name + "..."
+
+
+        # Print output in LUSAS log window
+        textWindow = getTextWindow()
+        if no_attributes_found:
+            textWindow.writeLine(f'No attributes found named or starting with "{attribute_name}"', "information")
+
+        elif len(attribute_types) == 1:
+            textWindow.writeLine("--------------------------------------------------", "information")
+            textWindow.writeLine(f'Attribute type of "{attribute_name}":', "information")
+            textWindow.writeLine(next(iter(attribute_types)), "information")
+
+        elif attribute_name_lc == "all":
+            textWindow.writeLine("--------------------------------------------------", "information")
+            textWindow.writeLine("Attribute types of all attributes in model:", "information")
+            for attr_type in attribute_types:
+                textWindow.writeLine(attr_type, "information")
+
+        else:
+            textWindow.writeLine("--------------------------------------------------", "information")
+            textWindow.writeLine(f'Attribute types of attributes named "{attribute_name}":', "information")
+            for attr_type in attribute_types:
+                textWindow.writeLine(attr_type, "information")
+
+
+# ---------------------------------------------------------
+# Prompt user for attribute name(s)
+# ---------------------------------------------------------
+
+# Parameters is a 2D list of column and row values, populate with default
+parameters: list[list[str]] = [[""]]
+
+ok_pressed, parameters = createSimpleDialog("Extract Attribute Values", ["Attribute(s) name (separated by \";\")"], ["Column"], parameters)
+user_input = parameters[0][0].strip()
+
+attribute_names = user_input.split(";")
+
+# Loop through supplied attribute names and print attribute types
+for attribute_name in attribute_names:
+    get_attribute_types(attribute_name)
