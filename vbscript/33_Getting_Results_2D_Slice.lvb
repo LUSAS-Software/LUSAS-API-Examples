@@ -88,9 +88,6 @@ Call database().Delete(inspectionLine)
 '#####################################################
 ' Print slice results
 
-' For NA values, LUSAS returns the following very small number
-NA_VALUE = 2.2250738585072014e-308
-
 Set grid = Nothing
 If printInGrid Then
     ' Print results to grid window
@@ -104,10 +101,11 @@ If printInGrid Then
     ReDim data(UBound(values) - LBound(values), 1)
     For i = LBound(values) To UBound(values)
         data(i - LBound(values), 0) = Round(distances(i), printDecimals)
-        If values(i) <> NA_VALUE Then
-            data(i - LBound(values), 1) = Round(values(i), printDecimals)
-        Else
+        
+        If isNumericalErrorValue(values(i)) Then
             data(i - LBound(values), 1) = "NA"
+        Else
+            data(i - LBound(values), 1) = Round(values(i), printDecimals)
         End If
     Next
     Call grid.setData(title, data, False, False, False)
@@ -118,10 +116,10 @@ Else
     Call textWin.writeLine("Distance, Value", 54)
 
     For i = LBound(values) To UBound(values)
-        If values(i) <> NA_VALUE Then
-            Call textWin.writeLine(Round(distances(i), printDecimals) & ", " & Round(values(i), printDecimals), 54)
-        Else
+        If isNumericalErrorValue(values(i)) Then
             Call textWin.writeLine(Round(distances(i), printDecimals) & ", NA", 54)
+        Else
+            Call textWin.writeLine(Round(distances(i), printDecimals) & ", " & Round(values(i), printDecimals), 54)
         End If
     Next
 End If
@@ -138,7 +136,7 @@ ReDim filteredDistances(n - 1)
 ReDim filteredValues(n - 1)
 cnt = 0
 For i = LBound(values) To UBound(values)
-    If values(i) <> NA_VALUE Then
+    If Not isNumericalErrorValue(values(i)) Then
         filteredDistances(cnt) = distances(i)
         filteredValues(cnt) = values(i)
         cnt = cnt + 1

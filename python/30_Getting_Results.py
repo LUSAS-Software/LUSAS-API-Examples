@@ -58,15 +58,15 @@ for n in targetNodes:
     # Non supported nodes will return a value of 2.2250738585072014e-308.
     # This is the smallest possible value represented by a 64bit double precision variable.
     # This value is equivalent to N/A.
-    # This can also be checked using the Helpers.isNan() function.
+    # This is checked using the isNumericalErrorValue() function.
     fx = n.getResults("Reaction", "FX")
-    if fx == 2.2250738585072014e-308:
+    if lusas.isNumericalErrorValue(fx):
         fx = 0
     fy = n.getResults("Reaction", "FY")
-    if fy == 2.2250738585072014e-308:
+    if lusas.isNumericalErrorValue(fy):
         fy = 0
     fz = n.getResults("Reaction", "FZ")
-    if fz == 2.2250738585072014e-308:
+    if lusas.isNumericalErrorValue(fz):
         fz = 0
 
     print(fx, fy, fz)

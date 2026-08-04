@@ -95,9 +95,6 @@ database.Delete(inspection_line)
 #####################################################
 # Print slice results
 
-# For NA values, LUSAS returns the following very small number
-NA_VALUE = 2.2250738585072014e-308
-
 if print_in_grid:
     # Print results to grid window
     grid : 'IFLPIGridWindow' = lusas.createGridWindow(lusas.nextGridWindowID())
@@ -109,7 +106,8 @@ if print_in_grid:
     data = []
     for i in range(len(values)):
         row = [round(distances[i], print_decimals)]
-        if values[i] != NA_VALUE:
+        # Check if the value is a numerical error value (NA)
+        if not lusas.isNumericalErrorValue(values[i]):
             row.append(round(values[i], print_decimals))
         else:
             row.append("NA")
@@ -124,7 +122,8 @@ else:
     print("Distance, Value")
 
     for i in range(len(values)):
-        if values[i] != NA_VALUE:
+        # Check if the value is a numerical error value (NA)
+        if not lusas.isNumericalErrorValue(values[i]):
             print(f"{round(distances[i], print_decimals)}, {round(values[i], print_decimals)}")
         else:
             print(f"{round(distances[i], print_decimals)}, NA")
@@ -138,7 +137,7 @@ filtered_distances = []
 filtered_values = []
 
 for i in range(len(values)):
-    if values[i] != NA_VALUE:
+    if not lusas.isNumericalErrorValue(values[i]):
         filtered_distances.append(distances[i])
         filtered_values.append(values[i])
 

@@ -50,18 +50,18 @@ Call textWin.writeLine("") ' Add a blank line to the output window
 Call textWin.writeLine("Reaction results:")
 For Each n in targetNodes
     ' Non supported nodes will return a value of 2.2250738585072014e-308. This is the smallest possible value represented by a 64bit double precision variable.
-    ' We can avoid this small value by asking if a result is available
-    ' This can also be checked using the isNan() function from the Helpers.
+    ' We can avoid this small value by asking if a result is available.
+    ' This is checked using the isNumericalErrorValue() function.
     fx = n.getResults("Reaction", "FX")
-    If fx = 2.2250738585072014e-308 Then
+    If isNumericalErrorValue(fx) Then
         fx = 0.0
     End If
     fy = n.getResults("Reaction", "FY")
-    If isNan(fy) Then
+    If isNumericalErrorValue(fy) Then
         fy = 0.0
     End If
     fz = n.getResults("Reaction", "FZ")
-    If isNan(fz) Then
+    If isNumericalErrorValue(fz) Then
         fz = 0.0
     End If
     Call textWin.writeLine(fx & ", " & fy & ", " & fz)
