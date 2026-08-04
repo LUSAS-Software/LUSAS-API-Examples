@@ -6,9 +6,9 @@ LUSAS Python Script (*LPython*) code (files with *.lpy extensions) can be execut
 
 | Category   | Description                           | File                     |
 | ---------- | ------------------------------------- | ------------------------ |
-| General    | Create new model                      | 02_Create_New_Model.py |
-| Geometry   | Creates points                        | 03_Point_Creation.py   |
-| Tools      | FCM Replace Multiple Varying with Tapered Sections | FCM Replace Multiple Varying with Tapered Sections.lpy |
+| General    | Create new model                      | 02_Create_New_Model.lpy |
+| Geometry   | Creates points                        | 03_Point_Creation.lpy   |
+| Tools      | FCM Replace Multiple Varying with Tapered Sections | 140 FCM Replace Multiple Varying with Tapered Sections.lpy |
 
 ## 📄 Code
 
